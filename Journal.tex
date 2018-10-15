@@ -6,7 +6,7 @@
 \usepackage{graphicx}
 \usepackage{esint}
 \usepackage{mdsymbol}
-\usepackage{esvect}
+\usepackage{esvect} 
 \usepackage{lipsum}
 \usepackage{hhline}
 \usepackage{eurosym}
@@ -37,5 +37,8 @@
 Mostly consisted of reading the theses sent to me by Elena/Brian to get an idea of what the "parent" projects involved and why my project was required.
 \section*{D/NCO Research}
 After 2nd meeting with supervisors the goal was to find out what options there were in terms of implementing an oscillator on an FPGA. Only two real options were phase accumulator \& ring oscillator. Both of these I knew of in advance of this research. Xilinx proprietary option with IODelays. Goal for next week to implement an oscillator of both main options.
+\section*{Initial DCO Implementation}
+Wrote Verilog in order to implement both a wave/inverter chain oscillator \& a counter based oscillator. Then made the test benches for these, only used post-synth simulation. Then implemented and tested. Counter based worked fine, runs perfectly @ generates divided clock. Wave seems to "toggle" an LED, but frequency is so high I cannot tell. Need to use a massive number of inverters, takes ages to synth \& therefore simulate. <- this seems to be vivado doing silly things. Turns out vivado is optimising away even with comb. loops allowed.
+
 
 \end{document}
