@@ -1,6 +1,6 @@
 module RingOsc #(parameter RINGSIZE = 333, CTRL_WIDTH = 4)( 
 	input wire enable_i,
-    input wire freq_sel_i,
+    input wire [CTRL_WIDTH-1:0] freq_sel_i,
     output wire clk_o
     );
 
@@ -18,17 +18,10 @@ module RingOsc #(parameter RINGSIZE = 333, CTRL_WIDTH = 4)(
     
     always @(freq_sel_i,ringwire_c)
     begin
-        if (freq_sel_i == 1'b0)
+        if (freq_sel_i == 4'b0)
             f_sel_mux_out_r = ringwire_c[INVERTERNUM];
         else
-            f_sel_mux_out_r = ringwire_c[INVERTERNUM-2];
-        /*
-        What I want to do here is:
-        - Make a generate block that creates this multiplexor.
-        - Formula @(<genvar> from 1:2^CTRL_WIDTH-1)
-        	else if (freq_sel_i == 1'b<genvar>)
-        		f_sel_mux_out_r = ringwire_c[INVERTERNUM-2<genvar>]
-        */
+            f_sel_mux_out_r = ringwire_c[INVERTERNUM-2*freq_sel_i];
     end
     
     assign ringwire_c[0] = !((f_sel_mux_out_r) & (enable_i));

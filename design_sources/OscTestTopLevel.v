@@ -35,7 +35,8 @@ module OscTestTopLevel(
     wire clk_ro_c;
     wire f_sel_sw_pa_c;
     wire [3:0] f_sel_sw_ro_c;
-    wire enable_r = 1'b1;
+    wire enable_ro_c = switches_i[11];
+    wire enable_pa_c = switches_i[9];
     wire reset_c;
     wire clk5_c;
 
@@ -64,7 +65,7 @@ module OscTestTopLevel(
                 .segment(segment_o));  // segment outputs
     /*
     PhaseAccum #(.WIDTH(ACCUM_WIDTH)) testOsc (
-                .enable_i (enable_r),
+                .enable_i (enable_pa_c),
                 .reset_i (reset_c),
                 .fpga_clk_i (clk100_i),
                 .clk_o (clk_pa_c),
@@ -73,7 +74,7 @@ module OscTestTopLevel(
                 */
     ///*            
     RingOsc testRing( 
-                .enable_i (enable_r),
+                .enable_i (enable_ro_c),
                 .freq_sel_i (f_sel_sw_ro_c),
                 .clk_o (clk_ro_c)
                 );
