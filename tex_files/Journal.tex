@@ -41,6 +41,15 @@ After 2nd meeting with supervisors the goal was to find out what options there w
 Wrote Verilog in order to implement both a wave/inverter chain oscillator \& a counter based oscillator. Then made the test benches for these, only used post-synth simulation. Then implemented and tested. Counter based worked fine, runs perfectly @ generates divided clock. Wave seems to "toggle" an LED, but frequency is so high I cannot tell. Need to use a massive number of inverters, takes ages to synth \& therefore simulate. <- this seems to be vivado doing silly things. Turns out vivado is optimising away even with comb. loops allowed. Needed to faff around the .xdc file.
 
 Eventually went for 1000 -> gives 1.58 MHz w/ inv chain. Works as expected. ~315 ps gate delay.
+\section*{Jitter detection}
+Started the week attempting to implement a system using the FPGA to measure jitter of the clock. Prior to this I implemented the ability to tune the frequencies of the oscillators. The RO was given 4 bit control, removing an extra pair of inverters each time. The PAccum was given 9 bit control.
+When I tried to do jitter detection I ran into a pair of problems. The first of these is my resolution was going to suffer.
+At 5 MHz RO clock Tnom is 200 nsec. Running the FPGA at 500 MHz gives 2 ns resolution. Period change through two oscillators is 1.2 ns. Cannot tell 3! jumps apart.
+Switched to using the agilent 4 GS/s scope, it has 250 psec resolution.
+Collected data friday, ran it through matlab, got some basic jitter calculations done.
+Wrote a bash script that implements a GPL c library that interacts with the scope over ethernet.
+Hopefully it works and can be used to automate datacapture process
+Will test Monday.
 
 
 \end{document}
