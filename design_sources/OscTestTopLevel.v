@@ -30,10 +30,10 @@ module OscTestTopLevel(
         output [7:0] digit_o        
         );
     
-    localparam ACCUM_WIDTH = 10;
+    localparam ACCUM_WIDTH = 12;
     wire clk_pa_c;
     wire clk_ro_c;
-    wire f_sel_sw_pa_c;
+    wire [8:0] f_sel_sw_pa_c;
     wire [3:0] f_sel_sw_ro_c;
     wire enable_ro_c = switches_i[11];
     wire enable_pa_c = switches_i[9];
@@ -50,12 +50,13 @@ module OscTestTopLevel(
     assign led_o = {1'b0, clk_ro_c, clk_pa_c};
 
     // Instantiate clock and reset generator, connect to signals
-    clockReset  clkGen  (
+    /*clockReset  clkGen  (
             .clk100 (clk100_i),       // input clock at 100 MHz
             .rstPBn (rstPBn_i),       // input reset, active low
             .clk5   (clk5_c),         // output clock, 5 MHz
             .reset  (reset_c) );      // output reset, active high
-   
+   */
+   /*
     displayInterface disp1 (
                 .clock(clk5_c),             // 5 MHz clock signal
                 .reset(reset_c),        // reset signal, active high
@@ -63,21 +64,21 @@ module OscTestTopLevel(
                 .point(4'b1111),    // radix markers to be displayed
                 .digit(digit_o),        // digit outputs
                 .segment(segment_o));  // segment outputs
-    /*
+    */
     PhaseAccum #(.WIDTH(ACCUM_WIDTH)) testOsc (
                 .enable_i (enable_pa_c),
-                .reset_i (reset_c),
+                .reset_i (rstPBn_i),
                 .fpga_clk_i (clk100_i),
                 .clk_o (clk_pa_c),
                 .k_val_i (f_sel_sw_pa_c)
                 );  // segment
-                */
-    ///*            
+                
+    /*            
     RingOsc testRing( 
                 .enable_i (enable_ro_c),
                 .freq_sel_i (f_sel_sw_ro_c),
                 .clk_o (clk_ro_c)
                 );
-                //*/
+                */
     
 endmodule

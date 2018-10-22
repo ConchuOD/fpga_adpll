@@ -24,21 +24,21 @@ for loop_inc = 1:num_datasets
 
     % @~1000 samples 3.090 for 1 outside
     % https://www.sitime.com/api/gated/AN10007-Jitter-and-measurement.pdf
-    period_jitter_p2p = 2*3.090*period_jitter_std*1E9; %in nanoseconds
+    period_jitter_p2p = 2*3.090*period_jitter_std; %in nanoseconds
     
     if(length(init_cross) >= 10000)
         long_term_jitter(loop_inc) = periods(10000)-periods(1);
     end   
        
     phase_shift = 0.10;
-    [t,square_wave] = generateSquareWave(period_mean,num_samp,f_samp,phase_shift);
+    [t,square_wave] = generateSquareWave(period_mean/1E9,num_samp,f_samp,phase_shift);
     
     [~,init_cross_ideal,~,~] = pulsewidth(square_wave,scope_x_data, 'Polarity', 'Positive');
 
     
     [periods_ideal] = getPeriods(init_cross_ideal);
     
-    time_interval_error = (periods - periods_ideal)*1E9; %in nanoseconds
+    time_interval_error = (periods - periods_ideal);%*1E9; %in nanoseconds
 end
 if (num_datasets == 1)
     figure

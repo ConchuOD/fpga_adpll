@@ -756,6 +756,8 @@ set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets -of_objects [get_cells rin
 
 set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets -of_objects [get_cells testRing/inverter__0]]
 
+set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets -of_objects [get_cells testRing/ringwire_c_inferred_i_1]]
+
 set_property ALLOW_COMBINATORIAL_LOOPS TRUE [get_nets testRing/ringwire_c[7776]]
 set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets {testRing/ringwire_c[7775]}]
 set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets {testRing/ringwire_c[7774]}]
