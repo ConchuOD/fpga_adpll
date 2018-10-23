@@ -77,8 +77,8 @@ set_property IOSTANDARD LVCMOS33 [get_ports {digit_o[7]}]
 ## Buttons - pushbutton switches
 # First is the red button marked CPU RESET.  Signal is active low.
 #Bank = 15, Pin name = IO_L3P_T0_DQS_AD1P_15,				Sch name = CPU_RESET
-set_property PACKAGE_PIN C12 [get_ports rstPBn_i]
-set_property IOSTANDARD LVCMOS33 [get_ports rstPBn_i]
+set_property PACKAGE_PIN C12 [get_ports rst_pbn_i]
+set_property IOSTANDARD LVCMOS33 [get_ports rst_pbn_i]
 
 ## The other 5 buttons are named as marked on the board. Signals are active high.
 ##Bank = 15, Pin name = IO_L11N_T1_SRCC_15,					Sch name = BTNC

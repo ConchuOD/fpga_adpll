@@ -39,28 +39,28 @@ module ClockReset(
 
 // Instantiate input buffer
     IBUF clkin_ibuf(
-    	.O (clk160_inbuf_x),
-      	.I (clk160_i)
+    	.O (clk100_inbuf_x),
+      .I (clk100_i)
     );
       
 // MMCME2_BASE: Base Mixed Mode Clock Manager,  Artix-7
 // Note reset_o is not used, so clock can stay running during reset_o.
     MMCME2_BASE #(
-       .BANDWIDTH("OPTIMIZED"),   	// Jitter programming (OPTIMIZED, HIGH, LOW)
-       .CLKOUT4_CASCADE("FALSE"), 	// Cascade CLKOUT4 counter with CLKOUT6 (FALSE, TRUE)
-       .STARTUP_WAIT("FALSE"),     	// Delays DONE until MMCM is locked_x (FALSE, TRUE)
-       .DIVCLK_DIVIDE(5),         	// Master division value (1-106)
-       .CLKFBOUT_MULT_F(32.0),     	// Multiply value for all CLKOUT (2.000-64.000).
-       .CLKFBOUT_PHASE(0.0),      	// Phase offset in degrees of CLKFB (-360.000-360.000).
-       .CLKIN1_PERIOD(10.0),       	// Input clock period in ns to ps resolution (i.e. 33.333 is 30 MHz).
-       .REF_JITTER1(0.01),         	// Reference input jitter in UI (0.000-0.999).
-       .CLKOUT0_DIVIDE_F(128.0),    // Divide amount for CLKOUT0 (1.000-128.000).
-       .CLKOUT0_DUTY_CYCLE(0.5),
-       .CLKOUT0_PHASE(0.0)//,
-       //.CLKOUT1_DIVIDE(4),    // Divide amount for CLKOUT1 (1.000-128.000).
-       //.CLKOUT1_DUTY_CYCLE(0.5),
-       //.CLKOUT1_PHASE(0.0)
-    )
+      .BANDWIDTH("OPTIMIZED"),    // Jitter programming (OPTIMIZED, HIGH, LOW)
+      .CLKOUT4_CASCADE("FALSE"),  // Cascade CLKOUT4 counter with CLKOUT6 (FALSE, TRUE)
+      .STARTUP_WAIT("FALSE"),     // Delays DONE until MMCM is locked (FALSE, TRUE)
+      .DIVCLK_DIVIDE(5),          // Master division value (1-106)
+      .CLKFBOUT_MULT_F(32.0),     // Multiply value for all CLKOUT (2.000-64.000).
+      .CLKFBOUT_PHASE(0.0),       // Phase offset in degrees of CLKFB (-360.000-360.000).
+      .CLKIN1_PERIOD(10.0),       // Input clock period in ns to ps resolution (i.e. 33.333 is 30 MHz).
+      .REF_JITTER1(0.01),         // Reference input jitter in UI (0.000-0.999).
+      .CLKOUT0_DIVIDE_F(128.0),   // Divide amount for CLKOUT0 (1.000-128.000).
+      .CLKOUT0_DUTY_CYCLE(0.5),
+      .CLKOUT0_PHASE(0.0),
+      .CLKOUT1_DIVIDE(4),         // Divide amount for CLKOUT0 (1.000-128.000).
+      .CLKOUT1_DUTY_CYCLE(0.5),
+      .CLKOUT1_PHASE(0.0)
+   )
     MMCME2_BASE_inst (
        .CLKFBOUT            (clk_fb_x),      // feedback output, connects back to input
        .CLKFBOUTB           (clk5_buffout_xb_unused),
@@ -76,7 +76,7 @@ module ClockReset(
        .CLKOUT5             (clkout5_unused),
        .CLKOUT6             (clkout6_unused),
        .CLKFBIN             (clk_fb_x),     // feedback input
-       .CLKIN1              (clk100_ibuf_x),     // primary clock input
+       .CLKIN1              (clk100_inbuf_x),     // primary clock input
        .LOCKED              (locked_x),       // 1-bit output: locked_x
        .PWRDWN              (1'b0),       // 1-bit input: Power-down, unused
        .RST                 (1'b0)    // 1-bit input: reset_o - not used here
@@ -86,11 +86,11 @@ module ClockReset(
 // Instantiate output buffer
     BUFG clkout0_bufg (
     	.O   (clk5_o),
-        .I   (clk5_MMCM0_x)
+      .I   (clk5_MMCM0_x)
     );
     BUFG clkout1_bufg (
     	.O   (clk160_o),
-        .I   (clk160_MMCM1_x)
+      .I   (clk160_MMCM1_x)
     );
       
 // reset_o Generator - keeps system in reset_o until clock manager is locked_x.
@@ -101,7 +101,7 @@ module ClockReset(
 // As output clock may not be available while MMCM is unlocked_x, this FF
 // must use asynchronous reset_o, so it can change state without the clock.
     reg  reset_r;    // flip-flop for reset_o (0 = reset_o)
-    always @ (posedge clk160_o, posedge reset_in)  // async reset_o
+    always @ (posedge clk5_o, posedge reset_in)  // async reset_o
       if (reset_in) reset_r <= 1'b0;  // clear on reset_o
       else reset_r <= 1'b1;  // otherwise set to 1 on clock edge
 
