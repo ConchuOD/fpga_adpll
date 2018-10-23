@@ -22,7 +22,7 @@
 
 module OscTestTopLevel(
         input clk100_i,        // 100 MHz clock from oscillator on board
-        input rstPBn_i,        // reset signal, active low, from CPU RESET pushbutton //
+        input rst_pbn_i,        // reset signal, active low, from CPU RESET pushbutton //
         input [15:0] switches_i,
         output [2:0] led_o,
         output [7:0] ra_o,
@@ -31,54 +31,54 @@ module OscTestTopLevel(
         );
     
     localparam ACCUM_WIDTH = 12;
-    wire clk_pa_c;
-    wire clk_ro_c;
-    wire [8:0] f_sel_sw_pa_c;
-    wire [3:0] f_sel_sw_ro_c;
-    wire enable_ro_c = switches_i[11];
-    wire enable_pa_c = switches_i[9];
-    wire reset_c;
-    wire clk5_c;
-
+    wire clk_pa_x;
+    wire clk_ro_x;
+    wire [8:0] f_sel_sw_pa_x;
+    wire [3:0] f_sel_sw_ro_x;
+    wire enable_ro_x = switches_i[11];
+    wire enable_pa_x = switches_i[9];
+    wire reset_x;
+    wire clk5_x;
+    wire clk160_x;
     
     //assign inputs
-    assign f_sel_sw_ro_c = switches_i[15:12]; //TODO 4' variation
-    assign f_sel_sw_pa_c = switches_i[8:0]; // 9' number, 10' counter
+    assign f_sel_sw_ro_x = switches_i[15:12]; 
+    assign f_sel_sw_pa_x = switches_i[8:0]; 
 
     //assign outputs
-    assign ra_o = {6'b0, clk_ro_c, clk_pa_c};
-    assign led_o = {1'b0, clk_ro_c, clk_pa_c};
+    assign ra_o = {6'b0, clk_ro_x, clk_pa_x};
+    assign led_o = {1'b0, clk_ro_x, clk_pa_x};
 
     // Instantiate clock and reset generator, connect to signals
-    /*clockReset  clkGen  (
-            .clk100 (clk100_i),       // input clock at 100 MHz
-            .rstPBn (rstPBn_i),       // input reset, active low
-            .clk5   (clk5_c),         // output clock, 5 MHz
-            .reset  (reset_c) );      // output reset, active high
-   */
-   /*
-    displayInterface disp1 (
-                .clock(clk5_c),             // 5 MHz clock signal
-                .reset(reset_c),        // reset signal, active high
-                .value(switches_i),     // input value to be displayed
-                .point(4'b1111),    // radix markers to be displayed
-                .digit(digit_o),        // digit outputs
-                .segment(segment_o));  // segment outputs
-    */
+    ClockReset  clkGen  (
+            .clk100_i 	(clk100_i),      // input clock at 100 MHz
+            .rst_pbn_i 	(rst_pbn_i),     // input reset, active low
+            .clk5_o   	(clk5_x),        // output clock, 5 MHz
+            .clk160_o	(clk160_x),
+            .reset_o  	(reset_x)     	 // output reset, active high
+    );
+   ///*
+    DisplayInterface disp1 (
+                .clock 		(clk5_x),       // 5 MHz clock signal
+                .reset 		(reset_x),      // reset signal, active high
+                .value 		(switches_i),   // input value to be displayed
+                .point 		(4'b1111),    	// radix markers to be displayed
+                .digit 		(digit_o),      // digit outputs
+                .segment 	(segment_o)  	// segment outputs
+    );
+    //*/
     PhaseAccum #(.WIDTH(ACCUM_WIDTH)) testOsc (
-                .enable_i (enable_pa_c),
-                .reset_i (rstPBn_i),
-                .fpga_clk_i (clk100_i),
-                .clk_o (clk_pa_c),
-                .k_val_i (f_sel_sw_pa_c)
-                );  // segment
-                
-    /*            
+                .enable_i (enable_pa_x),
+                .reset_i (reset_x),
+                .fpga_clk_i (clk160_x),
+                .clk_o (clk_pa_x),
+                .k_val_i (f_sel_sw_pa_x)
+	);        
+    ///*            
     RingOsc testRing( 
-                .enable_i (enable_ro_c),
-                .freq_sel_i (f_sel_sw_ro_c),
-                .clk_o (clk_ro_c)
-                );
-                */
-    
+                .enable_i (enable_ro_x),
+                .freq_sel_i (f_sel_sw_ro_x),
+                .clk_o (clk_ro_x)
+    );
+	//*/    
 endmodule

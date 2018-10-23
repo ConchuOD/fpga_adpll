@@ -1,4 +1,4 @@
-module displayInterface (
+module DisplayInterface (
     input [15:0] value,
     input clock, reset,
     input [3:0] point,
