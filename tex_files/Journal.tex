@@ -38,21 +38,37 @@ Mostly consisted of reading the theses sent to me by Elena/Brian to get an idea 
 \subsection*{Paper 1}
 \section*{D/NCO Research}
 After 2nd meeting with supervisors the goal was to find out what options there were in terms of implementing an oscillator on an FPGA. Only two real options were phase accumulator \& ring oscillator.
-Both of these I knew of in advance of this research. Xilinx proprietary option with IODelays. Goal for next week to implement an oscillator of both main options. %todo Link papers
+Both of these I knew of in advance of this research. Xilinx proprietary option with IODelays. Goal for next week to implement an oscillator of both main options. %TODO Link papers & this section
 \section*{Initial DCO Implementation}
-Wrote Verilog in order to implement both a wave/inverter chain oscillator \& a counter based oscillator. Then made the test benches for these, only used post-synth simulation. Then implemented and tested. Counter based worked fine, runs perfectly @ generates divided clock. Wave seems to "toggle" an LED, but frequency is so high I cannot tell. Need to use a massive number of inverters, takes ages to synth \& therefore simulate. <- this seems to be vivado doing silly things. Turns out vivado is optimising away even with comb. loops allowed. Needed to faff around the .xdc file.
+Having analysed the potential options for the oscillator in this network we decided to implement both of the two viable options so my task for the week was to do this. The phase accumulator was easy to implement, just requiring a counter with an adjustable addition value.\\
+The ring oscillator was more complicated although not because of the code itself being especially difficult, just requiring the use of a generate block to avoid having to type out the same line hundreds of times for each of the inverters required. The tricky part of this however was forcing Vivado to implement my verilog as written, as it wished to optimise away my inverter chains as it saw them as being redundant. The fact I had a combinatorial loop in my design presented it's own challenges in overcoming Vivado's complaints.
 
-Eventually went for 1000 -> gives 1.58 MHz w/ inv chain. Works as expected. ~315 ps gate delay.
+%Wrote Verilog in order to implement both a wave/inverter chain oscillator \& a counter based oscillator. Then made the test benches for these, only used post-synth simulation. Then implemented and tested. Counter based worked fine, runs perfectly @ generates divided clock. Wave seems to "toggle" an LED, but frequency is so high I cannot tell. Need to use a massive number of inverters, takes ages to synth \& therefore simulate. <- this seems to be vivado doing silly things. Turns out vivado is optimising away even with comb. loops allowed. Needed to faff around the .xdc file.
+
+%Eventually went for 1000 -> gives 1.58 MHz w/ inv chain. Works as expected. ~315 ps gate delay.
 \section*{Jitter detection}
-Started the week attempting to implement a system using the FPGA to measure jitter of the clock. Prior to this I implemented the ability to tune the frequencies of the oscillators. The RO was given 4 bit control, removing an extra pair of inverters each time. The PAccum was given 9 bit control.
-When I tried to do jitter detection I ran into a pair of problems. The first of these is my resolution was going to suffer.
-At 5 MHz RO clock Tnom is 200 nsec. Running the FPGA at 500 MHz gives 2 ns resolution. Period change through two oscillators is 1.2 ns. Cannot tell 3! jumps apart.
-Switched to using the agilent 4 GS/s scope, it has 250 psec resolution.
-Collected data friday, ran it through matlab, got some basic jitter calculations done.
-Wrote a bash script that implements a GPL c library that interacts with the scope over ethernet.
-Hopefully it works and can be used to automate datacapture process
-Will test Monday.
+Started the week attempting to implement a system using the FPGA to measure clock jitter. Prior to this I implemented the ability to tune the frequencies of the oscillators using the switches on the board. The ring oscillator was given 4 bit control, removing an extra pair of inverters each time, and an enable. As the phase accumulator has a naturally wide tuning range of to up half the clock frequency and the accumulator itself being 10 bits wide it made sense to give it 9 bit wide control as well as an enable.\\
+
+I then attempted to implement the jitter detection on the FPGA itself. I ran into some issues with the crossing of clock domains and went to speak to Brian about it. While talking to him we came to the conclusion that the resolution offered by a detector on the FPGA would not offer a resolution high enough to accurately measure the jitter. For example at a 500 MHz FPGA clock, which is at the higher end of what is attainable, the period is 2 nano seconds. As things stand the delay through one inverter is approximately 315 picoseconds each one adds 0.63 nanoseconds to the period of the signal. At 5 MHz then:
+$$ T_{nom} = 200\times10^{-9}\text{ ns ,}T_{next} = 202\times10^{-9}\text{ ns} $$
+$$ F_{nom} = 5\times10^{6}\text{ Hz ,}F_{next} = 4.950495\times10^{-9}\text{ Hz} $$
+$$ \Delta F_{FPGA} = 49.504\text{ kHz} $$
+While the ring oscillators adjustment resolution is 1.26 nanoseconds given each step removes an inverter pair this is a change of 
+$$ T_{nom} = 200\times10^{-9}\text{ ns ,}T_{next} = 201.26\times10^{-9}\text{ ns} $$
+$$ F_{nom} = 5\times10^{6}\text{ Hz ,}F_{next} = 4.968697\times10^{-9}\text{ Hz} $$
+$$ \Delta F_{RO} = 31.302\text{ kHz} $$
+As the supposed jitter detector cannot even detect a change in the period by a step it is not a useful method for the detection of jitter.\\
+In response to this we decided to do the jitter measurements used a 4 GS/s oscilloscope which has a resolution of 250 picoseconds, and following the same procedure this gives:
+%...
+$$ \Delta F_{Scope} = 6.24\text{ kHz} $$
+which is a significant improvement and allows for a number of measurement points for each oscillator resolution step.
+
+I then took a sample measurement of the clock output of the ring oscillator running at 5 MHz and began to process it in Matlab to get an idea of the jitter. To do this I wrote a basic script which calculated the mean and standard deviation of the periods in the sample as well and the Time Interval Error.
+\section*{OScope Control}
+Over the weekend I attempted to establish whether the oscilloscope could be controlled from my computer to automate the data collection process, and having initially hit a dead end with the Agilent provided Matlab functionality I found some an implementation in \texttt{C} which I have yet to test.
+
+
 \section*{MMCM Block}
-Set up the MMCM block such that I was able to generate both the 5 MHz signal \"required\" for the 7 segment display and a high freq. signal for the phase acccumultor as otherwise using the 100 MHz external signal as a input to the phase accumulator block resulted in Vivado errors. Now likely working at 160 Meg, just need to check w/ freq. meter.
+After running into issues with the use of the reference 100 MHz clock via the on chip clock manager at the same time as using it for the Phase Accumulator I had made. Accordingly I resetup the MMCM block in order to generate both the buffered high frequency clock for the Phase Accumulator and the lower frequency 5 MHz signal \"required\" for the 7 segment display.
 
 \end{document}
