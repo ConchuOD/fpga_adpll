@@ -2,12 +2,12 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{cancel}
-\usepackage{gensymb}
+%\usepackage{gensymb}
 \usepackage{graphicx}
 \usepackage{esint}
 \usepackage{mdsymbol}
 \usepackage{esvect} 
-\usepackage{lipsum}
+%\usepackage{lipsum}
 \usepackage{hhline}
 \usepackage{eurosym}
 \usepackage{listings}
@@ -35,8 +35,10 @@
 \maketitle
 \section*{Initial Research}
 Mostly consisted of reading the theses sent to me by Elena/Brian to get an idea of what the "parent" projects involved and why my project was required.
+\subsection*{Paper 1}
 \section*{D/NCO Research}
-After 2nd meeting with supervisors the goal was to find out what options there were in terms of implementing an oscillator on an FPGA. Only two real options were phase accumulator \& ring oscillator. Both of these I knew of in advance of this research. Xilinx proprietary option with IODelays. Goal for next week to implement an oscillator of both main options.
+After 2nd meeting with supervisors the goal was to find out what options there were in terms of implementing an oscillator on an FPGA. Only two real options were phase accumulator \& ring oscillator.
+Both of these I knew of in advance of this research. Xilinx proprietary option with IODelays. Goal for next week to implement an oscillator of both main options. %todo Link papers
 \section*{Initial DCO Implementation}
 Wrote Verilog in order to implement both a wave/inverter chain oscillator \& a counter based oscillator. Then made the test benches for these, only used post-synth simulation. Then implemented and tested. Counter based worked fine, runs perfectly @ generates divided clock. Wave seems to "toggle" an LED, but frequency is so high I cannot tell. Need to use a massive number of inverters, takes ages to synth \& therefore simulate. <- this seems to be vivado doing silly things. Turns out vivado is optimising away even with comb. loops allowed. Needed to faff around the .xdc file.
 
@@ -50,6 +52,7 @@ Collected data friday, ran it through matlab, got some basic jitter calculations
 Wrote a bash script that implements a GPL c library that interacts with the scope over ethernet.
 Hopefully it works and can be used to automate datacapture process
 Will test Monday.
-
+\section*{MMCM Block}
+Set up the MMCM block such that I was able to generate both the 5 MHz signal \"required\" for the 7 segment display and a high freq. signal for the phase acccumultor as otherwise using the 100 MHz external signal as a input to the phase accumulator block resulted in Vivado errors. Now likely working at 160 Meg, just need to check w/ freq. meter.
 
 \end{document}
