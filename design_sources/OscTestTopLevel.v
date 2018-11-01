@@ -43,8 +43,9 @@ module OscTestTopLevel(
     wire clk160_x;
     
     //assign inputs
-    assign f_sel_sw_ro_x[3:1] = switches_i[15:13]; 
-    //12 unused due to 1 bit PD control
+    assign f_sel_sw_ro_x[3:2] = switches_i[15:14];
+    assign f_sel_sw_ro_x[0] = 1'b0; 
+    //12&13 unused due to 1 bit PD control
     assign enable_ro_x = switches_i[11];
     assign enable_pd_x = switches_i[10];
     assign enable_pa_x = switches_i[9];
@@ -84,9 +85,9 @@ module OscTestTopLevel(
     );
     BangBangPD basicPD( //1 bit only, 
                 .enable_i(enable_pd_x),
-                .ref_i(clk5_x),
+                .ref_i(clk_pa_x),
                 .gen_i(clk_ro_x),
-                .reset_i,(reset_x),
-                .pd_out_o(f_sel_sw_ro_x[0])
+                .reset_i(reset_x),
+                .pd_out_o(f_sel_sw_ro_x[1])
     );  
 endmodule
