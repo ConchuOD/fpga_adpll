@@ -1,24 +1,4 @@
 `timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
-// Create Date: 14.10.2018 16:21:25
-// Design Name: 
-// Module Name: OscTestTopLevel
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-//////////////////////////////////////////////////////////////////////////////////
-
 
 module OscTestTopLevel(
         input clk100_i,        // 100 MHz clock from oscillator on board
@@ -28,7 +8,7 @@ module OscTestTopLevel(
         output [7:0] ra_o,
         output [7:0] segment_o,
         output [7:0] digit_o        
-        );
+    );
     
     localparam ACCUM_WIDTH = 12;
     wire clk_pa_x;
@@ -57,37 +37,37 @@ module OscTestTopLevel(
 
     // Instantiate clock and reset generator, connect to signals
     ClockReset  clkGen  (
-                .clk100_i 	(clk100_i),      // input clock at 100 MHz
-                .rst_pbn_i 	(rst_pbn_i),     // input reset, active low
-                .clk5_o   	(clk5_x),        // output clock, 5 MHz
-                .clk160_o	(clk160_x),
-                .reset_o  	(reset_x)     	 // output reset, active high
+        .clk100_i 	(clk100_i),      // input clock at 100 MHz
+        .rst_pbn_i 	(rst_pbn_i),     // input reset, active low
+        .clk5_o   	(clk5_x),        // output clock, 5 MHz
+        .clk160_o	(clk160_x),
+        .reset_o  	(reset_x)     	 // output reset, active high
     );
     DisplayInterface disp1 (
-                .clock 		(clk5_x),       // 5 MHz clock signal
-                .reset 		(reset_x),      // reset signal, active high
-                .value 		(switches_i),   // input value to be displayed
-                .point 		(4'b1111),    	// radix markers to be displayed
-                .digit 		(digit_o),      // digit outputs
-                .segment 	(segment_o)  	// segment outputs
+        .clock 		(clk5_x),       // 5 MHz clock signal
+        .reset 		(reset_x),      // reset signal, active high
+        .value 		(switches_i),   // input value to be displayed
+        .point 		(4'b1111),    	// radix markers to be displayed
+        .digit 		(digit_o),      // digit outputs
+        .segment 	(segment_o)  	// segment outputs
     );
     PhaseAccum #(.WIDTH(ACCUM_WIDTH)) testOsc (
-                .enable_i (enable_pa_x),
-                .reset_i (reset_x),
-                .fpga_clk_i (clk160_x),
-                .clk_o (clk_pa_x),
-                .k_val_i (f_sel_sw_pa_x)
+        .enable_i (enable_pa_x),
+        .reset_i (reset_x),
+        .fpga_clk_i (clk160_x),
+        .clk_o (clk_pa_x),
+        .k_val_i (f_sel_sw_pa_x)
 	);             
     RingOsc testRing( 
-                .enable_i (enable_ro_x),
-                .freq_sel_i (f_sel_sw_ro_x),
-                .clk_o (clk_ro_x)
+        .enable_i (enable_ro_x),
+        .freq_sel_i (f_sel_sw_ro_x),
+        .clk_o (clk_ro_x)
     );
     BangBangPD basicPD( //1 bit only, 
-                .enable_i(enable_pd_x),
-                .ref_i(clk_pa_x),
-                .gen_i(clk_ro_x),
-                .reset_i(reset_x),
-                .pd_out_o(f_sel_sw_ro_x[1])
+        .enable_i(enable_pd_x),
+        .ref_i(clk_pa_x),
+        .gen_i(clk_ro_x),
+        .reset_i(reset_x),
+        .pd_out_o(f_sel_sw_ro_x[1])
     );  
 endmodule

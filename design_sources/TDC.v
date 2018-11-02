@@ -1,30 +1,10 @@
 `timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
-// Create Date: 29.10.2018 01:35:56
-// Design Name: 
-// Module Name: TDC
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-//////////////////////////////////////////////////////////////////////////////////
-
 
 module TDC #(parameter WIDTH = 8)(
-    input wire reset_i, //unused
-    input wire mode_i,
-    input wire fpga_clk_i,
-    output reg [WIDTH-1:0] error_o
+        input wire reset_i, //unused
+        input wire mode_i,
+        input wire fpga_clk_i,
+        output reg [WIDTH-1:0] error_o
     );
 
 	reg [WIDTH-1:0] cnt_val_r, next_cnt_val_r;

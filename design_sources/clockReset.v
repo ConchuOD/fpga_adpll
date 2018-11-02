@@ -1,3 +1,4 @@
+`timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
 // Company: UCD School of Electrical and Electronic Engineering
 // Engineer: Brian Mulkeen
@@ -11,11 +12,11 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 module ClockReset(
-    input clk100_i,            	// 100 MHz input clock
-    input rst_pbn_i,           	// input from reset_o pushbutton, active low
-    output clk5_o,             	// 5 MHz output clock, buffered
-    output reset_o,           	// reset_o output, active high
-    output clk160_o		   	// 100 MHz output clock, buffered
+	    input clk100_i,            	// 100 MHz input clock
+	    input rst_pbn_i,           	// input from reset_o pushbutton, active low
+	    output clk5_o,             	// 5 MHz output clock, buffered
+	    output reset_o,           	// reset_o output, active high
+	    output clk160_o		   	// 100 MHz output clock, buffered
     );
  
 // Clock manager - Internal signals
