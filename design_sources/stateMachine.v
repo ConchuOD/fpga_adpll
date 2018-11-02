@@ -7,7 +7,7 @@ module StateMachine (
 		input generated_synced_i,
 		input counter_cleared_i,
 		output reg save_and_clear_o,
-		output reg [1:0] count_instr_o
+		output reg count_instr_o
 	);
 
 	localparam [3:0] WAITING = 4'b0001, GEN_FIRST = 4'b0010, REF_FIRST = 4'b0100, COPY_CLEAR = 4'b1000;
@@ -49,20 +49,30 @@ module StateMachine (
 	begin
 		case (current_state_r)
 			WAITING:
-				count_instr_o = DISABLE;
-				save_and_clear_o = 1'b0;
+				begin
+					count_instr_o = DISABLE;
+					save_and_clear_o = 1'b0;
+				end
 			REF_FIRST:	
-				count_instr_o = COUNT_UP;
-				save_and_clear_o = 1'b0;
+				begin
+					count_instr_o = COUNT_UP;
+					save_and_clear_o = 1'b0;
+				end
 			GEN_FIRST:
-				count_instr_o = COUNT_DOWN;
-				save_and_clear_o = 1'b0;
+				begin
+					count_instr_o = COUNT_DOWN;
+					save_and_clear_o = 1'b0;
+				end
 			COPY_CLEAR:
-				count_instr_o = DISABLE;
-				save_and_clear_o = 1'b1;
+				begin
+					count_instr_o = DISABLE;
+					save_and_clear_o = 1'b1;
+				end
 			default: 
-				count_instr_o = DISABLE;
-				save_and_clear_o = 1'b0;
+				begin
+					count_instr_o = DISABLE;
+					save_and_clear_o = 1'b0;
+				end
 		endcase
 	end
 
