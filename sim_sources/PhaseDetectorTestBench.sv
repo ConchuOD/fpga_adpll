@@ -45,7 +45,7 @@ module PhaseDetectorTestBench ();
 		#10
 		#100 gen_clk = ~gen_clk;	
 		#100 gen_clk = ~gen_clk;
-		#50 gen_clk = ~gen_clk;
+		#150 gen_clk = ~gen_clk;
 		#100 gen_clk = ~gen_clk;	
 	end
 
