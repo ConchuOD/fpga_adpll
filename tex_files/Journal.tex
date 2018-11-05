@@ -98,5 +98,12 @@ I intend trying this again tomorrow with reduced sizes and hopefully this will w
 \section*{MMCM Block}
 After running into issues with the use of the reference 100 MHz clock via the on chip clock manager at the same time as using it for the Phase Accumulator I had made. Accordingly I resetup the MMCM block in order to generate both the buffered high frequency clock for the Phase Accumulator and the lower frequency 5 MHz signal \"required\" for the 7 segment display. Testing again proved that both could be run simultaneously, the benefit of in phase clocks being that crossing of clock domains does not need to be considered.
 
+\section*{Phase Detection}
+The next step then was to work on a phase detection mechanism for the ADPLL. First off I went down the simplest route and implemented a 1 bit bang-bang detector using just a single D flip flop. After meeting with Brian on Wednesday we discussed some of the challenges of implementing the phase detector on an FPGA. Foremost among these was the issue of metastability and the likelihood of both signals occurring at the same time. For an implementation on an ASIC where an arbitration circuit can be constructed using gates I do not have this luxury, as I am restricted to simple look-up table elements. As a temporary workaround for this we decided I would implement a phase detector with the assumption that the signals are synchronised to the FPGA clock.\\
+Working under this assumption I created a phase detector which counts the number of FPGA clock cycles between edges of the two signals in question. In order to avoid issues where the rising edge of the second signal detected occurs very shortly before the next rising edge of the first signal detected the maximum phase difference that can be detected is the high time of the first signal.\\
+This phase detector outputs signed 2s complement integers that can be fed directly into the loop filter which succeeds this block.
+
+The problem that this introduces then is the minimum phase difference detectable is 2.5 nano seconds which equates to a 65 KHz frequency or a 4.5$^\circ$ phase deviation.
+
 
 \end{document}
