@@ -4,8 +4,8 @@ module SaveCounter #(parameter WIDTH = 20) (
 		input wire fpga_clk_i,
 		input wire reset_i,
 		input wire trigger_i,		
-		input wire [WIDTH-1:0] counter_val_i,
-		output reg [WIDTH-1:0] counter_val_saved_o,
+		input wire signed [WIDTH-1:0] counter_val_i,
+		output reg signed [WIDTH-1:0] counter_val_saved_o,
 		output reg counter_cleared_o
 	);
 	

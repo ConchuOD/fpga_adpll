@@ -5,7 +5,7 @@ module UpDownCounter #(parameter WIDTH = 20)(
 		input wire clear_i,
 		input wire fpga_clk_i,
 		input wire [1:0] count_instr_i,
-		output wire [WIDTH-1:0] counter_val_o
+		output wire signed [WIDTH-1:0] counter_val_o
 	);
 
 	localparam [1:0] DISABLE = 2'b00, COUNT_UP = 2'b01, COUNT_DOWN = 2'b10;
