@@ -19,9 +19,6 @@ module PhaseDetector #(parameter WIDTH = 20) (
 	wire generated_synced_i;
 	wire reference_synced_i;
 
-	assign reference_synced_i = reference_i;
-	assign generated_synced_i = generated_i;
-
 	Synchroniser genSync (
 		.clk_i(fpga_clk_i),
 		.async_i(generated_i),
