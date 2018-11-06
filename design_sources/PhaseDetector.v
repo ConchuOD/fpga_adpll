@@ -22,6 +22,18 @@ module PhaseDetector #(parameter WIDTH = 20) (
 	assign reference_synced_i = reference_i;
 	assign generated_synced_i = generated_i;
 
+	Synchroniser genSync (
+		.clk_i(fpga_clk_i),
+		.async_i(generated_i),
+		.sync_o(generated_synced_i)
+		);
+
+	Synchroniser refSync (
+		.clk_i(fpga_clk_i),
+		.async_i(reference_i),
+		.sync_o(reference_synced_i)
+		);
+
 	UpDownCounter #(.WIDTH(WIDTH)) upDownCounter (
 		.reset_i(reset_i), //not just a simple reset
 		.clear_i(save_and_clear_x),

@@ -6,7 +6,7 @@ module UpDownCounterTestBench ();
 	reg clear;
 	reg fpga_clk;
 	reg [1:0] count_instr;
-	wire [WIDTH-1:0] counter_val;
+	wire signed [WIDTH-1:0] counter_val;
 	
 	UpDownCounter #(.WIDTH(WIDTH)) upDownCounter (
 		.reset_i(reset),

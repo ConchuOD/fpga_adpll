@@ -5,8 +5,8 @@ module SaveAndClearTestBench ();
 	reg fpga_clk;
 	reg reset;
 	reg trigger;
-	reg [WIDTH-1:0] counter_val;
-	reg [WIDTH-1:0] saved_val;
+	reg signed [WIDTH-1:0] counter_val;
+	reg signed [WIDTH-1:0] saved_val;
 	reg cleared;
 
 	SaveCounter #(.WIDTH(WIDTH)) saveCounter (
