@@ -11,7 +11,7 @@
 //              pressed, and remains active for at least one rising edge of clk5_o.
 //////////////////////////////////////////////////////////////////////////////////
 
-module ClockReset5_400_PDiff(
+module ClockReset5_258_PDiff(
       input clk100_i,             // 100 MHz input clock
       input rst_pbn_i,            // input from reset_o pushbutton, active low
       output clk5_0_o,              // 5 MHz output clock, buffered
@@ -19,7 +19,7 @@ module ClockReset5_400_PDiff(
       output clk5_90_o,
       output clk5_135_o,
       output reset_o,             // reset_o output, active high
-      output clk400_o       // 100 MHz output clock, buffered
+      output clk258_o       // 100 MHz output clock, buffered
     );
  
 // Clock manager - Internal signals
@@ -27,7 +27,7 @@ module ClockReset5_400_PDiff(
     wire        clk_fb_x;
     wire        locked_x;
     wire        reset_o_high;
-    wire        clk400_MMCM0_x;
+    wire        clk258_MMCM0_x;
     wire        clk5_0_MMCM1_x;
     wire        clk5_45_MMCM2_x;
     wire        clk5_90_MMCM3_x;
@@ -81,7 +81,7 @@ module ClockReset5_400_PDiff(
     MMCME2_BASE_inst (
        .CLKFBOUT            (clk_fb_x),      // feedback output, connects back to input
        .CLKFBOUTB           (clk5_buffout_xb_unused),
-       .CLKOUT0             (clk400_MMCM0_x),        // 5 MHz output clock, unbuffered
+       .CLKOUT0             (clk258_MMCM0_x),        // 5 MHz output clock, unbuffered
        .CLKOUT0B            (clkout0b_unused),
        .CLKOUT1             (clk5_0_MMCM1_x),
        .CLKOUT1B            (clkout1b_unused),
@@ -102,8 +102,8 @@ module ClockReset5_400_PDiff(
 
 // Instantiate output buffer
     BUFG clkout0_bufg (
-      .O   (clk400_o),
-      .I   (clk400_MMCM0_x)
+      .O   (clk258_o),
+      .I   (clk258_MMCM0_x)
     );
     BUFG clkout1_bufg (
       .O   (clk5_0_o),

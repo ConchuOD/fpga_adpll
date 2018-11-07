@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-module ADPLL(
+module ADPLL #(parameter ACCUM_WIDTH = 12,PDET_WITH = 8) (
         input wire reset_i,
         input wire fpga_clk_i,
         input wire ref_clk_i,
@@ -9,10 +9,7 @@ module ADPLL(
         output wire signed [PDET_WITH-1:0] error_o  
     );
 
-	localparam ACCUM_WIDTH = 12;
-	localparam PDET_WITH = 8;
-
-    wire [ACCUM_WIDTH-1:0] f_sel_sw_pa_x = 12'd256; //TODO
+    wire [ACCUM_WIDTH-1:0] f_sel_sw_pa_x = 12'd82; //TODO
     wire gen_clk_x;
 
     assign gen_clk_o = gen_clk_x;

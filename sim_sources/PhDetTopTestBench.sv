@@ -4,11 +4,16 @@
 module PhDetTopTestBench ();
 	reg rst_pbn;
 
+    wire digit_o;
+    wire segment_o;
+
     reg clk5_x;
     reg clk400_x;
 
     wire signed [7:0] error_x;
     wire [7:0] error_hex_x;
+
+    wire ra_o;
 
     assign reset_x = ~rst_pbn;
 
@@ -17,15 +22,15 @@ module PhDetTopTestBench ();
 		clk400_x  = 1'b0;
 		forever
 		begin
-			#1.25 clk400_x = ~clk400_x;
+			#2 clk400_x = ~clk400_x;
 		end
 	end
-	 initial
+	initial
 	begin
 		clk5_x  = 1'b0;
 		forever
 		begin
-			#100 clk5_x = ~clk5_x;
+			#99 clk5_x = ~clk5_x;
 		end
 	end
 
@@ -33,8 +38,8 @@ module PhDetTopTestBench ();
     	.reset_i(reset_x),
     	.fpga_clk_i(clk400_x),
     	.ref_clk_i(clk5_x),
-    	.enable_i(1'b1),
-    	.gen_clk_o(),
+        .enable_i(1'b1),
+    	.gen_clk_o(ra_o),
     	.error_o(error_x)
     );
 
@@ -51,8 +56,7 @@ module PhDetTopTestBench ();
         .point 		(4'b1111),    	// radix markers to be displayed
         .digit 		(digit_o),      // digit outputs
         .segment 	(segment_o)  	// segment outputs
-    );
-   
+    );   
 
 	initial
 	begin

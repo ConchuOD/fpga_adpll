@@ -51,7 +51,7 @@ module StateMachine (
 			current_state_r <= next_state_r;
 	end
 	
-	always @ (current_state_r, ref_pos_edge_x, ref_neg_edge_x, gen_pos_edge_x, gen_neg_edge_x)
+	always @ (current_state_r, ref_pos_edge_x, ref_neg_edge_x, gen_pos_edge_x, gen_neg_edge_x, counter_cleared_i)
 	begin
 		case(current_state_r)
 			WAITING:

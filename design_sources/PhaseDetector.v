@@ -23,13 +23,13 @@ module PhaseDetector #(parameter WIDTH = 20) (
 		.clk_i(fpga_clk_i),
 		.async_i(generated_i),
 		.sync_o(generated_synced_i)
-		);
+	);
 
 	Synchroniser refSync (
 		.clk_i(fpga_clk_i),
 		.async_i(reference_i),
 		.sync_o(reference_synced_i)
-		);
+	);
 
 	UpDownCounter #(.WIDTH(WIDTH)) upDownCounter (
 		.reset_i(reset_i), //not just a simple reset
@@ -40,7 +40,6 @@ module PhaseDetector #(parameter WIDTH = 20) (
 	);
 
 	SaveCounter #(.WIDTH(WIDTH)) saveCounter (
-		.fpga_clk_i(fpga_clk_i),
 		.reset_i(reset_i),
 		.trigger_i(save_and_clear_x),
 		.counter_val_i(counter_val_x),

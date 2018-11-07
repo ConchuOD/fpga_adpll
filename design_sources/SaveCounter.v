@@ -1,7 +1,6 @@
 `timescale 1ns / 1ps
 
 module SaveCounter #(parameter WIDTH = 20) (
-		input wire fpga_clk_i,
 		input wire reset_i,
 		input wire trigger_i,		
 		input wire signed [WIDTH-1:0] counter_val_i,

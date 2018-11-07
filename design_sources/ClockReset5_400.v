@@ -14,7 +14,7 @@
 module ClockReset5_400(
       input clk100_i,             // 100 MHz input clock
       input rst_pbn_i,            // input from reset_o pushbutton, active low
-      output clk5_o,              // 5 MHz output clock, buffered
+      output clk5_0_o,              // 5 MHz output clock, buffered
       output reset_o,             // reset_o output, active high
       output clk400_o       // 100 MHz output clock, buffered
     );
@@ -50,24 +50,24 @@ module ClockReset5_400(
       .BANDWIDTH("OPTIMIZED"),    // Jitter programming (OPTIMIZED, HIGH, LOW)
       .CLKOUT4_CASCADE("FALSE"),  // Cascade CLKOUT4 counter with CLKOUT6 (FALSE, TRUE)
       .STARTUP_WAIT("FALSE"),     // Delays DONE until MMCM is locked (FALSE, TRUE)
-      .DIVCLK_DIVIDE(8),          // Master division value (1-106)
-      .CLKFBOUT_MULT_F(32.0),     // Multiply value for all CLKOUT (2.000-64.000).
+      .DIVCLK_DIVIDE(2),          // Master division value (1-106)
+      .CLKFBOUT_MULT_F(12.0),     // Multiply value for all CLKOUT (2.000-64.000).
       .CLKFBOUT_PHASE(0.0),       // Phase offset in degrees of CLKFB (-360.000-360.000).
       .CLKIN1_PERIOD(10.0),       // Input clock period in ns to ps resolution (i.e. 33.333 is 30 MHz).
       .REF_JITTER1(0.01),         // Reference input jitter in UI (0.000-0.999).
-      .CLKOUT0_DIVIDE_F(80.0),   // Divide amount for CLKOUT0 (1.000-128.000).
+      .CLKOUT0_DIVIDE_F(2.4),   // Divide amount for CLKOUT0 (1.000-128.000).
       .CLKOUT0_DUTY_CYCLE(0.5),
-      .CLKOUT0_PHASE(0.0),
-      .CLKOUT1_DIVIDE(1),         // Divide amount for CLKOUT1 (1-128).
+      .CLKOUT0_PHASE(0),
+      .CLKOUT1_DIVIDE(120),         // Divide amount for CLKOUT1 (1-128).
       .CLKOUT1_DUTY_CYCLE(0.5),
       .CLKOUT1_PHASE(0.0)
    )
     MMCME2_BASE_inst (
        .CLKFBOUT            (clk_fb_x),      // feedback output, connects back to input
        .CLKFBOUTB           (clk5_buffout_xb_unused),
-       .CLKOUT0             (clk5_MMCM0_x),        // 5 MHz output clock, unbuffered
+       .CLKOUT0             (clk400_MMCM0_x),        // 5 MHz output clock, unbuffered
        .CLKOUT0B            (clkout0b_unused),
-       .CLKOUT1             (clk400_MMCM1_x),
+       .CLKOUT1             (clk5_MMCM1_x),
        .CLKOUT1B            (clkout1b_unused),
        .CLKOUT2             (clkout2_unused),
        .CLKOUT2B            (clkout2b_unused),
@@ -86,12 +86,12 @@ module ClockReset5_400(
 
 // Instantiate output buffer
     BUFG clkout0_bufg (
-      .O   (clk5_o),
-      .I   (clk5_MMCM0_x)
+      .O   (clk400_o),
+      .I   (clk400_MMCM0_x)
     );
     BUFG clkout1_bufg (
-      .O   (clk400_o),
-      .I   (clk400_MMCM1_x)
+      .O   (clk5_o),
+      .I   (clk5_MMCM1_x)
     );
       
 // reset_o Generator - keeps system in reset_o until clock manager is locked_x.
