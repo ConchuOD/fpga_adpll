@@ -11,6 +11,7 @@ module PhDetTopTestBench ();
     reg clk400_x;
 
     wire signed [7:0] error_x;
+    wire signed [8:0] dco_cc;
     wire [7:0] error_hex_x;
 
     wire ra_o;
@@ -40,7 +41,8 @@ module PhDetTopTestBench ();
     	.ref_clk_i(clk5_x),
         .enable_i(1'b1),
     	.gen_clk_o(ra_o),
-    	.error_o(error_x)
+    	.error_o(error_x),
+        .dco_cc_o(dco_cc)
     );
 
     SignedDec2Hex sDec2Hex(
