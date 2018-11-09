@@ -4,3 +4,4 @@ vivado*
 *.aux
 *.gz
 *.log
+junk/
