@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="PhDetTopTestBench_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="PhDetTopTestBench" />
+            <top_module name="glbl" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="1004039399fs"></ZoomStartTime>
+      <ZoomEndTime time="1777039400fs"></ZoomEndTime>
+      <Cursor1Time time="1489039000fs"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="171"></NameColumnWidth>
+      <ValueColumnWidth column_width="119"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="15" />
+   <wvobject type="logic" fp_name="/PhDetTopTestBench/clk400_x">
+      <obj_property name="ElementShortName">clk400_x</obj_property>
+      <obj_property name="ObjectShortName">clk400_x</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/PhDetTopTestBench/error_x">
+      <obj_property name="ElementShortName">error_x[7:0]</obj_property>
+      <obj_property name="ObjectShortName">error_x[7:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/PhDetTopTestBench/dco_cc">
+      <obj_property name="ElementShortName">dco_cc[8:0]</obj_property>
+      <obj_property name="ObjectShortName">dco_cc[8:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/PhDetTopTestBench/reset_x">
+      <obj_property name="ElementShortName">reset_x</obj_property>
+      <obj_property name="ObjectShortName">reset_x</obj_property>
+   </wvobject>
+   <wvobject fp_name="divider704" type="divider">
+      <obj_property name="label">clocks</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="BkColor">#808080</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/PhDetTopTestBench/clk5_x">
+      <obj_property name="ElementShortName">clk5_x</obj_property>
+      <obj_property name="ObjectShortName">clk5_x</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/PhDetTopTestBench/adpll/loopFilter/gen_clk_i">
+      <obj_property name="ElementShortName">gen_clk_i</obj_property>
+      <obj_property name="ObjectShortName">gen_clk_i</obj_property>
+   </wvobject>
+   <wvobject fp_name="divider749" type="divider">
+      <obj_property name="label">LF</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="BkColor">#808080</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/PhDetTopTestBench/adpll/loopFilter/error_i">
+      <obj_property name="ElementShortName">error_i[7:0]</obj_property>
+      <obj_property name="ObjectShortName">error_i[7:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/PhDetTopTestBench/adpll/loopFilter/dco_cc_o">
+      <obj_property name="ElementShortName">dco_cc_o[8:0]</obj_property>
+      <obj_property name="ObjectShortName">dco_cc_o[8:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/PhDetTopTestBench/adpll/loopFilter/error_delay_r">
+      <obj_property name="ElementShortName">error_delay_r[7:0]</obj_property>
+      <obj_property name="ObjectShortName">error_delay_r[7:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/PhDetTopTestBench/adpll/loopFilter/kp_error_trun_c">
+      <obj_property name="ElementShortName">kp_error_trun_c[7:0]</obj_property>
+      <obj_property name="ObjectShortName">kp_error_trun_c[7:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/PhDetTopTestBench/adpll/loopFilter/ki_error_trun_c">
+      <obj_property name="ElementShortName">ki_error_trun_c[7:0]</obj_property>
+      <obj_property name="ObjectShortName">ki_error_trun_c[7:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject type="group" fp_name="group893">
+      <obj_property name="label">ADPLL</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject type="logic" fp_name="/PhDetTopTestBench/adpll/reset_i">
+         <obj_property name="ElementShortName">reset_i</obj_property>
+         <obj_property name="ObjectShortName">reset_i</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/PhDetTopTestBench/adpll/fpga_clk_i">
+         <obj_property name="ElementShortName">fpga_clk_i</obj_property>
+         <obj_property name="ObjectShortName">fpga_clk_i</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/PhDetTopTestBench/adpll/ref_clk_i">
+         <obj_property name="ElementShortName">ref_clk_i</obj_property>
+         <obj_property name="ObjectShortName">ref_clk_i</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/PhDetTopTestBench/adpll/enable_i">
+         <obj_property name="ElementShortName">enable_i</obj_property>
+         <obj_property name="ObjectShortName">enable_i</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/PhDetTopTestBench/adpll/gen_clk_o">
+         <obj_property name="ElementShortName">gen_clk_o</obj_property>
+         <obj_property name="ObjectShortName">gen_clk_o</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/PhDetTopTestBench/adpll/error_o">
+         <obj_property name="ElementShortName">error_o[7:0]</obj_property>
+         <obj_property name="ObjectShortName">error_o[7:0]</obj_property>
+         <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/PhDetTopTestBench/adpll/dco_cc_o">
+         <obj_property name="ElementShortName">dco_cc_o[8:0]</obj_property>
+         <obj_property name="ObjectShortName">dco_cc_o[8:0]</obj_property>
+         <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+         <obj_property name="isExpanded"></obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/PhDetTopTestBench/adpll/f_sel_sw_pa_x">
+         <obj_property name="ElementShortName">f_sel_sw_pa_x[11:0]</obj_property>
+         <obj_property name="ObjectShortName">f_sel_sw_pa_x[11:0]</obj_property>
+         <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+         <obj_property name="isExpanded"></obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/PhDetTopTestBench/adpll/gen_clk_x">
+         <obj_property name="ElementShortName">gen_clk_x</obj_property>
+         <obj_property name="ObjectShortName">gen_clk_x</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/PhDetTopTestBench/adpll/error_x">
+         <obj_property name="ElementShortName">error_x[7:0]</obj_property>
+         <obj_property name="ObjectShortName">error_x[7:0]</obj_property>
+         <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/PhDetTopTestBench/adpll/BIAS">
+         <obj_property name="ElementShortName">BIAS[11:0]</obj_property>
+         <obj_property name="ObjectShortName">BIAS[11:0]</obj_property>
+         <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group892">
+      <obj_property name="label">Loop Filter</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject type="logic" fp_name="/PhDetTopTestBench/adpll/loopFilter/gen_clk_i">
+         <obj_property name="ElementShortName">gen_clk_i</obj_property>
+         <obj_property name="ObjectShortName">gen_clk_i</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/PhDetTopTestBench/adpll/loopFilter/reset_i">
+         <obj_property name="ElementShortName">reset_i</obj_property>
+         <obj_property name="ObjectShortName">reset_i</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/PhDetTopTestBench/adpll/loopFilter/error_i">
+         <obj_property name="ElementShortName">error_i[7:0]</obj_property>
+         <obj_property name="ObjectShortName">error_i[7:0]</obj_property>
+         <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/PhDetTopTestBench/adpll/loopFilter/dco_cc_o">
+         <obj_property name="ElementShortName">dco_cc_o[8:0]</obj_property>
+         <obj_property name="ObjectShortName">dco_cc_o[8:0]</obj_property>
+         <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/PhDetTopTestBench/adpll/loopFilter/error_delay_r">
+         <obj_property name="ElementShortName">error_delay_r[7:0]</obj_property>
+         <obj_property name="ObjectShortName">error_delay_r[7:0]</obj_property>
+         <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/PhDetTopTestBench/adpll/loopFilter/kp_error_c">
+         <obj_property name="ElementShortName">kp_error_c[8:0]</obj_property>
+         <obj_property name="ObjectShortName">kp_error_c[8:0]</obj_property>
+         <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/PhDetTopTestBench/adpll/loopFilter/kp_error_trun_c">
+         <obj_property name="ElementShortName">kp_error_trun_c[7:0]</obj_property>
+         <obj_property name="ObjectShortName">kp_error_trun_c[7:0]</obj_property>
+         <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/PhDetTopTestBench/adpll/loopFilter/kp_x">
+         <obj_property name="ElementShortName">kp_x[1:0]</obj_property>
+         <obj_property name="ObjectShortName">kp_x[1:0]</obj_property>
+         <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/PhDetTopTestBench/adpll/loopFilter/ki_error_c">
+         <obj_property name="ElementShortName">ki_error_c[7:-3]</obj_property>
+         <obj_property name="ObjectShortName">ki_error_c[7:-3]</obj_property>
+         <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/PhDetTopTestBench/adpll/loopFilter/ki_error_inte_c">
+         <obj_property name="ElementShortName">ki_error_inte_c[7:-3]</obj_property>
+         <obj_property name="ObjectShortName">ki_error_inte_c[7:-3]</obj_property>
+         <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/PhDetTopTestBench/adpll/loopFilter/ki_error_inte_delay_r">
+         <obj_property name="ElementShortName">ki_error_inte_delay_r[7:-3]</obj_property>
+         <obj_property name="ObjectShortName">ki_error_inte_delay_r[7:-3]</obj_property>
+         <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/PhDetTopTestBench/adpll/loopFilter/ki_error_trun_c">
+         <obj_property name="ElementShortName">ki_error_trun_c[7:0]</obj_property>
+         <obj_property name="ObjectShortName">ki_error_trun_c[7:0]</obj_property>
+         <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+</wave_config>

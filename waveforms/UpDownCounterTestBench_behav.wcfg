@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="UpDownCounterTestBench_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="UpDownCounterTestBench" />
+            <top_module name="glbl" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="0fs"></ZoomStartTime>
+      <ZoomEndTime time="2329787235fs"></ZoomEndTime>
+      <Cursor1Time time="1000000000fs"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="66"></NameColumnWidth>
+      <ValueColumnWidth column_width="66"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="14" />
+   <wvobject type="logic" fp_name="/UpDownCounterTestBench/upDownCounter/reset_i">
+      <obj_property name="ElementShortName">reset_i</obj_property>
+      <obj_property name="ObjectShortName">reset_i</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/UpDownCounterTestBench/upDownCounter/clear_i">
+      <obj_property name="ElementShortName">clear_i</obj_property>
+      <obj_property name="ObjectShortName">clear_i</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/UpDownCounterTestBench/upDownCounter/fpga_clk_i">
+      <obj_property name="ElementShortName">fpga_clk_i</obj_property>
+      <obj_property name="ObjectShortName">fpga_clk_i</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/UpDownCounterTestBench/upDownCounter/count_instr_i">
+      <obj_property name="ElementShortName">count_instr_i[1:0]</obj_property>
+      <obj_property name="ObjectShortName">count_instr_i[1:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/UpDownCounterTestBench/upDownCounter/counter_val_o">
+      <obj_property name="ElementShortName">counter_val_o[19:0]</obj_property>
+      <obj_property name="ObjectShortName">counter_val_o[19:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/UpDownCounterTestBench/upDownCounter/count_r">
+      <obj_property name="ElementShortName">count_r[19:0]</obj_property>
+      <obj_property name="ObjectShortName">count_r[19:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/UpDownCounterTestBench/upDownCounter/next_count_r">
+      <obj_property name="ElementShortName">next_count_r[19:0]</obj_property>
+      <obj_property name="ObjectShortName">next_count_r[19:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/UpDownCounterTestBench/upDownCounter/count_val_r">
+      <obj_property name="ElementShortName">count_val_r[19:0]</obj_property>
+      <obj_property name="ObjectShortName">count_val_r[19:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/UpDownCounterTestBench/upDownCounter/WIDTH">
+      <obj_property name="ElementShortName">WIDTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">WIDTH[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/UpDownCounterTestBench/upDownCounter/DISABLE">
+      <obj_property name="ElementShortName">DISABLE[1:0]</obj_property>
+      <obj_property name="ObjectShortName">DISABLE[1:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/UpDownCounterTestBench/upDownCounter/COUNT_UP">
+      <obj_property name="ElementShortName">COUNT_UP[1:0]</obj_property>
+      <obj_property name="ObjectShortName">COUNT_UP[1:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/UpDownCounterTestBench/upDownCounter/COUNT_DOWN">
+      <obj_property name="ElementShortName">COUNT_DOWN[1:0]</obj_property>
+      <obj_property name="ObjectShortName">COUNT_DOWN[1:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/UpDownCounterTestBench/upDownCounter/MAXVAL">
+      <obj_property name="ElementShortName">MAXVAL[19:0]</obj_property>
+      <obj_property name="ObjectShortName">MAXVAL[19:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/UpDownCounterTestBench/upDownCounter/MINVAL">
+      <obj_property name="ElementShortName">MINVAL[19:0]</obj_property>
+      <obj_property name="ObjectShortName">MINVAL[19:0]</obj_property>
+   </wvobject>
+</wave_config>
