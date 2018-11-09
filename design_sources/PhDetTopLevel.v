@@ -40,7 +40,7 @@ module PhDetTopLevel(
 
     assign clk5_x = clk5_0_x;
     assign ra_o[1] = clk5_x;
-    assign ra_o[2] = error_x[0];
+    //assign ra_o[2] = error_x[0];
 
     /*
     ReferenceSelector refSel(

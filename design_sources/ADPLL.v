@@ -7,12 +7,13 @@ module ADPLL #(parameter ACCUM_WIDTH = 12,PDET_WITH = 8) (
         input wire enable_i,
         output wire gen_clk_o,
         output wire signed [PDET_WITH-1:0] error_o,
-        output wire signed [DCO_CC_WIDTH:0] dco_cc_o
+        output wire signed [DCO_CC_WIDTH-1:0] dco_cc_o
     );
     localparam DCO_CC_WIDTH = 9;
     localparam PADDING_WIDTH = ACCUM_WIDTH-DCO_CC_WIDTH;
+    localparam BIAS = 12'd82;
 
-    wire [ACCUM_WIDTH-1:0] f_sel_sw_pa_x = 12'd82; //TODO
+    wire signed [ACCUM_WIDTH-1:0] f_sel_sw_pa_x; //TODO
     wire gen_clk_x;
     wire signed [PDET_WITH-1:0] error_x;
 
@@ -39,5 +40,8 @@ module ADPLL #(parameter ACCUM_WIDTH = 12,PDET_WITH = 8) (
         .error_i(error_x),
         .dco_cc_o(dco_cc_o) 
     );
+
+    //assign f_sel_sw_pa_x = BIAS;
+    assign f_sel_sw_pa_x = BIAS + $signed({ {(PADDING_WIDTH){dco_cc_o[DCO_CC_WIDTH-1]}} ,dco_cc_o});
 
  endmodule // PhDetTopLevel
