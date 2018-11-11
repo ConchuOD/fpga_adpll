@@ -63,7 +63,7 @@ module PhDetTopTestBench ();
 	initial
 	begin
 		rst_pbn = 1'b0;
-		#10 
+		#100
 		rst_pbn = 1'b1;
 		#1000
 		$stop;
