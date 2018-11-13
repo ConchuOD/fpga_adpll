@@ -1,7 +1,21 @@
 `timescale 1ns / 1ps
 
 
-module PhDetTopTestBench ();
+module PhDetTopTestBenchValSave ();
+
+    integer file;
+    integer uid = 0;
+
+    initial
+    begin
+        file = $fopen("log","w");
+        $fwrite(file,"%d,\n",uid);
+        forever
+        begin
+            #4 $fwrite(file,"%t,%d\n", $time, error_x);
+        end
+    end
+
 	reg rst_pbn;
 
     wire digit_o;
@@ -67,6 +81,9 @@ module PhDetTopTestBench ();
 		rst_pbn = 1'b1;
 		#100000
 		$stop;
+        #10
+        $fclose(file);
+        $finish;
 	end
 
 endmodule // PhDetTopTestBench	

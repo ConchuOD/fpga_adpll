@@ -18,11 +18,11 @@ module LoopFilter #(
 	wire signed [ERROR_WIDTH-1:0] kp_error_trun_c;
 	wire signed [1:0] kp_x = KP;
 
-	wire signed [ERROR_WIDTH-1:-3] ki_error_c;
-	wire signed [ERROR_WIDTH-1:-3] ki_error_inte_c;
-	reg signed [ERROR_WIDTH-1:-3] ki_error_inte_delay_r;
+	wire signed [ERROR_WIDTH-1:-(KI_WIDTH-1)] ki_error_c;
+	wire signed [ERROR_WIDTH-1:-(KI_WIDTH-1)] ki_error_inte_c;
+	reg signed [ERROR_WIDTH-1:-(KI_WIDTH-1)] ki_error_inte_delay_r;
 	wire signed [ERROR_WIDTH-1:0] ki_error_trun_c;
-	wire signed [0:-3] ki_x = 4'b0001;
+	wire signed [0:-(KI_WIDTH-1)] ki_x = 4'b0001;
 
 	always @ (posedge gen_clk_i or posedge reset_i)
 	//always @ (posedge gen_clk_i)

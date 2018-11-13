@@ -19,6 +19,7 @@ module StateMachine (
 	wire gen_pos_edge_x;
 	wire gen_neg_edge_x;
 
+	//vivado will merge Pos/Neg edge detectors
 	PulseOnPosEdge refPosEdge(
 		.fpga_clk_i(fpga_clk_i),
 		.trigger_i(reference_synced_i),
