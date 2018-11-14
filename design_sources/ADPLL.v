@@ -11,7 +11,7 @@ module ADPLL #(parameter ACCUM_WIDTH = 12,PDET_WITH = 8) (
     );
     localparam DCO_CC_WIDTH = 9;
     localparam PADDING_WIDTH = ACCUM_WIDTH-DCO_CC_WIDTH;
-    localparam BIAS = 12'd81;
+    localparam BIAS = 12'd76;
 
     wire signed [ACCUM_WIDTH-1:0] f_sel_sw_pa_x; //TODO
     wire gen_clk_x;

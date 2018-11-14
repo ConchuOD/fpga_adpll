@@ -109,11 +109,47 @@ The above phase detector was created using a state machine with the following di
 %TODO insert image of the state transitions
 It is preceded by two synchronisers which attempt to avoid metastable conditions, which will be used for the time being so that I could advance until we found a method that worked more generally.\\
 I was able to test this phase detector and confirm that it was measuring a frequency difference in line with what I expected given my simulation results, despite spending too much time trying to figure out why the display was not giving me a reasonable output when it was just being updated far too quickly to be human readable.\\
-%TODO insert image of the RTL diagram
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.33]{../ADPLL_RTL_VIVADO}
+    \caption{RTL Diagram of the ADPLL}
+    \label{fig:adpll_rtl}
+\end{figure}
 I then realised I was also operating at a 160 MHz clock in both simulation and hardware so I attempted to push the clock up to the 400 MHz mark then but started to run into so timing issues on both inter and intra clock paths so I had to dial back the FPGA clock frequency to 258 MHz which was enough to remove all but what I think is an allowable timing violation on a synchroniser.\\
-Working with the 1:0.1 rule for proportional/integral gains I then implemented a PI loop filter as in Eldar's PhD on Friday in order to complete an entire multi-bit ADPLL. After ironing out one issue caused by a lack of bit extension causing strange behaviour on the control code if it was negative which had gone undetected in simulation I was able to get my PLL locking to an on-chip reference signal late on Friday. In more detail the 8 bit signed output of the error loop filter was being added to a 12 bit bias signal and due to a lack of sign extension -1 became a +511. This error would correct itself on the next cycle leading to signal which looked like: $||--|||||-----||--|||||$\\%TODO do I have a screenshot of this error?
+Working with the 1:0.1 rule for proportional/integral gains I then implemented a PI loop filter as in Eldar's PhD on Friday in order to complete an entire multi-bit ADPLL.
+After ironing out one issue caused by a lack of bit extension causing strange behaviour on the control code if it was negative which had gone undetected in simulation I was able to get my PLL locking to an on-chip reference signal late on Friday.
+In more detail the 8 bit signed output of the error loop filter was being added to a 12 bit bias signal and due to a lack of sign extension -1 became a +511. This error would correct itself on the next cycle leading to signal which looked like: $||--|||||-----||--|||||$\\r
 Pierre told me about his method for the arbiter so maybe I can implement that method myself rather than relying on my limited use case version.
-%TODO insert a good simulation
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.33]{../good_sim}
+    \caption{Example simulation}
+    \label{fig:example_sim}
+\end{figure}
+
+\section*{Basic Measurements}
+Lock range at bias of 82:
+$$4.19\rightarrow12.34\textrm{ MHz} $$ 
+Capture range at bias of 82:
+$$4.25\rightarrow12.76\textrm{ MHz}  $$
+Jitter at bias of 82:\\
+%TODO
+Jitter locked to 5~ MHz:\\
+%TODO
+Frequency sensitivity(control code to output):
+$$ 258\times10^6\frac{1}{2^{12}}=62.988\textrm{ MHz} $$
+Overall proportional gain (time $\rightarrow$ TDC $\rightarrow$ frequency):
+$$ 8.998 \textrm{ KHz/degree} $$
+LPF cutoff:\\
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.33]{../HMO_locking_4M7_to5M0}
+    \caption{Example of locking at startup}
+    \label{fig:hmo_locking}
+\end{figure}%redo on good scope
+
 
 
 

@@ -5,3 +5,4 @@ vivado*
 *.gz
 *.log
 junk/
+*.bin
