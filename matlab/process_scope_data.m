@@ -6,7 +6,7 @@ num = 1;
 
 periods = [];
 for inc1 = 1:10
-    filename = char("scope_"+num2str(18+inc1)+".bin");
+    filename = char("scope_"+num2str(4+inc1)+".bin");
     [scope_x_data(inc1,:),scope_y_data(inc1,:)] = importAgilentBin(filename,1);
     
     [w,init_cross,final_cross,mid_level] = pulsewidth(scope_y_data(inc1,:),scope_x_data(inc1,:), 'Polarity', 'Positive');
