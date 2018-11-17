@@ -1,0 +1,218 @@
+\documentclass{beamer}
+\mode<presentation>
+{
+  \usetheme{Warsaw}
+  % or ...
+
+  \setbeamercovered{transparent}
+  % or whatever (possibly just delete it)
+}
+
+\title{ADPLL Network on an FPGA}
+\author{Conor Dooley}
+\subtitle{Semester 1 Presentation}
+
+\begin{document}
+
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\section*{Background Information}
+\begin{frame}{Motivation}
+  % - A title should summarize the slide in an understandable fashion
+  %   for anyone how does not follow everything on the slide itself.
+
+    \begin{itemize}
+        \item
+            Clock source for System-On-Chip devices.
+        \item
+            Goal of clocking system:\\
+            Deliver in-phase clock signal to all parts of chip.
+        \item
+            Aim is to avoid synchronisation issues.
+        \item
+            Why are sync. errors bad?
+        \begin{itemize}
+            \item
+                Forced to do less complex operations per clock cycle.
+            \item
+                $ \therefore $ must lower clock freq. or reduce complexity per cycle.
+        \end{itemize}
+    \end{itemize}
+ 
+\end{frame}
+\begin{frame}{Existing Solutions}
+  % - A title should summarize the slide in an understandable fashion
+  %   for anyone how does not follow everything on the slide itself.
+
+    \begin{itemize}
+        \item
+            Solutions exist for this problem.
+        \item
+            Current implemenations have excessive power use/delays.
+        \item
+            Leads to skew/jitter at high frequency. %TODO what leads to this?
+        \item
+            Branch, H, X trees.
+        \item
+            Use buffers to distribute in sync clock.
+        \item
+            These suffer from fabrication mismatch problems.
+        \item
+            Solution to mismatches further drive up power cost.
+    \end{itemize}
+ 
+\end{frame}
+
+
+\begin{frame}{Alternatives}
+  % - A title should summarize the slide in an understandable fashion
+  %   for anyone how does not follow everything on the slide itself.
+
+    \begin{itemize}
+        \item
+            Attempts to fix mismatch: centralised/decentralised skew compensation.
+        %TODO subitemize
+        \item
+            Centralised tries to via main oscillator tuning.
+        \item
+            Decentralised via tuning of paths %TODO this true?
+        \item
+            Both methods suffer from high power consumption.
+        \item
+            PLL network:
+            PLLs generate clock in an area of chip
+            synced via lower freq. error signal between blocks
+            Laid out in carthesian grid
+        \end{itemize}
+ 
+\end{frame}
+\section*{ADPLL Network}
+
+\begin{frame}{ADPLL Network}
+  % - A title should summarize the slide in an understandable fashion
+  %   for anyone how does not follow everything on the slide itself.
+
+    \begin{itemize}
+        \item
+            \textbf{Reminder:} A Phase Lock Loop is a circuit which outputs a signal phase synchronised with a multiple of a reference.
+        \item
+            ADPLL:
+            %TODO subitem
+        \item
+            PLL using only digital blocks.
+        \item
+            Uses a number controller oscillator i.e. quantised frequency steps
+        \item
+            Digital loop filter.
+        \item
+            Quantised phase detector output, \"deadzone\" for phase detection
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Network on an FPGA}
+  % - A title should summarize the slide in an understandable fashion
+  %   for anyone how does not follow everything on the slide itself.
+
+    \begin{itemize}
+        \item
+            Why use this?
+    \end{itemize}
+ 
+\end{frame}
+
+\begin{frame}{My ADPLL}
+  % - A title should summarize the slide in an understandable fashion
+  %   for anyone how does not follow everything on the slide itself.
+
+     
+\end{frame}
+
+\section*{Measurements}
+\begin{frame}{Measurements}
+  % - A title should summarize the slide in an understandable fashion
+  %   for anyone how does not follow everything on the slide itself.
+
+    \begin{itemize}
+        \item
+            Why use this?
+    \end{itemize}
+ 
+\end{frame}
+
+\section*{Future Work}
+
+\begin{frame}{Future Work}
+  % - A title should summarize the slide in an understandable fashion
+  %   for anyone how does not follow everything on the slide itself.
+
+    \begin{itemize}
+        \item
+            Why use this?
+    \end{itemize}
+ 
+\end{frame}
+
+\section*{Summary}
+
+\begin{frame}{Summary}
+
+  % Keep the summary *very short*.
+  \begin{itemize}
+  \item
+    The \alert{first main message} of your talk in one or two lines.
+  \item
+    The \alert{second main message} of your talk in one or two lines.
+  \item
+    Perhaps a \alert{third message}, but not more than that.
+  \end{itemize}
+
+  % The following outlook is optional.
+  \vskip0pt plus.5fill
+  \begin{itemize}
+  \item
+    Outlook
+    \begin{itemize}
+    \item
+      Something you haven't solved.
+    \item
+      Something else you haven't solved.
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+
+
+% All of the following is optional and typically not needed.
+\appendix
+\section<presentation>*{\appendixname}
+\subsection<presentation>*{For Further Reading}
+
+\begin{frame}[allowframebreaks]
+  \frametitle<presentation>{For Further Reading}
+
+  \begin{thebibliography}{10}
+
+  \beamertemplatebookbibitems
+  % Start with overview books.
+
+  \bibitem{Author1990}
+    A.~Author.
+    \newblock {\em Handbook of Everything}.
+    \newblock Some Press, 1990.
+
+
+  \beamertemplatearticlebibitems
+  % Followed by interesting articles. Keep the list short.
+
+  \bibitem{Someone2000}
+    S.~Someone.
+    \newblock On this and that.
+    \newblock {\em Journal of This and That}, 2(1):50--100,
+    2000.
+  \end{thebibliography}
+\end{frame}
+
+
+\end{document}
