@@ -1,7 +1,8 @@
 \documentclass{beamer}
+\usepackage{tabularx}
 \mode<presentation>
 {
-  \usetheme{Warsaw}
+  %\usetheme{Warsaw}
   % or ...
 
   \setbeamercovered{transparent}
@@ -24,68 +25,109 @@
   %   for anyone how does not follow everything on the slide itself.
 
     \begin{itemize}
-        \item
+        \item[--]
             Clock source for System-On-Chip devices.
-        \item
-            Goal of clocking system:\\
-            Deliver in-phase clock signal to all parts of chip.
-        \item
-            Aim is to avoid synchronisation issues.
-        \item
-            Why are sync. errors bad?
+        \item[--]
+        	While transistor count has risen, clock frequency has not.
+        \item[--]
+        	Want a low power clocking system that is suited to high frequency.
+        \item[--]
+            Goals of clocking system:
+            \begin{itemize}
+            	\item[]
+            		Deliver in-phase clock signal to all parts of chip.
+		        \item[]
+		            Aim is to avoid synchronisation issues.
+		    \end{itemize}
+        \item[--]
+            Why are synchronisation errors bad?
         \begin{itemize}
-            \item
-                Forced to do less complex operations per clock cycle.
-            \item
-                $ \therefore $ must lower clock freq. or reduce complexity per cycle.
+        	\item[]
+        		De-sync between registers may reduce time for processing.
+            \item[]
+                As such forced to do less complex operations per clock cycle.
+            \item[]
+                Therefore must lower clock freq. or reduce complexity per cycle.
         \end{itemize}
+    	\item[--]
+    		Characterise this de-sync using:
+    		\begin{itemize}
+    			\item[]
+    				Average value \textit{skew}.
+    			\item[]
+	    			Random process \textit{jitter}.
+    		\end{itemize}
     \end{itemize}
  
 \end{frame}
+
 \begin{frame}{Existing Solutions}
   % - A title should summarize the slide in an understandable fashion
   %   for anyone how does not follow everything on the slide itself.
-
-    \begin{itemize}
-        \item
-            Solutions exist for this problem.
-        \item
-            Current implemenations have excessive power use/delays.
-        \item
-            Leads to skew/jitter at high frequency. %TODO what leads to this?
-        \item
-            Branch, H, X trees.
-        \item
-            Use buffers to distribute in sync clock.
-        \item
-            These suffer from fabrication mismatch problems.
-        \item
-            Solution to mismatches further drive up power cost.
-    \end{itemize}
+	\begin{columns}
+		\column{0.55\linewidth}
+		\textbf{Branch, H, X trees}
+		\begin{itemize}
+			\item[--]
+				Use buffers to distribute in sync clock.
+			\item[--]
+				Rely on symmetry of delay.
+			\item[--]
+				This global matching is very challenging in large chips.
+			\item[--]
+				Suffer from fabrication mismatch problems.	
+			\item[--]
+				Solutions to mismatches further drive up power consumption.
+			%\item[--]
+			%	Leads to skew/jitter at high frequency. %TODO what leads to this?
+		\end{itemize}
+		\textbf{Clock Mesh}
+		\begin{itemize}
+			\item[--]
+				Great timing accuracy.
+			\item[--]
+				Redundant high capacitance lines lead to large power consumption.
+		\end{itemize}
+		\column{0.45\linewidth}
+			%\centering	
+			\includegraphics[scale=0.4]{eldar_trees}
+			\includegraphics[scale=0.4]{eldar_mesh}
+	\end{columns}
  
 \end{frame}
 
 
-\begin{frame}{Alternatives}
+\begin{frame}{Avoidance of Mismatch}
   % - A title should summarize the slide in an understandable fashion
   %   for anyone how does not follow everything on the slide itself.
 
     \begin{itemize}
-        \item
+        \item[--]
             Attempts to fix mismatch: centralised/decentralised skew compensation.
         %TODO subitemize
-        \item
-            Centralised tries to via main oscillator tuning.
-        \item
-            Decentralised via tuning of paths %TODO this true?
-        \item
+        \item[--]
+            Centralised: main controller checks local skew \& tunes forward path.
+        \item[--]
+            Decentralised: local controller tunes its own clock path.
+        \item[--]
             Both methods suffer from high power consumption.
-        \item
+        \item[--]
+        \begin{columns}        	
+        	\column{0.4\linewidth}
+        	\flushleft
             PLL network:
-            PLLs generate clock in an area of chip
-            synced via lower freq. error signal between blocks
-            Laid out in carthesian grid
-        \end{itemize}
+             \begin{itemize}
+	            \item[]
+	           	 	PLLs generate clock in an area of chip.
+	            \item[]
+	            	Synced via lower freq. error signal between oscillators.
+	            \item[]
+	            	Error signals of neighbours used for phase sync.
+            \end{itemize}
+        	\column{0.35\linewidth}
+        	\includegraphics[scale=0.55]{network_ccic2013}
+        \end{columns}
+     \end{itemize}   
  
 \end{frame}
 \section*{ADPLL Network}
@@ -95,19 +137,24 @@
   %   for anyone how does not follow everything on the slide itself.
 
     \begin{itemize}
-        \item
-            \textbf{Reminder:} A Phase Lock Loop is a circuit which outputs a signal phase synchronised with a multiple of a reference.
-        \item
+        \item[--]
+            \textbf{Reminder:} A Phase Lock Loop outputs a signal phase synchronised with a multiple of the reference.
+            \begin{center}
+            \includegraphics[scale=0.3]{mulkeen_pll}
+            \end{center}
+        \item[--]
             ADPLL:
-            %TODO subitem
-        \item
-            PLL using only digital blocks.
-        \item
-            Uses a number controller oscillator i.e. quantised frequency steps
-        \item
-            Digital loop filter.
-        \item
-            Quantised phase detector output, \"deadzone\" for phase detection
+            \begin{itemize}
+	        \item[]
+	            Uses only digital blocks (Digital Loop Filter etc.)
+	        \item[]
+	           Number controller oscillator $\rightarrow$ quantised frequency
+	        \item[]
+	            Digital phase detector output $\rightarrow$ quantised phase detection
+        \end{itemize}
+    	\item[--]
+    		Example node:
+			\includegraphics[scale=0.3]{eldar_node}
     \end{itemize}
 \end{frame}
 
