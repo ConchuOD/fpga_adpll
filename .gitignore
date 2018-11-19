@@ -6,3 +6,7 @@ vivado*
 *.log
 junk/
 *.bin
+*.snm
+*.nav
+*.toc
+*.out

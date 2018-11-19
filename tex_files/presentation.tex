@@ -4,6 +4,7 @@
 {
   %\usetheme{Warsaw}
   % or ...
+  \usecolortheme{beaver}
 
   \setbeamercovered{transparent}
   % or whatever (possibly just delete it)
@@ -104,7 +105,6 @@
     \begin{itemize}
         \item[--]
             Attempts to fix mismatch: centralised/decentralised skew compensation.
-        %TODO subitemize
         \item[--]
             Centralised: main controller checks local skew \& tunes forward path.
         \item[--]
@@ -151,7 +151,7 @@
 	           Number controller oscillator $\rightarrow$ quantised frequency
 	        \item[]
 	            Digital phase detector output $\rightarrow$ quantised phase detection
-        \end{itemize}
+        	\end{itemize}
     	\item[--]
     		Example node:
 			\includegraphics[scale=0.3]{eldar_node}
@@ -163,8 +163,24 @@
   %   for anyone how does not follow everything on the slide itself.
 
     \begin{itemize}
-        \item
-            Why use this?
+        \item[--]
+            An FPGA is the optimum platform for rapid physical prototyping/limited validation.
+        \item[--]
+        	Enables low cost testing of potential network architectures and control schemes.
+        	%TODO ask Elena for a good thing to say here
+        \item[--]
+        	FPGA implementation brings with it some challenges:
+        	\begin{itemize}
+        		\item[]
+        			Restriction placed on available hardware. No gates, only LUTs.
+        		\item[]
+        			No delay lines for time-digital converter.
+        		\item[]
+        			Frequency must be downscaled to MHz from GHz region.
+        		\item[] 
+        			Synchroniser to avoid metastability in phase detector sets phase difference step size.
+        		
+        	\end{itemize}
     \end{itemize}
  
 \end{frame}
@@ -172,11 +188,38 @@
 \begin{frame}{My ADPLL}
   % - A title should summarize the slide in an understandable fashion
   %   for anyone how does not follow everything on the slide itself.
-
-     
+ 	%\begin{columns}
+ 	\begin{center}
+ 		\includegraphics[scale=0.25]{../ADPLL_RTL_VIVADO}
+ 	\end{center}
+		
+	\begin{itemize}
+		\item[--]
+			2 different oscillators made - Inverter Chain \& Phase Accumulator.
+		\item[--]
+			5 MHz bias point, FPGA clock at 258 MHz.
+		\item[--]
+			12 bit Phase Accumulator, 9 LSB control code, $60.975$ kHz frequency step.
+		\item[--]
+			8 bit Phase Detector, resolution of $6.975^\circ$ at 5 MHz.
+		\item[--]
+			9 bit PI Loop Filter, $k_p=1$ \& $k_i=0.125$. %from paper as a viable value
+	\end{itemize}
+	%\end{columns}
 \end{frame}
 
 \section*{Measurements}
+\begin{frame}{Simulations}
+% - A title should summarize the slide in an understandable fashion
+%   for anyone how does not follow everything on the slide itself.
+
+\begin{itemize}
+	\item
+	Why use this?
+\end{itemize}
+
+\end{frame}
+
 \begin{frame}{Measurements}
   % - A title should summarize the slide in an understandable fashion
   %   for anyone how does not follow everything on the slide itself.
