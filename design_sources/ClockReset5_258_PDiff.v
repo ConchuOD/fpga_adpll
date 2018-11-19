@@ -26,7 +26,7 @@ module ClockReset5_258_PDiff(
     wire        clk100_inbuf_x;
     wire        clk_fb_x;
     wire        locked_x;
-    wire        reset_o_high;
+    //wire        reset_o_high;
     wire        clk258_MMCM0_x;
     wire        clk5_0_MMCM1_x;
     wire        clk5_45_MMCM2_x;

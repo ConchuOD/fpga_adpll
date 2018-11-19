@@ -25,6 +25,7 @@ module PhDetTopLevel(
     wire signed [7:0] error_x;
     wire [7:0] error_hex_x;
 
+    assign led_o = 2'b0;
     assign ref_sel_c = switches_i[1:0];
 
     ClockReset5_258_PDiff  clkGen  (
@@ -60,7 +61,8 @@ module PhDetTopLevel(
     	.ref_clk_i(clk5_x),
         .enable_i(1'b1),
     	.gen_clk_o(ra_o[0]),
-    	.error_o(error_x)
+    	.error_o(error_x),
+        .dco_cc_o()
     );
 
     SignedDec2Hex sDec2Hex(
@@ -72,7 +74,7 @@ module PhDetTopLevel(
     DisplayInterface disp1 (
         .clock 		(clk5_0_x),       // 5 MHz clock signal
         .reset 		(reset_x),      // reset signal, active high
-        .value 		(error_hex_x),   // input value to be displayed
+        .value 		({8'b1,error_hex_x}),   // input value to be displayed
         .point 		(4'b1111),    	// radix markers to be displayed
         .digit 		(digit_o),      // digit outputs
         .segment 	(segment_o)  	// segment outputs

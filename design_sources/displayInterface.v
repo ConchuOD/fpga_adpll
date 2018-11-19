@@ -14,7 +14,7 @@ wire [10:0] enableCountNext;
 reg [10:0] enableCount;
 wire enableReg;
 reg radixOut;
-wire [3:0] point;
+
 //slows down clock 2048 times to get readable digit cycling, by using an 11 bit counter & an enable input on the 2 bit count register
 always @ (posedge clock or posedge reset)
 begin

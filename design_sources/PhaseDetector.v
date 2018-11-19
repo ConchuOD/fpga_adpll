@@ -32,7 +32,7 @@ module PhaseDetector #(parameter WIDTH = 20) (
 	);
 
 	UpDownCounter #(.WIDTH(WIDTH)) upDownCounter (
-		.reset_i(reset_i), //not just a simple reset
+		.reset_i(reset_i),
 		.clear_i(save_and_clear_x),
 		.fpga_clk_i(fpga_clk_i),
 		.count_instr_i(count_instr_x),
@@ -40,6 +40,7 @@ module PhaseDetector #(parameter WIDTH = 20) (
 	);
 
 	SaveCounter #(.WIDTH(WIDTH)) saveCounter (
+		.fpga_clk_i(fpga_clk_i),
 		.reset_i(reset_i),
 		.trigger_i(save_and_clear_x),
 		.counter_val_i(counter_val_x),

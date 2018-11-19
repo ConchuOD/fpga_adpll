@@ -68,7 +68,7 @@ module PhDetTopTestBenchValSave ();
     DisplayInterface disp1 (
         .clock 		(clk5_x),       // 5 MHz clock signal
         .reset 		(reset_x),      // reset signal, active high
-        .value 		(error_hex_x),   // input value to be displayed
+        .value 		({8'b1,error_hex_x}),   // input value to be displayed
         .point 		(4'b1111),    	// radix markers to be displayed
         .digit 		(digit_o),      // digit outputs
         .segment 	(segment_o)  	// segment outputs

@@ -17,7 +17,8 @@ module UpDownCounter #(parameter WIDTH = 20)(
 
 	always @ (posedge fpga_clk_i)
 	begin
-		if (reset_i == 1'b1 || clear_i == 1'b1) count_r <= {(WIDTH){1'b0}};
+		if (reset_i == 1'b1) count_r <= {(WIDTH){1'b0}};
+		else if(clear_i == 1'b1) count_r <= {(WIDTH){1'b0}};
 		else count_r <= next_count_r;
 	end
 
