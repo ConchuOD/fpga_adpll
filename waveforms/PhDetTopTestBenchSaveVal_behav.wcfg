@@ -3,7 +3,7 @@
    <wave_state>
    </wave_state>
    <db_ref_list>
-      <db_ref path="PhDetTopTestBenchValSave_behav.wdb" id="1">
+      <db_ref path="PhDetTopTestBenchValSave_time_synth.wdb" id="1">
          <top_modules>
             <top_module name="PhDetTopTestBenchValSave" />
             <top_module name="glbl" />
@@ -11,19 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="0fs"></ZoomStartTime>
-      <ZoomEndTime time="11500000001fs"></ZoomEndTime>
-      <Cursor1Time time="214000000fs"></Cursor1Time>
+      <ZoomStartTime time="977782872339fs"></ZoomStartTime>
+      <ZoomEndTime time="1004575425533fs"></ZoomEndTime>
+      <Cursor1Time time="1000110000000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="66"></NameColumnWidth>
       <ValueColumnWidth column_width="66"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="15" />
-   <wvobject type="logic" fp_name="/PhDetTopTestBenchValSave/clk400_x">
-      <obj_property name="ElementShortName">clk400_x</obj_property>
-      <obj_property name="ObjectShortName">clk400_x</obj_property>
-   </wvobject>
+   <WVObjectSize size="14" />
    <wvobject type="array" fp_name="/PhDetTopTestBenchValSave/error_x">
       <obj_property name="ElementShortName">error_x[7:0]</obj_property>
       <obj_property name="ObjectShortName">error_x[7:0]</obj_property>

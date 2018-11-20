@@ -10,6 +10,7 @@ module PhDetTopLevel(
         output [7:0] digit_o        
     );
 
+	localparam ACCUM_WIDTH = 12;
 	wire reset_x;
  
     wire gen_reference_x;
