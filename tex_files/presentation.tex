@@ -59,7 +59,10 @@
 	    			Random process \textit{jitter}.
     		\end{itemize}
     \end{itemize}
- 
+\end{frame}
+
+\begin{frame}{Literature Review}
+
 \end{frame}
 
 \begin{frame}{Existing Solutions}
@@ -226,7 +229,7 @@
 		\item[--]
             Loop Filter implemented by a PI controller.
         \item[--]
-            Coefficients chosen such that system is stable. \cite[elena_pi_paper]
+            Coefficients chosen such that system is stable. %\cite[elena_pi_paper]
         \item[--]
             State Machine implements phase detector.
         \item[--]
@@ -261,7 +264,8 @@
 	    \item[--]
             $20.91\textrm{ }\mu\textrm{s}$ to lock, initial deviation of $213\textrm{ kHz}$.
 	\end{itemize}
-	\column{0.5\linewidth}
+	
+    \column{0.5\linewidth}
 	\includegraphics[scale=0.4]{../sim_locking}
 	\end{columns}
 
@@ -270,10 +274,10 @@
 \begin{frame}{Measurements}
   % - A title should summarize the slide in an understandable fashion
   %   for anyone how does not follow everything on the slide itself.
-	%\vspace*{-10mm}
-	\begin{centering}
+	\vspace*{-5mm}
+	\begin{center}
 		\includegraphics[scale=0.4]{../impl_waveform}
-	\end{centering}
+	\end{center}
    	\begin{columns}
     	\column{0.5\linewidth}
     	\begin{itemize}
@@ -288,9 +292,10 @@
             \item[--]
                 Locked jitter: $200.009\pm2.7378\textrm{ ns}$
             \item[--]
-                $24.6\textrm{ }\mu\textrm{s}$ to lock, initial deviation of $213 kHz. 
+                $24.6\textrm{ }\mu\textrm{s}$ to lock, initial deviation of $213\textrm{ kHz}$. 
         \end{itemize}
-    	\column{0.5\linewidth}
+    	
+        \column{0.5\linewidth}
     	\includegraphics[scale=0.2]{../TIE}
     \end{columns}
  
@@ -301,16 +306,20 @@
 \begin{frame}{Future Work}
   % - A title should summarize the slide in an understandable fashion
   %   for anyone how does not follow everything on the slide itself.
-
+%TODO dates???
     \begin{itemize}
-        \item
-            Potential go away from state machine PDet
-         \item
-         	External reference
-         \item
-         	Create the network itself
-         \item
-         	Acquire a more suitable
+        \item[1]
+            Implement external reference.
+        \item[2]
+        	Create PLL using Inverter Chain.
+        \item[3]
+            Small scale interlinked PLLs
+        \item[4]
+            Acquire more suitable FPGA for measurements.
+        \item[5]
+            Build small scale network.
+        \item[6]
+            TBD...
     \end{itemize}
  
 \end{frame}
