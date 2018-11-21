@@ -190,7 +190,7 @@
   %   for anyone how does not follow everything on the slide itself.
  	%\begin{columns}
  	\begin{center}
- 		\includegraphics[scale=0.25]{../ADPLL_RTL_VIVADO}
+ 		\includegraphics[scale=0.25]{../rtl}
  	\end{center}
 		
 	\begin{itemize}
@@ -212,34 +212,46 @@
 \begin{frame}{Simulations}
 % - A title should summarize the slide in an understandable fashion
 %   for anyone how does not follow everything on the slide itself.
-
+	\vspace*{-10mm}
  	\begin{center}
  		\includegraphics[scale=0.33]{../vivado_sim}
  	\end{center}
-
+	\begin{columns}
+	\column{0.5\linewidth}
     \begin{itemize}
-    \item
-        Simulated in Vivado to verify behaviour.
-    \item
-        Individually tested blocks using simulation.
-    \item
-        Simulated locking to a reference signal.
-    \item
-        Observed jitter of $3.491$ ns, predicted p2p of $21.5798$ ns.
-    \item
-        :
-\end{itemize}
+	    \item
+	        Simulated in Vivado to verify behaviour.
+	    \item
+	        Individually tested blocks using simulation.
+	    \item
+	        Simulated locking to a reference signal.
+	    \item
+	        Observed jitter of $3.491$ ns, predicted p2p of $21.5798$ ns.
+	    \item
+	        2.091 seconds to lock, initial deviation of 213 kHz.
+	\end{itemize}
+	\column{0.5\linewidth}
+	\includegraphics[scale=0.4]{../sim_locking}
+	\end{columns}
 
 \end{frame}
 
 \begin{frame}{Measurements}
   % - A title should summarize the slide in an understandable fashion
   %   for anyone how does not follow everything on the slide itself.
-
-    \begin{itemize}
-        \item
-            Why use this?
-    \end{itemize}
+	%\vspace*{-10mm}
+	\begin{centering}
+		\includegraphics[scale=0.4]{../impl_waveform}
+	\end{centering}
+   	\begin{columns}
+    	\column{0.5\linewidth}
+    	\begin{itemize}
+    		\item
+	    		stats
+    	\end{itemize}
+    	\column{0.5\linewidth}
+    	\includegraphics[scale=0.2]{../TIE_plot}
+    \end{columns}
  
 \end{frame}
 

@@ -14,16 +14,16 @@ period_jitter_std = std(real_periods)*1E9; %in nanoseconds
 period_jitter_p2p = 2*3.090*period_jitter_std;
 
 x = 0:1:size(d,1)-1;
-times = x*3.875969e-4;
+times = x*3.875969e-3;
 
 figure
-linex = [2.091 2.091];
+linex = [20.91 20.91];
 liney = [-40 40];
 plot(linex, liney,'r');
 hold on;
 plot(times, d(:,2),'b')
 ylim([-40 40])
-xlim([0 3])
+xlim([0 30])
 xlabel("Time (\mu sec)")
 ylabel("Error code")
-text(2.41159135559921, 30.4562737642586, "Locked", 'Color', 'r');
+text(24.1159135559921, 30.4562737642586, "Locked", 'Color', 'r');

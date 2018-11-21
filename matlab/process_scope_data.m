@@ -1,7 +1,12 @@
 %% get data
 clear variables
 filename = 'scope_18.bin';
-% [scope_x_data,scope_y_data] = importAgilentBin(filename,2);
+[scope_x_data,scope_y_data] = importAgilentBin(filename,1);
+[scope_x_data,scope_y_data2] = importAgilentBin(filename,2);
+[w,init_cross,final_cross,mid_level] = pulsewidth(scope_y_data,scope_x_data, 'Polarity', 'Positive');
+fsamp = 4E9;
+num_samp = length(scope_y_data);
+periods = getPeriods(init_cross);
 num = 1;
 
 periods = [];
@@ -60,19 +65,32 @@ if (num_datasets == 1)
     title('Time Domain Data')
     ylabel('Amplitude')
     xlabel('Time (s)')
+    
     figure
     plot(freqs,y_fft_plottable)
     title('FFT')
     ylabel('')
     xlabel('Frequency (MHz)')
+    
     figure
     plot(time_interval_error)
     title('Time Interval Error')
     ylabel('Error (ns)')
     xlabel('Samples')
+    
     figure
     histfit(periods)
     title()
     xlabel()
     ylabel()
+    
+    figure
+    plot(t*1e6-7.95,scope_y_data,'b')
+    hold on;    
+    plot(t*1e6-7.95,scope_y_data2+4,'r')
+    ylabel('Amplitude')
+    xlabel('Time (s)')
+    xlim([0 9])
+    xlabel("Time (\mu sec)")
+    set(gca,'ytick',[])
 end
