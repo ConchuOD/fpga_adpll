@@ -1,1 +1,1 @@
-[scope_x_data,scope_y_data] = importAgilentBin('scope_3.bin',1);
+[scope_x_data,scope_y_data] = importAgilentBin('scope_18.bin',1);

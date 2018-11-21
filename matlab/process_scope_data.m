@@ -1,17 +1,9 @@
 %% get data
 clear variables
-filename = 'scope_18.bin';
-[scope_x_data,scope_y_data] = importAgilentBin(filename,1);
-[scope_x_data,scope_y_data2] = importAgilentBin(filename,2);
-[w,init_cross,final_cross,mid_level] = pulsewidth(scope_y_data,scope_x_data, 'Polarity', 'Positive');
-fsamp = 4E9;
-num_samp = length(scope_y_data);
-periods = getPeriods(init_cross);
-num = 1;
 
 periods = [];
 for inc1 = 1:10
-    filename = char("scope_"+num2str(4+inc1)+".bin");
+    filename = char("scope_"+num2str(18+inc1)+".bin");
     [scope_x_data(inc1,:),scope_y_data(inc1,:)] = importAgilentBin(filename,1);
     
     [w,init_cross,final_cross,mid_level] = pulsewidth(scope_y_data(inc1,:),scope_x_data(inc1,:), 'Polarity', 'Positive');
@@ -58,6 +50,10 @@ for loop_inc = 1:num_datasets
     [periods_ideal] = getPeriods(init_cross_ideal);
     
     time_interval_error = (periods - periods_ideal);%*1E9; %in nanoseconds
+end
+
+if (false)
+    time_interval_error = periods - periods2(size(periods2,2)-size(periods,2)+1:end);
 end
 if (num_datasets == 1)
     figure

@@ -199,12 +199,43 @@
 		\item[--]
 			5 MHz bias point, FPGA clock at 258 MHz.
 		\item[--]
-			12 bit Phase Accumulator, 9 LSB control code, $60.975$ kHz frequency step.
+            12 bit Phase Accumulator, 9 LSB control code, $62.988$ kHz frequency step.
 		\item[--]
 			8 bit Phase Detector, resolution of $6.975^\circ$ at 5 MHz.
 		\item[--]
 			9 bit PI Loop Filter, $k_p=1$ \& $k_i=0.125$. %from paper as a viable value
 	\end{itemize}
+	%\end{columns}
+\end{frame}
+
+\begin{frame}{Phase Detector \& Loop Filter}
+  % - A title should summarize the slide in an understandable fashion
+  %   for anyone how does not follow everything on the slide itself.
+ 	\begin{columns}
+        \column{0.5\linewidth}
+ 	\begin{center}
+        \includegraphics[scale=0.20]{../loop_filter.png}
+ 	\end{center}
+    \column{0.5\linewidth}
+ 	\begin{center}
+        \includegraphics[scale=0.20]{../state_trans_diagram.png}
+ 	\end{center}
+
+    \end{columns}		
+	\begin{itemize}
+		\item[--]
+            Loop Filter implemented by a PI controller.
+        \item[--]
+            Coefficients chosen such that system is stable. \cite[elena_pi_paper]
+        \item[--]
+            State Machine implements phase detector.
+        \item[--]
+            Up/Down count instruction sent to 8 bit TDC.
+        \item[--]
+            Save/Clear overwrites previous output.
+        \item[--]
+            Negedge condition avoids potential signal miss.
+    \end{itemize}
 	%\end{columns}
 \end{frame}
 
@@ -219,16 +250,16 @@
 	\begin{columns}
 	\column{0.5\linewidth}
     \begin{itemize}
-	    \item
+	    \item[--]
 	        Simulated in Vivado to verify behaviour.
-	    \item
-	        Individually tested blocks using simulation.
-	    \item
+	    \item[--]
+	        Inidividually tested blocks using simulation.
+	    \item[--]
 	        Simulated locking to a reference signal.
-	    \item
-	        Observed jitter of $3.491$ ns, predicted p2p of $21.5798$ ns.
-	    \item
-	        2.091 seconds to lock, initial deviation of 213 kHz.
+	    \item[--]
+            Observed jitter of $3.491$ ns, predicted p2p of $21.579\textrm{ ns}$.
+	    \item[--]
+            $20.91\textrm{ }\mu\textrm{s}$ to lock, initial deviation of $213\textrm{ kHz}$.
 	\end{itemize}
 	\column{0.5\linewidth}
 	\includegraphics[scale=0.4]{../sim_locking}
@@ -246,11 +277,21 @@
    	\begin{columns}
     	\column{0.5\linewidth}
     	\begin{itemize}
-    		\item
-	    		stats
-    	\end{itemize}
+            \item[--]
+                Tested with $f_c=5.04$ MHz ($\textrm{BIAS}=80$).
+    		\item[--]
+	    		Lock range: $4.19\rightarrow12.34\textrm{ MHz}$ 
+            \item[--]
+                Capture range: $4.25\rightarrow12.76\textrm{ MHz}$
+            \item[--]
+                Free running jitter: $200.1665\pm1.9689\textrm{ ns}$.
+            \item[--]
+                Locked jitter: $200.009\pm2.7378\textrm{ ns}$
+            \item[--]
+                $24.6\textrm{ }\mu\textrm{s}$ to lock, initial deviation of $213 kHz. 
+        \end{itemize}
     	\column{0.5\linewidth}
-    	\includegraphics[scale=0.2]{../TIE_plot}
+    	\includegraphics[scale=0.2]{../TIE}
     \end{columns}
  
 \end{frame}
