@@ -61,7 +61,31 @@
     \end{itemize}
 \end{frame}
 
-\begin{frame}{Literature Review}
+\begin{frame}[allowframebreaks]{Literature Review}
+
+  %\frametitle<presentation>{For Further Reading}
+
+  \begin{thebibliography}{10}
+
+  \beamertemplatebookbibitems
+  % Start with overview books.
+
+  \bibitem{Author1990}
+    A.~Author.
+    \newblock {\em Handbook of Everything}.
+    \newblock Some Press, 1990.
+
+
+  \beamertemplatearticlebibitems
+  % Followed by interesting articles. Keep the list short.
+
+  \bibitem{Someone2000}
+    S.~Someone.
+    \newblock On this and that.
+    \newblock {\em Journal of This and That}, 2(1):50--100,
+    2000.
+  \end{thebibliography}
+\end{frame}
 
 \end{frame}
 
@@ -306,20 +330,22 @@
 \begin{frame}{Future Work}
   % - A title should summarize the slide in an understandable fashion
   %   for anyone how does not follow everything on the slide itself.
-%TODO dates???
+%TODO dates
     \begin{itemize}
         \item[1]
-            Implement external reference.
+            Implement external reference. %\date{Before end of week.}
         \item[2]
-        	Create PLL using Inverter Chain.
+            Create PLL using Inverter Chain. %\date{Before end of exams}
         \item[3]
-            Small scale interlinked PLLs
+            Small scale interlinked PLLs. %\date{???}
         \item[4]
-            Acquire more suitable FPGA for measurements.
+            Acquire more suitable FPGA for measurements. %\date{Before end of study week}
         \item[5]
-            Build small scale network.
+            Build small scale network. % \date{Jan}
         \item[6]
-            TBD...
+            Test said network on FPGA. % \date{Jan}
+        \item[7]
+            Perform more thorough anaylsis of results. % \date{?}
     \end{itemize}
  
 \end{frame}
@@ -329,60 +355,28 @@
 \begin{frame}{Summary}
 
   % Keep the summary *very short*.
-  \begin{itemize}
-  \item
-    The \alert{first main message} of your talk in one or two lines.
-  \item
-    The \alert{second main message} of your talk in one or two lines.
-  \item
-    Perhaps a \alert{third message}, but not more than that.
-  \end{itemize}
+    \begin{itemize}
+        \item[--]
+        %Why is my project required?
+        \item[--]
+            Designed and implemented a single ADPLL.
+        \item[--]
+            Simulated and performed basic measurements on ADPLL.
+    \end{itemize}
 
   % The following outlook is optional.
-  \vskip0pt plus.5fill
-  \begin{itemize}
-  \item
-    Outlook
+    \vskip0pt plus.5fill
     \begin{itemize}
-    \item
-      Something you haven't solved.
-    \item
-      Something else you haven't solved.
+        \item[--]
+        Near Future:
+        \begin{itemize}
+            \item[]
+                %Brief outlook
+                External reference \& inverter chain ADPLL.
+            \item[]
+                Source higher performance FPGA.
     \end{itemize}
   \end{itemize}
 \end{frame}
-
-
-
-% All of the following is optional and typically not needed.
-\appendix
-\section<presentation>*{\appendixname}
-\subsection<presentation>*{For Further Reading}
-
-\begin{frame}[allowframebreaks]
-  \frametitle<presentation>{For Further Reading}
-
-  \begin{thebibliography}{10}
-
-  \beamertemplatebookbibitems
-  % Start with overview books.
-
-  \bibitem{Author1990}
-    A.~Author.
-    \newblock {\em Handbook of Everything}.
-    \newblock Some Press, 1990.
-
-
-  \beamertemplatearticlebibitems
-  % Followed by interesting articles. Keep the list short.
-
-  \bibitem{Someone2000}
-    S.~Someone.
-    \newblock On this and that.
-    \newblock {\em Journal of This and That}, 2(1):50--100,
-    2000.
-  \end{thebibliography}
-\end{frame}
-
 
 \end{document}
