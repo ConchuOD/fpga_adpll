@@ -26,3 +26,4 @@ ylim([-50 200])
 xlim([0 40])
 ylabel('Time Interval Error (ns)')
 xlabel('Time (\mus)')
+text(30, 150, "Locked", 'Color', 'r');
