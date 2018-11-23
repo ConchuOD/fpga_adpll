@@ -56,38 +56,63 @@
     			\item[]
     				Average value \textit{skew}.
     			\item[]
-	    			Random process \textit{jitter}.
+	    			Gaussian random process \textit{jitter}.
     		\end{itemize}
     \end{itemize}
 \end{frame}
 
-\begin{frame}[allowframebreaks]{Literature Review}
+\begin{frame}{Literature Review}
 
   %\frametitle<presentation>{For Further Reading}
-
-  \begin{thebibliography}{10}
-
-  \beamertemplatebookbibitems
-  % Start with overview books.
-
-  \bibitem{Author1990}
-    A.~Author.
-    \newblock {\em Handbook of Everything}.
-    \newblock Some Press, 1990.
-
-
-  \beamertemplatearticlebibitems
-  % Followed by interesting articles. Keep the list short.
-
-  \bibitem{Someone2000}
-    S.~Someone.
-    \newblock On this and that.
-    \newblock {\em Journal of This and That}, 2(1):50--100,
-    2000.
-  \end{thebibliography}
+	\begin{columns}
+		\column{0.6\linewidth}
+		\begin{thebibliography}{10}
+		\begin{tiny}
+		\beamertemplatearticlebibitems
+		% Followed by interesting articles. Keep the list short.
+		\bibitem{read_first}
+		M. Javidan, et al.
+		\newblock All-digital PLL array provides reliable distributed clock for SOCs.
+		\newblock {\em IEEE International Symposium on Circuits and Systems}, 2589-2592, 2011. %PID coefficients	
+			
+	  	\beamertemplatebookbibitems
+	  	% Start with overview books.
+	  	\bibitem{eldar}
+	    E. Zianbetov.
+	    \newblock {\em Distributed Clocking For Synchronous SoC}.
+		\newblock Universit\'e Pierre et Marie Curie, 2013. %network architecture
+		
+		\bibitem{shan}
+		C. Shan.
+		\newblock {\em Distributed Clocking For Synchronous SoC}.
+		\newblock Universit\'e Pierre et Marie Curie, 2014. %network architecture
+		
+	  	\beamertemplatearticlebibitems
+	 	 % Followed by interesting articles. Keep the list short.
+	  	\bibitem{pid_coeffs}
+	    E. Koskin, et al.
+	    \newblock Generation of a Clocking Signal in Synchronized All-Digital PLL Networks.
+	    \newblock {\em IEEE Transactions on Circuits and Systems II: Express Briefs}, 65(6), 809-813, 2018. %PID coefficients
+	    
+	    %\bibitem{network_ccic2013}
+	    %E. Zianbetov, et al.
+	    %\newblock {\em Distributed clock generator for synchronous SoC using ADPLL network}.
+	    %\newblock {\em Custom Integrated Circuits Conference (CICC)}, IEEE, 2013. %images
+	    \end{tiny}
+	  	\end{thebibliography}
+  		\column{0.4\linewidth}
+  		\begin{itemize}
+  			\item[$\rightarrow$] Background Info
+  			\vspace{0.6 cm}
+  			\item[$\rightarrow$] ADPLL/DCO Design
+  			\vspace{0.6 cm}
+  			\item[$\rightarrow$] ADPLL Network
+  			\vspace{0.6 cm}
+  			\item[$\rightarrow$] Filter Coefficients
+  		\end{itemize}
+  \end{columns}
 \end{frame}
 
-\end{frame}
 
 \begin{frame}{Existing Solutions}
   % - A title should summarize the slide in an understandable fashion
@@ -106,8 +131,8 @@
 				Suffer from fabrication mismatch problems.	
 			\item[--]
 				Solutions to mismatches further drive up power consumption.
-			%\item[--]
-			%	Leads to skew/jitter at high frequency. %TODO what leads to this?
+			\item[--]
+				Potential for supply noise. %potentially use 50% of power budget
 		\end{itemize}
 		\textbf{Clock Mesh}
 		\begin{itemize}
@@ -120,6 +145,7 @@
 			%\centering	
 			\includegraphics[scale=0.4]{eldar_trees}
 			\includegraphics[scale=0.4]{eldar_mesh}
+			\begin{tiny}\begin{flushright}\cite{eldar}\end{flushright}\end{tiny}
 	\end{columns}
  
 \end{frame}
@@ -152,7 +178,8 @@
 	            	Error signals of neighbours used for phase sync.
             \end{itemize}
         	\column{0.35\linewidth}
-        	\includegraphics[scale=0.55]{network_ccic2013}
+        	\includegraphics[scale=0.55]{network_ccic2013}        	
+        	\begin{tiny}\begin{flushright}\cite{eldar}\end{flushright}\end{tiny}
         \end{columns}
      \end{itemize}   
  
@@ -180,6 +207,7 @@
         	\end{itemize}
     	\item[--]
     		Example node:
+    		\begin{tiny}\begin{flushright}\cite{eldar}\end{flushright}\end{tiny}
 			\includegraphics[scale=0.3]{eldar_node}
     \end{itemize}
 \end{frame}
@@ -206,7 +234,7 @@
         			Frequency must be downscaled to MHz from GHz region.
         		\item[] 
         			Synchroniser to avoid metastability in phase detector sets phase difference step size.
-        		
+        			%TODO any more?        		
         	\end{itemize}
     \end{itemize}
 %The aim of this project is to investigate alternative methods of implementing an ADPLL on an FPGA, and ultimately to build a network of ADPLLs on an FPGA, along with hardware to allow its performance to be measured. This will allow the real-world behaviour of such a system to be analysed, and compared with existing simulation models. It will allow new architectures to be tested, and act as a step on the path to an IC prototype. 
@@ -230,7 +258,7 @@
 		\item[--]
 			8 bit Phase Detector, resolution of $6.975^\circ$ at 5 MHz.
 		\item[--]
-			9 bit PI Loop Filter, $k_p=1$ \& $k_i=0.125$. %from paper as a viable value
+			9 bit PI Loop Filter. %from paper as a viable value
 	\end{itemize}
 	%\end{columns}
 \end{frame}
@@ -253,7 +281,7 @@
 		\item[--]
             Loop Filter implemented by a PI controller.
         \item[--]
-            Coefficients chosen such that system is stable. %\cite[elena_pi_paper]
+            Coefficients of $k_p=1$ \& $k_i=0.125$ chosen for stability. \cite{pid_coeffs}
         \item[--]
             State Machine implements phase detector.
         \item[--]
@@ -306,7 +334,7 @@
     	\column{0.5\linewidth}
     	\begin{itemize}
             \item[--]
-                Tested with $f_c=5.04$ MHz ($\textrm{BIAS}=80$).
+                Tested with $f_c=5.04\textrm{ MHz}$, ($\textrm{BIAS}=80$).
     		\item[--]
 	    		Lock range: $4.19\rightarrow12.34\textrm{ MHz}$ 
             \item[--]
@@ -322,7 +350,30 @@
         \column{0.5\linewidth}
     	\includegraphics[scale=0.4]{../impl_locking}
     \end{columns}
- 
+\end{frame}
+
+\begin{frame}{Measurement Difficulties}
+% - A title should summarize the slide in an understandable fashion
+%   for anyone how does not follow everything on the slide itself.
+\vspace*{-5mm}
+\begin{center}
+	\includegraphics[scale=0.1]{../bad_waveform}
+\end{center}
+\begin{columns}
+	\column{0.5\linewidth}
+	\begin{itemize}
+		\item[--]
+			FPGA doesn't have a suitable RF (in/out)put.
+		\item[--]
+			Using jumper wires currently.
+		\item[--]
+			Resulting waveforms show some distortion.
+		\item[--]
+			$f_c>>5\textrm{ MHz}$ leads to significant distortion.
+	\end{itemize}
+	\column{0.5\linewidth}
+	\includegraphics[scale=0.2]{../fpga_photo}
+\end{columns}
 \end{frame}
 
 \section*{Future Work}
@@ -345,7 +396,7 @@
         \item[6]
             Test said network on FPGA. % \date{Jan}
         \item[7]
-            Perform more thorough anaylsis of results. % \date{?}
+            Perform more thorough analysis of results. % \date{?}
     \end{itemize}
  
 \end{frame}
@@ -357,7 +408,7 @@
   % Keep the summary *very short*.
     \begin{itemize}
         \item[--]
-        %Why is my project required?
+        	%Why is my project required?
         \item[--]
             Designed and implemented a single ADPLL.
         \item[--]
