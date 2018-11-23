@@ -92,7 +92,7 @@
 \begin{frame}{ADPLL Network}
         
         \begin{columns}        	
-        	\column{0.65\linewidth}
+        	\column{0.6\linewidth}
         	\textbf{PLL network:}
 	        \begin{itemize}
 			    \item[]
@@ -100,7 +100,7 @@
 			    \item[]
 			        Synced via lower freq. error signal between neighbouring PLLs.
     		\end{itemize}
-        	\column{0.35\linewidth}
+        	\column{0.4\linewidth}
         	\includegraphics[scale=0.55]{network_ccic2013}
         	\begin{tiny}\begin{flushright}\cite{eldar}\end{flushright}\end{tiny}
         \end{columns}
@@ -212,6 +212,17 @@
 \begin{frame}{Number Controller Oscillators}
   % - A title should summarize the slide in an understandable fashion
   %   for anyone how does not follow everything on the slide itself.	
+  	\begin{columns}
+  	\column{0.5\linewidth}
+    \begin{center}
+  	\includegraphics[scale=0.175]{../inverter_chain}
+    \end{center}
+    \column{0.5\linewidth}
+    \begin{center}
+    \includegraphics[scale=0.325]{../phase_accum}
+    \end{center}
+    \end{columns}
+    \vspace{1 cm}	
 	\begin{itemize}
 		\item[--]
             Inverter Ring \& Phase Accumulator
@@ -222,9 +233,10 @@
         \item[--]
         	Phase Accum. relies on FPGA clock \& bias.
         \item[--]
+            MSB is the clock signal.
+        \item[--]
         	12 bit Phase Accumulator, 9 LSB control code, $62.988\textrm{ kHz}$ frequency step.
     \end{itemize}
-	%\end{columns}
 \end{frame}
 
 \section*{Measurements}
