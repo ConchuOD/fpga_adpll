@@ -1,5 +1,10 @@
 \documentclass{beamer}
 \usepackage{tabularx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{gensymb}
+\usepackage{graphicx}
+\usepackage{smartdiagram}
 \mode<presentation>
 {
   %\usetheme{Warsaw}
@@ -243,9 +248,14 @@
 \begin{frame}{Simulations}
 % - A title should summarize the slide in an understandable fashion
 %   for anyone how does not follow everything on the slide itself.
-	\vspace*{-10mm}
- 	%\begin{center}
- 		\includegraphics[scale=0.36]{../vivado_sim}
+	\begin{columns}
+		\column{1.1\linewidth}
+		\vspace*{-10mm}
+		\hspace{10mm}
+		\begin{flushleft}
+ 		\includegraphics[scale=0.4]{../vivado_sim}
+ 	\end{flushleft}
+ \end{columns}
  	%\end{center}
 	\begin{columns}
 	\column{0.5\linewidth}
@@ -262,8 +272,11 @@
             $20.91\textrm{ }\mu\textrm{s}$ to lock, initial deviation of $213\textrm{ kHz}$.
 	\end{itemize}
 	
-    \column{0.5\linewidth}
-	\includegraphics[scale=0.4125]{../sim_locking}
+    \column{0.6\linewidth}
+    \begin{flushleft}
+    	\includegraphics[scale=0.45]{../sim_locking}
+    \end{flushleft}
+	
 	\end{columns}
 
 \end{frame}
@@ -271,10 +284,14 @@
 \begin{frame}{Measurements}
   % - A title should summarize the slide in an understandable fashion
   %   for anyone how does not follow everything on the slide itself.
+	\begin{columns}
+		\column{1.5\linewidth}
 	\vspace*{-5mm}
-	\begin{center}
+	%\hspace{-50mm}
+	\begin{flushleft}
 		\includegraphics[scale=0.4125]{../impl_waveform}
-	\end{center}
+	\end{flushleft}
+	\end{columns}
    	\begin{columns}
     	\column{0.5\linewidth}
     	\begin{itemize}
@@ -289,11 +306,11 @@
             \item[--]
                 Locked jitter: $200.009\pm2.7378\textrm{ ns}$
             \item[--]
-                $24.6\textrm{ }\mu\textrm{s}$ to lock, initial deviation of $213\textrm{ kHz}$. 
+                $25.2\textrm{ }\mu\textrm{s}$ to lock, initial deviation of $213\textrm{ kHz}$. 
         \end{itemize}
     	
-        \column{0.5\linewidth}
-    	\includegraphics[scale=0.4125]{../impl_locking}
+        \column{0.6\linewidth}
+    	\includegraphics[scale=0.45]{../impl_locking}
     \end{columns}
 \end{frame}
 
@@ -346,8 +363,17 @@
     \end{itemize}
  
 \end{frame}
-
-\begin{frame}{Reference}
+\begin{frame}
+\frametitle{\insertsection}\framesubtitle{\insertsubsection}
+	\begin{center}
+		\vspace{-14mm}
+		\begin{columns}
+			\column{1.25\linewidth}
+		\includegraphics[scale=0.4]{Timeline.pdf}
+		\end{columns}
+	\end{center}
+\end{frame}
+\begin{frame}{References}
   %\frametitle<presentation>{For Further Reading}
 	\begin{columns}
 		\column{0.6\linewidth}
@@ -381,14 +407,15 @@
 	    B. Mulkeen.
 	    \newblock Wireless System Notes, WS05\_FrequencyGenerators, 2017. %bm 
 	    
-	    %\bibitem{network_ccic2013}
-	    %E. Zianbetov, et al.
-	    %\newblock {\em Distributed clock generator for synchronous SoC using ADPLL network}.
-	    %\newblock {\em Custom Integrated Circuits Conference (CICC)}, IEEE, 2013. %images
+	    \bibitem{sitime}
+	    SiTime.
+	    \newblock {\em AN10007 Jitter Definitions and Measurement v1.2}.
+	    
 	    \end{tiny}
 	  	\end{thebibliography}
   		\column{0.4\linewidth}
   		\begin{itemize}
+  			\vspace{-1mm}
   			\item[$\rightarrow$] Background Info
   			\vspace{0.6 cm}
   			\item[$\rightarrow$] ADPLL/DCO Design
@@ -396,6 +423,8 @@
   			\item[$\rightarrow$] ADPLL Network
   			\vspace{0.6 cm}
   			\item[$\rightarrow$] Filter Coefficients
+  			\item[] ~
+  			\item[] ~
   		\end{itemize}
   \end{columns}
 \end{frame}

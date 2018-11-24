@@ -27,3 +27,16 @@ xlim([0 40])
 ylabel('Time Interval Error (ns)')
 xlabel('Time (\mus)')
 text(30, 150, "Locked", 'Color', 'r');
+
+figure
+plot(times,1./periods*1E-6,'b')
+hold on;
+linex = [25.2 25.2];
+liney = [-100 300];
+plot(linex, liney,'r');
+ylim([2 7])
+xlim([0 40])
+%xlabel("Time (\mu sec)")
+%ylabel("Frequency (MHz)")
+title("Frequency (MHz) over Time (\mus)")
+text(30, 6.5, "Locked", 'Color', 'r');
