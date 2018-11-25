@@ -162,7 +162,7 @@
 		\item[--]
 			2 different oscillators made - Inverter Chain \& Phase Accumulator.
 		\item[--]
-            12 bit Phase Accum. used, 9 LSB control code, $62.988\textrm{ kHz}$  frequency step.
+		12 bit Phase Accumulator, unsigned control code, $62.988\textrm{ kHz}$ frequency step.
 		\item[--]
 			5 MHz bias point, FPGA clock at 258 MHz.		
 		\item[--]
@@ -240,7 +240,7 @@
         \item[--]
             MSB is the clock signal.
         \item[--]
-        	12 bit Phase Accumulator, 9 LSB control code, $62.988\textrm{ kHz}$ frequency step.
+        	12 bit Phase Accumulator, unsigned control code, $62.988\textrm{ kHz}$ frequency step.
     \end{itemize}
 \end{frame}
 
@@ -296,17 +296,18 @@
     	\column{0.5\linewidth}
     	\begin{itemize}
             \item[--]
-                Tested with $f_c=5.04\textrm{ MHz}$, ($\textrm{BIAS}=80$).
+                Tested with $f_c=4.995\textrm{ MHz}$, ($\textrm{BIAS}=80$).
     		\item[--]
-	    		Lock range: $4.19\rightarrow12.34\textrm{ MHz}$ 
+	    		Lock range: $4.19\rightarrow12.76\textrm{ MHz}$ 
             \item[--]
-                Capture range: $4.25\rightarrow12.76\textrm{ MHz}$
+                Capture range: $4.25\rightarrow12.34\textrm{ MHz}$
             \item[--]
                 Free running jitter: $200.1665\pm1.9689\textrm{ ns}$.
             \item[--]
-                Locked jitter: $200.009\pm2.7378\textrm{ ns}$
+            	$25.2\textrm{ }\mu\textrm{s}$ to lock, initial deviation of $213\textrm{ kHz}$. 
             \item[--]
-                $25.2\textrm{ }\mu\textrm{s}$ to lock, initial deviation of $213\textrm{ kHz}$. 
+                Locked jitter: $200.009\pm2.7378\textrm{ ns}$
+            
         \end{itemize}
     	
         \column{0.6\linewidth}
@@ -340,29 +341,6 @@
 \end{frame}
 
 \section*{Future Work}
-
-\begin{frame}{Future Work}
-  % - A title should summarize the slide in an understandable fashion
-  %   for anyone how does not follow everything on the slide itself.
-%TODO dates
-    \begin{itemize}
-        \item[1]
-            Implement external reference. %\date{Before end of week.}
-        \item[2]
-            Create PLL using Inverter Chain. %\date{Before end of exams}
-        \item[3]
-            Small scale interlinked PLLs. %\date{???}
-        \item[4]
-            Acquire more suitable FPGA for measurements. %\date{Before end of study week}
-        \item[5]
-            Build small scale network. % \date{Jan}
-        \item[6]
-            Test said network on FPGA. % \date{Jan}
-        \item[7]
-            Perform more thorough analysis of results. % \date{?}
-    \end{itemize}
- 
-\end{frame}
 \begin{frame}
 \frametitle{\insertsection}\framesubtitle{\insertsubsection}
 	\begin{center}
@@ -371,7 +349,8 @@
 			\column{1.25\linewidth}
 		\includegraphics[scale=0.4]{Timeline.pdf}
 		\end{columns}
-	\end{center}
+	\end{center}
+
 \end{frame}
 \begin{frame}{References}
   %\frametitle<presentation>{For Further Reading}
