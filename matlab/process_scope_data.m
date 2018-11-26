@@ -31,7 +31,8 @@ for loop_inc = 1:num_datasets
     
     period_mean(loop_inc) = mean(periods)*1E9; %in nanoseconds
     period_jitter_std(loop_inc) = std(periods)*1E9; %in nanoseconds
-
+    period_jitter_rms(loop_inc) = 
+    
     % @~1000 samples 3.090 for 1 outside
     % https://www.sitime.com/api/gated/AN10007-Jitter-and-measurement.pdf
     period_jitter_p2p = 2*3.719*period_jitter_std; %in nanoseconds
@@ -49,8 +50,12 @@ for loop_inc = 1:num_datasets
     
     [periods_ideal] = getPeriods(init_cross_ideal);
     
-    time_interval_error = (periods - periods_ideal);%*1E9; %in nanoseconds
+    %time_interval_error = (periods - periods_ideal);%*1E9; %in nanoseconds
 end
+
+tmp = abs(periods-period_mean*1E-9);
+max(tmp)
+
 
 if (false)
     time_interval_error = periods - periods2(size(periods2,2)-size(periods,2)+1:end);

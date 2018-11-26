@@ -2,9 +2,9 @@
 \usepackage{tabularx}
 \usepackage{amsmath}
 \usepackage{amssymb}
-\usepackage{gensymb}
-\usepackage{graphicx}
-\usepackage{smartdiagram}
+%\usepackage{gensymb}
+%\usepackage{graphicx}
+%\usepackage{smartdiagram}
 \mode<presentation>
 {
   %\usetheme{Warsaw}
@@ -16,8 +16,9 @@
 }
 
 \title{ADPLL Network on an FPGA}
-\author{Conor Dooley}
+\author{Conor Dooley - 14321611\\ \and Supervisors: B. Mulkeen \& Dr. E. Blokhina}
 \subtitle{Semester 1 Presentation}
+\date{27 November 2018}
 
 \begin{document}
 
@@ -296,17 +297,17 @@
     	\column{0.5\linewidth}
     	\begin{itemize}
             \item[--]
-                Tested with $f_c=4.995\textrm{ MHz}$, ($\textrm{BIAS}=80$).
+                Tested with $f_c=4.995\textrm{ MHz}$%, ($\textrm{BIAS}=80$).
     		\item[--]
 	    		Lock range: $4.19\rightarrow12.76\textrm{ MHz}$ 
             \item[--]
                 Capture range: $4.25\rightarrow12.34\textrm{ MHz}$
             \item[--]
-                Free running jitter: $200.1665\pm1.9689\textrm{ ns}$.
+                Free running jitter at $200.1665\textrm{ ns}$: $1.9689\textrm{ ns}$.
             \item[--]
             	$25.2\textrm{ }\mu\textrm{s}$ to lock, initial deviation of $213\textrm{ kHz}$. 
             \item[--]
-                Locked jitter: $200.009\pm2.7378\textrm{ ns}$
+                Locked jitter at $T=200.009\textrm{ ns}$: $2.7378\textrm{ ns}$, p2p $6.751\textrm{ ns}$
             
         \end{itemize}
     	
