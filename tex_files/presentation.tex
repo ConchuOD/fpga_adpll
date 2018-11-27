@@ -14,7 +14,7 @@
   \setbeamercovered{transparent}
   % or whatever (possibly just delete it)
 }
-
+\setbeamertemplate{caption}{\raggedright\insertcaption\par}
 \title{ADPLL Network on an FPGA}
 \author{Conor Dooley - 14321611}%\\ \newline \and Supervisors: B. Mulkeen \& Dr. E. Blokhina}
 \subtitle{Semester 1 Presentation}
@@ -207,7 +207,7 @@
 		\item[--]
             Loop Filter implemented by a PI controller.
         \item[--]
-            Coefficients of $k_p=1$ \& $k_i=0.125$ chosen for stability. \cite{pid_coeffs}
+            Coefficients of $k_p=1$ \& $k_i=0.125$ chosen for stability. [Koskin, 2018]
         \item[--]
         	8 bits signed input, 9 bits signed output.
         \item[--]
@@ -269,7 +269,7 @@
 	    \item[--]
 	        Simulated locking to a reference signal.
 	    \item[--]
-            Observed jitter of $3.491$ ns, p2p of $9.299\textrm{ ns}$.
+            Observed jitter of $3.491\textrm{ ns}$, p2p of $9.299\textrm{ ns}$.
 	    \item[--]
             $20.91\textrm{ }\mu\textrm{s}$ to lock, initial deviation of $213\textrm{ kHz}$.
 	\end{itemize}
@@ -337,8 +337,10 @@
 			$f_c>>5\textrm{ MHz}$ leads to significant distortion.
 	\end{itemize}
 	\column{0.5\linewidth}
-    \includegraphics[angle=270,origin=c,scale=0.04]{../measurement_setup.jpg}
-
+    \begin{figure}
+        \includegraphics[angle=270,origin=c,scale=0.04]{../measurement_setup.jpg}
+        \caption{Measurement Setup.}
+    \end{figure}
 \end{columns}
 \end{frame}
 
