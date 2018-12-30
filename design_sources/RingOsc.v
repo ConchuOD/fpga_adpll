@@ -18,7 +18,7 @@ module RingOsc #(parameter RINGSIZE = 333, CTRL_WIDTH = 4)(
     
     always @(freq_sel_i,ringwire_c)
     begin
-        if (freq_sel_i == 4'b0)
+        if (freq_sel_i == {(CTRL_WIDTH){1'b0}})
             f_sel_mux_out_r = ringwire_c[INVERTERNUM];
         else
             f_sel_mux_out_r = ringwire_c[INVERTERNUM-2*freq_sel_i];

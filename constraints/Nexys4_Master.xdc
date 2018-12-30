@@ -746,18 +746,24 @@ set_property CONFIG_VOLTAGE 3.3 [current_design]
 #This line specifies generation of a compressed bitstream, for faster configuration
 set_property BITSTREAM.GENERAL.COMPRESS TRUE [current_design]
 
-#set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets -of_objects [get_cells testRing/ringwire_c_orig0]]
+set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets -of_objects [get_cells testRing/ringwire_c_orig0]]
 
-#set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets -of_objects [get_cells testRing/ringwire_c_orig0]]
+set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets -of_objects [get_cells testRing/ringwire_c_orig0]]
 
-#set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets -of_objects [get_cells ringwire_c_orig0]]
+set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets -of_objects [get_cells ringwire_c_orig0]]
 
-#set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets -of_objects [get_cells ringwire_c_inferred_i_1]]
+set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets -of_objects [get_cells ringwire_c_inferred_i_1]]
 
-#set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets -of_objects [get_cells testRing/inverter__0]]
+set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets -of_objects [get_cells testRing/inverter__0]]
 
-#set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets -of_objects [get_cells testRing/ringwire_c_inferred_i_1]]
+set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets -of_objects [get_cells testRing/ringwire_c_inferred_i_1]]
 
 #set_property ALLOW_COMBINATORIAL_LOOPS TRUE [get_nets testRing/ringwire_c[7776]]
 #set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets {testRing/ringwire_c[7775]}]
 #set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets {testRing/ringwire_c[7774]}]
+
+set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets -of_objects [get_cells adpll/testRing/ringwire_c_inferred_i_1]]
+
+#set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets {adpll/testRing/ringwire_c[0]}]
+
+#set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets adpll/testRing/ringwire_c[0]]
