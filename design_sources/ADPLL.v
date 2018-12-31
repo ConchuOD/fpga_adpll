@@ -1,9 +1,22 @@
 `timescale 1ns / 1ps
 
-module ADPLL #(parameter ACCUM_WIDTH = 12,PDET_WITH = 8) (
+module ADPLL #(
+		parameter ACCUM_WIDTH = 12,
+		parameter PDET_WITH = 8,
+		parameter BIAS = 12'd76, //5 MHZ @ 258 MHZ CLOCK
+		parameter DCO_CC_WIDTH = 9,
+		//LoopFilter
+		parameter ERROR_WIDTH = 8,
+		parameter KP_WIDTH = 3,
+		parameter KP_FRAC_WIDTH = 1,
+		parameter KP = 3'b010,
+		parameter KI_WIDTH = 4,
+		parameter KI_FRAC_WIDTH = 3,
+		parameter KI = 4'b0001
+	)
+	(
         input wire reset_i,
         input wire fpga_clk_i,
-        input wire temp,
         input wire ref_clk_i,
         input wire enable_i,
         output wire gen_clk_o,
@@ -11,9 +24,8 @@ module ADPLL #(parameter ACCUM_WIDTH = 12,PDET_WITH = 8) (
         output wire signed [PDET_WITH-1:0] error_o,
         output wire signed [DCO_CC_WIDTH-1:0] dco_cc_o
     );
-    localparam DCO_CC_WIDTH = 9;
+	
     localparam PADDING_WIDTH = ACCUM_WIDTH-DCO_CC_WIDTH;
-    localparam BIAS = 12'd76;
 
     wire [ACCUM_WIDTH-1:0] f_sel_sw_pa_x; //TODO
     wire gen_clk_x;
@@ -38,12 +50,23 @@ module ADPLL #(parameter ACCUM_WIDTH = 12,PDET_WITH = 8) (
    	);
 	PhaseDetector #(.WIDTH(PDET_WITH)) testPDet (
 		.reset_i(reset_i), 
-		.fpga_clk_i(temp),
+		.fpga_clk_i(fpga_clk_i),
 		.reference_i(ref_clk_i),
 		.generated_i(gen_div8_x),
 		.pd_clock_cycles_o(error_x)
 	);
-    LoopFilter loopFilter (
+    LoopFilter #(
+		.ERROR_WIDTH(ERROR_WIDTH),
+		.DCO_CC_WIDTH(DCO_CC_WIDTH),
+		.KP_WIDTH(KP_WIDTH),
+		.KP_FRAC_WIDTH(),
+		.KP(KP),
+		.KI_WIDTH(KI_WIDTH),
+		.KI_FRAC_WIDTH(KI_FRAC_WIDTH),
+		.KI(KI)		
+	)
+	loopFilter 
+	(
         .gen_clk_i(gen_clk_x),
         .reset_i(reset_i),
         .error_i(error_x),
