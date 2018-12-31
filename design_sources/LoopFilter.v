@@ -1,10 +1,10 @@
 module LoopFilter #(
 		parameter ERROR_WIDTH = 8,
 		parameter DCO_CC_WIDTH = 9,
-		parameter KP_WIDTH = 2,
-		parameter KP = 2'b01,
+		parameter KP_WIDTH = 3,
+		parameter KP = 3'b010,
 		parameter KI_WIDTH = 4,
-		parameter KI = -4'b0001
+		parameter KI = 4'b0001
 	)
 	(
 		input wire gen_clk_i,
@@ -14,15 +14,15 @@ module LoopFilter #(
 	);
 
 	reg signed [ERROR_WIDTH-1:0] error_delay_r;
-	wire signed [ERROR_WIDTH:0] kp_error_c;
+	wire signed [ERROR_WIDTH-1+1:0] kp_error_c;
 	wire signed [ERROR_WIDTH-1:0] kp_error_trun_c;
-	wire signed [1:0] kp_x = KP;
+	wire signed [1:-1] kp_x = KP;
 
 	wire signed [ERROR_WIDTH-1:-(KI_WIDTH-1)] ki_error_c;
 	wire signed [ERROR_WIDTH-1:-(KI_WIDTH-1)] ki_error_inte_c;
 	reg signed [ERROR_WIDTH-1:-(KI_WIDTH-1)] ki_error_inte_delay_r;
 	wire signed [ERROR_WIDTH-1:0] ki_error_trun_c;
-	wire signed [0:-(KI_WIDTH-1)] ki_x = 4'b0001;
+	wire signed [0:-(KI_WIDTH-1)] ki_x = KI;
 
 	always @ (posedge gen_clk_i or posedge reset_i)
 	//always @ (posedge gen_clk_i)
@@ -36,8 +36,8 @@ module LoopFilter #(
 	*/
 	//multiply by kp
 	assign kp_error_c = error_delay_r*kp_x;
-	//divide down by 2^n to get
-	assign kp_error_trun_c = kp_error_c >>> 1;
+	//divide down by 2^n to get - uhh no
+	assign kp_error_trun_c = kp_error_c;
 
 	/*
 		ki route

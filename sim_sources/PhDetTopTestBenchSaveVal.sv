@@ -1,6 +1,5 @@
 `timescale 1ns / 0.01ps
 
-
 module PhDetTopTestBenchValSave ();
 
     integer file;
@@ -27,6 +26,7 @@ module PhDetTopTestBenchValSave ();
 
     reg clk5_x;
     reg clk258_x;
+    reg clk129_x;
 
     wire signed [7:0] error_x;
     wire signed [8:0] dco_cc;
@@ -38,12 +38,20 @@ module PhDetTopTestBenchValSave ();
 
     initial
 	begin
-		clk258_x  = 1'b0;
+		clk129_x  = 1'b0;
 		forever
 		begin
-			#1.937984 clk258_x = ~clk258_x;
+			#7.751936 clk129_x = ~clk129_x;
 		end
 	end
+    initial
+    begin
+        clk258_x  = 1'b0;
+        forever
+        begin
+            #1.937984 clk258_x = ~clk258_x;
+        end
+    end
 	initial
 	begin
 		clk5_x  = 1'b0;
@@ -53,10 +61,18 @@ module PhDetTopTestBenchValSave ();
 		end
 	end
 
-    RingADPLL adpll (
+    wire clk_0625_x;
+    Div8 div8 ( 
+        .reset_i(reset_x),
+        .signal_i(clk5_x),
+        .div8_o(clk_0625_x)
+    );
+
+    ADPLL adpll (
     	.reset_i(reset_x),
     	.fpga_clk_i(clk258_x),
-    	.ref_clk_i(clk5_x),
+        .temp(clk129_x),
+    	.ref_clk_i(clk_0625_x),
         .enable_i(1'b1),
     	.gen_clk_o(ra_o),
     	.error_o(error_x),
@@ -87,7 +103,7 @@ module PhDetTopTestBenchValSave ();
 		$stop;
         #10
         $fclose(file);
-        $finish;
+        //$finish;
 	end
 
 endmodule // PhDetTopTestBench	

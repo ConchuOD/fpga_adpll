@@ -11,15 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="0fs"></ZoomStartTime>
-      <ZoomEndTime time="1000000001fs"></ZoomEndTime>
-      <Cursor1Time time="287671000fs"></Cursor1Time>
+      <ZoomStartTime time="653333332fs"></ZoomStartTime>
+      <ZoomEndTime time="1081333334fs"></ZoomEndTime>
+      <Cursor1Time time="1010000000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="175"></NameColumnWidth>
-      <ValueColumnWidth column_width="147"></ValueColumnWidth>
+      <ValueColumnWidth column_width="131"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="14" />
+   <WVObjectSize size="16" />
    <wvobject type="logic" fp_name="/LoopFilterTestBench/rst_pbn">
       <obj_property name="ElementShortName">rst_pbn</obj_property>
       <obj_property name="ObjectShortName">rst_pbn</obj_property>
@@ -48,9 +48,12 @@
       <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/LoopFilterTestBench/loopFilter/kp_x">
-      <obj_property name="ElementShortName">kp_x[1:0]</obj_property>
-      <obj_property name="ObjectShortName">kp_x[1:0]</obj_property>
-      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      <obj_property name="ElementShortName">kp_x[1:-1]</obj_property>
+      <obj_property name="ObjectShortName">kp_x[1:-1]</obj_property>
+      <obj_property name="Radix">REALRADIX</obj_property>
+      <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
+      <obj_property name="radix_fractionWidth">1</obj_property>
+      <obj_property name="radix_otherWidth">0</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/LoopFilterTestBench/loopFilter/ki_x">
       <obj_property name="ElementShortName">ki_x[0:-3]</obj_property>
@@ -68,6 +71,16 @@
    <wvobject fp_name="divider257" type="divider">
       <obj_property name="label">Internal values</obj_property>
       <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/LoopFilterTestBench/loopFilter/kp_error_c">
+      <obj_property name="ElementShortName">kp_error_c[8:0]</obj_property>
+      <obj_property name="ObjectShortName">kp_error_c[8:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/LoopFilterTestBench/loopFilter/kp_error_trun_c">
+      <obj_property name="ElementShortName">kp_error_trun_c[7:0]</obj_property>
+      <obj_property name="ObjectShortName">kp_error_trun_c[7:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/LoopFilterTestBench/loopFilter/ki_error_c">
       <obj_property name="ElementShortName">ki_error_c[7:-3]</obj_property>

@@ -35,7 +35,7 @@ module PhDetTopTestBench ();
 		end
 	end
 
-    RingADPLL adpll (
+    ADPLL adpll (
     	.reset_i(reset_x),
     	.fpga_clk_i(clk400_x),
     	.ref_clk_i(clk5_x),
