@@ -48,7 +48,7 @@ module ExtRefTest (
 
     assign clk5_x = clk5_0_x;
     assign ra_o[1] = clk5_x;
-    assign ra_o[2] = gen_reference_x;
+    assign ra_o[2] = ext_reference_x;
 
     PhaseAccum #(.WIDTH(ACCUM_WIDTH)) referenceOsc (
         .enable_i(1'b1),
@@ -68,7 +68,7 @@ module ExtRefTest (
 	(
     	.reset_i(reset_x),
     	.fpga_clk_i(clk258_x),
-    	.ref_clk_i(gen_reference_x),
+    	.ref_clk_i(ext_reference_x),
         .enable_i(1'b1),
     	.gen_clk_o(ra_o[0]),
     	.error_o(error_x)

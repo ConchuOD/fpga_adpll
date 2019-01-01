@@ -253,8 +253,8 @@ set_property IOSTANDARD LVCMOS33 [get_ports {ra_o[5]}]
 set_property PACKAGE_PIN D18 [get_ports {ra_o[6]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {ra_o[6]}]
 ##Bank = 15, Pin name = IO_L21P_T3_DQS_15,					Sch name = JA10
-set_property PACKAGE_PIN E18 [get_ports {ra_i[7]}]
-set_property IOSTANDARD LVCMOS33 [get_ports {ra_i[7]}]
+set_property PACKAGE_PIN E18 [get_ports {ra_i}]
+set_property IOSTANDARD LVCMOS33 [get_ports {ra_i}]
 
 ##Pmod Header JB, right side front - for connecting external hardware
 ##Bank = 15, Pin name = IO_L15N_T2_DQS_ADV_B_15,				Sch name = JB1
