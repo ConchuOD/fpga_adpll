@@ -24,16 +24,15 @@ module LoopFilter #(
 	wire signed [ERROR_WIDTH-1:0] kp_error_trun_c;
 	wire signed [KP_INT_WIDTH-1:-KP_FRAC_WIDTH] kp_x = KP;
 
-	wire signed [ERROR_WIDTH-1:-(KI_WIDTH-1)] ki_error_c;
-	wire signed [ERROR_WIDTH-1:-(KI_WIDTH-1)] ki_error_inte_c;
-	reg signed [ERROR_WIDTH-1:-(KI_WIDTH-1)] ki_error_inte_delay_r;
+	wire signed [(ERROR_WIDTH-1)+KI_INT_WIDTH:-KI_FRAC_WIDTH] ki_error_c;
+	wire signed [(ERROR_WIDTH-1)+KI_INT_WIDTH:-KI_FRAC_WIDTH] ki_error_inte_c;
+	reg signed [(ERROR_WIDTH-1)+KI_INT_WIDTH:-KI_FRAC_WIDTH] ki_error_inte_delay_r;
 	wire signed [ERROR_WIDTH-1:0] ki_error_trun_c;
 	wire signed [KI_INT_WIDTH-1:-KI_FRAC_WIDTH] ki_x = KI;
 
 	always @ (posedge gen_clk_i or posedge reset_i)
-	//always @ (posedge gen_clk_i)
 	begin
-		if(reset_i) error_delay_r <= {(ERROR_WIDTH){1'b0}};
+		if(reset_i) error_delay_r <= {((ERROR_WIDTH-1)+KI_INT_WIDTH+KI_FRAC_WIDTH){1'b0}};
 		else error_delay_r <= error_i;
 	end
 
@@ -42,8 +41,8 @@ module LoopFilter #(
 	*/
 	//multiply by kp
 	assign kp_error_c = error_delay_r*kp_x;
-	//divide down by 2^n to get
-	assign kp_error_trun_c = kp_error_c[ERROR_WIDTH-1:0];
+	//truncate
+	assign kp_error_trun_c = $signed(kp_error_c[ERROR_WIDTH-1:0]);
 
 	/*
 		ki route
