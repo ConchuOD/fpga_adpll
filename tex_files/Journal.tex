@@ -151,10 +151,17 @@ LPF cutoff:\\
 \end{figure}%redo on good scope
 
 \section*{RingADPLL}
-Had to change the number of inverters significantly as it the new layout since my last test of a significantly more simple system had a different layout, especially only 8 steps of 2 inverters rather than 32 in this design which \texttt{OscTestTopLevel} used with a raw Bang Bang Phase Detector. Unfortuantely all simulations broke and I was not actually able to simulate this re calibration of the ``bias''(really the number of inverters) and had to do it manually by generating bitstreams and seeing how high low I could pull the frequency of operation.
+Had to change the number of inverters significantly as it the new layout since my last test of a significantly more simple system had a different layout, especially only 8 steps of 2 inverters rather than 32 in this design which \texttt{OscTestTopLevel} used with a raw Bang Bang Phase Detector. Unfortunately all simulations broke and I was not actually able to simulate this re calibration of the ``bias''(really the number of inverters) and had to do it manually by generating bit streams and seeing how high low I could pull the frequency of operation.
 
 \section*{External Reference}
-I was able to simply repurpose an Arduino PWM script I had previously made as the reference. I then was able to run the ADPLL at 10 MHz from a reference at 1.25 MHz. The choice to run at 10 rather than 5 Meg was due to instability that was introduce with a division by eight to use the reference and a resulting inability to actually lock without reducing the clock frequency of the phase detection circuit (4x required for 8x reference scaling). I also made some large changes to the Loop Filter to allow for gain variation both in width and value.
+I was able to simply re purpose an Arduino PWM script I had previously made as the reference. I then was able to run the ADPLL at 10 MHz from a reference at 1.25 MHz. The choice to run at 10 rather than 5 Meg was due to instability that was introduce with a division by eight to use the reference and a resulting inability to actually lock without reducing the clock frequency of the phase detection circuit (4x required for 8x reference scaling). I also made some large changes to the Loop Filter to allow for gain variation both in width and value.
+
+\section*{Truncation in 2s Complement (LF)}
+This is an issue that needs addressing. I am truncating and that may corrupt the number. For now it doesn't matter however it may with certain configurations.
+
+\section*{RingOsc Sim Issue}
+For some reason I cannot run simulations of anything other than the RingOsc module itself. Any high level module fails to simulate properly, seemingly zero delay oscillation once the chain is enabled.
+
 
 
 
