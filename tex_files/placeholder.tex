@@ -61,7 +61,7 @@ Each register has a setup time, which represents the amount of time that the inp
 \begin{figure}[h]
 	\centering
 	\includegraphics[scale=0.5]{../eldar_why_precise_clocking}
-	\caption{Data Flow in a Clocked System \cite{zianbetov2013distributed}.}
+	\caption{Data Flow in a Clocked System \cite{zianbetov2013phd}.}
 	\label{fig:eldar_why_precise_clocking}
 \end{figure}\newline
 A lack of synchronisation between the clock edges will manifest itself as a time difference between the clocking events at both registers, $\Delta T = t^i_k - t^f_k$. $\Delta T$ is considered to be ergodic and can be described by an average deviation called skew and random process that is normally modelled as a Gaussian random variable. If $\Delta T$ is negative this reduces the time available for the intervening combinatorial network thereby having the same effect as a reduction in clocking frequency.
@@ -77,14 +77,13 @@ A number of traditional solutions exist which provide GSLS clocking systems, usi
 	\label{fig:trees}
 \end{figure}
 While on the surface these appear simple the task of obtaining an exact matching is, in practise, the limiting factor in this design. Even if the clock distribution system is geometrically symmetrical production mismatches in either active or passive components will lead to a skew that varies from part to part. In order to minimise the impact of production tolerances the dimensions of components in the distribution network can be increased, thus reducing the relative variation possible. However this has the impact of increasing the power consumption of the distribution network \cite{tiwari1998reducing}.
-
 Designs do exist in which the electrical lines used in the tree network are replaced by waveguides for optical signals, which negates the electrical losses however this technique suffers from being a newer technology and as such is expensive to realise \cite{haurylau2006chip}.
 
 A mesh clock distribution network is an alternate design where the clock is delivered using a Cartesian grid of distribution lines and variation in skew is inversely proportional to the density of the grid. According to Abdelhadi \textit{et al} (2010) clock meshes ``\textit{achieve low and deterministic skew, low skew variations, and low jitter}'', all desirable characteristics for a clock distribution system. However they dissipate more power due to extra capacitive loading due to vast number of lines required to form the grid and similarly to tree distribution networks suffer from potential mismatch in production and alleviation through increasing dimensions will again lead to higher power consumption \cite{abdelhadi2010timing}. 
 \begin{figure}[h]
 	\centering
 	\includegraphics[scale=0.5]{../eldar_why_precise_clocking}
-	\caption{Data Flow in a Clocked System \cite{zianbetov2013distributed}.}%TODO insert figure
+	\caption{Data Flow in a Clocked System \cite{zianbetov2013phd}.}%TODO insert figure
 	\label{fig:mesh}
 \end{figure}
 
@@ -122,9 +121,55 @@ Another potential multi-oscillator design synchronises the oscillators using the
 
 \section{ADPLL Networks}
 
+As a PLL network is an analog circuit its integration in a modern IC is a barrier to usage and it has not been used in any commercial designs \cite{zianbetov2013distributed}. An alternative design that is more suitable for current fabrication techniques eschews from using analog components and instead implements the network of controlled oscillators using only digital circuitry, hence the name All-Digital PLL. A 4x4 ADPLL network was designed and prototyped in 65 nm CMOS by Zianbetov and Shan in order to test the suitability of the technique as a clock distributor \cite{zianbetov2013phd,shan2014phd}. %TODO fix phd references
+In this design the oscillators are coupled using digital phase comparators which attempt to measure the phase error between two oscillators with each non edge node being connected to four neighbours. Figure \ref{fig:eldar_node} shows high level detail of the architecture of both the entire clocking system and that of an individual node in the design. A digital PLL network has the additional advantages over its analog counterparts that it can benefit from advancements in digital circuit design suites, be reconfigurable and programmable and has a significantly greater immunity to perturbations inherent to its digital nature \cite{zianbetov2013phd}. This last advantage is of particular use in a digital environment, as otherwise there is potential for clock degradation resulting from switching of transistors.
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.35]{../ccirc_2013_arch}
+	\caption{Architecture of the ADPLL network and of a single node \cite{zianbetov2013distributed}.}
+	\label{fig:eldar_node}
+\end{figure}
+Looking at the design of a given node it is notable that the function carried out by the Error Combiner  is akin to a average therefore as mentioned by Pratt and Nyugen there is potential to settle in a stable ``mode'' in which the oscillators are not synchronised. In their paper they present a method where initial start-up is performed uni-directionally and once all nodes are close full connectivity can be restored \cite{pratt1995distributed}. In creating an entirely digital system Zianbetov and Shan could exploit the reconfigurability and and implement this system at start-up.
 
+\section{ADPLL Architecture}
+As indicated in Figure \ref{fig:mulkeen_pll} the three main building blocks of a conventional Phase Lock Loop are the Phase Detector, Loop Filter and Controllable Oscillator. In the All-Digital counterpart each of these traditionally analog components are replaced by their digital counterparts, necessitating quantisation in order to remain physically realisable. 
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.7]{mulkeen_pll}
+	\caption{Block Diagram of a Phase Lock Loop, \textit{Wireless Systems Notes}, Mulkeen (2017).}
+	\label{fig:mulkeen_pll}
+\end{figure}
 
+\subsection{Digitally Controllable Oscillator}
+In a digital system there are a very limited number of voltages representable, and frequently there are only two levels, so using this to control the oscillator is not a viable strategy. Instead a fixed bit width signal is used to control the oscillator's period, selecting the number of inverters in a ring oscillator or the varactor configuration of a travelling wave oscillator \cite{chen2011rotary}. The decisions made in the design of the digitally controllable oscillator, or DCO, determine many of the other ADPLL parameters. While tuning range and centre frequency as well as linearity carry over from the analog counterpart a DCO also has a frequency step which in combination with the bit width of the control signal determines the range over which the oscillator can be tuned. Figure \ref{fig:my_ring} illustrates a basic ring oscillator design. In a ring oscillator is an inherently unstable circuit composed of an odd number of inveters. where the period of oscillation is given by twice entire chain's delay. The frequency of operation can then be set by modulating the length of the chain by means of \texttt{f\_select}. The main impact of output frequency quantisation is that only frequencies which are integer multiples of the frequency step away from the centre can be easily reproduced, with intermediate values only obtainable in a manner akin to Fractional-N synthesis with the control code toggling back and forth. This acts as a source of jitter in the system.
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.35]{../inverter_chain}
+	\caption{Basic Ring/Inverter Chain Oscillator.}
+	\label{fig:my_ring}
+\end{figure}
 
+\subsection{Digital Phase Detector}
+Once again quantisation impacts the Phase Detector, as rather than a continuous output the phase detector in an ADPLL has a finite number of output values thus limiting the accuracy of the phase detector. A second form of quantisation is also present as unlike an analog system a digital phase detector does not provide continuous data in the time domain either, instead relying on sampling. At its most basic a digital phase comparator may only output an indication of which signal is leading, a design known as a Bang-Bang Detector, which can be constructed using a single D Flip Flop. As the output only has two levels the resultant word is only 1 bit wide and as such limits the range over which the output frequency can be controlled. More complex designs such as that in Figure \ref{fig:shan_bb_pd}, implemented by Shan, build on this by measuring the time difference between edges of the signals using a Time-to-Digital Converter, or TDC, in his case using a tapped delay line \cite{shan2014phd}. This essentially mimics a counter and allows for a non binary form of phase measurement.
+
+\begin{figure}[h] %TODO top
+	\centering
+	\includegraphics[scale=0.35]{../shan_bb_pd}
+	\caption{Bang-bang phase/frequency detector architecture. \cite{shan2014phd}.}
+	\label{fig:shan_bb_pd}
+\end{figure}
+\subsection{Digital Loop Filter}
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.35]{../shan_bb_pd} %TODO this diagram
+	\caption{Basic PI Controller Architecture.}
+	\label{fig:my_simple_pi}
+\end{figure}
+The loop filter in an ADPLL can be implemented as a PI controller as it is just a low pass filter, such as that in Figure \ref{fig:my_simple_pi}. In the case of an ADPLL node in a network the input of this filter is a weighted sum of two to four phase errors, each corresponding to a neighbouring node. In a digital system the proportional section is implemented by a simple multiplier whereas the integral path is a combination of a multiplier and a delayed summation stage. The value of these gains determine the response and stability of the oscillator system. The transfer function of such a circuit is given by:
+\begin{equation*}
+	H(z) = \alpha + \beta\frac{1}{1-z^{-1}} = \frac{(\alpha + \beta) - \alpha z^{-1}}{1-z^{-1}}~~~\cite{shan2014phd}
+\end{equation*}
+It has been found by Koskin \textit{et al} (2018) that stable operation can be achieved when the integral gain, $k_i$, is less than half the proportional gain, $k_p$ \cite{koskin2018generation}. In the same study a range of values were found which would produce low jitter operation of the network. As these value are all less than one the filter must implement fixed point arithmetic in an effort to maintain the simplicity of the clock distribution network, rather than incurring the complexity penalty of floating point calculations.
 
 
 
