@@ -40,12 +40,12 @@
 \title{Placeholder Tex Doc}
 \author{Conor Dooley}
 \maketitle
+\doublespacing
 \chapter{Background Review}
 \section{Brief Overview}
-\doublespacing
 In a world where the demand for high performance hand-held computing devices continues to grow and the prevalence of ``smart'' devices is increasing the problem of maintaining the steady gain in performance of Systems-On-Chip remains at the forefront. %TODO cite?
 The main drivers of performance in Systems-On-Chip are the number of transistors on a chip, the clocking frequency and parallelism. However the latter will not be addressed in this assessment, partly as the performance of the paralellised operation is largely governed by the number of transistors and clock frequency to begin with. %TODO Excessive?
-As the number of transistors on a chip has increased roughly following Moore's Law the increase in clock frequency has not been able to follow a similar linear trajectory, which clock frequency having remained roughly equivalent for the last 10 years \cite{ross2008cpu}.
+As the number of transistors on a chip has increased roughly following Moore's Law the increase in clock frequency has not been able to follow a similar linear trajectory, which clock frequency having remained roughly equivalent for the last number of years \cite{ross2008cpu}.
 
 This plateauing of clock frequency has been caused by the high power consumption due to the demands placed by the global distribution of a high frequency clock, which is often the single biggest consumer of power on the chip. %TODO cite (can use tiwari1998reducing)
 In a world where low power devices are desirable, especially with the growing demand of Internet-Of-Things where high power consumption goes directly against one of the key pillars of the technology. %TODO Pillars of what?
@@ -55,7 +55,6 @@ In contrast a Globally Asynchronous Locally Synchronous clock delivery system en
 A GSLS system however has the advantages of deterministic behaviour and greater rates of communication between clocking areas and as such remains a desirable system design. A number of methods which deliver GSLS clocking exist at present such as clock trees as well as emerging technologies such as ADPLL networks.
 
 \section{The Impact of Clocking Errors}
-
 In Figure \ref{fig:eldar_why_precise_clocking} the data path between two synchronously clocked registers is shown, with the circuit's function being carried out by the combinatorial network between the registers.
 Each register has a setup time, which represents the amount of time that the input value to a register must remain constant before the clock edge, and a hold time, the time for which the input must remain constant after a clock edge.
 \begin{figure}[h]
@@ -68,7 +67,6 @@ A lack of synchronisation between the clock edges will manifest itself as a time
 The most common sources of clock error are caused by mismatches which usually stem from production such as differences in the length of clocking paths, buffer delays or in the parameters of either active or passive components in the clock distribution network. These all manifest themselves as skew, while the noise in active components will appear as jitter in the clock signal.
 
 \section{Traditional Solutions}
-
 A number of traditional solutions exist which provide GSLS clocking systems, using a variety of techniques. The most simple of these use the clock distribution network's symmetry in order to deliver the clock in phase at all locations in the chip and are named according to their geometry with the main variants being branch-trees, X-trees or H-trees. %TODO insert figure
 \begin{figure}[h]
 	\centering
@@ -120,7 +118,6 @@ Another potential multi-oscillator design synchronises the oscillators using the
 \end{figure}
 
 \section{ADPLL Networks}
-
 As a PLL network is an analog circuit its integration in a modern IC is a barrier to usage and it has not been used in any commercial designs \cite{zianbetov2013distributed}. An alternative design that is more suitable for current fabrication techniques eschews from using analog components and instead implements the network of controlled oscillators using only digital circuitry, hence the name All-Digital PLL. A 4x4 ADPLL network was designed and prototyped in 65 nm CMOS by Zianbetov and Shan in order to test the suitability of the technique as a clock distributor \cite{zianbetov2013phd,shan2014phd}. %TODO fix phd references
 In this design the oscillators are coupled using digital phase comparators which attempt to measure the phase error between two oscillators with each non edge node being connected to four neighbours. Figure \ref{fig:eldar_node} shows high level detail of the architecture of both the entire clocking system and that of an individual node in the design. A digital PLL network has the additional advantages over its analog counterparts that it can benefit from advancements in digital circuit design suites, be reconfigurable and programmable and has a significantly greater immunity to perturbations inherent to its digital nature \cite{zianbetov2013phd}. This last advantage is of particular use in a digital environment, as otherwise there is potential for clock degradation resulting from switching of transistors.
 \begin{figure}[h]
@@ -171,10 +168,42 @@ The loop filter in an ADPLL can be implemented as a PI controller as it is just 
 \end{equation*}
 It has been found by Koskin \textit{et al} (2018) that stable operation can be achieved when the integral gain, $k_i$, is less than half the proportional gain, $k_p$ \cite{koskin2018generation}. In the same study a range of values were found which would produce low jitter operation of the network. As these value are all less than one the filter must implement fixed point arithmetic in an effort to maintain the simplicity of the clock distribution network, rather than incurring the complexity penalty of floating point calculations.
 
+\section{My Contribution}
+The planned contribution of this project is to create an FPGA based prototyping platform for the testing of network parameters and architectural variations. An FPGA as a prototyping tool for networks was previously utilised by Zianbetov and Shan as the final stage before the creation of a custom chip as it allowed for ``a partial validation of the ASIC design, through a verification of the essential functional features of the designed clocking network \cite{zianbetov2013phd,shan2014phd}. They however note that there are some fundamental differences between the two environments in particular that the FPGA based prototype is unable to create the mixed signal circuits used in an ASIC resulting in alternative designs being mandated for certain components such as the Time-to-Digital Converter. Similarly most commericially available FPGA boards were noted to have clock frequencies well below the gigahertz levels possible in ASIC designs. In spite of these problems the FPGA as a prototyping solution is valuable as it allows for hardware based testing of architectures and the simulation of non trivial circuit behaviours.
 
+The novelty of this particular implementation is that in the case of Zianbetov and Shan only a small network was simulated on an FPGA and at a frequency close to 50 kHz, however this project will attempt to significantly increase the frequency of operation to the MHz range as well as expanding the size of the network, from 16 oscillators to potentially 100. This is done with the aim of assisting work being undertaken by a number of researchers in UCD who are working on aspects of ADPLL networks who would stand to benefit from such a platform.
 
 \chapter{Progress to Date}
+The first stage of this project was the creation of an ADPLL design that would be used for the network. Due to limitations of the connections available on the FPGA evaluation board used to this point, a Digilent/Xilinx Nexys 4, signals at frequencies significantly beyond 5 MHz suffered from major degradation as the connections were not designed for such frequencies. Thus a target frequency was set at 5 MHz while this board was in use. After initial research into potential oscillator designs and what would be feasible given the constraints of the particular platform design began with the aforementioned oscillator.
+\section{Controllable Oscillator}
+In my research into potential designs for numerically controllable oscillators that were viable on an FPGA I came across two main options. The first of these was the ring oscillator, constructed from an odd number of inverters strung together in a chain \cite{predraig}. In this case the frequency of operation is determined by the number of oscillators in the chain as the delay through the individual inverters determines the half period of the signal. This period can then be modified by adding or removing inverters in a manner that maintains the odd number of total inverters. The propagation time through an individual inverter is dependant on the layout of the ring and thus this design must be used with some care.\\
+The second option is one that I was aware of in advance this project's beginning. A phase accumulator makes use of the overflow property of a counter, and has a frequency determined by the width of the counter and the frequency at which it is clocked. The oscillator operates as follows: Once per clock cycle the counter will increment by a number $k$ until overflow is reached at $2^n-1$ where $n$ is the bit width of the counter. By controlling the magnitude of $k$ added on each cycle of the driving clock the frequency of this oscillator can be adjusted. The most significant bit of this counter can form the clock signal as it has an approximately 50\% duty cycle.\\
+As it is not reliant on the clock of FPGA the ring oscillator design is a more interesting design in the context of simulation, but the phase accumulator is significantly easier to manage due to being more easily simulatable. The decision was made to create both designs in order to keep options open.\\
+The only other option I managed to come across for an oscillator on an FPGA was using Xilinx proprietary \texttt{IODELAY} blocks, which have a permanently programmable delay at runtime \ref{IODELAY}. This could be coupled with an odd number of inverters in order to implement a quasi ring oscillator. However as these are IO blocks their usage is not particularly conducive to the creation of a network of ADPLLs.\\
+The phase accumulator was designed to have a bit width of 12, all of which could be set as the control code. As the maximum frequency of operation that had no timing violations was 258 MHz the frequency step of this oscillator design was 62.988 kHz and before integration into an ADPLL had a frequency range from 62.988 kHz to just under half the clock frequency at 128.94 MHz. Figure \ref{fig:my_pa} details the simple construction of this oscillator.\\
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.5]{../phase_accum}
+	\caption{Phase Accumulator Block Diagram.}
+	\label{fig:my_pa}
+\end{figure}
+As originally implemented for testing purposes the inverter ring oscillator had a propagation time per inverter of 315 picoseconds, thus each inverter would add 0.63 nano seconds to the total period, and had 4 control bits. In order to obtain a 5 MHz output from this type of ring oscillator a ring of of 317 inverters is required, and to set this as the centre point of the frequency range the total number of inverters was 325. At 5 MHz the frequency step of this design was calculated as:
+\begin{align*}
+T_{nom} = 200\times10^{-9}\text{ ns ,}T_{next} = 201.26\times10^{-9}\text{ ns} \\
+F_{nom} = 5\times10^{6}\text{ Hz ,}F_{next} = 4.968697\times10^{-9}\text{ Hz}
+\end{align*} 
+\begin{equation*}
+\Delta F_{RO} = 31.302\text{ kHz}
+\end{equation*}
+%TODO look into more detail on yoke.
 
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.35]{../ring_osc}
+	\caption{Simplified Ring Oscillator Block Diagram.}
+	\label{fig:my_ring_osc}
+\end{figure}
+\chapter{Future Work}
 
 
 \newpage
