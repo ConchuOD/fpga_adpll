@@ -195,13 +195,49 @@ F_{nom} = 5\times10^{6}\text{ Hz ,}F_{next} = 4.968697\times10^{-9}\text{ Hz}
 \begin{equation*}
 \Delta F_{RO} = 31.302\text{ kHz}
 \end{equation*}
-%TODO look into more detail on yoke.
-
+%TODO look into more detail on yoke with later work.
 \begin{figure}[h]
 	\centering
 	\includegraphics[scale=0.35]{../ring_osc}
 	\caption{Simplified Ring Oscillator Block Diagram.}
 	\label{fig:my_ring_osc}
+\end{figure}
+\section{Phase Detector}
+Moving along the chain the next block then is the phase detector, or more accurately phase comparator. At this stage in development this block just compares the oscillator's output with that of just one reference. In the future this block will be followed up with one which performs a weighted sum of all neighbouring nodes. The phase detector used in Shan's design has an arbitration circuit that is not synthesisable and an alternate design is required for use on an FPGA. The eventual design I chose has two main parts, firstly an up/down counter performs the role of the Time-to-Digital converter while also indicating the sign of the phase difference. In order to control the count, and indicate the direction in which to do so, a state machine determines which edge occurs first. In order to circumvent the possibility of a metastability condition being reached the incoming signals are synchronised to the higher frequency FPGA clock prior to their entry into the phase detector. From there the state machine can operate as designed, in accordance with the state transition diagram in Figure \ref{fig:my_state_machine}.
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.35]{../state_trans_diagram}
+	\caption{Phase Detection State Machine State Transition Diagram.}
+	\label{fig:my_state_machine}
+\end{figure}
+The state machine behaves as follows: Starting in the "Waiting" state, if the reference has a rising edge first it is said to be leading the oscillators output and the sign of the phase error is positive. Alternatively if the opposite occurs and the first rising edge is seen on the oscillator output the phase error is given a negative sign and the TDC counts downwards. In either case this continues until a rising edge occurs on the other signal which stops the count, updates the phase error output of the block and finally clears the counter. Between "Copy \& Clear" events the output of the block is held constant. There is a second condition that can stop the count and that is the occurrence of a falling edge of the signal that began the count. This does however limit the rate of lock acquisition in the case where the phase difference is greater than 180$^\circ$ or the frequency difference is significant. The operation however is the same as a conventional method when either locked or within a normal operating tolerance of being locked.\\
+In order to represent both the count value and sign in one value the counter operates in twos complement which allows the output be used directly in subsequent blocks. The counter itself has a bit width of 8 thereby having a range of -128 to 127 which at 5 MHz gives a phase resolution of:
+\begin{align*}
+	T_{res} &= \frac{1}{258\times 10^6} = 3.8760~ns \\
+	T_{period} &= \frac{1}{5\times 10^6} = 200~ns \\
+	\textrm{Ratio} &=\frac{3.8760}{200} = 0.0194 \\
+	\textrm{Resolution} & = 0.0194\times 360^\circ = 6.9768^\circ
+\end{align*}
+
+\section{Loop Filter}
+As with Shan's design I used a PI controller as the loop filter in order to align with the typical technology and also benefit from the work of member of the research team in UCD \cite{shan2014phd,koskin2018generation}. %TODO eugene
+The bit with of the filter's input is once again 8 bits to match up with the input from the phase detector and outputs a 9 bit value in order to accommodate the summation of an 8 bit number from each of the paths. I selected $k_p = 1$ and $k_i = 0.125$ in order to align with the region of stable coefficients discovered by Eugene \cite{koskin2018generation}. %TODO redo image of LF
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.35]{../loop_filter}
+	\caption{PI Loop Filter RTL diagram.}
+	\label{fig:my_pi}
+\end{figure}\\
+Figure \ref{fig:my_pi} showing the RTL diagram of the filter shows the two distinct paths through the filter, the more simple of these being the proportional one. The multiplication necessitates the increased width of the path in order to preserve the accuracy of the fixed point calculations, a width which is then cut down to an 8 bit value before being added to the output of the integral branch. The proportional gain value has a fixed point width of 2.1 allowing for values from -2 to 1.5, however in testing to this point only 1 and 0.5 have been used. The integral path is similar with the gain having a fixed width of 1.3, a range of -1 to 0.750, and for my testing set to 0.125. After the gain is applied via an accumulator with a delayed input clocked by the 258 MHz FPGA clock. Once again the output of this path is cut back down to an 8 bit value.\\
+The addition of two 8 bit values results in a 9 bit signed output from the phase detection block which is then combined with the bias to form the control code for the oscillator. As a higher control code leads to a larger frequency with the phase accumulator this combination is done by additions, whereas for the ring oscillator the relationship is inverse as we are controlling the period, so instead subtraction is used.
+
+\section{ADPLL}
+Combining these blocks, in this case using the Phase Accumulator style oscillator, gives the ADPLL shown in Figure \ref{fig:my_adpll} on which I performed my initial testing and simulations.
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.35]{../rtl}
+	\caption{Phase Accumulator ADPLL RTL diagram.}
+	\label{fig:my_adpll}
 \end{figure}
 \chapter{Future Work}
 
