@@ -239,8 +239,13 @@ Combining these blocks, in this case using the Phase Accumulator style oscillato
 	\caption{Phase Accumulator ADPLL RTL diagram.}
 	\label{fig:my_adpll}
 \end{figure}
-\chapter{Future Work}
 
+\chapter{Test Results}
+
+\chapter{Future Work}
+So far all work has been done using a single phase lock loop in order to have a suitable basis for the network and going forward this PLL will be used in that role. The first stage of network implementation will interlink two PLLs, with one of them also receiving input from the external reference. This test will serve as both validation of the phase coupling ability of the network as well as a test of the error summation block and the ability to lock from startup. For the sake of more realistic performance the inverter chain ADPLL will be used ahead of the Phase Accumulator based design.\\
+A shortcoming of the current FPGA evaluation board is the inability to input or extract signals in the multiple MHz range without significant distortion, and this will be resolved with the arrival of an FPGA more suited to extracting and importing higher frequency signals. With an ability to extract higher frequency signals for measurement and analysis purposes the target frequency of 5 MHz can potentially be increased into the tens of MHz range.\\
+With simple coupling implemented the logical next stage is the implementation of a small network, possibly 2x2, before scaling up to a size suitable to the FPGA in use. At this point analysis of measurement results can be undertaken and any refinements to the network can be made. Additionally, if time permits, the Phase Accumulator based design could be implemented and tested and comparisons made between both designs.
 
 \newpage
 \bibliography{bib} 
