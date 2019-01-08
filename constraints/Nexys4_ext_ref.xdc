@@ -762,7 +762,7 @@ set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets -of_objects [get_cells tes
 #set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets {testRing/ringwire_c[7775]}]
 #set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets {testRing/ringwire_c[7774]}]
 
-set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets -of_objects [get_cells adpll/testRing/ringwire_c_inferred_i_1]]
+set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets -of_objects [get_cells adpll/testRing/ringwire_c_inferred_i_2]]
 
 #set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets {adpll/testRing/ringwire_c[0]}]
 
