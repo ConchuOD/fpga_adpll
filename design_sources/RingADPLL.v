@@ -27,7 +27,9 @@ module RingADPLL #(
     localparam DCO_CC_WIDTH = RO_WIDTH;
     localparam PADDING_WIDTH = RO_WIDTH-DCO_CC_WIDTH;
 
-    wire [RO_WIDTH-1:0] f_sel_sw_pa_x; //TODO
+    wire [RO_WIDTH-1:0] f_sel_sw_ro_x; //TODO
+	wire signed [RO_WIDTH:0] f_sel_sw_ro_interim_c;
+	wire signed [RO_WIDTH:0] bias_padded_c;
     wire gen_clk_x;
     wire signed [PDET_WITH-1:0] error_x;
 
@@ -37,7 +39,7 @@ module RingADPLL #(
 
     RingOsc #(.RINGSIZE(RINGSIZE), .CTRL_WIDTH(RO_WIDTH)) testRing( 
         .enable_i (~reset_i),
-        .freq_sel_i (f_sel_sw_pa_x),
+        .freq_sel_i (f_sel_sw_ro_x),
         .clk_o (gen_clk_x)
 	);
 	Div8 div8 ( 
@@ -70,7 +72,10 @@ module RingADPLL #(
         .dco_cc_o(dco_cc_o) 
     );
 
-    //assign f_sel_sw_pa_x = BIAS;
-    assign f_sel_sw_pa_x = BIAS - $signed({ {(PADDING_WIDTH){dco_cc_o[DCO_CC_WIDTH-1]}} ,dco_cc_o});
+    //assign f_sel_sw_ro_x = BIAS;
+	assign bias_padded_c = $signed({0, BIAS});
+	//convert to signed after concat, all the below line does is replicate the top bit the needed number of times and then subtract from the bias
+	assign f_sel_sw_ro_interim_c = bias_padded_c - $signed({ {(PADDING_WIDTH){dco_cc_o[DCO_CC_WIDTH-1]}}, dco_cc_o});//minus avoids negative feedback
+    assign f_sel_sw_ro_x = f_sel_sw_ro_interim_c[RO_WIDTH-1:0];
 
  endmodule // PhDetTopLevel
