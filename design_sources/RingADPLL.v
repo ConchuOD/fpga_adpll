@@ -3,7 +3,7 @@
 module RingADPLL #(
 		parameter RO_WIDTH = 5,
 		parameter PDET_WITH = 8,
-		parameter RINGSIZE = 551, //~5 MHZ @ 258 MHZ CLOCK
+		parameter RINGSIZE = 333, 
 		parameter BIAS = 5'd16, 
 		//LoopFilter
 		parameter ERROR_WIDTH = 8,

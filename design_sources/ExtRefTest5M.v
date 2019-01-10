@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-module ExtRefTest (
+module ExtRefTest5M (
         input clk100_i,        // 100 MHz clock from oscillator on board
         input rst_pbn_i,        // reset signal, active low, from CPU RESET pushbutton //
         input [15:0] switches_i,
@@ -57,21 +57,13 @@ module ExtRefTest (
         .clk_o(gen_reference_x),
         .k_val_i(ref_sel_c)
     ); 
-	ADPLL #(
-		.BIAS(BIAS),
-		.KP(3'b001),
-		.KI_WIDTH(5),
-		.KI_FRAC_WIDTH(4),
-		.KI(5'b00001)	
-	) 
-	adpll
-	(
-    	.reset_i(reset_x),
-    	.fpga_clk_i(clk258_x),
-    	.ref_clk_i(gen_reference_x),
+	RingADPLL #(.RINGSIZE(555)) adpll ( //555w/ gen
+        .reset_i(reset_x),
+        .fpga_clk_i(clk258_x),
+        .ref_clk_i(gen_reference_x),
         .enable_i(1'b1),
-    	.gen_clk_o(ra_o[0]),
-    	.error_o(error_x)
+        .gen_clk_o(ra_o[0]),
+        .error_o(error_x)
     );
 
     SignedDec2Hex sDec2Hex(

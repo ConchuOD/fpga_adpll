@@ -61,7 +61,7 @@ module PhDetTestLockRange (
         .div8_o(gen_ref_div8)
     );
 
-    RingADPLL #(.RINGSIZE(275)) adpll (
+    RingADPLL #(.RINGSIZE(421)) adpll ( //425
     	.reset_i(reset_x),
     	.fpga_clk_i(clk258_x),
     	.ref_clk_i(gen_reference_x),
