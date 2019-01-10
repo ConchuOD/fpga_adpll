@@ -3,8 +3,20 @@
 %\usepackage[T1]{fontenc}
 \usepackage[latin9]{inputenc}
 \usepackage{setspace}
-
 \geometry{verbose,tmargin=3cm,bmargin=3cm,lmargin=3.5cm,rmargin=2.4cm}
+%\usepackage{fancyhdr}
+%\pagestyle{fancy}
+%\setcounter{secnumdepth}{3}
+\usepackage[british]{babel}
+
+%%% Add this %%%
+\usepackage{titlesec}
+\titleformat{\chapter}[display]
+{\normalfont\huge\bfseries}{\chaptertitlename~\thechapter}{18pt}{\Huge}
+\titlespacing*{\chapter}{0pt}{50pt}{40pt}
+\titlespacing*{name=\chapter,numberless}{0pt}{-30pt}{10pt}
+%%%   End   %%%
+
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{cancel}
@@ -35,11 +47,65 @@
 \definecolor{mygreen}{rgb}{0,0.6,0}
 \definecolor{mygray}{rgb}{0.5,0.5,0.5}
 \definecolor{mymauve}{rgb}{0.58,0,0.82}
+
 \begin{document}
 
 \title{Placeholder Tex Doc}
 \author{Conor Dooley}
-\maketitle
+\begin{titlepage}
+	
+	\pagenumbering{gobble}
+	
+	\setstretch{1.25}
+	
+	\begin{spacing}{3}
+		
+		\noindent \begin{center}
+			
+			{\huge{}ADPLL Network on an FPGA}
+			\par\end{center}{\huge \par}
+	\end{spacing}
+	
+	\bigskip{}
+	
+	\begin{center}
+		{\Large{}Conor Dooley}
+	\end{center}
+	
+	\vspace{1.25cm}
+	
+	\begin{center}
+		%\includegraphics[width=0.15\paperwidth]{ucd_crest.pdf}\vspace{0.75cm}
+		\includegraphics[width=0.2\paperwidth]{UCD_crest.pdf}\vspace{0.25cm}
+	\end{center}
+	
+	
+	\bigskip{}
+	
+	\begin{center}
+		{\huge{}Masters Project Interim Report }
+	\end{center}
+	
+	\vspace{1.cm}
+	
+	
+	{\Large{}\bigskip{}
+		\bigskip{}
+	}{\Large \par}
+	
+	\noindent \begin{center}
+		\begin{tabular}{lll}
+			\textbf{\large{}Research Supervisors:} & \qquad{}\qquad{} & {\large{}Dr Elena Blokhina \& Brian Mulkeen}\\
+		\end{tabular}
+		
+		\par\end{center}
+	
+	\vspace{1cm}
+	\noindent \begin{center}
+		{\large{}January  2019}
+		\par\end{center}{\large \par}
+	
+\end{titlepage}
 \doublespacing
 \chapter{Background Review}
 \section{Brief Overview}
@@ -249,15 +315,56 @@ Once this testing had been completed with the phase accumulator based ADPLL test
  The Loop Filter is clocked at the generated output frequency as this ensures it will be synchronised with the oscillator. This is important when using the inverter chain oscillator in order to avoid metastability as the generated output clock it may not be synchronised with the high frequency clock of the FPGA.
 
 
-\chapter{Test Results}
-\chapter{Test Results}
+\chapter{Results}
+
+Initially simulations were utilised to validate the behaviour of the individual blocks and of the system as a whole while using the Phase Accumulator based design. From these simulations I was able to test the performance of the ADPLL while locked to a signal at 5 MHz and its behaviour during the acquisition period. A signal at 5 MHz lies close to midway between two increments of the phase accumulator and as such the oscillator must switch between two frequencies leading to the introduction of jitter. From simulations performed in Vivado locked to a signal at 5 MHz I observed jitter of 3.491 ns, based on the differences between sequential periods, and a peak to peak worst case value of 9.299 ns.\\
+Similarly I performed simulations of the locking performance of the design starting with a deviation of 213 KHz and observing the time taken to achieve a lock. 213 KHz represents an offset of three frequency steps plus the difference between 5 MHz and the nearest integer frequency step. Figure \ref{fig:vivado_sim} contains the visual results of the tests, in which a repetitive pattern can be seen to begin after 20.91 $\mu$s indicating a lock as been acquired.
+\begin{figure}[h]
+	\centering
+	%\includegraphics[scale=0.5]{../vivado_sim}
+	\includegraphics[scale=0.45]{../sim_locking_rect}
+	\caption{Locking Dynamics Simulation.}
+	\label{fig:vivado_sim}
+\end{figure}\\
+Identical tests were performed post implementation using a Digilent Nexys4 development board in addition to measuring the lock and capture ranges of the design. Firstly in order to determine the baseline for jitter in the system the oscillator was biased to 4.9761 MHz and sequential period jitter was observed to be 1.9689 ns. Connecting then the remainder of the ADPLL and by varying the reference the lock and capture ranges were found to be 4.19-12.76 MHz and 4.25-12.34 MHz respectively when the bias point was 5 MHz. Somewhat surprisingly this is not centred on the bias point, suggesting a potential flaw in the system that needs to be addressed. A identical locking test was performed in the implemented design, Figure \ref{fig:impl}, where using the same method a time to lock of 25.2 $\mu$s was observed. While locked jitter was better in both average period to period variation and peak to peak, which can be attributed to the FPGA clock frequency not exactly matching that designed and as such the distance between 5 MHz and the nearest frequency step being reduced, thereby leading to less switching required to generate a 5 MHz signal.
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.45]{../sim_locking_rect}
+	\caption{Locking Dynamics Measurement.}
+	\label{fig:impl}
+\end{figure}\\
+Similarly tests were carried out with the Ring Oscillator based design at a bias point of 5 MHz. 425 inverters, with 5 bit control, were used to obtain an output in the region of 5 MHz with the bias set to the midpoint which is close to 5 MHz. The expected lock range given the width the use of an otherwise identical design would be the entire range of 32 steps or 64 inverters which can be easily estimated:
+\begin{align*}
+	T_{inv} &= \frac{200\times 10^{-6}}{425-2\times 16} = 0.50891\textrm{~ns} \\
+	F_{min} &= \frac{1}{(425)\times 0.50891\textrm{~ns}} = 4.623\textrm{~MHz} \\
+	F_{max} &= \frac{1}{(425-2\times 32)\times 0.50891\textrm{~ns}} = 5.443\textrm{~MHz}
+\end{align*}
+However in testing the lock and capture ranges both came out to be 4.86-5.15 MHz, so significantly below the estimates, which highlights an issue that requires investigation.\\
+
+Testing was also carried out of the ADPLL containing a divider in both divide by 4 and 8 modes to examine their impact on locking behaviour. The results of this testing are displayed in Table \ref{table:1}. The jitter in this case is rather low as the 10 MHz target frequency lies close to an integer increment of the phase accumulator design used for this test. Lock and capture ranges are significantly more symmetrical in these configurations than at a target of 5 MHz and as expected there is a decrease in range with the greater division values.
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.5]{../matlab/painintheass}
+	\caption{Testing of ADPLLs employing div4 \& div8.}
+	\label{fig:div}
+\end{figure}
+\begin{table}[!ht]
+	\begin{center} 
+		\begin{tabular}{c|c|c|c|c}           
+			& Period Jitter & Peak-Peak Jitter & Lock Range & Capture Range \\
+			div4 & 1.9858 ns & 6.4854 ns & 5.000-17.200 MHz & 5.620-16.700 MHz \\
+			div8 & 1.5702 ns & 6.1594 ns & 5.768-15.262 MHz & 5.928-14.216 MHz \\
+		\end{tabular}
+		\caption{Divider Comparison.}
+		\label{table:b_c_perf}
+	\end{center}
+\end{table}
 
 \chapter{Future Work}
-
-So far all work has been done using a single phase lock loop in order to have a suitable basis for the network and going forward this PLL will be used in that role. The first stage of network implementation will interlink two PLLs, with one of them also receiving input from the external reference. This test will serve as both validation of the phase coupling ability of the network as well as a test of the error summation block and the ability to lock from startup. For the sake of more realistic performance the inverter chain ADPLL will be used ahead of the Phase Accumulator based design.\\
+Firstly I will be addressing the issues regarding the lock and capture ranges, however the first of those may be fixed by a transition to a higher frequency as evidenced by the 10 MHz testing. So far all work has been done using a single phase lock loop in order to have a suitable basis for the network and going forward this PLL will be used in that role. The first stage of network implementation will interlink two PLLs, with one of them also receiving input from the external reference. This test will serve as both validation of the phase coupling ability of the network as well as a test of the error summation block and the ability to lock from startup. For the sake of more realistic performance the inverter chain ADPLL will be used ahead of the Phase Accumulator based design.\\
 A shortcoming of the current FPGA evaluation board is the inability to input or extract signals in the multiple MHz range without significant distortion, and this will be resolved with the arrival of an FPGA more suited to extracting and importing higher frequency signals. With an ability to extract higher frequency signals for measurement and analysis purposes the target frequency of 5 MHz can potentially be increased into the tens of MHz range.\\
 With simple coupling implemented the logical next stage is the implementation of a small network, possibly 2x2, before scaling up to a size suitable to the FPGA in use. At this point analysis of measurement results can be undertaken and any refinements to the network can be made. Additionally, if time permits, the Phase Accumulator based design could be implemented and tested and comparisons made between both designs.\\
-As with the single ADPLL testing the important characteristics to look out for will be the lock and capture ranges of the network which should mirror that of the ADPLLs used in it's construction. Similarly the jitter of a number of clocks across the network will be examined in order, and any skew between the PLL outputs investigated. Also of interest will be the initial locking behaviour, in particular how quickly the network can be brought up from ``cold''.
+As with the single ADPLL testing the important characteristics to look out for will be the lock and capture ranges of the network which should mirror that of the ADPLLs used in it's construction. Similarly the jitter of a number of clocks across the network will be examined in order, and any skew between the PLL outputs investigated. Also of interest will be the initial locking behaviour, in particular how quickly the network can be brought up from ``cold''.\\
 
 \newpage
 \bibliography{bib} 
