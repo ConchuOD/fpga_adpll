@@ -12,7 +12,7 @@ module ExtRefTest (
     );
 
     localparam ACCUM_WIDTH = 12;
-	localparam BIAS = 12'd154;
+	localparam BIAS = 12'd154; //154 = 10 MHz
     
 	wire reset_x;
  
@@ -57,19 +57,21 @@ module ExtRefTest (
         .clk_o(gen_reference_x),
         .k_val_i(ref_sel_c)
     ); 
+
 	ADPLL #(
 		.BIAS(BIAS),
-		.KP(3'b001),
-		.KI_WIDTH(5),
-		.KI_FRAC_WIDTH(4),
-		.KI(5'b00001)	
+		.KP(5'b00001),
+        .KP_FRAC_WIDTH(4),
+		.KI_WIDTH(7),
+		.KI_FRAC_WIDTH(6),
+		.KI(7'b0000001)	
 	) 
 	adpll
 	(
     	.reset_i(reset_x),
     	.fpga_clk_i(clk258_x),
-    	.ref_clk_i(gen_reference_x),
-        .enable_i(1'b1),
+    	.ref_clk_i(ext_reference_x),
+        .enable_i(switches_i[15]),
     	.gen_clk_o(ra_o[0]),
     	.error_o(error_x)
     );

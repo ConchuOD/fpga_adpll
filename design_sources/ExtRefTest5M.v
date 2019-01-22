@@ -57,11 +57,12 @@ module ExtRefTest5M (
         .clk_o(gen_reference_x),
         .k_val_i(ref_sel_c)
     ); 
+
 	RingADPLL #(.RINGSIZE(555)) adpll ( //555w/ gen
         .reset_i(reset_x),
         .fpga_clk_i(clk258_x),
         .ref_clk_i(gen_reference_x),
-        .enable_i(1'b1),
+        .enable_i(switches_i[0]),
         .gen_clk_o(ra_o[0]),
         .error_o(error_x)
     );

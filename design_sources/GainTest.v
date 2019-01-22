@@ -1,28 +1,23 @@
 `timescale 1ns / 1ps
 
-module PhDetTestLockRange (
+module GainTest (
         input clk100_i,        // 100 MHz clock from oscillator on board
         input rst_pbn_i,        // reset signal, active low, from CPU RESET pushbutton //
         input [15:0] switches_i,
         output [2:0] led_o,
-        output [7:0] ra_o,
+        output [6:0] ra_o,
+		input ra_i, // external reference
         output [7:0] segment_o,
         output [7:0] digit_o        
     );
 
-    localparam ACCUM_WIDTH = 12; //max 14 w/ gen multiplex
-    localparam BIAS = 12'd76;
+    localparam ACCUM_WIDTH = 12;
+	localparam BIAS = 12'd154; //154 = 10 MHz
     
 	wire reset_x;
  
-    wire gen_div8_x;
-    
-    wire gen_ref_x;
-    
-    wire gen_ref_div2_x;
-    wire gen_ref_div4_x;
-    wire gen_ref_div8_x;
-
+	wire ext_reference_x;
+    wire gen_reference_x;
     wire clk5_x;
     wire clk5_0_x;
     wire clk5_45_x;
@@ -33,10 +28,22 @@ module PhDetTestLockRange (
 
     wire [ACCUM_WIDTH-1:0] ref_sel_c;
 
-    wire signed [7:0] error_x;
-    wire [7:0] error_hex_x;
+    wire [3:0] kp_sel_x;
+    wire [3:0] ki_sel_x;
+    wire [7:0] kp_ki_c;
 
-    assign ref_sel_c = switches_i[ACCUM_WIDTH-1:0];
+    wire signed [7:0] error_x;
+
+    wire [7:0] half_7seg_x;
+
+    assign ref_sel_c = 12'd36;
+	
+	assign ext_reference_x = ra_i;
+
+    assign kp_sel_x = switches_i[11:8];
+    assign ki_sel_x = switches_i[3:0];
+    assign kp_ki_c = {kp_sel_x,ki_sel_x};
+
 
     ClockReset5_258_PDiff  clkGen  (
         .clk100_i 	(clk100_i),      // input clock at 100 MHz
@@ -50,69 +57,57 @@ module PhDetTestLockRange (
     );
 
     assign clk5_x = clk5_0_x;
-    assign ra_o[1] = clk5_x;
-    assign ra_o[2] = gen_ref_x;
-    assign ra_o[3] = gen_div8_x;
+    assign ra_o[1] = gen_reference_x;
+    assign ra_o[2] = ext_reference_x;
 
     PhaseAccum #(.WIDTH(ACCUM_WIDTH)) referenceOsc (
         .enable_i(1'b1),
         .reset_i(reset_x),
         .fpga_clk_i(clk258_x),
-        .clk_o(gen_ref_x),
+        .clk_o(gen_reference_x),
         .k_val_i(ref_sel_c)
     ); 
 
+    wire padded_kp_c;
+    wire padded_ki_c;
+    assign padded_kp_c = {1'b0,kp_sel_x};
+    assign padded_ki_c = {3'b000,ki_sel_x};
 
-    Div8 genRefDiv8 (
-        .reset_i(reset_x),
-        .signal_i(gen_ref_x),
-        .div2_o(gen_ref_div2_x),
-        .div4_o(gen_ref_div4_x),
-        .div8_o(gen_ref_div8_x)
-    );
-
-    /*
-    RingADPLL #(.RINGSIZE(421)) adpll ( //425
+	ADPLL #(
+		.BIAS(BIAS),
+		//.KP(5'b00001),
+        .KP_WIDTH(5),
+        .KP_FRAC_WIDTH(4),
+		.KI_WIDTH(7),
+		.KI_FRAC_WIDTH(6),
+		//.KI(7'b0000001)
+        .DYNAMIC_VAL(1'b1)	
+	) 
+	adpll
+	(
     	.reset_i(reset_x),
     	.fpga_clk_i(clk258_x),
-    	.ref_clk_i(gen_ref_x),
-        .enable_i(1'b1),
+    	.ref_clk_i(ext_reference_x),
+        .enable_i(switches_i[15]),
     	.gen_clk_o(ra_o[0]),
-    	.error_o(error_x)
-    );
-    */
-
-    ADPLL #(
-        .BIAS(BIAS),
-        .KP(3'b001),
-        .KI_WIDTH(5),
-        .KI_FRAC_WIDTH(4),
-        .KI(5'b00001)   
-    ) 
-    adpll
-    (
-        .reset_i(reset_x),
-        .fpga_clk_i(clk258_x),
-        .ref_clk_i(gen_ref_x),
-        .enable_i(1'd1),
-        .gen_clk_o(ra_o[0]),
-        .gen_div8_o(gen_div8_x),
-        .error_o(error_x)
+    	.error_o(error_x),
+        .kp_i(5'b00001), //padded_kp_c
+        .ki_i(7'b0000001) //padded_ki_c
     );
 
     SignedDec2Hex sDec2Hex(
         .signed_dec_i(error_x),
-        .hex_o(error_hex_x)
+        .hex_o(half_7seg_x)
     );
 
     //2s to unsigned to hex to seg lol
     DisplayInterface disp1 (
         .clock 		(clk5_0_x),       // 5 MHz clock signal
         .reset 		(reset_x),      // reset signal, active high
-        .value 		(error_hex_x),   // input value to be displayed
+        .value 		(half_7seg_x),   // input value to be displayed
         .point 		(4'b1111),    	// radix markers to be displayed
         .digit 		(digit_o),      // digit outputs
         .segment 	(segment_o)  	// segment outputs
     );
 
- endmodule // PhDetTopLevel
+ endmodule // 

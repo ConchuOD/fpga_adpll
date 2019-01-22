@@ -1,4 +1,5 @@
 module LoopFilter #(
+		parameter DYNAMIC_VAL = 0,
 		parameter ERROR_WIDTH = 8,
 		parameter DCO_CC_WIDTH = 9,
 		parameter KP_WIDTH = 3,
@@ -11,6 +12,8 @@ module LoopFilter #(
 	(
 		input wire gen_clk_i,
 		input wire reset_i,
+		input wire [KP_WIDTH-1:0] kp_i,
+		input wire [KI_WIDTH-1:0] ki_i,
 		input wire signed [ERROR_WIDTH-1:0] error_i,
 		output wire signed [DCO_CC_WIDTH-1:0] dco_cc_o
 	);
@@ -18,17 +21,32 @@ module LoopFilter #(
 	localparam KP_INT_WIDTH = KP_WIDTH-KP_FRAC_WIDTH;
 	localparam KI_INT_WIDTH = KI_WIDTH-KI_FRAC_WIDTH;
 
+	reg signed [KP_INT_WIDTH-1:-KP_FRAC_WIDTH] kp_x;
+	reg signed [KI_INT_WIDTH-1:-KI_FRAC_WIDTH] ki_x;
+
 	reg signed [ERROR_WIDTH-1:0] error_delay_r;
 	
 	wire signed [(ERROR_WIDTH-1)+KP_INT_WIDTH:-KP_FRAC_WIDTH] kp_error_c;
 	wire signed [ERROR_WIDTH-1:0] kp_error_trun_c;
-	wire signed [KP_INT_WIDTH-1:-KP_FRAC_WIDTH] kp_x = KP;
 
 	wire signed [(ERROR_WIDTH-1)+KI_INT_WIDTH:-KI_FRAC_WIDTH] ki_error_c;
 	wire signed [(ERROR_WIDTH-1)+KI_INT_WIDTH:-KI_FRAC_WIDTH] ki_error_inte_c;
 	reg signed [(ERROR_WIDTH-1)+KI_INT_WIDTH:-KI_FRAC_WIDTH] ki_error_inte_delay_r;
 	wire signed [ERROR_WIDTH-1:0] ki_error_trun_c;
-	wire signed [KI_INT_WIDTH-1:-KI_FRAC_WIDTH] ki_x = KI;
+	
+	always @(DYNAMIC_VAL)
+	begin
+		if (DYNAMIC_VAL)
+		begin
+			kp_x = kp_i;
+			ki_x = ki_i;
+		end
+		else
+		begin
+			kp_x = KP;
+			ki_x = KI;
+		end
+	end
 
 	always @ (posedge gen_clk_i or posedge reset_i)
 	begin

@@ -6,6 +6,7 @@ module ADPLL #(
 		parameter BIAS = 12'd76, //5 MHZ @ 258 MHZ CLOCK
 		parameter DCO_CC_WIDTH = 9,
 		//LoopFilter
+		parameter DYNAMIC_VAL = 0,
 		parameter ERROR_WIDTH = 8,
 		parameter KP_WIDTH = 3,
 		parameter KP_FRAC_WIDTH = 1,
@@ -19,6 +20,8 @@ module ADPLL #(
         input wire fpga_clk_i,
         input wire ref_clk_i,
         input wire enable_i,
+        input wire kp_i,
+        input wire ki_i,
         output wire gen_clk_o,
         output wire gen_div8_o,
         output wire signed [PDET_WITH-1:0] error_o,
@@ -63,13 +66,16 @@ module ADPLL #(
 		.KP(KP),
 		.KI_WIDTH(KI_WIDTH),
 		.KI_FRAC_WIDTH(KI_FRAC_WIDTH),
-		.KI(KI)		
+		.KI(KI),
+		.DYNAMIC_VAL(DYNAMIC_VAL)	
 	)
 	loopFilter 
 	(
         .gen_clk_i(gen_clk_x),
         .reset_i(reset_i),
         .error_i(error_x),
+        .kp_i(kp_i),
+        .ki_i(ki_i),
         .dco_cc_o(dco_cc_o) 
     );
 
