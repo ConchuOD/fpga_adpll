@@ -4,7 +4,7 @@ clear variables
 periods = [];
 for inc1 = 1:10
     filename = char("scope_"+num2str(18+inc1)+".bin");
-    [scope_x_data(inc1,:),scope_y_data(inc1,:)] = importAgilentBin(filename,1);
+    [scope_x_data(inc1,:),scope_y_data(inc1,:)] = importAgilentBin(filename,2);
     
     [w,init_cross,final_cross,mid_level] = pulsewidth(scope_y_data(inc1,:),scope_x_data(inc1,:), 'Polarity', 'Positive');
     periods = [periods;getPeriods(init_cross)];
@@ -21,7 +21,6 @@ y_fft = fft(scope_y_data);
 y_fft_scaled = abs(y_fft);
 y_fft_plottable = real(y_fft_scaled(1:floor(num_samp/2)));
 
-
 num_datasets = 1;
 for loop_inc = 1:num_datasets
     %% compute periods
@@ -31,7 +30,7 @@ for loop_inc = 1:num_datasets
     
     period_mean(loop_inc) = mean(periods)*1E9; %in nanoseconds
     period_jitter_std(loop_inc) = std(periods)*1E9; %in nanoseconds
-    period_jitter_rms(loop_inc) = 
+   % period_jitter_rms(loop_inc) = 
     
     % @~1000 samples 3.090 for 1 outside
     % https://www.sitime.com/api/gated/AN10007-Jitter-and-measurement.pdf

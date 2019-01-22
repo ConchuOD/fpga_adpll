@@ -1,6 +1,6 @@
 %plot_error_over_time
 
-filename = 'scope_18.bin';
+filename = 'scope_31.bin';
 [~,scope_y_data] = importAgilentBin(filename,1);
 [scope_x_data,scope_y_data2] = importAgilentBin(filename,2);
 [w,init_cross,final_cross,mid_level] = pulsewidth(scope_y_data,scope_x_data, 'Polarity', 'Positive');
