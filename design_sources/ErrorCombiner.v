@@ -29,6 +29,9 @@ module ErrorCombiner #(
 	wire [ERROR_WIDTH-1:0] result_div4_c;
 
 	assign weighted_0_c = weight_0_i*error_0_i;
+	assign weighted_1_c = weight_1_i*error_1_i;
+	assign weighted_2_c = weight_2_i*error_2_i;
+	assign weighted_3_c = weight_3_i*error_3_i;
 
 	assign weighted_sum_c = weighted_0_c+weighted_1_c+weighted_2_c+weighted_3_c;
 
