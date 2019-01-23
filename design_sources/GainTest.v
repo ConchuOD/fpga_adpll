@@ -68,8 +68,8 @@ module GainTest (
         .k_val_i(ref_sel_c)
     ); 
 
-    wire padded_kp_c;
-    wire padded_ki_c;
+    wire [5-1:0] padded_kp_c;
+    wire [7-1:0] padded_ki_c;
     assign padded_kp_c = {1'b0,kp_sel_x};
     assign padded_ki_c = {3'b000,ki_sel_x};
 
@@ -91,12 +91,12 @@ module GainTest (
         .enable_i(switches_i[15]),
     	.gen_clk_o(ra_o[0]),
     	.error_o(error_x),
-        .kp_i(5'b00001), //padded_kp_c
-        .ki_i(7'b0000001) //padded_ki_c
+        .kp_i(padded_kp_c), //padded_kp_c
+        .ki_i(padded_ki_c) //padded_ki_c
     );
 
     SignedDec2Hex sDec2Hex(
-        .signed_dec_i(error_x),
+        .signed_dec_i(kp_ki_c),
         .hex_o(half_7seg_x)
     );
 

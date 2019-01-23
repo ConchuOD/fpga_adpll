@@ -1,4 +1,4 @@
-module LoopFilterTestBench ();
+module ErrorCombinerTestBench ();
 	reg rst_pbn;
 
     reg clk5_x;
@@ -34,4 +34,4 @@ module LoopFilterTestBench ();
 		$stop;
 	end
 
-endmodule // LoopFilterTestBench
+endmodule // ErrorCombinerTestBench
