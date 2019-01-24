@@ -70,8 +70,8 @@ module GainTest (
 
     wire [5-1:0] padded_kp_c;
     wire [8-1:0] padded_ki_c;
-    assign padded_kp_c = {1'b0,kp_sel_x};
-    assign padded_ki_c = {4'b0000,ki_sel_x};
+    assign padded_kp_c = {1'b0,kp_sel_x}; //opt is 5'b0 1001
+    assign padded_ki_c = {4'b0000,ki_sel_x}; //opt is 8'b0000 0001
 
 	ADPLL #(
 		.BIAS(BIAS),

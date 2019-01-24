@@ -2,14 +2,14 @@
 
 module ErrorCombiner #(
 		parameter ERROR_WIDTH = 8,
-		parameter WEIGHT_WIDTH = 3
+		parameter WEIGHT_WIDTH = 4
 	)
 	(
         input wire reset_i,
-        input wire [WEIGHT_WIDTH-1:0] weight_0_i,
-        input wire [WEIGHT_WIDTH-1:0] weight_1_i,
-        input wire [WEIGHT_WIDTH-1:0] weight_2_i,
-        input wire [WEIGHT_WIDTH-1:0] weight_3_i,
+        input wire signed [WEIGHT_WIDTH-1:0] weight_0_i,
+        input wire signed [WEIGHT_WIDTH-1:0] weight_1_i,
+        input wire signed [WEIGHT_WIDTH-1:0] weight_2_i,
+        input wire signed [WEIGHT_WIDTH-1:0] weight_3_i,
         input wire signed [ERROR_WIDTH-1:0] error_0_i,
         input wire signed [ERROR_WIDTH-1:0] error_1_i,        
         input wire signed [ERROR_WIDTH-1:0] error_2_i,
@@ -35,7 +35,7 @@ module ErrorCombiner #(
 
 	assign weighted_sum_c = weighted_0_c+weighted_1_c+weighted_2_c+weighted_3_c;
 
-	assign result_div4_c = weighted_sum_c[WEIGHTED_WIDTH-1:WEIGHTED_WIDTH-1-ERROR_WIDTH];
+	assign result_div4_c = $signed({weighted_sum_c[WEIGHTED_WIDTH-1],weighted_sum_c[((ERROR_WIDTH-1)-1)+2:0+2]});// weighted_sum_c[WEIGHTED_WIDTH-1:WEIGHTED_WIDTH-1-ERROR_WIDTH];
 	assign error_comb_o = result_div4_c;
 
 endmodule // ErrorCombiner

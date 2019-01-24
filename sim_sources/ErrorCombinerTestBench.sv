@@ -5,8 +5,8 @@ module ErrorCombinerTestBench ();
 
     wire signed [7:0] error_x;
 
-    reg [2:0] w0,w1,w2,w3;
-    reg [7:0] e0,e1,e2,e3;
+    reg signed [3:0] w0,w1,w2,w3;
+    reg signed [7:0] e0,e1,e2,e3;
 
     assign reset_x = ~rst_pbn;
 
@@ -36,12 +36,12 @@ module ErrorCombinerTestBench ();
 	initial
 	begin
 		rst_pbn = 1'b0;
-		w0 = 3'd1;
-		w1 = 3'd1;
-		w2 = 3'd1;
-		w3 = 3'd1;
+		w0 = 4'd2;
+		w1 = 4'd2;
+		w2 = 4'd0;
+		w3 = 4'd0;
 		e0 = 8'd10;
-		e1 = 8'd10;
+		e1 = -8'd20;
 		e2 = 8'd10;
 		e3 = 8'd10;
 		#10 

@@ -72,19 +72,19 @@ module TwoConnectedTest (
     ); 
 
     wire [5-1:0] padded_kp_c;
-    wire [7-1:0] padded_ki_c;
-    assign padded_kp_c = {1'b0,kp_sel_x};
-    assign padded_ki_c = {3'b000,ki_sel_x};
+    wire [8-1:0] padded_ki_c;
+    assign padded_kp_c = {1'b0,kp_sel_x}; //opt is 5'b0 1001
+    assign padded_ki_c = {4'b0000,ki_sel_x}; //opt is 8'b0000 0001
 
     ADPLLw2Inputs #(
         .BIAS(BIAS),
         //.KP(5'b00001),
         .KP_WIDTH(5),
         .KP_FRAC_WIDTH(4),
-        .KI_WIDTH(7),
-        .KI_FRAC_WIDTH(6),
+        .KI_WIDTH(8),
+        .KI_FRAC_WIDTH(7),
         //.KI(7'b0000001)
-        .DYNAMIC_VAL(1'b1)  
+        .DYNAMIC_VAL(1'b1) 
     ) 
     refAdpll
     (
@@ -101,12 +101,12 @@ module TwoConnectedTest (
 
 	ADPLL #(
 		.BIAS(BIAS),
-		//.KP(5'b00001),
+        //.KP(5'b00001),
         .KP_WIDTH(5),
         .KP_FRAC_WIDTH(4),
-		.KI_WIDTH(7),
-		.KI_FRAC_WIDTH(6),
-		//.KI(7'b0000001)
+        .KI_WIDTH(8),
+        .KI_FRAC_WIDTH(7),
+        //.KI(7'b0000001)
         .DYNAMIC_VAL(1'b1)	
 	) 
 	adpll

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="TwoConnectedTestBench_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="TwoConnectedTestBench" />
+            <top_module name="glbl" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="166267738620fs"></ZoomStartTime>
+      <ZoomEndTime time="176487738621fs"></ZoomEndTime>
+      <Cursor1Time time="172807738620fs"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="194"></NameColumnWidth>
+      <ValueColumnWidth column_width="66"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="10" />
+   <wvobject type="logic" fp_name="/TwoConnectedTestBench/rst_pbn">
+      <obj_property name="ElementShortName">rst_pbn</obj_property>
+      <obj_property name="ObjectShortName">rst_pbn</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/TwoConnectedTestBench/reset_x">
+      <obj_property name="ElementShortName">reset_x</obj_property>
+      <obj_property name="ObjectShortName">reset_x</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/TwoConnectedTestBench/ext_reference_x">
+      <obj_property name="ElementShortName">ext_reference_x</obj_property>
+      <obj_property name="ObjectShortName">ext_reference_x</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/TwoConnectedTestBench/ref_adpll_div8_x">
+      <obj_property name="ElementShortName">ref_adpll_div8_x</obj_property>
+      <obj_property name="ObjectShortName">ref_adpll_div8_x</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/TwoConnectedTestBench/other_adpll_div8_x">
+      <obj_property name="ElementShortName">other_adpll_div8_x</obj_property>
+      <obj_property name="ObjectShortName">other_adpll_div8_x</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/TwoConnectedTestBench/ref_clk_x">
+      <obj_property name="ElementShortName">ref_clk_x</obj_property>
+      <obj_property name="ObjectShortName">ref_clk_x</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/TwoConnectedTestBench/clk258_x">
+      <obj_property name="ElementShortName">clk258_x</obj_property>
+      <obj_property name="ObjectShortName">clk258_x</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/TwoConnectedTestBench/clk129_x">
+      <obj_property name="ElementShortName">clk129_x</obj_property>
+      <obj_property name="ObjectShortName">clk129_x</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/TwoConnectedTestBench/padded_kp_c">
+      <obj_property name="ElementShortName">padded_kp_c[4:0]</obj_property>
+      <obj_property name="ObjectShortName">padded_kp_c[4:0]</obj_property>
+      <obj_property name="Radix">REALRADIX</obj_property>
+      <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
+      <obj_property name="radix_fractionWidth">4</obj_property>
+      <obj_property name="radix_otherWidth">0</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/TwoConnectedTestBench/padded_ki_c">
+      <obj_property name="ElementShortName">padded_ki_c[7:0]</obj_property>
+      <obj_property name="ObjectShortName">padded_ki_c[7:0]</obj_property>
+      <obj_property name="Radix">REALRADIX</obj_property>
+      <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
+      <obj_property name="radix_fractionWidth">8</obj_property>
+      <obj_property name="radix_otherWidth">0</obj_property>
+   </wvobject>
+</wave_config>
