@@ -69,17 +69,17 @@ module GainTest (
     ); 
 
     wire [5-1:0] padded_kp_c;
-    wire [7-1:0] padded_ki_c;
+    wire [8-1:0] padded_ki_c;
     assign padded_kp_c = {1'b0,kp_sel_x};
-    assign padded_ki_c = {3'b000,ki_sel_x};
+    assign padded_ki_c = {4'b0000,ki_sel_x};
 
 	ADPLL #(
 		.BIAS(BIAS),
 		//.KP(5'b00001),
         .KP_WIDTH(5),
         .KP_FRAC_WIDTH(4),
-		.KI_WIDTH(7),
-		.KI_FRAC_WIDTH(6),
+		.KI_WIDTH(8),
+		.KI_FRAC_WIDTH(7),
 		//.KI(7'b0000001)
         .DYNAMIC_VAL(1'b1)	
 	) 

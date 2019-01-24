@@ -253,8 +253,8 @@ set_property IOSTANDARD LVCMOS33 [get_ports {ra_o[5]}]
 set_property PACKAGE_PIN D18 [get_ports {ra_o[6]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {ra_o[6]}]
 ##Bank = 15, Pin name = IO_L21P_T3_DQS_15,					Sch name = JA10
-set_property PACKAGE_PIN E18 [get_ports {ra_i}]
-set_property IOSTANDARD LVCMOS33 [get_ports {ra_i}]
+set_property PACKAGE_PIN E18 [get_ports ra_i]
+set_property IOSTANDARD LVCMOS33 [get_ports ra_i]
 
 ##Pmod Header JB, right side front - for connecting external hardware
 ##Bank = 15, Pin name = IO_L15N_T2_DQS_ADV_B_15,				Sch name = JB1
@@ -746,24 +746,30 @@ set_property CONFIG_VOLTAGE 3.3 [current_design]
 #This line specifies generation of a compressed bitstream, for faster configuration
 set_property BITSTREAM.GENERAL.COMPRESS TRUE [current_design]
 
-set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets -of_objects [get_cells testRing/ringwire_c_orig0]]
 
-set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets -of_objects [get_cells testRing/ringwire_c_orig0]]
 
-set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets -of_objects [get_cells ringwire_c_orig0]]
 
-set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets -of_objects [get_cells ringwire_c_inferred_i_1]]
 
-set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets -of_objects [get_cells testRing/inverter__0]]
 
-set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets -of_objects [get_cells testRing/ringwire_c_inferred_i_1]]
 
 #set_property ALLOW_COMBINATORIAL_LOOPS TRUE [get_nets testRing/ringwire_c[7776]]
 #set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets {testRing/ringwire_c[7775]}]
 #set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets {testRing/ringwire_c[7774]}]
 
-set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets -of_objects [get_cells adpll/testRing/ringwire_c_inferred_i_2]]
 
 #set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets {adpll/testRing/ringwire_c[0]}]
 
 #set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets adpll/testRing/ringwire_c[0]]
+
+create_pblock pblock_loopFilter
+add_cells_to_pblock [get_pblocks pblock_loopFilter] [get_cells -quiet [list adpll/loopFilter]]
+resize_pblock [get_pblocks pblock_loopFilter] -add {SLICE_X0Y145:SLICE_X7Y150}
+create_pblock pblock_testPDet
+add_cells_to_pblock [get_pblocks pblock_testPDet] [get_cells -quiet [list adpll/testPDet]]
+resize_pblock [get_pblocks pblock_testPDet] -add {SLICE_X0Y151:SLICE_X7Y156}
+create_pblock pblock_div8
+add_cells_to_pblock [get_pblocks pblock_div8] [get_cells -quiet [list adpll/div8]]
+resize_pblock [get_pblocks pblock_div8] -add {SLICE_X2Y157:SLICE_X5Y158}
+create_pblock pblock_testOsc
+add_cells_to_pblock [get_pblocks pblock_testOsc] [get_cells -quiet [list adpll/testOsc]]
+resize_pblock [get_pblocks pblock_testOsc] -add {SLICE_X0Y159:SLICE_X7Y164}
