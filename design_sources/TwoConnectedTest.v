@@ -13,13 +13,18 @@ module TwoConnectedTest (
 
     localparam ACCUM_WIDTH = 12;
 	localparam BIAS = 12'd154; //154 = 10 MHz
+	localparam PDET_WITH = 8;
     
 	wire reset_x;
  
 	wire ext_reference_x;
     wire gen_reference_x;
+	
     wire ref_adpll_div8_x;
     wire other_adpll_div8_x;
+	
+	wire ref_adpll_gen_x;
+	wire other_adpll_gen_x;
 
     wire clk5_x;
     wire clk5_0_x;
@@ -35,7 +40,8 @@ module TwoConnectedTest (
     wire [3:0] ki_sel_x;
     wire [7:0] kp_ki_c;
 
-    wire signed [7:0] error_x;
+    wire signed [7:0] ref_adpll_error_x;
+	wire signed [7:0] other_adpll_error_x;
 
     wire [7:0] half_7seg_x;
 
@@ -75,8 +81,92 @@ module TwoConnectedTest (
     wire [8-1:0] padded_ki_c;
     assign padded_kp_c = {1'b0,kp_sel_x}; //opt is 5'b0 1001
     assign padded_ki_c = {4'b0000,ki_sel_x}; //opt is 8'b0000 0001
+	
+	PhaseDetector #(.WIDTH(PDET_WITH)) testPDet ( // output to ref_adpll
+		.reset_i(reset_x), 
+		.fpga_clk_i(clk258_x),
+		.reference_i(ext_reference_x),
+		.generated_i(ref_adpll_div8_x),
+		.pd_clock_cycles_o(ref_adpll_error_x)
+	);
+	
+	ADPLLwNoPDet #(
+        .BIAS(BIAS),
+        //.KP(5'b00001),
+        .KP_WIDTH(5),
+        .KP_FRAC_WIDTH(4),
+        .KI_WIDTH(8),
+        .KI_FRAC_WIDTH(7),
+        //.KI(7'b0000001)
+        .DYNAMIC_VAL(1'b1) 
+    ) 
+    refAdpll
+    (
+        .reset_i(reset_x),
+        .fpga_clk_i(clk258_x),
+        .enable_i(switches_i[15]),
+		.error_top_x(8'd0),
+		.error_right_x(ref_adpll_error_x), //replace this w/ ~other_adpll_error_x
+		.error_bottom_x(8'd0),
+		.error_left_x(ref_adpll_error_x),
+        .gen_clk_o(ref_adpll_gen_x),
+        .gen_div8_o(ref_adpll_div8_x),
+        .kp_i(padded_kp_c), //padded_kp_c
+        .ki_i(padded_ki_c) //padded_ki_c
+    );
 
-    ADPLLw2Inputs #(
+	PhaseDetector #(.WIDTH(PDET_WITH)) testPDet ( // output to other, complement to ref_adpll
+		.reset_i(reset_x), 
+		.fpga_clk_i(fpga_clk_i),
+		.reference_i(ref_adpll_div8_x),
+		.generated_i(other_adpll_error_x),
+		.pd_clock_cycles_o(other_adpll_error_x)
+	);
+	
+	ADPLLwNoPDet #(
+        .BIAS(BIAS-1), //spice it up
+        //.KP(5'b00001),
+        .KP_WIDTH(5),
+        .KP_FRAC_WIDTH(4),
+        .KI_WIDTH(8),
+        .KI_FRAC_WIDTH(7),
+        //.KI(7'b0000001)
+        .DYNAMIC_VAL(1'b1) 
+    ) 
+    otherAdpll
+    (
+        .reset_i(reset_x),
+        .fpga_clk_i(clk258_x),
+        .enable_i(switches_i[15]),
+		.error_top_x(8'd0),
+		.error_right_x(other_adpll_error_x), //replace this w/ 8'b0
+		.error_bottom_x(8'd0),
+		.error_left_x(other_adpll_error_x),
+        .gen_clk_o(other_adpll_gen_x),
+        .gen_div8_o(other_adpll_div8_x),
+        .kp_i(padded_kp_c), //padded_kp_c
+        .ki_i(padded_ki_c) //padded_ki_c
+    );
+
+    SignedDec2Hex sDec2Hex(
+        .signed_dec_i(kp_ki_c),
+        .hex_o(half_7seg_x)
+    );
+
+    //2s to unsigned to hex to seg lol
+    DisplayInterface disp1 (
+        .clock 		(clk5_0_x),       // 5 MHz clock signal
+        .reset 		(reset_x),      // reset signal, active high
+        .value 		(half_7seg_x),   // input value to be displayed
+        .point 		(4'b1111),    	// radix markers to be displayed
+        .digit 		(digit_o),      // digit outputs
+        .segment 	(segment_o)  	// segment outputs
+    );
+
+ endmodule // end of module TwoConnectedTest
+ 
+ /*
+	ADPLLw2Inputs #(
         .BIAS(BIAS),
         //.KP(5'b00001),
         .KP_WIDTH(5),
@@ -120,20 +210,4 @@ module TwoConnectedTest (
         .kp_i(padded_kp_c), //padded_kp_c
         .ki_i(padded_ki_c) //padded_ki_c
     );
-
-    SignedDec2Hex sDec2Hex(
-        .signed_dec_i(kp_ki_c),
-        .hex_o(half_7seg_x)
-    );
-
-    //2s to unsigned to hex to seg lol
-    DisplayInterface disp1 (
-        .clock 		(clk5_0_x),       // 5 MHz clock signal
-        .reset 		(reset_x),      // reset signal, active high
-        .value 		(half_7seg_x),   // input value to be displayed
-        .point 		(4'b1111),    	// radix markers to be displayed
-        .digit 		(digit_o),      // digit outputs
-        .segment 	(segment_o)  	// segment outputs
-    );
-
- endmodule // end of module TwoConnectedTest
+*/
