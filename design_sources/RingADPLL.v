@@ -3,7 +3,7 @@
 module RingADPLL #(
 		parameter RO_WIDTH = 5,
 		parameter PDET_WITH = 8,
-		parameter RINGSIZE = 333, 
+		parameter RINGSIZE = 199, 
 		parameter BIAS = 5'd16, 
 		//LoopFilter
 		parameter DYNAMIC_VAL = 0,
@@ -48,7 +48,7 @@ module RingADPLL #(
 	Div8 div8 ( 
 		.reset_i(reset_i),
     	.signal_i(gen_clk_x),
-    	.div8_o(gen_div8_x)
+    	.div1_o(gen_div8_x)
    	);
 	PhaseDetector #(.WIDTH(PDET_WITH)) testPDet (
 		.reset_i(reset_i), 

@@ -58,7 +58,7 @@ module ExtRefTest5M (
         .k_val_i(ref_sel_c)
     ); 
 
-	RingADPLL #(.RINGSIZE(555)) adpll ( //555w/ gen
+	RingADPLL adpll ( //555w/ gen
         .reset_i(reset_x),
         .fpga_clk_i(clk258_x),
         .ref_clk_i(gen_reference_x),
