@@ -162,6 +162,22 @@ This is an issue that needs addressing. I am truncating and that may corrupt the
 \section*{RingOsc Sim Issue}
 For some reason I cannot run simulations of anything other than the RingOsc module itself. Any high level module fails to simulate properly, seemingly zero delay oscillation once the chain is enabled.
 
+\section*{External Reference II}
+Problem was with the offset of the reference, once fixed things worked as expected. I previously had it zero centred rather than zero-min
+
+\section*{Gain Testing}
+Varied gains to find lower jitter operation. Required fixing of the loop filter truncation. Optimal gain changed significantly based on the configuration in use.
+
+\section*{Chained PLLs}
+Chained together 2 PLLs and the reference as so:
+\begin{equation*}
+	ref -> pll1 <=> pll2
+\end{equation*}
+required the creation of a weighted error combiner. Moved the PFD out of the PLL block for reuse between neighbours.
+
+\section*{Baby's First Floorplanning}
+Did things with floorplanning in order to ensure the ring oscillator doesnt change its frequency all the time.
+	
 
 
 
