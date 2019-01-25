@@ -746,22 +746,20 @@ set_property CONFIG_VOLTAGE 3.3 [current_design]
 #This line specifies generation of a compressed bitstream, for faster configuration
 set_property BITSTREAM.GENERAL.COMPRESS TRUE [current_design]
 
-
-
-
-
-
-
 #set_property ALLOW_COMBINATORIAL_LOOPS TRUE [get_nets testRing/ringwire_c[7776]]
 #set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets {testRing/ringwire_c[7775]}]
 #set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets {testRing/ringwire_c[7774]}]
 
+create_pblock pblock_otherAdpll
+add_cells_to_pblock [get_pblocks pblock_otherAdpll] [get_cells -quiet [list otherAdpll]]
+resize_pblock [get_pblocks pblock_otherAdpll] -add {SLICE_X0Y147:SLICE_X7Y152}
+create_pblock pblock_refAdpll
+add_cells_to_pblock [get_pblocks pblock_refAdpll] [get_cells -quiet [list refAdpll]]
+resize_pblock [get_pblocks pblock_refAdpll] -add {SLICE_X0Y139:SLICE_X7Y144}
+create_pblock pblock_refPDet
+add_cells_to_pblock [get_pblocks pblock_refPDet] [get_cells -quiet [list refPDet]]
+resize_pblock [get_pblocks pblock_refPDet] -add {SLICE_X0Y137:SLICE_X7Y138}
 
-set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets {adpll/testRing/ringwire_c[0]}]
-
-set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets adpll/testRing/ringwire_c[0]]
-
-set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets {adpll/testRing/ringwire_c[524]}]
-
-set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets adpll/testRing/ringwire_c[524]]
-
+create_pblock pblock_otherPDet
+add_cells_to_pblock [get_pblocks pblock_otherPDet] [get_cells -quiet [list otherPDet]]
+resize_pblock [get_pblocks pblock_otherPDet] -add {SLICE_X0Y145:SLICE_X7Y146}

@@ -14,6 +14,8 @@ module TwoConnectedTest (
     localparam ACCUM_WIDTH = 12;
 	localparam BIAS = 12'd154; //154 = 10 MHz
 	localparam PDET_WITH = 8;
+    //optimal gains => kp @ 1.4 = 1000 lower
+    //                 ki @ 1.8 = 1000 lower 
     
 	wire reset_x;
  
@@ -66,8 +68,10 @@ module TwoConnectedTest (
     );
 
     assign clk5_x = clk5_0_x;
+    assign ra_o[0] = ref_adpll_gen_x;
     assign ra_o[1] = gen_reference_x;
     assign ra_o[2] = ext_reference_x;
+    assign ra_o[4] = other_adpll_gen_x;
 
     PhaseAccum #(.WIDTH(ACCUM_WIDTH)) referenceOsc (
         .enable_i(1'b1),
@@ -78,11 +82,11 @@ module TwoConnectedTest (
     ); 
 
     wire [5-1:0] padded_kp_c;
-    wire [8-1:0] padded_ki_c;
+    wire [9-1:0] padded_ki_c;
     assign padded_kp_c = {1'b0,kp_sel_x}; //opt is 5'b0 1001
-    assign padded_ki_c = {4'b0000,ki_sel_x}; //opt is 8'b0000 0001
+    assign padded_ki_c = {5'b00000,ki_sel_x}; //opt is 8'b0000 0001
 	
-	PhaseDetector #(.WIDTH(PDET_WITH)) testPDet ( // output to ref_adpll
+	PhaseDetector #(.WIDTH(PDET_WITH)) refPDet ( // output to ref_adpll
 		.reset_i(reset_x), 
 		.fpga_clk_i(clk258_x),
 		.reference_i(ext_reference_x),
@@ -95,8 +99,8 @@ module TwoConnectedTest (
         //.KP(5'b00001),
         .KP_WIDTH(5),
         .KP_FRAC_WIDTH(4),
-        .KI_WIDTH(8),
-        .KI_FRAC_WIDTH(7),
+        .KI_WIDTH(9),
+        .KI_FRAC_WIDTH(8),
         //.KI(7'b0000001)
         .DYNAMIC_VAL(1'b1) 
     ) 
@@ -106,7 +110,7 @@ module TwoConnectedTest (
         .fpga_clk_i(clk258_x),
         .enable_i(switches_i[15]),
 		.error_top_x(8'd0),
-		.error_right_x(ref_adpll_error_x), //replace this w/ ~other_adpll_error_x
+		.error_right_x(~other_adpll_error_x), //replace this w/ ~other_adpll_error_x
 		.error_bottom_x(8'd0),
 		.error_left_x(ref_adpll_error_x),
         .gen_clk_o(ref_adpll_gen_x),
@@ -115,11 +119,12 @@ module TwoConnectedTest (
         .ki_i(padded_ki_c) //padded_ki_c
     );
 
-	PhaseDetector #(.WIDTH(PDET_WITH)) testPDet ( // output to other, complement to ref_adpll
+	(* DONT_TOUCH = "TRUE" *) 
+    PhaseDetector #(.WIDTH(PDET_WITH)) otherPDet ( // output to other, complement to ref_adpll
 		.reset_i(reset_x), 
-		.fpga_clk_i(fpga_clk_i),
+		.fpga_clk_i(clk258_x),
 		.reference_i(ref_adpll_div8_x),
-		.generated_i(other_adpll_error_x),
+		.generated_i(other_adpll_div8_x),
 		.pd_clock_cycles_o(other_adpll_error_x)
 	);
 	
@@ -128,8 +133,8 @@ module TwoConnectedTest (
         //.KP(5'b00001),
         .KP_WIDTH(5),
         .KP_FRAC_WIDTH(4),
-        .KI_WIDTH(8),
-        .KI_FRAC_WIDTH(7),
+        .KI_WIDTH(9),
+        .KI_FRAC_WIDTH(8),
         //.KI(7'b0000001)
         .DYNAMIC_VAL(1'b1) 
     ) 
