@@ -3,16 +3,16 @@
 module RingADPLL #(
 		parameter RO_WIDTH = 5,
 		parameter PDET_WITH = 8,
-		parameter RINGSIZE = 271, 
+		parameter RINGSIZE = 399, 
 		parameter BIAS = 5'd16, 
 		//LoopFilter
 		parameter DYNAMIC_VAL = 0,
 		parameter ERROR_WIDTH = 8,
-		parameter KP_WIDTH = 3,
-		parameter KP_FRAC_WIDTH = 1,
-		parameter KP = 3'b010,
+		parameter KP_WIDTH = 5,
+		parameter KP_FRAC_WIDTH = 0,
+		parameter KP = 4'b0100,
 		parameter KI_WIDTH = 4,
-		parameter KI_FRAC_WIDTH = 3,
+		parameter KI_FRAC_WIDTH = 0,
 		parameter KI = 4'b0001
 	)
 	(
@@ -42,7 +42,7 @@ module RingADPLL #(
 
     RingOsc #(.RINGSIZE(RINGSIZE), .CTRL_WIDTH(RO_WIDTH)) testRing( 
         .enable_i (~reset_i),
-        .freq_sel_i (5'd16),
+        .freq_sel_i (f_sel_sw_ro_x),
         .clk_o (gen_clk_x)
 	);
 	Div8 div8 ( 
