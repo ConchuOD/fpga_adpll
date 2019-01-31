@@ -746,20 +746,29 @@ set_property CONFIG_VOLTAGE 3.3 [current_design]
 #This line specifies generation of a compressed bitstream, for faster configuration
 set_property BITSTREAM.GENERAL.COMPRESS TRUE [current_design]
 
-#set_property ALLOW_COMBINATORIAL_LOOPS TRUE [get_nets testRing/ringwire_c[7776]]
-#set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets {testRing/ringwire_c[7775]}]
-#set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets {testRing/ringwire_c[7774]}]
+set_property ALLOW_COMBINATORIAL_LOOPS TRUE [get_nets adpll/testRing/ringwire_c[168]]
+set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets {adpll/testRing/ringwire_c[168]}]
+set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets -of_objects [get_cells adpll/testRing/ringwire_c[168]]]
+#set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets -of_objects [get_cells adpll/testRing/ringwire_c]]
+#set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets -of_objects [get_cells ringwire_c_orig0]]
+#set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets -of_objects [get_cells ringwire_c_inferred_i_1]]
+set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets -of_objects [get_cells adpll/testRing/inverter__14]]
+#set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets -of_objects [get_cells adpll/testRing/ringwire_c_inferred_i_184_n_0]]
 
-create_pblock pblock_otherAdpll
-add_cells_to_pblock [get_pblocks pblock_otherAdpll] [get_cells -quiet [list otherAdpll]]
-resize_pblock [get_pblocks pblock_otherAdpll] -add {SLICE_X0Y147:SLICE_X7Y152}
-create_pblock pblock_refAdpll
-add_cells_to_pblock [get_pblocks pblock_refAdpll] [get_cells -quiet [list refAdpll]]
-resize_pblock [get_pblocks pblock_refAdpll] -add {SLICE_X0Y139:SLICE_X7Y144}
-create_pblock pblock_refPDet
-add_cells_to_pblock [get_pblocks pblock_refPDet] [get_cells -quiet [list refPDet]]
-resize_pblock [get_pblocks pblock_refPDet] -add {SLICE_X0Y137:SLICE_X7Y138}
+set_property SEVERITY {Warning}  [get_drc_checks LUTLP-1]
 
-create_pblock pblock_otherPDet
-add_cells_to_pblock [get_pblocks pblock_otherPDet] [get_cells -quiet [list otherPDet]]
-resize_pblock [get_pblocks pblock_otherPDet] -add {SLICE_X0Y145:SLICE_X7Y146}
+set_property SEVERITY {Warning} [get_drc_checks NSTD-1]
+
+#create_pblock pblock_otherAdpll
+#add_cells_to_pblock [get_pblocks pblock_otherAdpll] [get_cells -quiet [list otherAdpll]]
+#resize_pblock [get_pblocks pblock_otherAdpll] -add {SLICE_X0Y147:SLICE_X7Y152}
+#create_pblock pblock_refAdpll
+#add_cells_to_pblock [get_pblocks pblock_refAdpll] [get_cells -quiet [list refAdpll]]
+#resize_pblock [get_pblocks pblock_refAdpll] -add {SLICE_X0Y139:SLICE_X7Y144}
+#create_pblock pblock_refPDet
+#add_cells_to_pblock [get_pblocks pblock_refPDet] [get_cells -quiet [list refPDet]]
+#resize_pblock [get_pblocks pblock_refPDet] -add {SLICE_X0Y137:SLICE_X7Y138}
+
+#create_pblock pblock_otherPDet
+#add_cells_to_pblock [get_pblocks pblock_otherPDet] [get_cells -quiet [list otherPDet]]
+#resize_pblock [get_pblocks pblock_otherPDet] -add {SLICE_X0Y145:SLICE_X7Y146}

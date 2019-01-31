@@ -65,6 +65,9 @@ module TwoByTwoTest (
 	
 	assign ext_reference_x = ra_i;
 
+    wire enable_x = switches_i[15];
+    wire uni_dir_x = switches_i[14];
+
     assign kp_sel_x = switches_i[11:8];
     assign ki_sel_x = switches_i[3:0];
     assign kp_ki_c = {kp_sel_x,ki_sel_x};
@@ -104,7 +107,7 @@ module TwoByTwoTest (
     (
         .reset_i(reset_x),
         .fpga_clk_i(clk258_x),
-        .enable_i(switches_i[15]),
+        .enable_i(enable_x),
         .error_right_i(~adpll_12_error_left_x), //adpll12
         .error_bottom_i(~adpll_21_error_above_x), //adpll21
         .ref_left_i(ext_reference_x), //reference

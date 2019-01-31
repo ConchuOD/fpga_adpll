@@ -16,7 +16,7 @@ module Div8 (
  	assign d1_c = ~q1_r;
  	assign d2_c = ~q2_r;
 
- 	assign div1_0 = signal_i;
+ 	assign div1_o = signal_i;
  	assign div2_o = q0_r;
  	assign div4_o = q1_r;
  	assign div8_o = q2_r;

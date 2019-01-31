@@ -2,7 +2,7 @@
 
 module NetworkADPLL #(
 		parameter ACCUM_WIDTH = 12,
-		parameter PDET_WITH = 8,
+		parameter PDET_WIDTH = 8,
 		parameter BIAS = 12'd76, //5 MHZ @ 258 MHZ CLOCK
 		parameter DCO_CC_WIDTH = 9,
 		//LoopFilter
@@ -22,8 +22,8 @@ module NetworkADPLL #(
         input wire fpga_clk_i,		
         input wire ref_left_i,
         input wire ref_above_i,
-		input wire [PDET_WITH-1:0] error_right_i,
-		input wire [PDET_WITH-1:0] error_bottom_i,
+		input wire [PDET_WIDTH-1:0] error_right_i,
+		input wire [PDET_WIDTH-1:0] error_bottom_i,
 		input wire [KP_WIDTH-1:0] kp_i,
 		input wire [KI_WIDTH-1:0] ki_i,
 		input wire [WEIGHT_WIDTH-1:0] weight_left_i,
@@ -32,8 +32,8 @@ module NetworkADPLL #(
 		input wire [WEIGHT_WIDTH-1:0] weight_below_i,
         output wire gen_clk_o,
         output wire gen_div8_o,
-        output wire signed [PDET_WITH-1:0] error_left_o,
-        output wire signed [PDET_WITH-1:0] error_above_o,
+        output wire signed [PDET_WIDTH-1:0] error_left_o,
+        output wire signed [PDET_WIDTH-1:0] error_above_o,
         output wire signed [DCO_CC_WIDTH-1:0] dco_cc_o
     );
 	
@@ -42,7 +42,7 @@ module NetworkADPLL #(
     wire [ACCUM_WIDTH-1:0] f_sel_sw_pa_x; //TODO
     wire gen_clk_x;
     wire gen_div8_x;
-    wire signed [PDET_WITH-1:0] error_x;
+    wire signed [PDET_WIDTH-1:0] error_x;
 
     assign gen_clk_o = gen_clk_x;
     assign gen_div8_o = gen_div8_x;
@@ -50,7 +50,7 @@ module NetworkADPLL #(
     assign error_above_o = error_above_x;
 	
 	
-	PhaseDetector #(.WIDTH(PDET_WITH)) pDetLeft (
+	PhaseDetector #(.WIDTH(PDET_WIDTH)) pDetLeft (
 		.reset_i(reset_i), 
 		.fpga_clk_i(fpga_clk_i),
 		.reference_i(ref_left_i),
@@ -58,7 +58,7 @@ module NetworkADPLL #(
 		.pd_clock_cycles_o(error_left_x)
 	);
 
-	PhaseDetector #(.WIDTH(PDET_WITH)) pDetAbove (
+	PhaseDetector #(.WIDTH(PDET_WIDTH)) pDetAbove (
 		.reset_i(reset_i), 
 		.fpga_clk_i(fpga_clk_i),
 		.reference_i(ref_above_i),

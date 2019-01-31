@@ -83,8 +83,8 @@ module TwoConnectedTest (
 
     wire [5-1:0] padded_kp_c;
     wire [9-1:0] padded_ki_c;
-    assign padded_kp_c = {1'b0,kp_sel_x}; //opt is 5'b0 1001
-    assign padded_ki_c = {5'b00000,ki_sel_x}; //opt is 8'b0000 0001
+    assign padded_kp_c = {1'b0,kp_sel_x}; //opt is 5'b0 1000
+    assign padded_ki_c = {5'b00000,ki_sel_x}; //opt is 8'b0000 1001
 	
 	PhaseDetector #(.WIDTH(PDET_WITH)) refPDet ( // output to ref_adpll
 		.reset_i(reset_x), 
