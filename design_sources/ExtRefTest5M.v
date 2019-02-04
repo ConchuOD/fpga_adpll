@@ -35,10 +35,10 @@ module ExtRefTest5M (
     wire signed [7:0] error_x;
     wire [7:0] error_hex_x;
 
-    assign ref_sel_c = 12'd80;
-    
-    assign kp_sel_x = switches_i[11:8];
-    assign ki_sel_x = switches_i[3:0];
+    assign ref_sel_c = 12'd90;
+
+    assign kp_sel_x = switches_i[14:8];
+    assign ki_sel_x = switches_i[6:0];
 	
 	assign ext_reference_x = ra_i;
 
@@ -65,18 +65,18 @@ module ExtRefTest5M (
         .k_val_i(ref_sel_c)
     ); 
 
-    wire [5:0] padded_kp_c;
-    wire [4:0] padded_ki_c;
-    assign padded_kp_c = {2'b00,kp_sel_x}; //opt is 5'b0 1001
+    wire [7:0] padded_kp_c;
+    wire [7:0] padded_ki_c;
+    assign padded_kp_c = {1'b0,kp_sel_x}; //opt is 5'b0 1001
     assign padded_ki_c = {1'b0,ki_sel_x}; //opt is 8'b0000 0001
 
 	RingADPLL #(
         .BIAS(BIAS),
         //.KP(5'b00001),
-        .KP_WIDTH(6),
-        .KP_FRAC_WIDTH(0),
-        .KI_WIDTH(5),
-        .KI_FRAC_WIDTH(0),
+        .KP_WIDTH(8),
+        .KP_FRAC_WIDTH(5),
+        .KI_WIDTH(8),
+        .KI_FRAC_WIDTH(7),
         //.KI(7'b0000001)
         .DYNAMIC_VAL(1'b1)  
     ) 
@@ -85,7 +85,7 @@ module ExtRefTest5M (
         .reset_i(reset_x),
         .fpga_clk_i(clk258_x),
         .ref_clk_i(gen_reference_x),
-        .enable_i(switches_i[0]),
+        .enable_i(switches_i[15]),
         .gen_clk_o(ra_o[0]),
         .error_o(error_x),
         .kp_i(padded_kp_c),

@@ -20,7 +20,7 @@ module ErrorCombinerTestBench ();
 	end
 
 
-	ErrorCombiner errorCombiner (
+	ErrorCombiner #(.WEIGHT_WIDTH(4)) errorCombiner (
 		.reset_i(reset_x),
         .weight_0_i(w0),
         .weight_1_i(w1),
@@ -36,12 +36,12 @@ module ErrorCombinerTestBench ();
 	initial
 	begin
 		rst_pbn = 1'b0;
-		w0 = 4'd2;
-		w1 = 4'd2;
-		w2 = 4'd0;
-		w3 = 4'd0;
+		w0 = 4'd1;
+		w1 = 4'd1;
+		w2 = 4'd1;
+		w3 = 4'd1;
 		e0 = 8'd10;
-		e1 = -8'd20;
+		e1 = -8'd40;
 		e2 = 8'd10;
 		e3 = 8'd10;
 		#10 

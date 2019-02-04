@@ -17,9 +17,6 @@ module LoopFilter #(
 		input wire signed [ERROR_WIDTH-1:0] error_i,
 		output wire signed [DCO_CC_WIDTH-1:0] dco_cc_o
 	);
-
-	wire signed [DCO_CC_WIDTH-1:0] deletethis;
-	assign deletethis = ki_error_trun_c+kp_error_trun_c;
 	
 	localparam KP_INT_WIDTH = KP_WIDTH-KP_FRAC_WIDTH;
 	localparam KI_INT_WIDTH = KI_WIDTH-KI_FRAC_WIDTH;
@@ -43,7 +40,7 @@ module LoopFilter #(
 	reg  signed [KI_MULT_RES_INT_WIDTH-1:-KI_FRAC_WIDTH] ki_error_inte_delay_r;
 	wire signed [ERROR_WIDTH-1:0] ki_error_trun_c;
 	
-	always @(DYNAMIC_VAL or reset_i)
+	always @(DYNAMIC_VAL or reset_i or kp_i or kp_i)
 	begin
 		if (DYNAMIC_VAL)
 		begin

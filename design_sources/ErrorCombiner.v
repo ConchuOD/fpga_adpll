@@ -20,13 +20,13 @@ module ErrorCombiner #(
 	localparam WEIGHTED_WIDTH = ERROR_WIDTH+WEIGHT_WIDTH;
 	localparam SUM_WIDTH = WEIGHTED_WIDTH+2; //+2 to fit times 4
 
-	wire [WEIGHTED_WIDTH-1:0] weighted_0_c;
-	wire [WEIGHTED_WIDTH-1:0] weighted_1_c;
-	wire [WEIGHTED_WIDTH-1:0] weighted_2_c;
-	wire [WEIGHTED_WIDTH-1:0] weighted_3_c;
+	wire signed [WEIGHTED_WIDTH-1:0] weighted_0_c;
+	wire signed [WEIGHTED_WIDTH-1:0] weighted_1_c;
+	wire signed [WEIGHTED_WIDTH-1:0] weighted_2_c;
+	wire signed [WEIGHTED_WIDTH-1:0] weighted_3_c;
 
-	wire [SUM_WIDTH-1:0] weighted_sum_c;
-	wire [ERROR_WIDTH-1:0] result_div4_c;
+	wire signed [SUM_WIDTH-1:0] weighted_sum_c;
+	wire signed [ERROR_WIDTH-1:0] result_div4_c;
 
 	assign weighted_0_c = weight_0_i*error_0_i;
 	assign weighted_1_c = weight_1_i*error_1_i;

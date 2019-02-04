@@ -12,14 +12,14 @@
    </db_ref_list>
    <zoom_setting>
       <ZoomStartTime time="0fs"></ZoomStartTime>
-      <ZoomEndTime time="274393065fs"></ZoomEndTime>
+      <ZoomEndTime time="1337905525fs"></ZoomEndTime>
       <Cursor1Time time="10000000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="197"></NameColumnWidth>
-      <ValueColumnWidth column_width="67"></ValueColumnWidth>
+      <NameColumnWidth column_width="138"></NameColumnWidth>
+      <ValueColumnWidth column_width="94"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="18" />
+   <WVObjectSize size="33" />
    <wvobject type="logic" fp_name="/ErrorCombinerTestBench/rst_pbn">
       <obj_property name="ElementShortName">rst_pbn</obj_property>
       <obj_property name="ObjectShortName">rst_pbn</obj_property>
@@ -28,9 +28,58 @@
       <obj_property name="ElementShortName">clk5_x</obj_property>
       <obj_property name="ObjectShortName">clk5_x</obj_property>
    </wvobject>
+   <wvobject type="array" fp_name="/ErrorCombinerTestBench/error_x">
+      <obj_property name="ElementShortName">error_x[7:0]</obj_property>
+      <obj_property name="ObjectShortName">error_x[7:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/ErrorCombinerTestBench/w0">
+      <obj_property name="ElementShortName">w0[3:0]</obj_property>
+      <obj_property name="ObjectShortName">w0[3:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/ErrorCombinerTestBench/w1">
+      <obj_property name="ElementShortName">w1[3:0]</obj_property>
+      <obj_property name="ObjectShortName">w1[3:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/ErrorCombinerTestBench/w2">
+      <obj_property name="ElementShortName">w2[3:0]</obj_property>
+      <obj_property name="ObjectShortName">w2[3:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/ErrorCombinerTestBench/w3">
+      <obj_property name="ElementShortName">w3[3:0]</obj_property>
+      <obj_property name="ObjectShortName">w3[3:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/ErrorCombinerTestBench/e0">
+      <obj_property name="ElementShortName">e0[7:0]</obj_property>
+      <obj_property name="ObjectShortName">e0[7:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/ErrorCombinerTestBench/e1">
+      <obj_property name="ElementShortName">e1[7:0]</obj_property>
+      <obj_property name="ObjectShortName">e1[7:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/ErrorCombinerTestBench/e2">
+      <obj_property name="ElementShortName">e2[7:0]</obj_property>
+      <obj_property name="ObjectShortName">e2[7:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/ErrorCombinerTestBench/e3">
+      <obj_property name="ElementShortName">e3[7:0]</obj_property>
+      <obj_property name="ObjectShortName">e3[7:0]</obj_property>
+   </wvobject>
    <wvobject type="logic" fp_name="/ErrorCombinerTestBench/reset_x">
       <obj_property name="ElementShortName">reset_x</obj_property>
       <obj_property name="ObjectShortName">reset_x</obj_property>
+   </wvobject>
+   <wvobject fp_name="divider407" type="divider">
+      <obj_property name="label">Internals</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/ErrorCombinerTestBench/errorCombiner/reset_i">
+      <obj_property name="ElementShortName">reset_i</obj_property>
+      <obj_property name="ObjectShortName">reset_i</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/ErrorCombinerTestBench/errorCombiner/weight_0_i">
       <obj_property name="ElementShortName">weight_0_i[3:0]</obj_property>
@@ -55,22 +104,18 @@
    <wvobject type="array" fp_name="/ErrorCombinerTestBench/errorCombiner/error_0_i">
       <obj_property name="ElementShortName">error_0_i[7:0]</obj_property>
       <obj_property name="ObjectShortName">error_0_i[7:0]</obj_property>
-      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/ErrorCombinerTestBench/errorCombiner/error_1_i">
       <obj_property name="ElementShortName">error_1_i[7:0]</obj_property>
       <obj_property name="ObjectShortName">error_1_i[7:0]</obj_property>
-      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/ErrorCombinerTestBench/errorCombiner/error_2_i">
       <obj_property name="ElementShortName">error_2_i[7:0]</obj_property>
       <obj_property name="ObjectShortName">error_2_i[7:0]</obj_property>
-      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/ErrorCombinerTestBench/errorCombiner/error_3_i">
       <obj_property name="ElementShortName">error_3_i[7:0]</obj_property>
       <obj_property name="ObjectShortName">error_3_i[7:0]</obj_property>
-      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/ErrorCombinerTestBench/errorCombiner/error_comb_o">
       <obj_property name="ElementShortName">error_comb_o[7:0]</obj_property>
@@ -79,22 +124,18 @@
    <wvobject type="array" fp_name="/ErrorCombinerTestBench/errorCombiner/weighted_0_c">
       <obj_property name="ElementShortName">weighted_0_c[11:0]</obj_property>
       <obj_property name="ObjectShortName">weighted_0_c[11:0]</obj_property>
-      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/ErrorCombinerTestBench/errorCombiner/weighted_1_c">
       <obj_property name="ElementShortName">weighted_1_c[11:0]</obj_property>
       <obj_property name="ObjectShortName">weighted_1_c[11:0]</obj_property>
-      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/ErrorCombinerTestBench/errorCombiner/weighted_2_c">
       <obj_property name="ElementShortName">weighted_2_c[11:0]</obj_property>
       <obj_property name="ObjectShortName">weighted_2_c[11:0]</obj_property>
-      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/ErrorCombinerTestBench/errorCombiner/weighted_3_c">
       <obj_property name="ElementShortName">weighted_3_c[11:0]</obj_property>
       <obj_property name="ObjectShortName">weighted_3_c[11:0]</obj_property>
-      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/ErrorCombinerTestBench/errorCombiner/weighted_sum_c">
       <obj_property name="ElementShortName">weighted_sum_c[13:0]</obj_property>
@@ -104,6 +145,21 @@
    <wvobject type="array" fp_name="/ErrorCombinerTestBench/errorCombiner/result_div4_c">
       <obj_property name="ElementShortName">result_div4_c[7:0]</obj_property>
       <obj_property name="ObjectShortName">result_div4_c[7:0]</obj_property>
-      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/ErrorCombinerTestBench/errorCombiner/ERROR_WIDTH">
+      <obj_property name="ElementShortName">ERROR_WIDTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">ERROR_WIDTH[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/ErrorCombinerTestBench/errorCombiner/WEIGHT_WIDTH">
+      <obj_property name="ElementShortName">WEIGHT_WIDTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">WEIGHT_WIDTH[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/ErrorCombinerTestBench/errorCombiner/WEIGHTED_WIDTH">
+      <obj_property name="ElementShortName">WEIGHTED_WIDTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">WEIGHTED_WIDTH[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/ErrorCombinerTestBench/errorCombiner/SUM_WIDTH">
+      <obj_property name="ElementShortName">SUM_WIDTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">SUM_WIDTH[31:0]</obj_property>
    </wvobject>
 </wave_config>

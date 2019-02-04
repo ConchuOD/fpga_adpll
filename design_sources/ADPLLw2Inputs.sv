@@ -69,7 +69,7 @@ module ADPLLw2Inputs #(
 		.pd_clock_cycles_o(other_error_x)
 	);
 	ErrorCombiner errorCombiner ( //zero out unconnected, 2 weight on others
-		.reset_i(reset_x),
+		.reset_i(reset_i),
         .weight_0_i(3'b010),
         .weight_1_i(3'b010),
         .weight_2_i(3'd0),

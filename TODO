@@ -1,0 +1,5 @@
+1 - Retest TwoByTwo w/o error combiner and ensure it works.
+  - If this doesn't work then recheck TwoConnected.
+2 - Record this gain (should be on the board as is).
+3 - Reinsert error combiner & see if it locks.
+4 - ???

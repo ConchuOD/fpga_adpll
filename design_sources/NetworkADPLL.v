@@ -15,10 +15,11 @@ module NetworkADPLL #(
 		parameter KI_FRAC_WIDTH = 3,
 		parameter KI = 4'b0001,
 		//ErrorCombiner
-		parameter WEIGHT_WIDTH = 3
+		parameter WEIGHT_WIDTH = 4
 	)
 	(
         input wire reset_i,
+        input wire enable_i,
         input wire fpga_clk_i,		
         input wire ref_left_i,
         input wire ref_above_i,
@@ -43,6 +44,8 @@ module NetworkADPLL #(
     wire gen_clk_x;
     wire gen_div8_x;
     wire signed [PDET_WIDTH-1:0] error_x;
+    wire signed [PDET_WIDTH-1:0] error_left_x;
+    wire signed [PDET_WIDTH-1:0] error_above_x;
 
     assign gen_clk_o = gen_clk_x;
     assign gen_div8_o = gen_div8_x;
@@ -50,7 +53,7 @@ module NetworkADPLL #(
     assign error_above_o = error_above_x;
 	
 	
-	PhaseDetector #(.WIDTH(PDET_WIDTH)) pDetLeft (
+	(* DONT_TOUCH = "TRUE" *)  PhaseDetector #(.WIDTH(PDET_WIDTH)) pDetLeft (
 		.reset_i(reset_i), 
 		.fpga_clk_i(fpga_clk_i),
 		.reference_i(ref_left_i),
@@ -58,7 +61,7 @@ module NetworkADPLL #(
 		.pd_clock_cycles_o(error_left_x)
 	);
 
-	PhaseDetector #(.WIDTH(PDET_WIDTH)) pDetAbove (
+	(* DONT_TOUCH = "TRUE" *)  PhaseDetector #(.WIDTH(PDET_WIDTH)) pDetAbove (
 		.reset_i(reset_i), 
 		.fpga_clk_i(fpga_clk_i),
 		.reference_i(ref_above_i),
@@ -66,8 +69,8 @@ module NetworkADPLL #(
 		.pd_clock_cycles_o(error_above_x)
 	);
 	
-	ErrorCombiner errorCombiner ( //zero out unconnected, 2 weight on others
-		.reset_i(reset_x),
+	ErrorCombiner #(.WEIGHT_WIDTH(WEIGHT_WIDTH)) errorCombiner ( //zero out unconnected, 2 weight on others
+		.reset_i(reset_i),
         .weight_0_i(weight_above_i),
         .weight_1_i(weight_left_i),
         .weight_2_i(weight_right_i),
@@ -93,7 +96,7 @@ module NetworkADPLL #(
 	(
         .gen_clk_i(gen_clk_x),
         .reset_i(reset_i),
-        .error_i(error_x),
+        .error_i(error_left_x),
         .kp_i(kp_i),
         .ki_i(ki_i),
         .dco_cc_o(dco_cc_o) 

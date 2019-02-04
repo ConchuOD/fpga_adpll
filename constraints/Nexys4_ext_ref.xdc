@@ -258,29 +258,29 @@ set_property IOSTANDARD LVCMOS33 [get_ports ra_i]
 
 ##Pmod Header JB, right side front - for connecting external hardware
 ##Bank = 15, Pin name = IO_L15N_T2_DQS_ADV_B_15,				Sch name = JB1
-#set_property PACKAGE_PIN G14 [get_ports {JB[0]}]
-#set_property IOSTANDARD LVCMOS33 [get_ports {JB[0]}]
+set_property PACKAGE_PIN G14 [get_ports {JB[0]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {JB[0]}]
 ##Bank = 14, Pin name = IO_L13P_T2_MRCC_14,					Sch name = JB2
-#set_property PACKAGE_PIN P15 [get_ports {JB[1]}]
-#set_property IOSTANDARD LVCMOS33 [get_ports {JB[1]}]
+set_property PACKAGE_PIN P15 [get_ports {JB[1]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {JB[1]}]
 ##Bank = 14, Pin name = IO_L21N_T3_DQS_A06_D22_14,			Sch name = JB3
-#set_property PACKAGE_PIN V11 [get_ports {JB[2]}]
-#set_property IOSTANDARD LVCMOS33 [get_ports {JB[2]}]
+set_property PACKAGE_PIN V11 [get_ports {JB[2]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {JB[2]}]
 ##Bank = CONFIG, Pin name = IO_L16P_T2_CSI_B_14,				Sch name = JB4
-#set_property PACKAGE_PIN V15 [get_ports {JB[3]}]
-#set_property IOSTANDARD LVCMOS33 [get_ports {JB[3]}]
+set_property PACKAGE_PIN V15 [get_ports {JB[3]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {JB[3]}]
 ##Bank = 15, Pin name = IO_25_15,							Sch name = JB7
-#set_property PACKAGE_PIN K16 [get_ports {JB[4]}]
-#set_property IOSTANDARD LVCMOS33 [get_ports {JB[4]}]
+set_property PACKAGE_PIN K16 [get_ports {JB[4]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {JB[4]}]
 ##Bank = CONFIG, Pin name = IO_L15P_T2_DQS_RWR_B_14,			Sch name = JB8
-#set_property PACKAGE_PIN R16 [get_ports {JB[5]}]
-#set_property IOSTANDARD LVCMOS33 [get_ports {JB[5]}]
+set_property PACKAGE_PIN R16 [get_ports {JB[5]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {JB[5]}]
 ##Bank = 14, Pin name = IO_L24P_T3_A01_D17_14,				Sch name = JB9
-#set_property PACKAGE_PIN T9 [get_ports {JB[6]}]
-#set_property IOSTANDARD LVCMOS33 [get_ports {JB[6]}]
+set_property PACKAGE_PIN T9 [get_ports {JB[6]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {JB[6]}]
 ##Bank = 14, Pin name = IO_L19N_T3_A09_D25_VREF_14,			Sch name = JB10
-#set_property PACKAGE_PIN U11 [get_ports {JB[7]}]
-#set_property IOSTANDARD LVCMOS33 [get_ports {JB[7]}]
+set_property PACKAGE_PIN U11 [get_ports {JB[7]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {JB[7]}]
 
 ##Pmod Header JC, left side front - for connecting external hardware
 ##Bank = 35, Pin name = IO_L23P_T3_35,						Sch name = JC1
@@ -746,7 +746,6 @@ set_property CONFIG_VOLTAGE 3.3 [current_design]
 #This line specifies generation of a compressed bitstream, for faster configuration
 set_property BITSTREAM.GENERAL.COMPRESS TRUE [current_design]
 
-set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets {adpll/testRing/ringwire_c[168]}]
 #set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets -of_objects [get_cells adpll/testRing/ringwire_c]]
 #set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets -of_objects [get_cells ringwire_c_orig0]]
 #set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets -of_objects [get_cells ringwire_c_inferred_i_1]]
@@ -767,4 +766,81 @@ set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets {adpll/testRing/ringwire_c
 #create_pblock pblock_otherPDet
 #add_cells_to_pblock [get_pblocks pblock_otherPDet] [get_cells -quiet [list otherPDet]]
 #resize_pblock [get_pblocks pblock_otherPDet] -add {SLICE_X0Y145:SLICE_X7Y146}
+
+
+create_pblock pblock_testOsc
+add_cells_to_pblock [get_pblocks pblock_testOsc] [get_cells -quiet [list adpll_11/testOsc]]
+resize_pblock [get_pblocks pblock_testOsc] -add {SLICE_X72Y96:SLICE_X77Y97}
+create_pblock pblock_pDetLeft
+add_cells_to_pblock [get_pblocks pblock_pDetLeft] [get_cells -quiet [list adpll_11/pDetLeft]]
+resize_pblock [get_pblocks pblock_pDetLeft] -add {SLICE_X68Y86:SLICE_X71Y91}
+create_pblock pblock_div8
+add_cells_to_pblock [get_pblocks pblock_div8] [get_cells -quiet [list adpll_11/div8]]
+resize_pblock [get_pblocks pblock_div8] -add {SLICE_X74Y94:SLICE_X77Y95}
+create_pblock pblock_loopFilter
+add_cells_to_pblock [get_pblocks pblock_loopFilter] [get_cells -quiet [list adpll_11/loopFilter]]
+resize_pblock [get_pblocks pblock_loopFilter] -add {SLICE_X72Y86:SLICE_X77Y93}
+create_pblock pblock_errorCombiner
+add_cells_to_pblock [get_pblocks pblock_errorCombiner] [get_cells -quiet [list adpll_11/errorCombiner]]
+resize_pblock [get_pblocks pblock_errorCombiner] -add {SLICE_X72Y83:SLICE_X77Y85}
+create_pblock pblock_testOsc_1
+add_cells_to_pblock [get_pblocks pblock_testOsc_1] [get_cells -quiet [list adpll_12/testOsc]]
+resize_pblock [get_pblocks pblock_testOsc_1] -add {SLICE_X82Y96:SLICE_X87Y97}
+create_pblock pblock_pDetLeft_1
+add_cells_to_pblock [get_pblocks pblock_pDetLeft_1] [get_cells -quiet [list adpll_12/pDetLeft]]
+resize_pblock [get_pblocks pblock_pDetLeft_1] -add {SLICE_X78Y86:SLICE_X81Y91}
+create_pblock pblock_loopFilter_1
+add_cells_to_pblock [get_pblocks pblock_loopFilter_1] [get_cells -quiet [list adpll_12/loopFilter]]
+resize_pblock [get_pblocks pblock_loopFilter_1] -add {SLICE_X82Y86:SLICE_X87Y93}
+create_pblock pblock_errorCombiner_1
+add_cells_to_pblock [get_pblocks pblock_errorCombiner_1] [get_cells -quiet [list adpll_12/errorCombiner]]
+resize_pblock [get_pblocks pblock_errorCombiner_1] -add {SLICE_X82Y83:SLICE_X87Y85}
+create_pblock pblock_div8_1
+add_cells_to_pblock [get_pblocks pblock_div8_1] [get_cells -quiet [list adpll_12/div8]]
+resize_pblock [get_pblocks pblock_div8_1] -add {SLICE_X84Y94:SLICE_X87Y95}
+
+create_pblock pblock_errorCombiner_2
+add_cells_to_pblock [get_pblocks pblock_errorCombiner_2] [get_cells -quiet [list adpll_21/errorCombiner]]
+resize_pblock [get_pblocks pblock_errorCombiner_2] -add {SLICE_X72Y70:SLICE_X77Y72}
+create_pblock pblock_loopFilter_2
+add_cells_to_pblock [get_pblocks pblock_loopFilter_2] [get_cells -quiet [list adpll_21/loopFilter]]
+resize_pblock [get_pblocks pblock_loopFilter_2] -add {SLICE_X72Y62:SLICE_X77Y69}
+create_pblock pblock_div8_2
+add_cells_to_pblock [get_pblocks pblock_div8_2] [get_cells -quiet [list adpll_21/div8]]
+resize_pblock [get_pblocks pblock_div8_2] -add {SLICE_X74Y60:SLICE_X77Y61}
+create_pblock pblock_pDetAbove
+add_cells_to_pblock [get_pblocks pblock_pDetAbove] [get_cells -quiet [list adpll_21/pDetAbove]]
+resize_pblock [get_pblocks pblock_pDetAbove] -add {SLICE_X72Y75:SLICE_X77Y80}
+create_pblock pblock_testOsc_2
+add_cells_to_pblock [get_pblocks pblock_testOsc_2] [get_cells -quiet [list adpll_21/testOsc]]
+resize_pblock [get_pblocks pblock_testOsc_2] -add {SLICE_X72Y58:SLICE_X77Y59}
+create_pblock pblock_pDetAbove_1
+add_cells_to_pblock [get_pblocks pblock_pDetAbove_1] [get_cells -quiet [list adpll_22/pDetAbove]]
+resize_pblock [get_pblocks pblock_pDetAbove_1] -add {SLICE_X82Y75:SLICE_X87Y80}
+create_pblock pblock_errorCombiner_3
+add_cells_to_pblock [get_pblocks pblock_errorCombiner_3] [get_cells -quiet [list adpll_22/errorCombiner]]
+resize_pblock [get_pblocks pblock_errorCombiner_3] -add {SLICE_X82Y70:SLICE_X87Y72}
+create_pblock pblock_loopFilter_3
+add_cells_to_pblock [get_pblocks pblock_loopFilter_3] [get_cells -quiet [list adpll_22/loopFilter]]
+resize_pblock [get_pblocks pblock_loopFilter_3] -add {SLICE_X82Y62:SLICE_X87Y69}
+create_pblock pblock_div8_3
+add_cells_to_pblock [get_pblocks pblock_div8_3] [get_cells -quiet [list adpll_22/div8]]
+resize_pblock [get_pblocks pblock_div8_3] -add {SLICE_X84Y60:SLICE_X87Y61}
+create_pblock pblock_testOsc_3
+add_cells_to_pblock [get_pblocks pblock_testOsc_3] [get_cells -quiet [list adpll_22/testOsc]]
+resize_pblock [get_pblocks pblock_testOsc_3] -add {SLICE_X82Y58:SLICE_X87Y59}
+
+create_pblock pblock_pDetLeft_2
+add_cells_to_pblock [get_pblocks pblock_pDetLeft_2] [get_cells -quiet [list adpll_22/pDetLeft]]
+resize_pblock [get_pblocks pblock_pDetLeft_2] -add {SLICE_X78Y64:SLICE_X81Y69}
+
+create_pblock pblock_pDetLeft_3
+add_cells_to_pblock [get_pblocks pblock_pDetLeft_3] [get_cells -quiet [list adpll_21/pDetLeft]]
+resize_pblock [get_pblocks pblock_pDetLeft_3] -add {SLICE_X68Y64:SLICE_X71Y69}
+create_pblock pblock_pDetAbove_2
+add_cells_to_pblock [get_pblocks pblock_pDetAbove_2] [get_cells -quiet [list adpll_11/pDetAbove]]
+resize_pblock [get_pblocks pblock_pDetAbove_2] -add {SLICE_X72Y100:SLICE_X77Y103}
+create_pblock pblock_pDetAbove_3
+add_cells_to_pblock [get_pblocks pblock_pDetAbove_3] [get_cells -quiet [list adpll_12/pDetAbove]]
+resize_pblock [get_pblocks pblock_pDetAbove_3] -add {SLICE_X82Y100:SLICE_X87Y103}
 
