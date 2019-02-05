@@ -69,16 +69,16 @@ module NetworkADPLL #(
 		.pd_clock_cycles_o(error_above_x)
 	);
 	
-	ErrorCombiner #(.WEIGHT_WIDTH(WEIGHT_WIDTH)) errorCombiner ( //zero out unconnected, 2 weight on others
+	(* DONT_TOUCH = "TRUE" *)  ErrorCombiner #(.WEIGHT_WIDTH(WEIGHT_WIDTH)) errorCombiner ( //zero out unconnected, 2 weight on others
 		.reset_i(reset_i),
         .weight_0_i(weight_above_i),
         .weight_1_i(weight_left_i),
         .weight_2_i(weight_right_i),
         .weight_3_i(weight_below_i),
         .error_0_i(error_above_x),
-        .error_3_i(error_left_x),
-        .error_1_i(error_right_i),        
-        .error_2_i(error_bottom_i),
+        .error_1_i(error_left_x),
+        .error_2_i(error_right_i),        
+        .error_3_i(error_bottom_i),
         .error_comb_o(error_x)
 	);
     LoopFilter #(
@@ -96,7 +96,7 @@ module NetworkADPLL #(
 	(
         .gen_clk_i(gen_clk_x),
         .reset_i(reset_i),
-        .error_i(error_left_x),
+        .error_i(error_x),
         .kp_i(kp_i),
         .ki_i(ki_i),
         .dco_cc_o(dco_cc_o) 

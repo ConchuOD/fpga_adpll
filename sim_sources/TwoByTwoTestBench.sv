@@ -57,12 +57,14 @@ module TwoByTwoTestBench ();
 	initial
 	begin
 		rst_pbn = 1'b0;
-        switches_x = 16'b000010010000001;
+        switches_x = 16'h0801;
 		#100
 		rst_pbn = 1'b1;
         #10
-        switches_x[15:14] = 2'b10;
+        switches_x[15:14] = 2'b11;
 		#1000000
+        switches_x[14] = 1'b0;
+        #1000000
         $stop;
         //$finish;
 	end

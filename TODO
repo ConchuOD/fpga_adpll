@@ -1,5 +1,4 @@
-1 - Retest TwoByTwo w/o error combiner and ensure it works.
-  - If this doesn't work then recheck TwoConnected.
-2 - Record this gain (should be on the board as is).
-3 - Reinsert error combiner & see if it locks.
+2 - Record this gain (should be on the board as is). (1011, 0111)
+3 - Reinsert error combiner & see if it locks. (All interior lock to eachother, not to ext ref.)
 4 - ???
+5- 1.07 - 1.3 (*8)

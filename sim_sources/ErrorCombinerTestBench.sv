@@ -40,10 +40,10 @@ module ErrorCombinerTestBench ();
 		w1 = 4'd1;
 		w2 = 4'd1;
 		w3 = 4'd1;
-		e0 = 8'd10;
-		e1 = -8'd40;
-		e2 = 8'd10;
-		e3 = 8'd10;
+		e0 = -8'd128;
+		e1 = -8'd128;
+		e2 = -8'd128;
+		e3 = -8'd128;
 		#10 
 		rst_pbn = 1'b1;
 		#1000
