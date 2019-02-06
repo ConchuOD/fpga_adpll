@@ -7,6 +7,7 @@ module RingADPLLTestBench ();
     reg ref_clk_x;
 	reg ref_div8_x;
     reg clk258_x;
+    reg enable_x;
 	
 	wire reset_x;
 
@@ -60,6 +61,9 @@ module RingADPLLTestBench ();
 	initial
 	begin
 		rst_pbn = 1'b0;
+		enable_x = 1'b0;
+		#1
+		enable_x = 1'b1;
 		#1000
 		rst_pbn = 1'b1;
 		#100000

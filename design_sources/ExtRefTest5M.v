@@ -35,7 +35,7 @@ module ExtRefTest5M (
     wire signed [7:0] error_x;
     wire [7:0] error_hex_x;
 
-    assign ref_sel_c = 12'd90;
+    assign ref_sel_c = 12'd83;
 
     assign kp_sel_x = switches_i[14:8];
     assign ki_sel_x = switches_i[6:0];
@@ -73,7 +73,7 @@ module ExtRefTest5M (
 	RingADPLL #(
         .BIAS(BIAS),
         //.KP(5'b00001),
-        .KP_WIDTH(8),
+        .KP_WIDTH(6),
         .KP_FRAC_WIDTH(5),
         .KI_WIDTH(8),
         .KI_FRAC_WIDTH(7),

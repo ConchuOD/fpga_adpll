@@ -4,7 +4,7 @@ module RingOscTest();//rename file
     reg enable_r;
     reg [4:0] f_select;
     
-    RingOsc #(.CTRL_WIDTH(5)) testRing( //
+    RingOsc #(.RINGSIZE(421), .CTRL_WIDTH(5)) testRing( //
 				.enable_i (enable_r),
     			.freq_sel_i (f_select),
     			.clk_o (clkmine)
