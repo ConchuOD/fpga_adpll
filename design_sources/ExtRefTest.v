@@ -61,6 +61,7 @@ module ExtRefTest (
 	ADPLL #(
 		.BIAS(BIAS),
 		.KP(5'b00001),
+		.KP_WIDTH(5),
         .KP_FRAC_WIDTH(4),
 		.KI_WIDTH(7),
 		.KI_FRAC_WIDTH(6),
