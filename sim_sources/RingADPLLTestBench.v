@@ -11,7 +11,7 @@ module RingADPLLTestBench ();
 	
 	wire reset_x;
 
-    wire signed [7:0] error_x;
+    wire signed [4:0] error_x;
     wire signed [4:0] dco_cc;
     wire [7:0] error_hex_x;
 

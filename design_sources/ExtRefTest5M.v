@@ -12,7 +12,13 @@ module ExtRefTest5M (
     );
 
     localparam ACCUM_WIDTH = 12;
-	localparam BIAS = 12'd154;
+
+    // w/ div1:
+    //          kp @ 1.5 = 0111
+    //          ki @ 1.7 = 0001
+    // w/ div2:
+    //          kp @ 1.5 = 1001
+    //          ki @ 1.7 = 0001
     
 	wire reset_x;
  
@@ -35,7 +41,7 @@ module ExtRefTest5M (
     wire signed [7:0] error_x;
     wire [7:0] error_hex_x;
 
-    assign ref_sel_c = 12'd83;
+    assign ref_sel_c = 12'd8;
 
     assign kp_sel_x = switches_i[14:8];
     assign ki_sel_x = switches_i[6:0];
@@ -71,7 +77,6 @@ module ExtRefTest5M (
     assign padded_ki_c = {1'b0,ki_sel_x}; //opt is 8'b0000 0001
 
 	RingADPLL #(
-        .BIAS(BIAS),
         //.KP(5'b00001),
         .KP_WIDTH(6),
         .KP_FRAC_WIDTH(5),

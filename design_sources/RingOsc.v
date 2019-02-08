@@ -1,5 +1,6 @@
 module RingOsc #(parameter RINGSIZE = 421, CTRL_WIDTH = 5)( 
 	input wire enable_i,
+    input wire reset_i,
     input wire [CTRL_WIDTH-1:0] freq_sel_i,
     output wire clk_o
     );
@@ -16,9 +17,11 @@ module RingOsc #(parameter RINGSIZE = 421, CTRL_WIDTH = 5)(
         end
     endgenerate
     
-    always @(freq_sel_i,ringwire_c)
+    always @(freq_sel_i,ringwire_c,reset_i)
     begin
-        if (freq_sel_i == {(CTRL_WIDTH){1'b0}})
+        if (reset_i)
+            f_sel_mux_out_r = 1'b0;
+        else if (freq_sel_i == {(CTRL_WIDTH){1'b0}})
             f_sel_mux_out_r = ringwire_c[INVERTERNUM];
         else
             f_sel_mux_out_r = ringwire_c[INVERTERNUM-2*freq_sel_i];

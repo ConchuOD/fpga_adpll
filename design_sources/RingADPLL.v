@@ -2,18 +2,17 @@
 
 module RingADPLL #(
 		parameter RO_WIDTH = 5,
-		parameter PDET_WITH = 8,
-		parameter RINGSIZE = 421, 
+		parameter PDET_WITH = 5,
+		parameter RINGSIZE = 401, 
 		parameter BIAS = 5'd16, 
 		//LoopFilter
 		parameter DYNAMIC_VAL = 0,
-		parameter ERROR_WIDTH = 8,
-		parameter KP_WIDTH = 4,
-		parameter KP_FRAC_WIDTH = 2,
-		parameter KP = 4'b0100,
+		parameter KP_WIDTH = 6,
+		parameter KP_FRAC_WIDTH = 5,
+		parameter KP = 5'b01001,
 		parameter KI_WIDTH = 4,
-		parameter KI_FRAC_WIDTH = 3,
-		parameter KI = 4'b0001
+		parameter KI_FRAC_WIDTH = 7,
+		parameter KI = 8'b00000001
 	)
 	(
         input wire reset_i,
@@ -40,15 +39,16 @@ module RingADPLL #(
     assign gen_div8_o = gen_div8_x;
     assign error_o = error_x;
 
-    RingOsc #(.RINGSIZE(421), .CTRL_WIDTH(5)) testRing( 
+    RingOsc #(.RINGSIZE(RINGSIZE), .CTRL_WIDTH(5)) testRing( 
         .enable_i (enable_i),
+        .reset_i (reset_i),
         .freq_sel_i (f_sel_sw_ro_x),
         .clk_o (gen_clk_x)
 	);
 	Div8 div8 ( 
 		.reset_i(reset_i),
     	.signal_i(gen_clk_x),
-    	.div1_o(gen_div8_x)
+    	.div4_o(gen_div8_x)
    	);
 	PhaseDetector #(.WIDTH(PDET_WITH)) testPDet (
 		.reset_i(reset_i), 
@@ -58,10 +58,10 @@ module RingADPLL #(
 		.pd_clock_cycles_o(error_x)
 	);
     LoopFilter #(
-		.ERROR_WIDTH(ERROR_WIDTH),
+		.ERROR_WIDTH(PDET_WITH),
 		.DCO_CC_WIDTH(DCO_CC_WIDTH),
 		.KP_WIDTH(KP_WIDTH),
-		.KP_FRAC_WIDTH(),
+		.KP_FRAC_WIDTH(KP_FRAC_WIDTH),
 		.KP(KP),
 		.KI_WIDTH(KI_WIDTH),
 		.KI_FRAC_WIDTH(KI_FRAC_WIDTH),

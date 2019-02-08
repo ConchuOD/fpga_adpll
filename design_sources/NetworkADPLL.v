@@ -7,7 +7,6 @@ module NetworkADPLL #(
 		parameter DCO_CC_WIDTH = 9,
 		//LoopFilter
 		parameter DYNAMIC_VAL = 0,
-		parameter ERROR_WIDTH = 8,
 		parameter KP_WIDTH = 3,
 		parameter KP_FRAC_WIDTH = 1,
 		parameter KP = 3'b010,
@@ -82,7 +81,7 @@ module NetworkADPLL #(
         .error_comb_o(error_x)
 	);
     LoopFilter #(
-		.ERROR_WIDTH(ERROR_WIDTH),
+		.ERROR_WIDTH(PDET_WIDTH),
 		.DCO_CC_WIDTH(DCO_CC_WIDTH),
 		.KP_WIDTH(KP_WIDTH),
 		.KP_FRAC_WIDTH(),

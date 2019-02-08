@@ -2,10 +2,12 @@
 module RingOscTest();//rename file
 	wire clkmine;
     reg enable_r;
+    reg reset;
     reg [4:0] f_select;
     
     RingOsc #(.RINGSIZE(421), .CTRL_WIDTH(5)) testRing( //
 				.enable_i (enable_r),
+                .reset_i (reset),
     			.freq_sel_i (f_select),
     			.clk_o (clkmine)
    				);
@@ -13,6 +15,9 @@ module RingOscTest();//rename file
         begin
             enable_r = 1'b0;
             f_select = 1'b0;
+            reset = 1'b1;
+            #10
+            reset = 1'b0;
             #1000
             enable_r = 1'b1;
             #2000

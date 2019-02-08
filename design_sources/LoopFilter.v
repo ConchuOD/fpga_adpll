@@ -86,14 +86,12 @@ module LoopFilter #(
 
 	//truncate to integer
 	//assign ki_error_trun_c = $signed(ki_error_inte_c[KI_MULT_RES_INT_WIDTH-1:KI_MULT_RES_INT_WIDTH-1-ERROR_WIDTH]);
-	assign ki_error_trun_c = $signed(ki_error_inte_c[ERROR_WIDTH-1:0]);
+	//assign ki_error_trun_c = $signed(ki_error_inte_c[ERROR_WIDTH-1:0]);
 
 	wire signed [SUM_INT_WIDTH-1:-SUM_FRAC_WIDTH] error_sum_c;
 
 	assign error_sum_c = $signed({kp_error_c, {(KI_FRAC_WIDTH-KP_FRAC_WIDTH){1'b0}} })+ki_error_inte_c;
 	
 	assign dco_cc_o = error_sum_c[SUM_INT_WIDTH-1:SUM_INT_WIDTH-1-DCO_CC_WIDTH];
-	//assign dco_cc_o = temp[10-1:10-1-DCO_CC_WIDTH];
-	//assign dco_cc_o = temp[DCO_CC_WIDTH-1:0];
 
 endmodule
