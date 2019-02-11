@@ -40,7 +40,7 @@ module LoopFilter #(
 	reg  signed [KI_MULT_RES_INT_WIDTH-1:-KI_FRAC_WIDTH] ki_error_inte_delay_r;
 	wire signed [ERROR_WIDTH-1:0] ki_error_trun_c;
 	
-	always @(DYNAMIC_VAL or reset_i or kp_i or kp_i)
+	always @(DYNAMIC_VAL or reset_i or kp_i or ki_i)
 	begin
 		if (DYNAMIC_VAL)
 		begin

@@ -16,7 +16,7 @@ module ExtRefTest5M (
     // w/ div1:
     //          kp @ 1.5 = 0111
     //          ki @ 1.7 = 0001
-    // w/ div2:
+    // w/ div2,4:
     //          kp @ 1.5 = 1001
     //          ki @ 1.7 = 0001
     
@@ -41,7 +41,7 @@ module ExtRefTest5M (
     wire signed [7:0] error_x;
     wire [7:0] error_hex_x;
 
-    assign ref_sel_c = 12'd8;
+    assign ref_sel_c = 12'd19;
 
     assign kp_sel_x = switches_i[14:8];
     assign ki_sel_x = switches_i[6:0];
@@ -89,7 +89,7 @@ module ExtRefTest5M (
     (
         .reset_i(reset_x),
         .fpga_clk_i(clk258_x),
-        .ref_clk_i(gen_reference_x),
+        .ref_clk_i(ext_reference_x),
         .enable_i(switches_i[15]),
         .gen_clk_o(ra_o[0]),
         .error_o(error_x),

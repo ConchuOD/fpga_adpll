@@ -2,7 +2,7 @@
 
 module RingADPLL #(
 		parameter RO_WIDTH = 5,
-		parameter PDET_WITH = 5,
+		parameter PDET_WIDTH = 5,
 		parameter RINGSIZE = 401, 
 		parameter BIAS = 5'd16, 
 		//LoopFilter
@@ -23,7 +23,7 @@ module RingADPLL #(
 		input wire [KI_WIDTH-1:0] ki_i,
         output wire gen_clk_o,
         output wire gen_div8_o,
-        output wire signed [PDET_WITH-1:0] error_o,
+        output wire signed [PDET_WIDTH-1:0] error_o,
         output wire signed [RO_WIDTH-1:0] dco_cc_o
     );
     localparam DCO_CC_WIDTH = RO_WIDTH;
@@ -33,32 +33,36 @@ module RingADPLL #(
 	wire signed [RO_WIDTH:0] f_sel_sw_ro_interim_c;
 	wire signed [RO_WIDTH:0] bias_padded_c;
     wire gen_clk_x;
-    wire signed [PDET_WITH-1:0] error_x;
+    wire gen_div8_x;
+    wire signed [PDET_WIDTH-1:0] error_x;
 
     assign gen_clk_o = gen_clk_x;
     assign gen_div8_o = gen_div8_x;
     assign error_o = error_x;
 
-    RingOsc #(.RINGSIZE(RINGSIZE), .CTRL_WIDTH(5)) testRing( 
+    RingOsc #(.RINGSIZE(RINGSIZE), .CTRL_WIDTH(RO_WIDTH)) testRing( 
         .enable_i (enable_i),
         .reset_i (reset_i),
         .freq_sel_i (f_sel_sw_ro_x),
         .clk_o (gen_clk_x)
 	);
+
 	Div8 div8 ( 
 		.reset_i(reset_i),
     	.signal_i(gen_clk_x),
     	.div4_o(gen_div8_x)
    	);
-	PhaseDetector #(.WIDTH(PDET_WITH)) testPDet (
+
+	PhaseDetector #(.WIDTH(PDET_WIDTH)) testPDet (
 		.reset_i(reset_i), 
 		.fpga_clk_i(fpga_clk_i),
 		.reference_i(ref_clk_i),
 		.generated_i(gen_div8_x),
 		.pd_clock_cycles_o(error_x)
 	);
+
     LoopFilter #(
-		.ERROR_WIDTH(PDET_WITH),
+		.ERROR_WIDTH(PDET_WIDTH),
 		.DCO_CC_WIDTH(DCO_CC_WIDTH),
 		.KP_WIDTH(KP_WIDTH),
 		.KP_FRAC_WIDTH(KP_FRAC_WIDTH),
