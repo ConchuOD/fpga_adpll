@@ -9,6 +9,9 @@
 
 # Clock signal - from 100 MHz clock oscillator on board
 #Bank = 35, Pin name = IO_L12P_T1_MRCC_35,					Sch name = CLK100MHZ
+set_property PACKAGE_PIN E3 [get_ports clk100_i]
+set_property IOSTANDARD LVCMOS33 [get_ports clk100_i]
+create_clock -period 10.000 -name sys_clk_pin -waveform {0.000 5.000} -add [get_ports clk100_i]
 
 #==================================================================================
 
@@ -18,30 +21,64 @@
 # Signal name segment_o[7:0], with segment_o[7] = A, segment_o[6] = B, . . .
 #			. . .	segment_o[1] = G, segment_o[0] = decimal point.
 #Bank = 34, Pin name = IO_L2N_T0_34,						Sch name = CA
+set_property PACKAGE_PIN L3 [get_ports {segment_o[7]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {segment_o[7]}]
 #Bank = 34, Pin name = IO_L3N_T0_DQS_34,					Sch name = CB
+set_property PACKAGE_PIN N1 [get_ports {segment_o[6]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {segment_o[6]}]
 #Bank = 34, Pin name = IO_L6N_T0_VREF_34,					Sch name = CC
+set_property PACKAGE_PIN L5 [get_ports {segment_o[5]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {segment_o[5]}]
 #Bank = 34, Pin name = IO_L5N_T0_34,						Sch name = CD
+set_property PACKAGE_PIN L4 [get_ports {segment_o[4]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {segment_o[4]}]
 #Bank = 34, Pin name = IO_L2P_T0_34,						Sch name = CE
+set_property PACKAGE_PIN K3 [get_ports {segment_o[3]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {segment_o[3]}]
 #Bank = 34, Pin name = IO_L4N_T0_34,						Sch name = CF
+set_property PACKAGE_PIN M2 [get_ports {segment_o[2]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {segment_o[2]}]
 #Bank = 34, Pin name = IO_L6P_T0_34,						Sch name = CG
+set_property PACKAGE_PIN L6 [get_ports {segment_o[1]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {segment_o[1]}]
 #Bank = 34, Pin name = IO_L16P_T2_34,						Sch name = DP
+set_property PACKAGE_PIN M4 [get_ports {segment_o[0]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {segment_o[0]}]
 
 # These are the digit select signals, also active low.
 # Signal names are digit_o[7:0], digit_o[7] on the left, digit_o[0] on the right.
 #Bank = 34, Pin name = IO_L18N_T2_34,						Sch name = AN0
+set_property PACKAGE_PIN N6 [get_ports {digit_o[0]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {digit_o[0]}]
 #Bank = 34, Pin name = IO_L18P_T2_34,						Sch name = AN1
+set_property PACKAGE_PIN M6 [get_ports {digit_o[1]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {digit_o[1]}]
 #Bank = 34, Pin name = IO_L4P_T0_34,						Sch name = AN2
+set_property PACKAGE_PIN M3 [get_ports {digit_o[2]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {digit_o[2]}]
 #Bank = 34, Pin name = IO_L13_T2_MRCC_34,					Sch name = AN3
+set_property PACKAGE_PIN N5 [get_ports {digit_o[3]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {digit_o[3]}]
 #Bank = 34, Pin name = IO_L3P_T0_DQS_34,					Sch name = AN4
+set_property PACKAGE_PIN N2 [get_ports {digit_o[4]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {digit_o[4]}]
 #Bank = 34, Pin name = IO_L16N_T2_34,						Sch name = AN5
+set_property PACKAGE_PIN N4 [get_ports {digit_o[5]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {digit_o[5]}]
 #Bank = 34, Pin name = IO_L1P_T0_34,						Sch name = AN6
+set_property PACKAGE_PIN L1 [get_ports {digit_o[6]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {digit_o[6]}]
 #Bank = 34, Pin name = IO_L1N_T034,							Sch name = AN7
+set_property PACKAGE_PIN M1 [get_ports {digit_o[7]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {digit_o[7]}]
 
 #==================================================================================
 
 ## Buttons - pushbutton switches
 # First is the red button marked CPU RESET.  Signal is active low.
 #Bank = 15, Pin name = IO_L3P_T0_DQS_AD1P_15,				Sch name = CPU_RESET
+set_property PACKAGE_PIN C12 [get_ports rst_pbn_i]
+set_property IOSTANDARD LVCMOS33 [get_ports rst_pbn_i]
 
 ## The other 5 buttons are named as marked on the board. Signals are active high.
 ##Bank = 15, Pin name = IO_L11N_T1_SRCC_15,					Sch name = BTNC
@@ -66,21 +103,53 @@
 ## Default signal names are switches_i[15] (on left) to switches_i[0] (on right).
 ## Switch up gives logic 1, switch down gives logic 0.
 ##Bank = 34, Pin name = IO_L21P_T3_DQS_34,					Sch name = SW0
+set_property PACKAGE_PIN U9 [get_ports {switches_i[0]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {switches_i[0]}]
 ##Bank = 34, Pin name = IO_25_34,							Sch name = SW1
+set_property PACKAGE_PIN U8 [get_ports {switches_i[1]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {switches_i[1]}]
 ##Bank = 34, Pin name = IO_L23P_T3_34,						Sch name = SW2
+set_property PACKAGE_PIN R7 [get_ports {switches_i[2]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {switches_i[2]}]
 ##Bank = 34, Pin name = IO_L19P_T3_34,						Sch name = SW3
+set_property PACKAGE_PIN R6 [get_ports {switches_i[3]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {switches_i[3]}]
 ##Bank = 34, Pin name = IO_L19N_T3_VREF_34,					Sch name = SW4
+set_property PACKAGE_PIN R5 [get_ports {switches_i[4]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {switches_i[4]}]
 ##Bank = 34, Pin name = IO_L20P_T3_34,						Sch name = SW5
+set_property PACKAGE_PIN V7 [get_ports {switches_i[5]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {switches_i[5]}]
 ##Bank = 34, Pin name = IO_L20N_T3_34,						Sch name = SW6
+set_property PACKAGE_PIN V6 [get_ports {switches_i[6]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {switches_i[6]}]
 ##Bank = 34, Pin name = IO_L10P_T1_34,						Sch name = SW7
+set_property PACKAGE_PIN V5 [get_ports {switches_i[7]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {switches_i[7]}]
 ##Bank = 34, Pin name = IO_L8P_T1-34,						Sch name = SW8
+set_property PACKAGE_PIN U4 [get_ports {switches_i[8]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {switches_i[8]}]
 ##Bank = 34, Pin name = IO_L9N_T1_DQS_34,					Sch name = SW9
+set_property PACKAGE_PIN V2 [get_ports {switches_i[9]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {switches_i[9]}]
 ##Bank = 34, Pin name = IO_L9P_T1_DQS_34,					Sch name = SW10
+set_property PACKAGE_PIN U2 [get_ports {switches_i[10]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {switches_i[10]}]
 ##Bank = 34, Pin name = IO_L11N_T1_MRCC_34,					Sch name = SW11
+set_property PACKAGE_PIN T3 [get_ports {switches_i[11]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {switches_i[11]}]
 ##Bank = 34, Pin name = IO_L17N_T2_34,						Sch name = SW12
+set_property PACKAGE_PIN T1 [get_ports {switches_i[12]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {switches_i[12]}]
 ##Bank = 34, Pin name = IO_L11P_T1_SRCC_34,					Sch name = SW13
+set_property PACKAGE_PIN R3 [get_ports {switches_i[13]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {switches_i[13]}]
 ##Bank = 34, Pin name = IO_L14N_T2_SRCC_34,					Sch name = SW14
+set_property PACKAGE_PIN P3 [get_ports {switches_i[14]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {switches_i[14]}]
 ##Bank = 34, Pin name = IO_L14P_T2_SRCC_34,					Sch name = SW15
+set_property PACKAGE_PIN P4 [get_ports {switches_i[15]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {switches_i[15]}]
 
 #==================================================================================
 
@@ -88,8 +157,14 @@
 ## Default signal names led_o[15] (on left), to led_o[0] (on right).
 ## logic 1 = ON, logic 0 = OFF.
 ##Bank = 34, Pin name = IO_L24N_T3_34,						Sch name = LED0
+set_property PACKAGE_PIN T8 [get_ports {led_o[0]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {led_o[0]}]
 ##Bank = 34, Pin name = IO_L21N_T3_DQS_34,					Sch name = LED1
+set_property PACKAGE_PIN V9 [get_ports {led_o[1]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {led_o[1]}]
 ##Bank = 34, Pin name = IO_L24P_T3_34,						Sch name = LED2
+set_property PACKAGE_PIN R8 [get_ports {led_o[2]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {led_o[2]}]
 ##Bank = 34, Pin name = IO_L23N_T3_34,						Sch name = LED3
 #set_property PACKAGE_PIN T6 [get_ports {led_o[3]}]
 #set_property IOSTANDARD LVCMOS33 [get_ports {led_o[3]}]
@@ -132,38 +207,31 @@
 
 #==================================================================================
 
-## Tri-colour LEDs - these are to the left of the pushbuttons, marked LD17, LD16
-## Each has 3 control signals, for the red, green and blue LEDs in the package.
-##Bank = 34, Pin name = IO_L5P_T0_34,						Sch name = LED16_R
-#set_property PACKAGE_PIN K5 [get_ports RGB1_Red]
-#set_property IOSTANDARD LVCMOS33 [get_ports RGB1_Red]
-##Bank = 15, Pin name = IO_L5P_T0_AD9P_15,					Sch name = LED16_G
-#set_property PACKAGE_PIN F13 [get_ports RGB1_Green]
-#set_property IOSTANDARD LVCMOS33 [get_ports RGB1_Green]
-##Bank = 35, Pin name = IO_L19N_T3_VREF_35,					Sch name = LED16_B
-#set_property PACKAGE_PIN F6 [get_ports RGB1_Blue]
-#set_property IOSTANDARD LVCMOS33 [get_ports RGB1_Blue]
-##Bank = 34, Pin name = IO_0_34,								Sch name = LED17_R
-#set_property PACKAGE_PIN K6 [get_ports RGB2_Red]
-#set_property IOSTANDARD LVCMOS33 [get_ports RGB2_Red]
-##Bank = 35, Pin name = IO_24P_T3_35,						Sch name =  LED17_G
-#set_property PACKAGE_PIN H6 [get_ports RGB2_Green]
-#set_property IOSTANDARD LVCMOS33 [get_ports RGB2_Green]
-##Bank = CONFIG, Pin name = IO_L3N_T0_DQS_EMCCLK_14,			Sch name = LED17_B
-#set_property PACKAGE_PIN L16 [get_ports RGB2_Blue]
-#set_property IOSTANDARD LVCMOS33 [get_ports RGB2_Blue]
-
-#==================================================================================
-
 ##Pmod Header JA, right side centre - for connecting external hardware
 ##Bank = 15, Pin name = IO_L1N_T0_AD0N_15,					Sch name = JA1
+set_property PACKAGE_PIN B13 [get_ports {ra_o[0]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {ra_o[0]}]
 ##Bank = 15, Pin name = IO_L5N_T0_AD9N_15,					Sch name = JA2
+set_property PACKAGE_PIN F14 [get_ports {ra_o[1]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {ra_o[1]}]
 ##Bank = 15, Pin name = IO_L16N_T2_A27_15,					Sch name = JA3
+set_property PACKAGE_PIN D17 [get_ports {ra_o[2]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {ra_o[2]}]
 ##Bank = 15, Pin name = IO_L16P_T2_A28_15,					Sch name = JA4
+set_property PACKAGE_PIN E17 [get_ports {ra_o[3]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {ra_o[3]}]
 ##Bank = 15, Pin name = IO_0_15,								Sch name = JA7
+set_property PACKAGE_PIN G13 [get_ports {ra_o[4]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {ra_o[4]}]
 ##Bank = 15, Pin name = IO_L20N_T3_A19_15,					Sch name = JA8
+set_property PACKAGE_PIN C17 [get_ports {ra_o[5]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {ra_o[5]}]
 ##Bank = 15, Pin name = IO_L21N_T3_A17_15,					Sch name = JA9
+set_property PACKAGE_PIN D18 [get_ports {ra_o[6]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {ra_o[6]}]
 ##Bank = 15, Pin name = IO_L21P_T3_DQS_15,					Sch name = JA10
+set_property PACKAGE_PIN E18 [get_ports ra_o[7]]
+set_property IOSTANDARD LVCMOS33 [get_ports ra_o[7]]
 
 ##Pmod Header JB, right side front - for connecting external hardware
 ##Bank = 15, Pin name = IO_L15N_T2_DQS_ADV_B_15,				Sch name = JB1
@@ -662,6 +730,9 @@ set_property BITSTREAM.GENERAL.COMPRESS TRUE [current_design]
 #set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets {testRing/ringwire_c[7775]}]
 #set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets {testRing/ringwire_c[7774]}]
 
+set_property SEVERITY {Warning}  [get_drc_checks LUTLP-1]
+
+set_property SEVERITY {Warning} [get_drc_checks NSTD-1]
 
 #set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets {adpll/testRing/ringwire_c[0]}]
 
