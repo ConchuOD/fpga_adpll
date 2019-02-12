@@ -182,7 +182,29 @@ Did things with floorplanning in order to ensure the ring oscillator doesnt chan
 Tried to get this into a PLL and lock to the reference. Struggled for ~6 hours with it and never got close to locking.
 
 \section*{2x2 Network}
-Tried this w/ PA PLL,  couldnt get locking, got something that was "close" to locked with huge amounts of jitter. Will attempt to locate the issue tomorrow. Potentially there is an error in the PLL, or a missing error negation.
+Tried this w/ PA PLL,  couldnt get locking, got something that was "close" to locked with huge amounts of jitter. Will attempt to locate the issue tomorrow. Potentially there is an error in the PLL, or a missing error negation.\\
+Got the 2x2 PLL to lock at 10 MHz w/ div 8. Also designed in unidirectional startup. First got that to lock, in doing so I found 3! separate errors in the NetworkADPLL (or sub module) code. From there I joined toggled off and got locking.
+
+\section*{Ring ADPLL}
+Got this to lock today. Spent all day yesterday debugging, realised that having an 8 bit Phase Detector with a 5 bit Control Code is basically impossible. Switched to 4 bit Phase Detector, and this lead to locking quite quickly. As an aside, 401 not 301 inverters are required.
+
+\section*{Gains}
+Table \ref{table:sdf} contains the gains required to achieve locking, and in the case of the PA ADPLL, the most visually optimal jitter. I have not yet checked the ring on the better scope so the values may not in fact be optimal.
+\begin{table}[!ht]
+	\begin{center} 
+		\begin{tabular}{c|c|c|c|c}           
+			Configuration & $K_p$ Width & $K_p$ & $K_i$ Width & $K_i$ \\
+			PA ADPLL (5 MHz) & 2.1 & 001  & 1.4 & 0001 \\
+			PA ADPLL div8 & 1.4 & 1001 & 1.7 & 0001 \\
+			PA Chained & 1.4 & 0001 & 1.8 & 0001 \\
+			PA 2x2 & 1.5 & 1000 & 1.7 & 0001 \\
+			RO ADPLL & 1.5 & 0111 & 1.7 & 0001 \\
+			RO ADPLL div2/4 & 1001 & 1000 & 1.7 & 0001 \\
+		\end{tabular}
+		\caption{PA @ 10, RO @ 5}
+		\label{table:sdf}
+	\end{center}
+\end{table}
 	
 
 
