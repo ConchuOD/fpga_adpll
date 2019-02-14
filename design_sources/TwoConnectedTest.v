@@ -36,10 +36,10 @@ module TwoConnectedTest (
 
     wire clk258_x;
 
-    wire [ACCUM_WIDTH-1:0] ref_sel_c;
+    reg [ACCUM_WIDTH-1:0] ref_sel_r;
 
-    wire [3:0] kp_sel_x;
-    wire [3:0] ki_sel_x;
+    reg [3:0] kp_sel_r;
+    reg [3:0] ki_sel_r;
     wire [7:0] kp_ki_c;
 
     wire signed [7:0] ref_adpll_error_x;
@@ -47,13 +47,10 @@ module TwoConnectedTest (
 
     wire [7:0] half_7seg_x;
 
-    assign ref_sel_c = 12'd36;
 	
 	assign ext_reference_x = ra_i;
 
-    assign kp_sel_x = switches_i[11:8];
-    assign ki_sel_x = switches_i[3:0];
-    assign kp_ki_c = {kp_sel_x,ki_sel_x};
+    assign kp_ki_c = {kp_sel_r,ki_sel_r};
 
 
     ClockReset5_258_PDiff  clkGen  (
@@ -67,24 +64,40 @@ module TwoConnectedTest (
         .reset_o  	(reset_x)     	 // output reset, active high
     );
 
+    PhaseAccum #(.WIDTH(ACCUM_WIDTH)) referenceOsc (
+        .enable_i(1'b1),
+        .reset_i(reset_x),
+        .fpga_clk_i(clk258_x),
+        .clk_o(gen_reference_x),
+        .k_val_i(ref_sel_r)
+    ); 
+
+    always @ (posedge clk258_x)
+    begin 
+        if (switches_i[12] == 1'b1)
+        begin
+            ref_sel_r <= switches_i[11:0];
+            kp_sel_r <= kp_sel_r;
+            ki_sel_r <= ki_sel_r;
+        end
+        else
+        begin
+            ref_sel_r <= ref_sel_r;
+            kp_sel_r <= switches_i[11:8];
+            ki_sel_r <= switches_i[3:0];
+        end
+    end
+
     assign clk5_x = clk5_0_x;
     assign ra_o[0] = ref_adpll_gen_x;
     assign ra_o[1] = gen_reference_x;
     assign ra_o[2] = ext_reference_x;
     assign ra_o[4] = other_adpll_gen_x;
 
-    PhaseAccum #(.WIDTH(ACCUM_WIDTH)) referenceOsc (
-        .enable_i(1'b1),
-        .reset_i(reset_x),
-        .fpga_clk_i(clk258_x),
-        .clk_o(gen_reference_x),
-        .k_val_i(ref_sel_c)
-    ); 
-
     wire [5-1:0] padded_kp_c;
     wire [9-1:0] padded_ki_c;
-    assign padded_kp_c = {1'b0,kp_sel_x}; //opt is 5'b0 1000
-    assign padded_ki_c = {5'b00000,ki_sel_x}; //opt is 8'b0000 1001
+    assign padded_kp_c = {1'b0,kp_sel_r}; //opt is 5'b0 1000
+    assign padded_ki_c = {5'b00000,ki_sel_r}; //opt is 8'b0000 1001
 	
 	PhaseDetector #(.WIDTH(PDET_WITH)) refPDet ( // output to ref_adpll
 		.reset_i(reset_x), 

@@ -86,7 +86,3 @@ resize_pblock [get_pblocks pblock_pDetLeft_3] -add {SLICE_X8Y155:SLICE_X11Y160}
 create_pblock pblock_pDetAbove_3
 add_cells_to_pblock [get_pblocks pblock_pDetAbove_3] [get_cells -quiet [list adpll_22/pDetAbove]]
 resize_pblock [get_pblocks pblock_pDetAbove_3] -add {SLICE_X20Y167:SLICE_X23Y172}
-
-
-
-

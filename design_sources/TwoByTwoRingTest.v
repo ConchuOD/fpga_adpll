@@ -16,13 +16,13 @@ module TwoByTwoRingTest (
 
     localparam BIAS = 5'd15; //154 = 10 MHz
     localparam PDET_WIDTH = 5;
-    localparam RINGSIZE = 353;
+    localparam RINGSIZE = 383;
+    localparam ACCUM_WIDTH = 12;
     //optimal gains w/ 5.25 M, ref : 11,12 -> 0001 0010
     
     wire reset_x;
  
     reg ext_reference_r;
-    wire gen_reference_x = 1'b0;
     wire other_ref_div4_x;
     
     wire adpll_11_gen_x;
@@ -69,28 +69,26 @@ module TwoByTwoRingTest (
 
     wire clk258_x;
 
-    wire [3:0] kp_sel_x;
-    wire [3:0] ki_sel_x;
+    reg [3:0] kp_sel_r;
+    reg [3:0] ki_sel_r;
     wire [7:0] kp_ki_c;
 
     wire [7:0] half_7seg_x;
 
     wire enable_x = switches_i[15];
     wire uni_dir_x = switches_i[14];
-    wire ref_sel_x = switches_i[13];
+    reg [ACCUM_WIDTH-1:0] ref_sel_r;
     
-    assign kp_sel_x = switches_i[11:8];
-    assign ki_sel_x = switches_i[3:0];
-    assign kp_ki_c = {kp_sel_x,ki_sel_x};
+    assign kp_ki_c = {kp_sel_r,ki_sel_r};
 
-    localparam KP_WIDTH = 5;
-    localparam KP_FRAC_WIDTH = 6;
-    localparam KI_WIDTH = 8;
-    localparam KI_FRAC_WIDTH = 7;
+    localparam KP_WIDTH = 4;
+    localparam KP_FRAC_WIDTH = 3;
+    localparam KI_WIDTH = 7;
+    localparam KI_FRAC_WIDTH = 6;
     wire [KP_WIDTH-1:0] padded_kp_c;
     wire [KI_WIDTH-1:0] padded_ki_c;
-    assign padded_kp_c = {{(KP_WIDTH-4){1'b0}},kp_sel_x}; 
-    assign padded_ki_c = {{(KI_WIDTH-4){1'b0}},ki_sel_x}; 
+    assign padded_kp_c = {{(KP_WIDTH-4){1'b0}},kp_sel_r}; 
+    assign padded_ki_c = {{(KI_WIDTH-4){1'b0}},ki_sel_r}; 
 
     always @ (posedge clk258_x)
     begin
@@ -110,6 +108,30 @@ module TwoByTwoRingTest (
 
     //assign clk258_x = temp;
     //assign reset_x = temp_rst;
+
+    PhaseAccum #(.WIDTH(ACCUM_WIDTH)) referenceOsc (
+        .enable_i(1'b1),
+        .reset_i(reset_x),
+        .fpga_clk_i(clk258_x),
+        .clk_o(gen_reference_x),
+        .k_val_i(ref_sel_r)
+    ); 
+
+    always @ (posedge clk258_x)
+    begin 
+        if (switches_i[12] == 1'b1)
+        begin
+            ref_sel_r <= switches_i[11:0];
+            kp_sel_r <= kp_sel_r;
+            ki_sel_r <= ki_sel_r;
+        end
+        else
+        begin
+            ref_sel_r <= ref_sel_r;
+            kp_sel_r <= switches_i[11:8];
+            ki_sel_r <= switches_i[3:0];
+        end
+    end
 
     assign JB[5-1:0] = adpll_11_error_left_x[5-1:0]; 
     assign clk5_x = clk5_0_x;
@@ -159,7 +181,7 @@ module TwoByTwoRingTest (
         .enable_i(enable_x),
         .error_right_i(~adpll_12_error_left_x), //adpll12
         .error_bottom_i(~adpll_21_error_top_x), //adpll21
-        .ref_left_i(ext_reference_r), //reference
+        .ref_left_i(gen_reference_x), //reference
         .ref_above_i(adpll_11_div8_x), //unused so just looping back
         .weight_left_i(weight_left_11),
         .weight_above_i(weight_above_11),
@@ -245,6 +267,8 @@ module TwoByTwoRingTest (
 
     NetworkRing #(
         .BIAS(BIAS),
+        .RO_WIDTH(PDET_WIDTH),
+        .RINGSIZE(RINGSIZE),
         .PDET_WIDTH(PDET_WIDTH),
         //.KP(5'b00001),
         .KP_WIDTH(KP_WIDTH),
@@ -295,6 +319,8 @@ module TwoByTwoRingTest (
 
     NetworkRing #(
         .BIAS(BIAS),
+        .RO_WIDTH(PDET_WIDTH),
+        .RINGSIZE(RINGSIZE),
         .PDET_WIDTH(PDET_WIDTH),
         //.KP(5'b00001),
         .KP_WIDTH(KP_WIDTH),

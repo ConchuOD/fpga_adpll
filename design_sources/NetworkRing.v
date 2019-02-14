@@ -10,7 +10,7 @@ module NetworkRing #(
 		parameter KP_WIDTH = 6,
 		parameter KP_FRAC_WIDTH = 5,
 		parameter KP = 5'b01001,
-		parameter KI_WIDTH = 4,
+		parameter KI_WIDTH = 8,
 		parameter KI_FRAC_WIDTH = 7,
 		parameter KI = 8'b00000001,
 		//ErrorCombiner
@@ -88,7 +88,7 @@ module NetworkRing #(
 		.ERROR_WIDTH(PDET_WIDTH),
 		.DCO_CC_WIDTH(RO_WIDTH),
 		.KP_WIDTH(KP_WIDTH),
-		.KP_FRAC_WIDTH(),
+		.KP_FRAC_WIDTH(KP_FRAC_WIDTH),
 		.KP(KP),
 		.KI_WIDTH(KI_WIDTH),
 		.KI_FRAC_WIDTH(KI_FRAC_WIDTH),
@@ -115,7 +115,7 @@ module NetworkRing #(
 	Div8 div8 ( 
 		.reset_i(reset_i),
     	.signal_i(gen_clk_x),
-    	.div4_o(gen_div_x)
+    	.div1_o(gen_div_x)
    	);
     
     assign f_sel_sw_ro_x = BIAS - dco_cc_o; //
