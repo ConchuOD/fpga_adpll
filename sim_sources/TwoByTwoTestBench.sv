@@ -44,7 +44,7 @@ module TwoByTwoTestBench ();
 		end
 	end
 
-    TwoByTwoTest topLevelTest(
+    TwoByTwoRingTest ringTestTwoByTwo(
         .clk100_i(clk100_x),        // 100 MHz clock from oscillator on board
         .rst_pbn_i(rst_pbn),        // reset signal, active low, from CPU RESET pushbutton //
         .switches_i(switches_x),
@@ -57,14 +57,14 @@ module TwoByTwoTestBench ();
 	initial
 	begin
 		rst_pbn = 1'b0;
-        switches_x = 16'h0801;
+        switches_x = 16'h8B01;
 		#100
 		rst_pbn = 1'b1;
         #10
-        switches_x[15:14] = 2'b11;
+        switches_x[15:12] = 4'b1111;
+        #10
+        switches_x[11:0] = 12'd80;
 		#1000000
-        switches_x[14] = 1'b0;
-        #1000000
         $stop;
         //$finish;
 	end

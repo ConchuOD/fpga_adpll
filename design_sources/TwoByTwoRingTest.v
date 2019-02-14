@@ -11,7 +11,7 @@ module TwoByTwoRingTest (
         output [7:0] segment_o,
         output [7:0] digit_o/*,  
         input temp,
-        input temp_rst */
+        input temp_rst*/
     );
 
     localparam BIAS = 5'd15; //154 = 10 MHz
@@ -81,7 +81,7 @@ module TwoByTwoRingTest (
     
     assign kp_ki_c = {kp_sel_r,ki_sel_r};
 
-    localparam KP_WIDTH = 4;
+    localparam KP_WIDTH = 5;
     localparam KP_FRAC_WIDTH = 3;
     localparam KI_WIDTH = 7;
     localparam KI_FRAC_WIDTH = 6;
@@ -104,7 +104,7 @@ module TwoByTwoRingTest (
         .clk5_135_o (),
         .clk258_o   (clk258_x),
         .reset_o    (reset_x)        // output reset, active high
-    );//*/
+    );
 
     //assign clk258_x = temp;
     //assign reset_x = temp_rst;
@@ -181,7 +181,7 @@ module TwoByTwoRingTest (
         .enable_i(enable_x),
         .error_right_i(~adpll_12_error_left_x), //adpll12
         .error_bottom_i(~adpll_21_error_top_x), //adpll21
-        .ref_left_i(gen_reference_x), //reference
+        .ref_left_i(ext_reference_r), //reference
         .ref_above_i(adpll_11_div8_x), //unused so just looping back
         .weight_left_i(weight_left_11),
         .weight_above_i(weight_above_11),
@@ -214,7 +214,7 @@ module TwoByTwoRingTest (
     end
 
     NetworkRing #(
-        .BIAS(BIAS),
+        .BIAS(BIAS+10),
         .RO_WIDTH(PDET_WIDTH),
         .RINGSIZE(RINGSIZE),
         .PDET_WIDTH(PDET_WIDTH),
