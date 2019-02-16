@@ -114,7 +114,7 @@ module TwoByTwoRingTest (
         .reset_i(reset_x),
         .fpga_clk_i(clk258_x),
         .clk_o(gen_reference_x),
-        .k_val_i(ref_sel_r)
+        .k_val_i(12'd84)
     ); 
 
     always @ (posedge clk258_x)

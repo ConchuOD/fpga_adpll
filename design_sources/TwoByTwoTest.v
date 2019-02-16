@@ -17,7 +17,7 @@ module TwoByTwoTest (
     localparam ACCUM_WIDTH = 12;
     localparam BIAS = 12'd154; //154 = 10 MHz
     localparam PDET_WIDTH = 8;
-    //optimal gains w/ 10 M => kp @ 1.5 = 1000 lower
+    //optimal gains w/ 10 M => kp @ 1.5 = 1110 lower
     //                         ki @ 1.7 = 0001 lower 
     
     wire reset_x;
@@ -116,6 +116,14 @@ module TwoByTwoTest (
     //assign clk258_x = temp;
     //assign reset_x = temp_rst;
 
+    PhaseAccum #(.WIDTH(ACCUM_WIDTH)) referenceOsc (
+        .enable_i(1'b1),
+        .reset_i(reset_x),
+        .fpga_clk_i(clk258_x),
+        .clk_o(gen_reference_x),
+        .k_val_i(12'd20)
+    );
+
     assign JB[6:0] = adpll_11_error_left_x[6:0]; 
     assign clk5_x = clk5_0_x;
     assign ra_o[0] = adpll_11_gen_x;
@@ -162,7 +170,7 @@ module TwoByTwoTest (
         .enable_i(enable_x),
         .error_right_i(~adpll_12_error_left_x), //adpll12
         .error_bottom_i(~adpll_21_error_top_x), //adpll21
-        .ref_left_i(ext_reference_r), //reference
+        .ref_left_i(gen_reference_x), //reference
         .ref_above_i(adpll_11_div8_x), //unused so just looping back
         .weight_left_i(weight_left_11),
         .weight_above_i(weight_above_11),
