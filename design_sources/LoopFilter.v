@@ -40,6 +40,8 @@ module LoopFilter #(
 	reg  signed [KI_MULT_RES_INT_WIDTH-1:-KI_FRAC_WIDTH] ki_error_inte_delay_r;
 	wire signed [ERROR_WIDTH-1:0] ki_error_trun_c;
 	
+	wire signed [SUM_INT_WIDTH-1:-SUM_FRAC_WIDTH] error_sum_c;
+	
 	always @(DYNAMIC_VAL or reset_i or kp_i or ki_i)
 	begin
 		if (DYNAMIC_VAL)
@@ -56,7 +58,7 @@ module LoopFilter #(
 
 	always @ (posedge gen_clk_i or posedge reset_i)
 	begin
-		if(reset_i) error_delay_r <= {((ERROR_WIDTH-1)+KI_INT_WIDTH+KI_FRAC_WIDTH){1'b0}};
+		if(reset_i) error_delay_r <= {(ERROR_WIDTH){1'b0}};
 		else error_delay_r <= error_i;
 	end
 
@@ -66,8 +68,7 @@ module LoopFilter #(
 	//multiply by kp
 	assign kp_error_c = error_delay_r*kp_x;
 	//truncate
-	//assign kp_error_trun_c = $signed(kp_error_c[KP_MULT_RES_INT_WIDTH-1:KP_MULT_RES_INT_WIDTH-1-ERROR_WIDTH]);
-	assign kp_error_trun_c = $signed(kp_error_c[ERROR_WIDTH-1:0]);
+	//assign kp_error_trun_c = $signed(kp_error_c[ERROR_WIDTH-1:0]);
 
 
 	/*
@@ -84,13 +85,7 @@ module LoopFilter #(
 		else ki_error_inte_delay_r <= ki_error_inte_c;
 	end
 
-	//truncate to integer
-	//assign ki_error_trun_c = $signed(ki_error_inte_c[KI_MULT_RES_INT_WIDTH-1:KI_MULT_RES_INT_WIDTH-1-ERROR_WIDTH]);
-	//assign ki_error_trun_c = $signed(ki_error_inte_c[ERROR_WIDTH-1:0]);
-
-	wire signed [SUM_INT_WIDTH-1:-SUM_FRAC_WIDTH] error_sum_c;
-
-	assign error_sum_c = $signed({kp_error_c, {(KI_FRAC_WIDTH-KP_FRAC_WIDTH){1'b0}} })+ki_error_inte_c;
+	assign error_sum_c = $signed({kp_error_c, {(KI_FRAC_WIDTH-KP_FRAC_WIDTH){1'b0}} }) + ki_error_inte_c;
 	
 	assign dco_cc_o = error_sum_c[SUM_INT_WIDTH-1:SUM_INT_WIDTH-1-DCO_CC_WIDTH];
 

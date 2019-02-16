@@ -57,6 +57,5 @@ module PhaseDetector #(parameter WIDTH = 20) (
 		.save_and_clear_o(save_and_clear_x),
 		.count_instr_o(count_instr_x)
 	);
-							
 
 endmodule // PhaseDetector
