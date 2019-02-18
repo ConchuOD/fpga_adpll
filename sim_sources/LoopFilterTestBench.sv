@@ -3,7 +3,7 @@ module LoopFilterTestBench ();
 
     reg clk5_x;
 
-    wire signed [7:0] error_x = 8'd10;
+    wire signed [4:0] error_x = 5'd10;
 
     wire [7:0] ra_o;
 
@@ -23,13 +23,13 @@ module LoopFilterTestBench ();
 	
 	localparam DYNAMIC_VAL = 0;
 	localparam DCO_CC_WIDTH = 5;
-	localparam ERROR_WIDTH = 4;
-	localparam KP_WIDTH = 4;
-	localparam KP_FRAC_WIDTH = 0;
-	localparam KP = 6'b0100;
-	localparam KI_WIDTH = 8;
-	localparam KI_FRAC_WIDTH = 3;
-	localparam KI = 6'b00010000;
+	localparam ERROR_WIDTH = 5;
+	localparam KP_WIDTH = 5;
+	localparam KP_FRAC_WIDTH = 3;
+	localparam KP = 5'b00100;
+	localparam KI_WIDTH = 6;
+	localparam KI_FRAC_WIDTH = 5;
+	localparam KI = 6'b000100;
 	
 
 	/*

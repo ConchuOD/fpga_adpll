@@ -115,7 +115,7 @@ module NetworkRing #(
 	Div8 div8 ( 
 		.reset_i(reset_i),
     	.signal_i(gen_clk_x),
-    	.div1_o(gen_div_x)
+    	.div4_o(gen_div_x)
    	);
     
     assign f_sel_sw_ro_x = BIAS - dco_cc_o; //

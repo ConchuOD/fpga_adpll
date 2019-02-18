@@ -18,7 +18,7 @@ module TwoByTwoRingTest (
     localparam PDET_WIDTH = 5;
     localparam RINGSIZE = 383;
     localparam ACCUM_WIDTH = 12;
-    //optimal gains w/ 5.25 M, ref : 11,12 -> 0001 0010
+    //network works at 0100 0001, 1.4, 1.7
     
     wire reset_x;
  
@@ -82,9 +82,9 @@ module TwoByTwoRingTest (
     assign kp_ki_c = {kp_sel_r,ki_sel_r};
 
     localparam KP_WIDTH = 5;
-    localparam KP_FRAC_WIDTH = 3;
-    localparam KI_WIDTH = 7;
-    localparam KI_FRAC_WIDTH = 6;
+    localparam KP_FRAC_WIDTH = 4;
+    localparam KI_WIDTH = 8;
+    localparam KI_FRAC_WIDTH = 7;
     wire [KP_WIDTH-1:0] padded_kp_c;
     wire [KI_WIDTH-1:0] padded_ki_c;
     assign padded_kp_c = {{(KP_WIDTH-4){1'b0}},kp_sel_r}; 
@@ -114,7 +114,7 @@ module TwoByTwoRingTest (
         .reset_i(reset_x),
         .fpga_clk_i(clk258_x),
         .clk_o(gen_reference_x),
-        .k_val_i(12'd84)
+        .k_val_i(12'd21)
     ); 
 
     always @ (posedge clk258_x)
@@ -214,7 +214,7 @@ module TwoByTwoRingTest (
     end
 
     NetworkRing #(
-        .BIAS(BIAS+10),
+        .BIAS(BIAS-6),
         .RO_WIDTH(PDET_WIDTH),
         .RINGSIZE(RINGSIZE),
         .PDET_WIDTH(PDET_WIDTH),

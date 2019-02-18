@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 module PhaseDetectorTestBench ();
 	
-	localparam WIDTH = 20;
+	localparam WIDTH = 8;
 	localparam EXPECTED_VAL = {{(WIDTH-4){1'b0}}, 4'b1010};
 	//localparam EXPECTED_VAL = {{(WIDTH-4){1'b1}}, 4'b0110};
 	reg fpga_clk; //400 MHz -> 1.25 ns half period
