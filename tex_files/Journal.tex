@@ -197,16 +197,21 @@ Table \ref{table:sdf} contains the gains required to achieve locking, and in the
 			PA ADPLL (5 MHz) & 2.1 & 001  & 1.4 & 0001 \\
 			PA ADPLL div8 & 1.4 & 1001 & 1.7 & 0001 \\
 			PA Chained & 1.4 & 0001 & 1.8 & 0001 \\
-			PA 2x2 & 1.5 & 1000 & 1.7 & 0001 \\
+			PA 2x2 & 1.5 & 1110 & 1.7 & 0001 \\
 			RO ADPLL & 1.5 & 0111 & 1.7 & 0001 \\
 			RO ADPLL div2/4 & 1001 & 1000 & 1.7 & 0001 \\
+            RO 2x2 & 1.4 & 0100 & 1.7 & 0001 \\
 		\end{tabular}
 		\caption{PA @ 10, RO @ 5}
 		\label{table:sdf}
 	\end{center}
 \end{table}
 	
-
-
-
+\section*{Ring Osc Locking}
+After many trials and tribulations, including a situation where the ring adpll was locking to the inverse of the reference applied to it I finally managed to get the ring locked at 5 MHz with a 4 times divider. Turns out the shifting of $K_p$ and $K_i$ in the same direction did not help matters as I thought it might.
+In fact increasing $K_p$ while decreasing $k_i$ turned out to be the solution to my problems.
+Along the way I located an error where I was using 5'd16 as the bias which doesnt work with a subtraction of 15 to -16, as it would give overflow. Athough I had actually  made the counter the same in both directions so this didnt actually manifest itself as an issue.
+The lock range is now heavily impacted by the gains as I discovered when attempting to copy gains from the PA ADPLL.
+The key to solving it was going through all the fixed point arith. and checking that the widths made sense, which made my realise I had made a false assummtion that going from an 8 to a 5 bit detector/filter resulted in a div by eight times more at the exit of the filter, but in fact had the same div by 4.
+After discovering this I had it locking within 3 hours of work, when prior I had spent ~ 9 days on the calendar and ~30 hours working on the problem. Locking perofmance looks potentially better than the 10 MHz perf of the ADPLL (magnitude not \% for the sake of comp. However div is by 4 now not 8, and res is twice as good.) In the coming week I will be characterising the perf of these different designs to compare effectively.
 \end{document}
