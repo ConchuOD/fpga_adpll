@@ -11,13 +11,13 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="1267140900fs"></ZoomStartTime>
-      <ZoomEndTime time="2867432497fs"></ZoomEndTime>
-      <Cursor1Time time="4498178000fs"></Cursor1Time>
+      <ZoomStartTime time="6814419300fs"></ZoomStartTime>
+      <ZoomEndTime time="8946419301fs"></ZoomEndTime>
+      <Cursor1Time time="10000000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="124"></NameColumnWidth>
-      <ValueColumnWidth column_width="96"></ValueColumnWidth>
+      <ValueColumnWidth column_width="92"></ValueColumnWidth>
    </column_width_setting>
    <WVObjectSize size="45" />
    <wvobject type="logic" fp_name="/LoopFilterTestBench/rst_pbn">
@@ -29,8 +29,8 @@
       <obj_property name="ObjectShortName">clk5_x</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/LoopFilterTestBench/error_x">
-      <obj_property name="ElementShortName">error_x[7:0]</obj_property>
-      <obj_property name="ObjectShortName">error_x[7:0]</obj_property>
+      <obj_property name="ElementShortName">error_x[4:0]</obj_property>
+      <obj_property name="ObjectShortName">error_x[4:0]</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/LoopFilterTestBench/ra_o">
       <obj_property name="ElementShortName">ra_o[7:0]</obj_property>
@@ -61,8 +61,8 @@
       <obj_property name="ObjectShortName">KP_FRAC_WIDTH[31:0]</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/LoopFilterTestBench/KP">
-      <obj_property name="ElementShortName">KP[5:0]</obj_property>
-      <obj_property name="ObjectShortName">KP[5:0]</obj_property>
+      <obj_property name="ElementShortName">KP[4:0]</obj_property>
+      <obj_property name="ObjectShortName">KP[4:0]</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/LoopFilterTestBench/KI_WIDTH">
       <obj_property name="ElementShortName">KI_WIDTH[31:0]</obj_property>
@@ -85,16 +85,16 @@
       <obj_property name="ObjectShortName">reset_i</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/LoopFilterTestBench/loopFilter/kp_i">
-      <obj_property name="ElementShortName">kp_i[3:0]</obj_property>
-      <obj_property name="ObjectShortName">kp_i[3:0]</obj_property>
+      <obj_property name="ElementShortName">kp_i[4:0]</obj_property>
+      <obj_property name="ObjectShortName">kp_i[4:0]</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/LoopFilterTestBench/loopFilter/ki_i">
-      <obj_property name="ElementShortName">ki_i[7:0]</obj_property>
-      <obj_property name="ObjectShortName">ki_i[7:0]</obj_property>
+      <obj_property name="ElementShortName">ki_i[5:0]</obj_property>
+      <obj_property name="ObjectShortName">ki_i[5:0]</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/LoopFilterTestBench/loopFilter/error_i">
-      <obj_property name="ElementShortName">error_i[3:0]</obj_property>
-      <obj_property name="ObjectShortName">error_i[3:0]</obj_property>
+      <obj_property name="ElementShortName">error_i[4:0]</obj_property>
+      <obj_property name="ObjectShortName">error_i[4:0]</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/LoopFilterTestBench/loopFilter/dco_cc_o">
       <obj_property name="ElementShortName">dco_cc_o[4:0]</obj_property>
@@ -102,63 +102,63 @@
       <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/LoopFilterTestBench/loopFilter/kp_x">
-      <obj_property name="ElementShortName">kp_x[3:0]</obj_property>
-      <obj_property name="ObjectShortName">kp_x[3:0]</obj_property>
+      <obj_property name="ElementShortName">kp_x[1:-3]</obj_property>
+      <obj_property name="ObjectShortName">kp_x[1:-3]</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/LoopFilterTestBench/loopFilter/ki_x">
-      <obj_property name="ElementShortName">ki_x[4:-3]</obj_property>
-      <obj_property name="ObjectShortName">ki_x[4:-3]</obj_property>
+      <obj_property name="ElementShortName">ki_x[0:-5]</obj_property>
+      <obj_property name="ObjectShortName">ki_x[0:-5]</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/LoopFilterTestBench/loopFilter/error_delay_r">
-      <obj_property name="ElementShortName">error_delay_r[3:0]</obj_property>
-      <obj_property name="ObjectShortName">error_delay_r[3:0]</obj_property>
+      <obj_property name="ElementShortName">error_delay_r[4:0]</obj_property>
+      <obj_property name="ObjectShortName">error_delay_r[4:0]</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/LoopFilterTestBench/loopFilter/kp_error_c">
-      <obj_property name="ElementShortName">kp_error_c[7:0]</obj_property>
-      <obj_property name="ObjectShortName">kp_error_c[7:0]</obj_property>
+      <obj_property name="ElementShortName">kp_error_c[6:-3]</obj_property>
+      <obj_property name="ObjectShortName">kp_error_c[6:-3]</obj_property>
       <obj_property name="Radix">REALRADIX</obj_property>
       <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
-      <obj_property name="radix_fractionWidth">4</obj_property>
+      <obj_property name="radix_fractionWidth">3</obj_property>
       <obj_property name="radix_otherWidth">0</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/LoopFilterTestBench/loopFilter/kp_error_trun_c">
-      <obj_property name="ElementShortName">kp_error_trun_c[3:0]</obj_property>
-      <obj_property name="ObjectShortName">kp_error_trun_c[3:0]</obj_property>
+      <obj_property name="ElementShortName">kp_error_trun_c[4:0]</obj_property>
+      <obj_property name="ObjectShortName">kp_error_trun_c[4:0]</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/LoopFilterTestBench/loopFilter/ki_error_c">
-      <obj_property name="ElementShortName">ki_error_c[8:-3]</obj_property>
-      <obj_property name="ObjectShortName">ki_error_c[8:-3]</obj_property>
+      <obj_property name="ElementShortName">ki_error_c[5:-5]</obj_property>
+      <obj_property name="ObjectShortName">ki_error_c[5:-5]</obj_property>
       <obj_property name="Radix">REALRADIX</obj_property>
       <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
-      <obj_property name="radix_fractionWidth">3</obj_property>
+      <obj_property name="radix_fractionWidth">5</obj_property>
       <obj_property name="radix_otherWidth">0</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/LoopFilterTestBench/loopFilter/ki_error_inte_c">
-      <obj_property name="ElementShortName">ki_error_inte_c[8:-3]</obj_property>
-      <obj_property name="ObjectShortName">ki_error_inte_c[8:-3]</obj_property>
+      <obj_property name="ElementShortName">ki_error_inte_c[5:-5]</obj_property>
+      <obj_property name="ObjectShortName">ki_error_inte_c[5:-5]</obj_property>
       <obj_property name="Radix">REALRADIX</obj_property>
       <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
-      <obj_property name="radix_fractionWidth">3</obj_property>
+      <obj_property name="radix_fractionWidth">5</obj_property>
       <obj_property name="radix_otherWidth">0</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/LoopFilterTestBench/loopFilter/ki_error_inte_delay_r">
-      <obj_property name="ElementShortName">ki_error_inte_delay_r[8:-3]</obj_property>
-      <obj_property name="ObjectShortName">ki_error_inte_delay_r[8:-3]</obj_property>
+      <obj_property name="ElementShortName">ki_error_inte_delay_r[5:-5]</obj_property>
+      <obj_property name="ObjectShortName">ki_error_inte_delay_r[5:-5]</obj_property>
       <obj_property name="Radix">REALRADIX</obj_property>
       <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
-      <obj_property name="radix_fractionWidth">3</obj_property>
+      <obj_property name="radix_fractionWidth">5</obj_property>
       <obj_property name="radix_otherWidth">0</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/LoopFilterTestBench/loopFilter/ki_error_trun_c">
-      <obj_property name="ElementShortName">ki_error_trun_c[3:0]</obj_property>
-      <obj_property name="ObjectShortName">ki_error_trun_c[3:0]</obj_property>
+      <obj_property name="ElementShortName">ki_error_trun_c[4:0]</obj_property>
+      <obj_property name="ObjectShortName">ki_error_trun_c[4:0]</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/LoopFilterTestBench/loopFilter/error_sum_c">
-      <obj_property name="ElementShortName">error_sum_c[8:-3]</obj_property>
-      <obj_property name="ObjectShortName">error_sum_c[8:-3]</obj_property>
+      <obj_property name="ElementShortName">error_sum_c[7:-5]</obj_property>
+      <obj_property name="ObjectShortName">error_sum_c[7:-5]</obj_property>
       <obj_property name="Radix">REALRADIX</obj_property>
       <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
-      <obj_property name="radix_fractionWidth">3</obj_property>
+      <obj_property name="radix_fractionWidth">5</obj_property>
       <obj_property name="radix_otherWidth">0</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/LoopFilterTestBench/loopFilter/DYNAMIC_VAL">
@@ -182,8 +182,8 @@
       <obj_property name="ObjectShortName">KP_FRAC_WIDTH[31:0]</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/LoopFilterTestBench/loopFilter/KP">
-      <obj_property name="ElementShortName">KP[5:0]</obj_property>
-      <obj_property name="ObjectShortName">KP[5:0]</obj_property>
+      <obj_property name="ElementShortName">KP[4:0]</obj_property>
+      <obj_property name="ObjectShortName">KP[4:0]</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/LoopFilterTestBench/loopFilter/KI_WIDTH">
       <obj_property name="ElementShortName">KI_WIDTH[31:0]</obj_property>
