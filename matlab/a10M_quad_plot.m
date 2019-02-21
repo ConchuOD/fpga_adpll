@@ -1,4 +1,4 @@
-filename = 'scope_32.bin';
+filename = 'PA_10M_div4.bin';
 [~,scope_y_data] = importAgilentBin(filename,1);
 [scope_x_data,scope_y_data2] = importAgilentBin(filename,2);
 [w,init_cross,final_cross,mid_level] = pulsewidth(scope_y_data,scope_x_data, 'Polarity', 'Positive');
@@ -16,7 +16,7 @@ plot(t*1e6-7.95-0.09,scope_y_data2,'r');
 
 c = scope_y_data2;
 
-filename = 'scope_31.bin';
+filename = 'PA_10M_div4_1.bin';
 [~,scope_y_data] = importAgilentBin(filename,1);
 [scope_x_data,scope_y_data2] = importAgilentBin(filename,2);
 [w,init_cross,final_cross,mid_level] = pulsewidth(scope_y_data,scope_x_data, 'Polarity', 'Positive');
