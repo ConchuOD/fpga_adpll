@@ -97,7 +97,7 @@ module NetworkRing #(
 	)
 	loopFilter 
 	(
-        .gen_clk_i(gen_clk_x),
+        .gen_clk_i(gen_div_x),
         .reset_i(reset_i),
         .error_i(error_x),
         .kp_i(kp_i),

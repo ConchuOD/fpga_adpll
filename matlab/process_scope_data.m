@@ -2,13 +2,14 @@
 clear variables
 
 periods = [];
-for inc1 = 1:10
-    filename = char("PA_10M_div4.bin");
+inc1 = 1;
+%for inc1 = 1:10
+    filename = char("scope_19.bin");
     [scope_x_data(inc1,:),scope_y_data(inc1,:)] = importAgilentBin(filename,1);
     
     [w,init_cross,final_cross,mid_level] = pulsewidth(scope_y_data(inc1,:),scope_x_data(inc1,:), 'Polarity', 'Positive');
     periods = [periods;getPeriods(init_cross)];
-end
+%end
 
 periods = reshape(periods, [1 size(periods,1)*size(periods,2)]);
 
@@ -22,6 +23,7 @@ y_fft_scaled = abs(y_fft);
 y_fft_plottable = real(y_fft_scaled(1:floor(num_samp/2)));
 
 num_datasets = 1;
+
 for loop_inc = 1:num_datasets
 %% compute periods
 %     [w,init_cross,final_cross,mid_level] = pulsewidth(scope_y_data,scope_x_data, 'Polarity', 'Positive');
@@ -81,9 +83,9 @@ if (num_datasets == 1)
     
     figure
     histfit(periods)
-    title()
-    xlabel()
-    ylabel()
+    title('')
+    xlabel('')
+    ylabel('')
     
     figure
     plot(t*1e6-7.95,scope_y_data,'b')

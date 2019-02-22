@@ -81,10 +81,10 @@ module TwoByTwoRingTest (
     
     assign kp_ki_c = {kp_sel_r,ki_sel_r};
 
-    localparam KP_WIDTH = 5;
-    localparam KP_FRAC_WIDTH = 4;
-    localparam KI_WIDTH = 10;
-    localparam KI_FRAC_WIDTH = 9;
+    localparam KP_WIDTH = 7;
+    localparam KP_FRAC_WIDTH = 6;
+    localparam KI_WIDTH = 12;
+    localparam KI_FRAC_WIDTH = 11;
     wire [KP_WIDTH-1:0] padded_kp_c;
     wire [KI_WIDTH-1:0] padded_ki_c;
     assign padded_kp_c = {{(KP_WIDTH-4){1'b0}},kp_sel_r}; 

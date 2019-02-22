@@ -1,0 +1,11 @@
+measurements:
+~~~
+10M, 1.25M, 1.4, 1.8, 0011, 0010 - uni PA 2x2
+same							 - bi PA 2x2
+5M, same, 0001, 0001             - uni PA 2x2
+same                             - uni PA 2x2
+same							 - bi PA 2x2
+5M, same, 0001, 0001             - uni PA 2x2
+same                             - uni PA 2x2
+5M, same, 1.6, 1.11, 0111, 0001  - uni RO 2x2
+same                             - bi RO 2x2

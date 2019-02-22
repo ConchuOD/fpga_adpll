@@ -15,7 +15,7 @@ module TwoByTwoTest (
     );
 
     localparam ACCUM_WIDTH = 12;
-    localparam BIAS = 12'd154; //154 = 10 MHz
+    localparam BIAS = 12'd77; //154 = 10 MHz
     localparam PDET_WIDTH = 8;
     //optimal gains w/ 10 M => kp @ 1.5 = 1110 lower
     //                         ki @ 1.7 = 0001 lower 
@@ -88,10 +88,10 @@ module TwoByTwoTest (
     assign ki_sel_x = switches_i[3:0];
     assign kp_ki_c = {kp_sel_x,ki_sel_x};
 
-    localparam KP_WIDTH = 6;
-    localparam KP_FRAC_WIDTH = 5;
-    localparam KI_WIDTH = 8;
-    localparam KI_FRAC_WIDTH = 7;
+    localparam KP_WIDTH = 5;
+    localparam KP_FRAC_WIDTH = 4;
+    localparam KI_WIDTH = 9;
+    localparam KI_FRAC_WIDTH = 8;
     wire [KP_WIDTH-1:0] padded_kp_c;
     wire [KI_WIDTH-1:0] padded_ki_c;
     assign padded_kp_c = {{(KP_WIDTH-4){1'b0}},kp_sel_x}; //opt is 0100, kp @ 1.5
@@ -170,7 +170,7 @@ module TwoByTwoTest (
         .enable_i(enable_x),
         .error_right_i(~adpll_12_error_left_x), //adpll12
         .error_bottom_i(~adpll_21_error_top_x), //adpll21
-        .ref_left_i(gen_reference_x), //reference
+        .ref_left_i(ext_reference_r), //reference
         .ref_above_i(adpll_11_div8_x), //unused so just looping back
         .weight_left_i(weight_left_11),
         .weight_above_i(weight_above_11),

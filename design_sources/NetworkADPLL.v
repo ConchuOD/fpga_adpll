@@ -93,7 +93,7 @@ module NetworkADPLL #(
 	)
 	loopFilter 
 	(
-        .gen_clk_i(gen_clk_x),
+        .gen_clk_i(gen_div8_x),
         .reset_i(reset_i),
         .error_i(error_x),
         .kp_i(kp_i),
@@ -110,7 +110,7 @@ module NetworkADPLL #(
 	Div8 div8 ( 
 		.reset_i(reset_i),
     	.signal_i(gen_clk_x),
-    	.div8_o(gen_div8_x)
+    	.div4_o(gen_div8_x)
    	);
 
     //assign f_sel_sw_pa_x = BIAS;
