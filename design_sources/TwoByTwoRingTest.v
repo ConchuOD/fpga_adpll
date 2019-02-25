@@ -33,8 +33,8 @@ module TwoByTwoRingTest (
     reg [3:0] weight_above_11;
     reg [3:0] weight_right_11;
     reg [3:0] weight_below_11;    
-    wire adpll_11_ref_left_c;
-    wire adpll_11_ref_above_c;
+    reg adpll_11_ref_left_c;
+    reg adpll_11_ref_above_c;
 
     wire adpll_12_gen_x;
     wire adpll_12_div8_x;
@@ -44,8 +44,8 @@ module TwoByTwoRingTest (
     reg [3:0] weight_above_12;
     reg [3:0] weight_right_12;
     reg [3:0] weight_below_12; 
-    wire adpll_12_ref_left_c;
-    wire adpll_12_ref_above_c;
+    reg adpll_12_ref_left_c;
+    reg adpll_12_ref_above_c;
 
     wire adpll_21_gen_x;
     wire adpll_21_div8_x;
@@ -55,8 +55,8 @@ module TwoByTwoRingTest (
     reg [3:0] weight_above_21;
     reg [3:0] weight_right_21;
     reg [3:0] weight_below_21;       
-    wire adpll_21_ref_left_c;
-    wire adpll_21_ref_above_c;
+    reg adpll_21_ref_left_c;
+    reg adpll_21_ref_above_c;
 
     wire adpll_22_gen_x;
     wire adpll_22_div8_x;
@@ -66,8 +66,8 @@ module TwoByTwoRingTest (
     reg [3:0] weight_above_22;
     reg [3:0] weight_right_22;
     reg [3:0] weight_below_22;    
-    wire adpll_22_ref_left_c;
-    wire adpll_22_ref_above_c;
+    reg adpll_22_ref_left_c;
+    reg adpll_22_ref_above_c;
 
     wire clk5_x;
     wire clk5_0_x;
@@ -77,16 +77,16 @@ module TwoByTwoRingTest (
 
     wire clk258_x;
 
-    reg [3:0] kp_sel_r;
+    reg [5:0] kp_sel_r;
     reg [3:0] ki_sel_r;
     wire [7:0] kp_ki_c;
 
     wire [7:0] half_7seg_x;
 
-    wire enable_x = switches_i[15];
-    wire uni_dir_x = switches_i[14];
-    wire pll_or_network_x = switches_i[13];
-    wire ref_or_gains_x = switches_i[12];
+    wire enable_x = switches_i[15]; //0 disable
+    wire uni_dir_x = switches_i[14]; //0 network
+    wire pll_or_network_x = switches_i[13]; //0 pll
+    wire ref_or_gains_x = switches_i[12]; //0 gains
     reg [ACCUM_WIDTH-1:0] ref_sel_r;
     
     assign kp_ki_c = {kp_sel_r,ki_sel_r};
@@ -140,7 +140,7 @@ module TwoByTwoRingTest (
         else
         begin
             ref_sel_r <= ref_sel_r;
-            kp_sel_r <= switches_i[11:8];
+            kp_sel_r <= switches_i[11:6];
             ki_sel_r <= switches_i[3:0];
         end
     end

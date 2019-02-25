@@ -88,8 +88,8 @@ module TwoByTwoTest (
     assign ki_sel_x = switches_i[3:0];
     assign kp_ki_c = {kp_sel_x,ki_sel_x};
 
-    localparam KP_WIDTH = 5;
-    localparam KP_FRAC_WIDTH = 4;
+    localparam KP_WIDTH = 6;
+    localparam KP_FRAC_WIDTH = 5;
     localparam KI_WIDTH = 9;
     localparam KI_FRAC_WIDTH = 8;
     wire [KP_WIDTH-1:0] padded_kp_c;
