@@ -24,4 +24,4 @@ pa_freq_sens = 1*b0*(258E6*(1/2^12));
 inv_num = 383;
 T_target = 1/target;
 
-ro_freq_sens = 1*b0*(abs(1/(T_target - T_target/inv_num)-target) + abs(1/(T_target + T_target/inv_num)-target))/2;
+ro_freq_sens = 1*b0*(abs(1/(T_target - 2*(T_target/inv_num))-target) + abs(1/(T_target + 2*(T_target/inv_num))-target))/2;

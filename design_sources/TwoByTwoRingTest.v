@@ -32,7 +32,9 @@ module TwoByTwoRingTest (
     reg [3:0] weight_left_11;
     reg [3:0] weight_above_11;
     reg [3:0] weight_right_11;
-    reg [3:0] weight_below_11;
+    reg [3:0] weight_below_11;    
+    wire adpll_11_ref_left_c;
+    wire adpll_11_ref_above_c;
 
     wire adpll_12_gen_x;
     wire adpll_12_div8_x;
@@ -41,7 +43,9 @@ module TwoByTwoRingTest (
     reg [3:0] weight_left_12;
     reg [3:0] weight_above_12;
     reg [3:0] weight_right_12;
-    reg [3:0] weight_below_12;
+    reg [3:0] weight_below_12; 
+    wire adpll_12_ref_left_c;
+    wire adpll_12_ref_above_c;
 
     wire adpll_21_gen_x;
     wire adpll_21_div8_x;
@@ -50,7 +54,9 @@ module TwoByTwoRingTest (
     reg [3:0] weight_left_21;
     reg [3:0] weight_above_21;
     reg [3:0] weight_right_21;
-    reg [3:0] weight_below_21;
+    reg [3:0] weight_below_21;       
+    wire adpll_21_ref_left_c;
+    wire adpll_21_ref_above_c;
 
     wire adpll_22_gen_x;
     wire adpll_22_div8_x;
@@ -59,7 +65,9 @@ module TwoByTwoRingTest (
     reg [3:0] weight_left_22;
     reg [3:0] weight_above_22;
     reg [3:0] weight_right_22;
-    reg [3:0] weight_below_22;
+    reg [3:0] weight_below_22;    
+    wire adpll_22_ref_left_c;
+    wire adpll_22_ref_above_c;
 
     wire clk5_x;
     wire clk5_0_x;
@@ -77,6 +85,8 @@ module TwoByTwoRingTest (
 
     wire enable_x = switches_i[15];
     wire uni_dir_x = switches_i[14];
+    wire pll_or_network_x = switches_i[13];
+    wire ref_or_gains_x = switches_i[12];
     reg [ACCUM_WIDTH-1:0] ref_sel_r;
     
     assign kp_ki_c = {kp_sel_r,ki_sel_r};
@@ -89,6 +99,8 @@ module TwoByTwoRingTest (
     wire [KI_WIDTH-1:0] padded_ki_c;
     assign padded_kp_c = {{(KP_WIDTH-4){1'b0}},kp_sel_r}; 
     assign padded_ki_c = {{(KI_WIDTH-4){1'b0}},ki_sel_r}; 
+    
+    wire reference_x = ext_reference_r;
 
     always @ (posedge clk258_x)
     begin
@@ -119,7 +131,7 @@ module TwoByTwoRingTest (
 
     always @ (posedge clk258_x)
     begin 
-        if (switches_i[12] == 1'b1)
+        if (ref_or_gains_x == 1'b1)
         begin
             ref_sel_r <= switches_i[11:0];
             kp_sel_r <= kp_sel_r;
@@ -161,6 +173,20 @@ module TwoByTwoRingTest (
         end
     end
 
+    always @ (*)
+    begin
+        if (pll_or_network_x == 1'b0)
+        begin
+            adpll_11_ref_left_c = reference_x;
+            adpll_11_ref_above_c = reference_x;
+        end
+        else
+        begin
+            adpll_11_ref_left_c = reference_x;
+            adpll_11_ref_above_c = adpll_11_div8_x; //unused so just looping back
+        end
+    end
+
     NetworkRing #(
         .BIAS(BIAS),
         .RO_WIDTH(PDET_WIDTH),
@@ -181,8 +207,8 @@ module TwoByTwoRingTest (
         .enable_i(enable_x),
         .error_right_i(~adpll_12_error_left_x), //adpll12
         .error_bottom_i(~adpll_21_error_top_x), //adpll21
-        .ref_left_i(ext_reference_r), //reference
-        .ref_above_i(adpll_11_div8_x), //unused so just looping back
+        .ref_left_i(adpll_11_ref_left_c), //reference
+        .ref_above_i(adpll_11_ref_above_c), //unused so just looping back
         .weight_left_i(weight_left_11),
         .weight_above_i(weight_above_11),
         .weight_right_i(weight_right_11),
@@ -213,6 +239,20 @@ module TwoByTwoRingTest (
         end
     end
 
+    always @ (*)
+    begin
+        if (pll_or_network_x == 1'b0)
+        begin
+            adpll_12_ref_left_c = reference_x;
+            adpll_12_ref_above_c = reference_x;
+        end
+        else
+        begin
+            adpll_12_ref_left_c = adpll_11_div8_x;
+            adpll_12_ref_above_c = adpll_12_div8_x; //unused so just looping back
+        end
+    end
+
     NetworkRing #(
         .BIAS(BIAS-6),
         .RO_WIDTH(PDET_WIDTH),
@@ -233,8 +273,8 @@ module TwoByTwoRingTest (
         .enable_i(switches_i[15]),
         .error_right_i({(PDET_WIDTH){1'b0}}), //nothing
         .error_bottom_i(~adpll_22_error_top_x), //adpll21
-        .ref_left_i(adpll_11_div8_x), //adpll11
-        .ref_above_i(adpll_12_div8_x), //unused so just looping back
+        .ref_left_i(adpll_12_ref_left_c), //adpll11
+        .ref_above_i(adpll_12_ref_above_c), //unused so just looping back
         .weight_left_i(weight_left_12),
         .weight_above_i(weight_above_12),
         .weight_right_i(weight_right_12),
@@ -265,6 +305,20 @@ module TwoByTwoRingTest (
         end
     end
 
+    always @ (*)
+    begin
+        if (pll_or_network_x == 1'b0)
+        begin
+            adpll_21_ref_left_c = reference_x;
+            adpll_21_ref_above_c = reference_x;
+        end
+        else
+        begin
+            adpll_21_ref_left_c = adpll_21_div8_x; //unused so just looping back
+            adpll_21_ref_above_c = adpll_11_div8_x; 
+        end
+    end
+
     NetworkRing #(
         .BIAS(BIAS),
         .RO_WIDTH(PDET_WIDTH),
@@ -285,8 +339,8 @@ module TwoByTwoRingTest (
         .enable_i(switches_i[15]),
         .error_right_i(~adpll_22_error_left_x), //adpll12
         .error_bottom_i({(PDET_WIDTH){1'b0}}), //nothing
-        .ref_left_i(adpll_21_div8_x), //nothing
-        .ref_above_i(adpll_11_div8_x),
+        .ref_left_i(adpll_21_ref_left_c), //nothing
+        .ref_above_i(adpll_21_ref_above_c),
         .weight_left_i(weight_left_21),
         .weight_above_i(weight_above_21),
         .weight_right_i(weight_right_21),
@@ -317,6 +371,20 @@ module TwoByTwoRingTest (
         end
     end
 
+    always @ (*)
+    begin
+        if (pll_or_network_x == 1'b0)
+        begin
+            adpll_22_ref_left_c = reference_x;
+            adpll_22_ref_above_c = reference_x;
+        end
+        else
+        begin
+            adpll_22_ref_left_c = adpll_21_div8_x; //unused so just looping back
+            adpll_22_ref_above_c = adpll_12_div8_x; 
+        end
+    end
+
     NetworkRing #(
         .BIAS(BIAS),
         .RO_WIDTH(PDET_WIDTH),
@@ -337,8 +405,8 @@ module TwoByTwoRingTest (
         .enable_i(switches_i[15]),
         .error_right_i({(PDET_WIDTH){1'b0}}), //adpll12
         .error_bottom_i({(PDET_WIDTH){1'b0}}), //adpll21
-        .ref_left_i(adpll_21_div8_x), //reference
-        .ref_above_i(adpll_12_div8_x), //
+        .ref_left_i(adpll_22_ref_left_c), //reference
+        .ref_above_i(adpll_22_ref_above_c), //
         .weight_left_i(weight_left_22),
         .weight_above_i(weight_above_22),
         .weight_right_i(weight_right_22),
