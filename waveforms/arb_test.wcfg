@@ -11,15 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="25473667fs"></ZoomStartTime>
-      <ZoomEndTime time="499973668fs"></ZoomEndTime>
-      <Cursor1Time time="104557000fs"></Cursor1Time>
+      <ZoomStartTime time="252628750fs"></ZoomStartTime>
+      <ZoomEndTime time="403328751fs"></ZoomEndTime>
+      <Cursor1Time time="305141000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="199"></NameColumnWidth>
-      <ValueColumnWidth column_width="134"></ValueColumnWidth>
+      <ValueColumnWidth column_width="130"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="18" />
+   <WVObjectSize size="19" />
    <wvobject type="logic" fp_name="/PhaseDetectorDLTestBench/reset">
       <obj_property name="ElementShortName">reset</obj_property>
       <obj_property name="ObjectShortName">reset</obj_property>
@@ -75,6 +75,10 @@
    <wvobject type="logic" fp_name="/PhaseDetectorDLTestBench/lmao1pl8/sign_c">
       <obj_property name="ElementShortName">sign_c</obj_property>
       <obj_property name="ObjectShortName">sign_c</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/PhaseDetectorDLTestBench/lmao1pl8/clear_tdl_c">
+      <obj_property name="ElementShortName">clear_tdl_c</obj_property>
+      <obj_property name="ObjectShortName">clear_tdl_c</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/PhaseDetectorDLTestBench/lmao1pl8/count_input_c">
       <obj_property name="ElementShortName">count_input_c[1:15]</obj_property>

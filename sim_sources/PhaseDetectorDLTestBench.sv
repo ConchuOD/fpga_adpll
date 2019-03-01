@@ -36,21 +36,27 @@ module PhaseDetectorDLTestBench ();
 		#100 ref_clk = ~ref_clk;	
 		#100 ref_clk = ~ref_clk;		
 		
-		#25 ref_clk = ~ref_clk;	
 		#100 ref_clk = ~ref_clk;	
+		#100 ref_clk = ~ref_clk;			
+		
+		#100 ref_clk = ~ref_clk;	
+		#100 ref_clk = ~ref_clk;
 	end
 
 	initial
 	begin
-		gen_clk = 1'b0;
-		#103 gen_clk = ~gen_clk;	
-		#100 gen_clk = ~gen_clk;
+		gen_clk = 1'b0;				/* Post Synth & Post Impl Timing */
+		#104 gen_clk = ~gen_clk;	//(4) -n*1.5 	> 0 -> n = 2 + 1 free 	-----> 1 + 1
+		#100 gen_clk = ~gen_clk;	//(4) -n*2 		> 0 -> n = 2 + 1 free 	-----> 1 + 1
 		
-		#104 gen_clk = ~gen_clk;
-		#100 gen_clk = ~gen_clk;
+		#104 gen_clk = ~gen_clk;	//(8) -n*1.5 	> 0 -> n = 5 + 1 free 	-----> 4 + 1
+		#100 gen_clk = ~gen_clk;	//(8) -n*2 		> 0 -> n = 4 + 1 free 	-----> 3 + 1
 		
-		#111 gen_clk = ~gen_clk;	
-		#100 gen_clk = ~gen_clk;	
+		#104 gen_clk = ~gen_clk;	//(12) -n*1.5 	> 0 -> n = 8 + 1 free 	-----> 6 + 1
+		#100 gen_clk = ~gen_clk;	//(12) -n*2 	> 0 -> n = 6 + 1 free 	-----> 5 + 1
+
+		#104 gen_clk = ~gen_clk;	//(16) -n*1.5 	> 0 -> n = 10 + 1 free 	-----> 9 + 1
+		#100 gen_clk = ~gen_clk;	//(16) -n*2 	> 0 -> n = 8 + 1 free 	-----> 7 + 1
 	end
 
 	//do testing
