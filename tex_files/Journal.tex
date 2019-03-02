@@ -214,4 +214,12 @@ Along the way I located an error where I was using 5'd16 as the bias which doesn
 The lock range is now heavily impacted by the gains as I discovered when attempting to copy gains from the PA ADPLL.
 The key to solving it was going through all the fixed point arith. and checking that the widths made sense, which made my realise I had made a false assummtion that going from an 8 to a 5 bit detector/filter resulted in a div by eight times more at the exit of the filter, but in fact had the same div by 4.
 After discovering this I had it locking within 3 hours of work, when prior I had spent ~ 9 days on the calendar and ~30 hours working on the problem. Locking perofmance looks potentially better than the 10 MHz perf of the ADPLL (magnitude not \% for the sake of comp. However div is by 4 now not 8, and res is twice as good.) In the coming week I will be characterising the perf of these different designs to compare effectively.
+
+\section*{Issues}
+This week I took some measurements of my 2x2 networks in order to justify the transition over to the ring based design. However I was unable to get satisfactory performance out of the ring design, with total jitter being approximately 50\% of the period and a very narrow band of gains which actually did anything.
+Speaking to Elena she suggested that the problem might be the 4 ns resolution on the detector but 1 ns period increments. However 4 ns is the lowest increment I could possibly get so an alternate design was required. I.E. returning to TDC design.
+
+\section*{Tapped Delay Line}
+I spent this week creating this design, starting with the logic that would determine the sign was the simple side of things, but much more challenging was the delay line. As an FPGA is not intended to implement systems like this liberal use of KEEP\_TRUE was required alongside many variations of logic to find one which had suitable timing to implement this system. I eventually found one which worked in simulation, so I intend to test it in the coming week.
+
 \end{document}
