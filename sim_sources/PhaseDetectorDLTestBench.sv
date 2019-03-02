@@ -8,7 +8,9 @@ module PhaseDetectorDLTestBench ();
 
 	localparam EXPECTED_VAL = 0; //int
 
-	PhaseDetectorDL lmao1pl8(
+	wire [4:0] pd_clock_cycles;
+
+	PhaseDetectorDL #(.WIDTH(5)) lmao1pl8(
 		.reset_i(reset), 
 		.fpga_clk_i(fpga_clk),
 		.reference_i(ref_clk),
@@ -40,6 +42,12 @@ module PhaseDetectorDLTestBench ();
 		#100 ref_clk = ~ref_clk;			
 		
 		#100 ref_clk = ~ref_clk;	
+		#100 ref_clk = ~ref_clk;			
+		
+		#100 ref_clk = ~ref_clk;	
+		#100 ref_clk = ~ref_clk;			
+		
+		#100 ref_clk = ~ref_clk;	
 		#100 ref_clk = ~ref_clk;
 	end
 
@@ -57,6 +65,12 @@ module PhaseDetectorDLTestBench ();
 
 		#104 gen_clk = ~gen_clk;	//(16) -n*1.5 	> 0 -> n = 10 + 1 free 	-----> 9 + 1
 		#100 gen_clk = ~gen_clk;	//(16) -n*2 	> 0 -> n = 8 + 1 free 	-----> 7 + 1
+
+		#082 gen_clk = ~gen_clk;
+		#100 gen_clk = ~gen_clk;
+
+		#096 gen_clk = ~gen_clk;
+		#100 gen_clk = ~gen_clk;
 	end
 
 	//do testing
