@@ -30,7 +30,7 @@ module LoopFilter #(
 	reg signed [KP_INT_WIDTH-1:-KP_FRAC_WIDTH] kp_x;
 	reg signed [KI_INT_WIDTH-1:-KI_FRAC_WIDTH] ki_x;
 
-	reg signed [ERROR_WIDTH-1:0] error_delay_r;
+	wire signed [ERROR_WIDTH-1:0] error_delay_r;
 	
 	wire signed [KP_MULT_RES_INT_WIDTH-1:-KP_FRAC_WIDTH] kp_error_c;
 	wire signed [ERROR_WIDTH-1:0] kp_error_trun_c;
@@ -58,7 +58,7 @@ module LoopFilter #(
 		end
 	end
 
-	//assign error_delay_r = error_i;
+	assign error_delay_r = error_i;
 	assign dco_cc_o = error_sum_trun_delay_r;
 	always @ (posedge gen_clk_i or posedge reset_i)
 	begin
@@ -66,13 +66,13 @@ module LoopFilter #(
 		else error_sum_trun_delay_r <= error_sum_trun_c;
 	end
 
-	
+	/*
 	always @ (posedge gen_clk_i or posedge reset_i)
 	begin
 		if(reset_i) error_delay_r <= {(ERROR_WIDTH){1'b0}};
 		else error_delay_r <= error_i;
 	end
-	
+	*/
 
 	/*
 		kp route

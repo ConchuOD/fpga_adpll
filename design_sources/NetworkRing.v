@@ -40,6 +40,8 @@ module NetworkRing #(
     wire [RO_WIDTH-1:0] f_sel_sw_ro_x; //TODO
     wire gen_clk_x;
     wire gen_div_x;
+    wire early_clk_x;
+    wire early_div_x;
     wire signed [PDET_WIDTH-1:0] error_x;
     wire signed [PDET_WIDTH-1:0] error_left_x;
     wire signed [PDET_WIDTH-1:0] error_above_x;
@@ -97,7 +99,7 @@ module NetworkRing #(
 	)
 	loopFilter 
 	(
-        .gen_clk_i(gen_div_x),
+        .gen_clk_i(early_div_x),
         .reset_i(reset_i),
         .error_i(error_x),
         .kp_i(kp_i),
@@ -109,6 +111,7 @@ module NetworkRing #(
         .enable_i (enable_i),
         .reset_i (reset_i),
         .freq_sel_i (f_sel_sw_ro_x),
+        .early_clk_o (early_clk_x),
         .clk_o (gen_clk_x)
 	);
 
@@ -116,6 +119,12 @@ module NetworkRing #(
 		.reset_i(reset_i),
     	.signal_i(gen_clk_x),
     	.div4_o(gen_div_x)
+   	);
+
+   	Div8 div8Early ( 
+		.reset_i(reset_i),
+    	.signal_i(early_clk_x),
+    	.div4_o(early_div_x)
    	);
     
     assign f_sel_sw_ro_x = BIAS - dco_cc_o; //
