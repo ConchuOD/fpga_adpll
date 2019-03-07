@@ -1,4 +1,4 @@
-filename = 'tcope_2.bin';
+filename = 'scope_36.bin';
 [~,scope_y_data] = importAgilentBin(filename,1);
 [~,scope_y_data2] = importAgilentBin(filename,2);
 [~,scope_y_data3] = importAgilentBin(filename,3);

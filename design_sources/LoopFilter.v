@@ -41,6 +41,8 @@ module LoopFilter #(
 	wire signed [ERROR_WIDTH-1:0] ki_error_trun_c;
 	
 	wire signed [SUM_INT_WIDTH-1:-SUM_FRAC_WIDTH] error_sum_c;
+	wire signed [DCO_CC_WIDTH-1:0] error_sum_trun_c;
+	reg signed [DCO_CC_WIDTH-1:0] error_sum_trun_delay_r;
 	
 	always @(DYNAMIC_VAL or reset_i or kp_i or ki_i)
 	begin
@@ -56,11 +58,21 @@ module LoopFilter #(
 		end
 	end
 
+	//assign error_delay_r = error_i;
+	assign dco_cc_o = error_sum_trun_delay_r;
+	always @ (posedge gen_clk_i or posedge reset_i)
+	begin
+		if(reset_i) error_sum_trun_delay_r <= {(DCO_CC_WIDTH){1'b0}};
+		else error_sum_trun_delay_r <= error_sum_trun_c;
+	end
+
+	
 	always @ (posedge gen_clk_i or posedge reset_i)
 	begin
 		if(reset_i) error_delay_r <= {(ERROR_WIDTH){1'b0}};
 		else error_delay_r <= error_i;
 	end
+	
 
 	/*
 		kp route
@@ -87,6 +99,6 @@ module LoopFilter #(
 
 	assign error_sum_c = $signed({kp_error_c, {(KI_FRAC_WIDTH-KP_FRAC_WIDTH){1'b0}} }) + ki_error_inte_c;
 	
-	assign dco_cc_o = error_sum_c[SUM_INT_WIDTH-1:SUM_INT_WIDTH-1-DCO_CC_WIDTH];
+	assign error_sum_trun_c = error_sum_c[SUM_INT_WIDTH-1:SUM_INT_WIDTH-1-DCO_CC_WIDTH];
 
 endmodule

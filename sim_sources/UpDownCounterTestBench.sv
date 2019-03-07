@@ -1,6 +1,6 @@
 module UpDownCounterTestBench ();
 
-	localparam WIDTH = 20;
+	localparam WIDTH = 5;
 
 	reg reset;
 	reg clear;

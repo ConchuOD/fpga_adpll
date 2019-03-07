@@ -284,29 +284,29 @@ set_property IOSTANDARD LVCMOS33 [get_ports {JB[7]}]
 
 ##Pmod Header JC, left side front - for connecting external hardware
 ##Bank = 35, Pin name = IO_L23P_T3_35,						Sch name = JC1
-#set_property PACKAGE_PIN K2 [get_ports {JC[0]}]
-#set_property IOSTANDARD LVCMOS33 [get_ports {JC[0]}]
+set_property PACKAGE_PIN K2 [get_ports {JC[0]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {JC[0]}]
 ##Bank = 35, Pin name = IO_L6P_T0_35,						Sch name = JC2
-#set_property PACKAGE_PIN E7 [get_ports {JC[1]}]
-#set_property IOSTANDARD LVCMOS33 [get_ports {JC[1]}]
+set_property PACKAGE_PIN E7 [get_ports {JC[1]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {JC[1]}]
 ##Bank = 35, Pin name = IO_L22P_T3_35,						Sch name = JC3
-#set_property PACKAGE_PIN J3 [get_ports {JC[2]}]
-#set_property IOSTANDARD LVCMOS33 [get_ports {JC[2]}]
+set_property PACKAGE_PIN J3 [get_ports {JC[2]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {JC[2]}]
 ##Bank = 35, Pin name = IO_L21P_T3_DQS_35,					Sch name = JC4
-#set_property PACKAGE_PIN J4 [get_ports {JC[3]}]
-#set_property IOSTANDARD LVCMOS33 [get_ports {JC[3]}]
+set_property PACKAGE_PIN J4 [get_ports {JC[3]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {JC[3]}]
 ##Bank = 35, Pin name = IO_L23N_T3_35,						Sch name = JC7
-#set_property PACKAGE_PIN K1 [get_ports {JC[4]}]
-#set_property IOSTANDARD LVCMOS33 [get_ports {JC[4]}]
+set_property PACKAGE_PIN K1 [get_ports {JC[4]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {JC[4]}]
 ##Bank = 35, Pin name = IO_L5P_T0_AD13P_35,					Sch name = JC8
-#set_property PACKAGE_PIN E6 [get_ports {JC[5]}]
-#set_property IOSTANDARD LVCMOS33 [get_ports {JC[5]}]
+set_property PACKAGE_PIN E6 [get_ports {JC[5]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {JC[5]}]
 ##Bank = 35, Pin name = IO_L22N_T3_35,						Sch name = JC9
-#set_property PACKAGE_PIN J2 [get_ports {JC[6]}]
-#set_property IOSTANDARD LVCMOS33 [get_ports {JC[6]}]
+set_property PACKAGE_PIN J2 [get_ports {JC[6]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {JC[6]}]
 ##Bank = 35, Pin name = IO_L19P_T3_35,						Sch name = JC10
-#set_property PACKAGE_PIN G6 [get_ports {JC[7]}]
-#set_property IOSTANDARD LVCMOS33 [get_ports {JC[7]}]
+set_property PACKAGE_PIN G6 [get_ports {JC[7]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {JC[7]}]
 
 ##Pmod Header JD, left side centre - for connecting external hardware
 ##Bank = 35, Pin name = IO_L21N_T2_DQS_35,					Sch name = JD1

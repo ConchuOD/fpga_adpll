@@ -129,7 +129,7 @@ module PhaseDetectorDL #(parameter WIDTH = 5) (
     always @ (*)
     begin
         error_bin_r = {(MAG_WIDTH){1'b0}};
-        for (j=0;j<NUM_TAPS;j=j+1)
+        for (j=1;j<=NUM_TAPS;j=j+1)
         begin
             error_bin_r = error_bin_r + error_taps_buff_r[j];
         end

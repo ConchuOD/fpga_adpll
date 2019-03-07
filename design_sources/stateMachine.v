@@ -62,11 +62,11 @@ module StateMachine (
 				else next_state_r = WAITING; //if not those then keep WAITING
 			REF_FIRST:
 				if (gen_pos_edge_x) next_state_r = COPY_CLEAR; //edge on gen moves to COPY_CLEAR
-				else if (ref_neg_edge_x) next_state_r = COPY_CLEAR; //negedge on ref also does
+				//else if (ref_neg_edge_x) next_state_r = COPY_CLEAR; //negedge on ref also does
 				else next_state_r = REF_FIRST; //otherwise stay here			
 			GEN_FIRST:
 				if (ref_pos_edge_x) next_state_r = COPY_CLEAR; //edge on ref moves to COPY_CLEAR
-				else if (gen_neg_edge_x) next_state_r = COPY_CLEAR; //negedge on gen also does
+				//else if (gen_neg_edge_x) next_state_r = COPY_CLEAR; //negedge on gen also does
 				else next_state_r = GEN_FIRST; //otherwise stay here			
 			COPY_CLEAR:
 				if(counter_cleared_i) next_state_r = WAITING;

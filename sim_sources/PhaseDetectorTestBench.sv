@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 module PhaseDetectorTestBench ();
 	
-	localparam WIDTH = 8;
+	localparam WIDTH = 5;
 	localparam EXPECTED_VAL = {{(WIDTH-4){1'b0}}, 4'b1010};
 	//localparam EXPECTED_VAL = {{(WIDTH-4){1'b1}}, 4'b0110};
 	reg fpga_clk; //400 MHz -> 1.25 ns half period
@@ -32,21 +32,34 @@ module PhaseDetectorTestBench ();
 	initial
 	begin
 		ref_clk = 1'b0;
-		#35
 		#100 ref_clk = ~ref_clk;	
+		#100 ref_clk = ~ref_clk;
+
+		#100 ref_clk = ~ref_clk;	
+		#100 ref_clk = ~ref_clk;	
+		
+		#180 ref_clk = ~ref_clk;	
 		#100 ref_clk = ~ref_clk;		
-		#100 ref_clk = ~ref_clk;	
+		
+		#160 ref_clk = ~ref_clk;	
 		#100 ref_clk = ~ref_clk;	
 	end
 
 	initial
 	begin
 		gen_clk = 1'b0;
-		#10
+		#130 gen_clk = ~gen_clk;	
+		#100 gen_clk = ~gen_clk;
+		
+		#140 gen_clk = ~gen_clk;	
+		#100 gen_clk = ~gen_clk;
+
 		#100 gen_clk = ~gen_clk;	
 		#100 gen_clk = ~gen_clk;
-		#150 gen_clk = ~gen_clk;
+		
 		#100 gen_clk = ~gen_clk;	
+		#100 gen_clk = ~gen_clk;
+
 	end
 
 	//do testing
@@ -56,7 +69,7 @@ module PhaseDetectorTestBench ();
 		reset = 1'b1;
 		#5
 		reset = 1'b0;
-		#235
+		#2350
 		assert (pd_clock_cycles == EXPECTED_VAL);
 		#2.5
 		assert (pd_clock_cycles == EXPECTED_VAL);

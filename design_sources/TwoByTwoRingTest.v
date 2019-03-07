@@ -8,15 +8,20 @@ module TwoByTwoRingTest (
         output [6:0] ra_o,
 		input ra_i, // external reference
         output [7:0] JB,
+        output [7:0] JC,
         output [7:0] segment_o,
         output [7:0] digit_o/*,  
         input temp,
         input temp_rst*/
     );
 
+    wire [4:0] temp_5b_0_x;
+    wire [7:0] temp_5b_1_x;
+    assign temp_5b_1_x = adpll_11_error_left_x;
+
     localparam BIAS = 5'd15; //154 = 10 MHz
     localparam PDET_WIDTH = 5;
-    localparam RINGSIZE = 383;
+    localparam RINGSIZE = 373;
     localparam ACCUM_WIDTH = 12;
     //network works at 0100 0001, 1.4, 1.7
     
@@ -28,7 +33,7 @@ module TwoByTwoRingTest (
     wire adpll_11_gen_x;
     wire adpll_11_div8_x;
     wire [PDET_WIDTH-1:0] adpll_11_error_top_x;
-    wire [PDET_WIDTH-1:0] adpll_11_error_left_x;
+    wire [PDET_WIDTH-1+3:0] adpll_11_error_left_x; //TODO WARNING WIDTH
     reg [3:0] weight_left_11;
     reg [3:0] weight_above_11;
     reg [3:0] weight_right_11;
@@ -91,10 +96,10 @@ module TwoByTwoRingTest (
     
     assign kp_ki_c = {kp_sel_r,ki_sel_r};
 
-    localparam KP_WIDTH = 7;
-    localparam KP_FRAC_WIDTH = 6;
-    localparam KI_WIDTH = 12;
-    localparam KI_FRAC_WIDTH = 11;
+    localparam KP_WIDTH = 5;
+    localparam KP_FRAC_WIDTH = 4;
+    localparam KI_WIDTH = 11;
+    localparam KI_FRAC_WIDTH = 10;
     wire [KP_WIDTH-1:0] padded_kp_c;
     wire [KI_WIDTH-1:0] padded_ki_c;
     assign padded_kp_c = {{(KP_WIDTH-4){1'b0}},kp_sel_r}; 
@@ -140,12 +145,13 @@ module TwoByTwoRingTest (
         else
         begin
             ref_sel_r <= ref_sel_r;
-            kp_sel_r <= switches_i[11:6];
+            kp_sel_r <= switches_i[11:8];
             ki_sel_r <= switches_i[3:0];
         end
     end
 
-    assign JB[5-1:0] = adpll_11_error_left_x[5-1:0]; 
+    assign JB[4:0] = temp_5b_0_x;
+    assign JC[7:0] = temp_5b_1_x;
     assign clk5_x = clk5_0_x;
     assign ra_o[0] = adpll_11_gen_x;
     assign ra_o[1] = gen_reference_x;
@@ -191,7 +197,7 @@ module TwoByTwoRingTest (
         .BIAS(BIAS),
         .RO_WIDTH(PDET_WIDTH),
         .RINGSIZE(RINGSIZE),
-        .PDET_WIDTH(PDET_WIDTH),
+        .PDET_WIDTH(PDET_WIDTH+3),
         //.KP(5'b00001),
         .KP_WIDTH(KP_WIDTH),
         .KP_FRAC_WIDTH(KP_FRAC_WIDTH),
@@ -202,6 +208,7 @@ module TwoByTwoRingTest (
     ) 
     adpll_11
     (
+        .dco_cc_o(temp_5b_0_x),
         .reset_i(reset_x),
         .fpga_clk_i(clk258_x),
         .enable_i(enable_x),
@@ -254,7 +261,7 @@ module TwoByTwoRingTest (
     end
 
     NetworkRing #(
-        .BIAS(BIAS-6),
+        .BIAS(BIAS),
         .RO_WIDTH(PDET_WIDTH),
         .RINGSIZE(RINGSIZE),
         .PDET_WIDTH(PDET_WIDTH),
