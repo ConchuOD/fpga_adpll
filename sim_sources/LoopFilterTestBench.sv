@@ -3,9 +3,9 @@ module LoopFilterTestBench ();
 
     reg clk5_x;
 
-    wire signed [4:0] error_x = 5'd10;
+    wire signed [7:0] error_x = 8'd10;
 
-    wire [7:0] ra_o;
+    wire [4:0] ra_o;
 
     wire reset_x;
 
@@ -20,16 +20,17 @@ module LoopFilterTestBench ();
 		end
 	end
 
-	
-	localparam DYNAMIC_VAL = 0;
+	localparam PDET_WIDTH = 8;
+	localparam RO_WIDTH = 5;
+	localparam DYNAMIC_VAL = 1;
 	localparam DCO_CC_WIDTH = 5;
-	localparam ERROR_WIDTH = 5;
+	localparam ERROR_WIDTH = 8;
 	localparam KP_WIDTH = 5;
-	localparam KP_FRAC_WIDTH = 3;
-	localparam KP = 5'b00100;
-	localparam KI_WIDTH = 6;
-	localparam KI_FRAC_WIDTH = 5;
-	localparam KI = 6'b000100;
+	localparam KP_FRAC_WIDTH = 4;
+	localparam KP = 5'd1;
+	localparam KI_WIDTH = 11;
+	localparam KI_FRAC_WIDTH = 10;
+	localparam KI = 11'd1;
 	
 
 	/*
@@ -46,23 +47,25 @@ module LoopFilterTestBench ();
 	
 
 	LoopFilter #(
-		.ERROR_WIDTH(ERROR_WIDTH),
-		.DCO_CC_WIDTH(DCO_CC_WIDTH),
+		.ERROR_WIDTH(PDET_WIDTH),
+		.DCO_CC_WIDTH(RO_WIDTH),
 		.KP_WIDTH(KP_WIDTH),
 		.KP_FRAC_WIDTH(KP_FRAC_WIDTH),
 		.KP(KP),
 		.KI_WIDTH(KI_WIDTH),
 		.KI_FRAC_WIDTH(KI_FRAC_WIDTH),
 		.KI(KI),
-		.DYNAMIC_VAL(DYNAMIC_VAL)
+		.DYNAMIC_VAL(DYNAMIC_VAL)	
 	)
-	loopFilter
+	loopFilter 
 	(
-		.gen_clk_i(clk5_x),
-		.reset_i(reset_x),
-		.error_i(error_x),
-		.dco_cc_o(ra_o)	
-	);
+        .gen_clk_i(clk5_x),
+        .reset_i(reset_x),
+        .error_i(error_x),
+        .kp_i(KP),
+        .ki_i(KI),
+        .dco_cc_o(ra_o) 
+    );
 
 	initial
 	begin

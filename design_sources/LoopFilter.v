@@ -25,7 +25,7 @@ module LoopFilter #(
 	localparam KI_MULT_RES_INT_WIDTH = ERROR_WIDTH+KI_INT_WIDTH;
 
 	localparam SUM_INT_WIDTH = KP_MULT_RES_INT_WIDTH+1; //kp always bigger, but +1 for overflow
-	localparam SUM_FRAC_WIDTH = KI_FRAC_WIDTH; //ki always smaller
+	localparam SUM_FRAC_WIDTH = KI_FRAC_WIDTH; //ki always more bits
 
 	reg signed [KP_INT_WIDTH-1:-KP_FRAC_WIDTH] kp_x;
 	reg signed [KI_INT_WIDTH-1:-KI_FRAC_WIDTH] ki_x;
@@ -91,7 +91,7 @@ module LoopFilter #(
 	//accumulator
 	assign ki_error_inte_c = ki_error_inte_delay_r+ki_error_c;
 
-	always @ (posedge gen_clk_i or posedge  reset_i)
+	always @ (posedge gen_clk_i or posedge reset_i)
 	begin
 		if(reset_i) ki_error_inte_delay_r <= {(KI_MULT_RES_INT_WIDTH-1){1'b0}};
 		else ki_error_inte_delay_r <= ki_error_inte_c;

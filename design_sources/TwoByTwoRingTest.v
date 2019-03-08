@@ -16,7 +16,7 @@ module TwoByTwoRingTest (
     );
 
     wire [4:0] temp_5b_0_x;
-    wire [7:0] temp_5b_1_x;
+    wire [5:0] temp_5b_1_x;
     assign temp_5b_1_x = adpll_11_error_left_x;
 
     localparam BIAS = 5'd15; //154 = 10 MHz
@@ -26,6 +26,17 @@ module TwoByTwoRingTest (
     //network works at 0100 0001, 1.4, 1.7
     
     wire reset_x;
+
+    assign JB[4:0] = temp_5b_0_x;
+    assign JC[5:0] = temp_5b_1_x;
+    assign clk5_x = clk5_0_x;
+    assign ra_o[0] = adpll_11_gen_x;
+    assign ra_o[1] = gen_reference_x;
+    assign ra_o[2] = ext_reference_r;
+    assign ra_o[3] = adpll_11_div8_x;
+    assign ra_o[4] = adpll_12_gen_x;
+    assign ra_o[5] = adpll_21_gen_x;
+    assign ra_o[6] = adpll_22_gen_x;
  
     reg ext_reference_r;
     wire other_ref_div4_x;
@@ -33,7 +44,7 @@ module TwoByTwoRingTest (
     wire adpll_11_gen_x;
     wire adpll_11_div8_x;
     wire [PDET_WIDTH-1:0] adpll_11_error_top_x;
-    wire [PDET_WIDTH-1+3:0] adpll_11_error_left_x; //TODO WARNING WIDTH
+    wire [PDET_WIDTH-1:0] adpll_11_error_left_x; //TODO WARNING WIDTH
     reg [3:0] weight_left_11;
     reg [3:0] weight_above_11;
     reg [3:0] weight_right_11;
@@ -98,8 +109,8 @@ module TwoByTwoRingTest (
 
     localparam KP_WIDTH = 5;
     localparam KP_FRAC_WIDTH = 4;
-    localparam KI_WIDTH = 11;
-    localparam KI_FRAC_WIDTH = 10;
+    localparam KI_WIDTH = 8;
+    localparam KI_FRAC_WIDTH = 7;
     wire [KP_WIDTH-1:0] padded_kp_c;
     wire [KI_WIDTH-1:0] padded_ki_c;
     assign padded_kp_c = {{(KP_WIDTH-4){1'b0}},kp_sel_r}; 
@@ -150,17 +161,6 @@ module TwoByTwoRingTest (
         end
     end
 
-    assign JB[4:0] = temp_5b_0_x;
-    assign JC[7:0] = temp_5b_1_x;
-    assign clk5_x = clk5_0_x;
-    assign ra_o[0] = adpll_11_gen_x;
-    assign ra_o[1] = gen_reference_x;
-    assign ra_o[2] = ext_reference_r;
-    assign ra_o[3] = adpll_11_div8_x;
-    assign ra_o[4] = adpll_12_gen_x;
-    assign ra_o[5] = adpll_21_gen_x;
-    assign ra_o[6] = adpll_22_gen_x;
-
     always @ (uni_dir_x)
     begin
         if(uni_dir_x)
@@ -197,7 +197,7 @@ module TwoByTwoRingTest (
         .BIAS(BIAS),
         .RO_WIDTH(PDET_WIDTH),
         .RINGSIZE(RINGSIZE),
-        .PDET_WIDTH(PDET_WIDTH+3),
+        .PDET_WIDTH(PDET_WIDTH),
         //.KP(5'b00001),
         .KP_WIDTH(KP_WIDTH),
         .KP_FRAC_WIDTH(KP_FRAC_WIDTH),
@@ -227,7 +227,7 @@ module TwoByTwoRingTest (
         .kp_i(padded_kp_c), //padded_kp_c
         .ki_i(padded_ki_c) //padded_ki_c
     );
-
+/*
     always @ (uni_dir_x)
     begin
         if(uni_dir_x)
@@ -425,7 +425,7 @@ module TwoByTwoRingTest (
         .kp_i(padded_kp_c), //padded_kp_c
         .ki_i(padded_ki_c) //padded_ki_c
     );
-
+    */
     SignedDec2Hex sDec2Hex(
         .signed_dec_i(kp_ki_c),
         .hex_o(half_7seg_x)

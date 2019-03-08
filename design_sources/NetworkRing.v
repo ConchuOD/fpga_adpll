@@ -37,6 +37,7 @@ module NetworkRing #(
         output wire signed [RO_WIDTH-1:0] dco_cc_o
     );
 
+	wire [RO_WIDTH-1:0] lf_out_x;
     wire [RO_WIDTH-1:0] f_sel_sw_ro_x; //TODO
     wire gen_clk_x;
     wire gen_div_x;
@@ -46,13 +47,15 @@ module NetworkRing #(
     wire signed [PDET_WIDTH-1:0] error_left_x;
     wire signed [PDET_WIDTH-1:0] error_above_x;
 
+    assign dco_cc_o = lf_out_x;
+
     assign gen_clk_o = gen_clk_x;
     assign gen_div8_o = gen_div_x;
     assign error_left_o = error_left_x;
     assign error_above_o = error_above_x;
 	
 	
-	(* DONT_TOUCH = "TRUE" *)  PhaseDetector #(.WIDTH(PDET_WIDTH)) pDetLeft (
+	(* DONT_TOUCH = "TRUE" *)  PhaseDetectorDL #(.WIDTH(PDET_WIDTH)) pDetLeft (
 		.reset_i(reset_i), 
 		.fpga_clk_i(fpga_clk_i),
 		.reference_i(ref_left_i),
@@ -60,7 +63,7 @@ module NetworkRing #(
 		.pd_clock_cycles_o(error_left_x)
 	);
 
-	(* DONT_TOUCH = "TRUE" *)  PhaseDetector #(.WIDTH(PDET_WIDTH)) pDetAbove (
+	(* DONT_TOUCH = "TRUE" *)  PhaseDetectorDL #(.WIDTH(PDET_WIDTH)) pDetAbove (
 		.reset_i(reset_i), 
 		.fpga_clk_i(fpga_clk_i),
 		.reference_i(ref_above_i),
@@ -104,7 +107,7 @@ module NetworkRing #(
         .error_i(error_x),
         .kp_i(kp_i),
         .ki_i(ki_i),
-        .dco_cc_o(dco_cc_o) 
+        .dco_cc_o(lf_out_x) 
     );
 
 	RingOsc #(.RINGSIZE(RINGSIZE), .CTRL_WIDTH(RO_WIDTH)) testRing( 
@@ -127,6 +130,6 @@ module NetworkRing #(
     	.div4_o(early_div_x)
    	);
     
-    assign f_sel_sw_ro_x = BIAS - dco_cc_o; //
+    assign f_sel_sw_ro_x = BIAS - lf_out_x; //
 
  endmodule // NetworkRing
