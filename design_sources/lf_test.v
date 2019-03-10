@@ -10,6 +10,8 @@ module LoopFilter2 #(
 		parameter KI = 4'b0001
 	)
 	(
+		output wire [7:0] temp_8bit_bus1,
+		output wire [7:0] temp_8bit_bus2,
 		input wire gen_clk_i,
 		input wire reset_i,
 		input wire [KP_WIDTH-1:0] kp_i,
@@ -66,7 +68,7 @@ module LoopFilter2 #(
 		else error_sum_trun_delay_r <= error_sum_trun_c;
 	end
 
-	/*
+	/* //removed delay at the start in favour of at the end
 	always @ (posedge gen_clk_i or posedge reset_i)
 	begin
 		if(reset_i) error_delay_r <= {(ERROR_WIDTH){1'b0}};
@@ -97,10 +99,13 @@ module LoopFilter2 #(
 		else ki_error_inte_delay_r <= ki_error_inte_c;
 	end
 
-	assign error_sum_c = ki_error_inte_c; //$signed({kp_error_c, {(KI_FRAC_WIDTH-KP_FRAC_WIDTH){1'b0}} }) + 
+	//assign error_sum_c = ki_error_inte_c; 
+	assign error_sum_c = $signed({kp_error_c, {(KI_FRAC_WIDTH-KP_FRAC_WIDTH){1'b0}} }) + ki_error_inte_c;
 	
-	//assign error_sum_trun_c = error_sum_c[SUM_INT_WIDTH-1:SUM_INT_WIDTH-1-DCO_CC_WIDTH];
+	assign error_sum_trun_c = error_sum_c[SUM_INT_WIDTH-1:SUM_INT_WIDTH-1-DCO_CC_WIDTH];
 
-	assign error_sum_trun_c = ki_error_c[KI_MULT_RES_INT_WIDTH-1:KI_MULT_RES_INT_WIDTH-1-DCO_CC_WIDTH];
+	//assign error_sum_trun_c = ki_error_c[KI_MULT_RES_INT_WIDTH-1:KI_MULT_RES_INT_WIDTH-1-DCO_CC_WIDTH];
 
+	assign temp_8bit_bus2 = {3'b000, error_i};
+	assign temp_8bit_bus1 = {3'b000, dco_cc_o};
 endmodule

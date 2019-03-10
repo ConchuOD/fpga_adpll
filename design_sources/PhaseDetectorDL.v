@@ -1,7 +1,6 @@
 `timescale 1ns / 1ps
 
 module PhaseDetectorDL #(parameter WIDTH = 5) (
-        output wire sign_delay_o,
         input wire reset_i,
         input wire fpga_clk_i, //preserved for interface compatability
         input wire reference_i,
@@ -20,7 +19,6 @@ module PhaseDetectorDL #(parameter WIDTH = 5) (
     (* DONT_TOUCH = "TRUE" *) wire which_first_c;
     (* DONT_TOUCH = "TRUE" *) wire sign_c;
 
-    assign sign_delay_o = sign_delay_r;
     assign clear_c = done_c;
 
     reg [MAG_WIDTH-1:0] error_bin_r;

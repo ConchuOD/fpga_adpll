@@ -15,9 +15,8 @@ module TwoByTwoRingTest (
         input temp_rst*/
     );
 
-    wire [4:0] temp_5b_0_x;
-    wire [5:0] temp_5b_1_x;
-    assign temp_5b_1_x = adpll_11_error_left_x;
+    wire [7:0] temp_8bit_bus1;
+    wire [7:0] temp_8bit_bus2;
 
     localparam BIAS = 5'd15; //154 = 10 MHz
     localparam PDET_WIDTH = 5;
@@ -26,17 +25,6 @@ module TwoByTwoRingTest (
     //network works at 0100 0001, 1.4, 1.7
     
     wire reset_x;
-
-    assign JB[4:0] = temp_5b_0_x;
-    assign JC[5:0] = temp_5b_1_x;
-    assign clk5_x = clk5_0_x;
-    assign ra_o[0] = adpll_11_gen_x;
-    assign ra_o[1] = gen_reference_x;
-    assign ra_o[2] = ext_reference_r;
-    assign ra_o[3] = adpll_11_div8_x;
-    assign ra_o[4] = adpll_12_gen_x;
-    assign ra_o[5] = adpll_21_gen_x;
-    assign ra_o[6] = adpll_22_gen_x;
  
     reg ext_reference_r;
     wire other_ref_div4_x;
@@ -104,7 +92,19 @@ module TwoByTwoRingTest (
     wire pll_or_network_x = switches_i[13]; //0 pll
     wire ref_or_gains_x = switches_i[12]; //0 gains
     reg [ACCUM_WIDTH-1:0] ref_sel_r;
+
+
+    assign JB[7:0] = temp_8bit_bus2;
+    assign JC[7:0] = temp_8bit_bus1;
+    assign ra_o[0] = adpll_11_gen_x;
+    assign ra_o[1] = gen_reference_x;
+    assign ra_o[2] = ext_reference_r;
+    assign ra_o[3] = adpll_11_div8_x;
+    assign ra_o[4] = adpll_12_gen_x;
+    assign ra_o[5] = adpll_21_gen_x;
+    assign ra_o[6] = adpll_22_gen_x;
     
+    assign clk5_x = clk5_0_x;
     assign kp_ki_c = {kp_sel_r,ki_sel_r};
 
     localparam KP_WIDTH = 5;
@@ -208,7 +208,8 @@ module TwoByTwoRingTest (
     ) 
     adpll_11
     (
-        .dco_cc_o(temp_5b_0_x),
+        .temp_8bit_bus1(temp_8bit_bus1),
+        .temp_8bit_bus2(temp_8bit_bus2),
         .reset_i(reset_x),
         .fpga_clk_i(clk258_x),
         .enable_i(enable_x),
