@@ -19,7 +19,8 @@ module TwoByTwoRingTest (
     wire [7:0] temp_8bit_bus2;
 
     localparam BIAS = 6'd31; //154 = 10 MHz
-    localparam PDET_WIDTH = 6;
+    localparam RO_WIDTH = 6;
+    localparam PDET_WIDTH = RO_WIDTH-1;
     localparam RINGSIZE = 373;
     localparam ACCUM_WIDTH = 12;
     //network works at 0100 0001, 1.4, 1.7
@@ -199,9 +200,9 @@ module TwoByTwoRingTest (
 
     NetworkRing #(
         .BIAS(BIAS),
-        .RO_WIDTH(PDET_WIDTH),
+        .RO_WIDTH(RO_WIDTH),
         .RINGSIZE(RINGSIZE),
-        .PDET_WIDTH(PDET_WIDTH-1),
+        .PDET_WIDTH(PDET_WIDTH),
         //.KP(5'b00001),
         .KP_WIDTH(KP_WIDTH),
         .KP_FRAC_WIDTH(KP_FRAC_WIDTH),
@@ -267,9 +268,9 @@ module TwoByTwoRingTest (
 
     NetworkRing #(
         .BIAS(BIAS),
-        .RO_WIDTH(PDET_WIDTH),
+        .RO_WIDTH(RO_WIDTH),
         .RINGSIZE(RINGSIZE),
-        .PDET_WIDTH(PDET_WIDTH-1),
+        .PDET_WIDTH(PDET_WIDTH),
         //.KP(5'b00001),
         .KP_WIDTH(KP_WIDTH),
         .KP_FRAC_WIDTH(KP_FRAC_WIDTH),
@@ -333,9 +334,9 @@ module TwoByTwoRingTest (
 
     NetworkRing #(
         .BIAS(BIAS),
-        .RO_WIDTH(PDET_WIDTH),
+        .RO_WIDTH(RO_WIDTH),
         .RINGSIZE(RINGSIZE),
-        .PDET_WIDTH(PDET_WIDTH-1),
+        .PDET_WIDTH(PDET_WIDTH),
         //.KP(5'b00001),
         .KP_WIDTH(KP_WIDTH),
         .KP_FRAC_WIDTH(KP_FRAC_WIDTH),
@@ -396,12 +397,12 @@ module TwoByTwoRingTest (
             adpll_22_ref_above_c = adpll_12_div8_x; 
         end
     end
-/*
+
     NetworkRing #(
         .BIAS(BIAS),
-        .RO_WIDTH(PDET_WIDTH),
+        .RO_WIDTH(RO_WIDTH),
         .RINGSIZE(RINGSIZE),
-        .PDET_WIDTH(PDET_WIDTH-1),
+        .PDET_WIDTH(PDET_WIDTH),
         //.KP(5'b00001),
         .KP_WIDTH(KP_WIDTH),
         .KP_FRAC_WIDTH(KP_FRAC_WIDTH),
@@ -430,7 +431,7 @@ module TwoByTwoRingTest (
         .kp_i(padded_kp_c), //padded_kp_c
         .ki_i(padded_ki_c) //padded_ki_c
     );
-*/
+
     SignedDec2Hex sDec2Hex(
         .signed_dec_i(kp_ki_c),
         .hex_o(half_7seg_x)
