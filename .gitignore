@@ -9,3 +9,4 @@ junk/
 *.nav
 *.toc
 *.out
+matlab/*.txt
