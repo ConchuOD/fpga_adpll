@@ -20,7 +20,7 @@ module LoopFilterTestBench ();
 		end
 	end
 
-	localparam PDET_WIDTH = 8;
+	localparam PDET_WIDTH = 6;
 	localparam RO_WIDTH = 5;
 	localparam DYNAMIC_VAL = 1;
 	localparam DCO_CC_WIDTH = 5;
@@ -46,7 +46,7 @@ module LoopFilterTestBench ();
 	*/
 	
 
-	LoopFilter #(
+	LoopFilter2 #(
 		.ERROR_WIDTH(PDET_WIDTH),
 		.DCO_CC_WIDTH(RO_WIDTH),
 		.KP_WIDTH(KP_WIDTH),

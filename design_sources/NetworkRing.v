@@ -90,7 +90,7 @@ module NetworkRing #(
         .error_comb_o(error_x)
     );
 
-    LoopFilter2 #(
+    LoopFilter #(
         .ERROR_WIDTH(PDET_WIDTH),
         .DCO_CC_WIDTH(RO_WIDTH),
         .KP_WIDTH(KP_WIDTH),
@@ -103,8 +103,8 @@ module NetworkRing #(
     )
     loopFilter 
     (
-        .temp_8bit_bus1(temp_8bit_bus1),
-        .temp_8bit_bus2(temp_8bit_bus2),
+        //.temp_8bit_bus1(temp_8bit_bus1),
+        //.temp_8bit_bus2(temp_8bit_bus2),
         .gen_clk_i(early_div_x),
         .reset_i(reset_i),
         .error_i(error_x),
@@ -124,13 +124,13 @@ module NetworkRing #(
     Div8 div8 ( 
         .reset_i(reset_i),
         .signal_i(gen_clk_x),
-        .div4_o(gen_div_x)
+        .div1_o(gen_div_x)
     );
 
     Div8 div8Early ( 
         .reset_i(reset_i),
         .signal_i(early_clk_x),
-        .div4_o(early_div_x)
+        .div1_o(early_div_x)
     );
     
     assign f_sel_sw_ro_x = BIAS - lf_out_x; //

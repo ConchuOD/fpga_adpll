@@ -758,6 +758,9 @@ set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets -of_objects [get_cells adp
 
 #[ adpll_11/pDetAbove/arbitration/Q. Please evaluate your design. The cells in the loop are: adpll_11/pDetAbove/arbitration/Q_INST_0.
 
+set_property CLOCK_DEDICATED_ROUTE FALSE [get_nets ra_i_IBUF]
+set_property CLOCK_DEDICATED_ROUTE FALSE [get_nets ra_o_OBUF[2]]
+
 
 set_property SEVERITY {Warning}  [get_drc_checks LUTLP-1]
 

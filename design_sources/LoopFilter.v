@@ -21,10 +21,10 @@ module LoopFilter #(
 	localparam KP_INT_WIDTH = KP_WIDTH-KP_FRAC_WIDTH;
 	localparam KI_INT_WIDTH = KI_WIDTH-KI_FRAC_WIDTH;
 
-	localparam KP_MULT_RES_INT_WIDTH = ERROR_WIDTH+KP_INT_WIDTH;
-	localparam KI_MULT_RES_INT_WIDTH = ERROR_WIDTH+KI_INT_WIDTH;
+	localparam KP_MULT_RES_INT_WIDTH = ERROR_WIDTH;//+KP_INT_WIDTH;
+	localparam KI_MULT_RES_INT_WIDTH = ERROR_WIDTH;//+KI_INT_WIDTH;
 
-	localparam SUM_INT_WIDTH = KP_MULT_RES_INT_WIDTH+1; //kp always bigger, but +1 for overflow
+	localparam SUM_INT_WIDTH = KP_MULT_RES_INT_WIDTH;//kp always bigger
 	localparam SUM_FRAC_WIDTH = KI_FRAC_WIDTH; //ki always more bits
 
 	reg signed [KP_INT_WIDTH-1:-KP_FRAC_WIDTH] kp_x;
@@ -60,6 +60,7 @@ module LoopFilter #(
 
 	assign error_delay_r = error_i;
 	assign dco_cc_o = error_sum_trun_delay_r;
+
 	always @ (posedge gen_clk_i or posedge reset_i)
 	begin
 		if(reset_i) error_sum_trun_delay_r <= {(DCO_CC_WIDTH){1'b0}};
@@ -67,21 +68,10 @@ module LoopFilter #(
 	end
 
 	/*
-	always @ (posedge gen_clk_i or posedge reset_i)
-	begin
-		if(reset_i) error_delay_r <= {(ERROR_WIDTH){1'b0}};
-		else error_delay_r <= error_i;
-	end
-	*/
-
-	/*
 		kp route
 	*/
 	//multiply by kp
 	assign kp_error_c = error_delay_r*kp_x;
-	//truncate
-	//assign kp_error_trun_c = $signed(kp_error_c[ERROR_WIDTH-1:0]);
-
 
 	/*
 		ki route
@@ -97,8 +87,9 @@ module LoopFilter #(
 		else ki_error_inte_delay_r <= ki_error_inte_c;
 	end
 
+	//assign error_sum_c = ki_error_inte_c; 
 	assign error_sum_c = $signed({kp_error_c, {(KI_FRAC_WIDTH-KP_FRAC_WIDTH){1'b0}} }) + ki_error_inte_c;
-	
-	assign error_sum_trun_c = error_sum_c[SUM_INT_WIDTH-1:SUM_INT_WIDTH-1-DCO_CC_WIDTH];
+
+	assign error_sum_trun_c = error_sum_c[4:1];//[SUM_INT_WIDTH-1:SUM_INT_WIDTH-1-DCO_CC_WIDTH]; //
 
 endmodule

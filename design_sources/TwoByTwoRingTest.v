@@ -18,15 +18,16 @@ module TwoByTwoRingTest (
     wire [7:0] temp_8bit_bus1;
     wire [7:0] temp_8bit_bus2;
 
-    localparam BIAS = 5'd15; //154 = 10 MHz
-    localparam PDET_WIDTH = 5;
+    localparam BIAS = 6'd31; //154 = 10 MHz
+    localparam PDET_WIDTH = 6;
     localparam RINGSIZE = 373;
     localparam ACCUM_WIDTH = 12;
     //network works at 0100 0001, 1.4, 1.7
     
     wire reset_x;
  
-    reg ext_reference_r;
+    wire ext_reference_x;
+    wire reference_x;
     wire other_ref_div4_x;
     
     wire adpll_11_gen_x;
@@ -94,11 +95,11 @@ module TwoByTwoRingTest (
     reg [ACCUM_WIDTH-1:0] ref_sel_r;
 
 
-    assign JB[7:0] = temp_8bit_bus2;
-    assign JC[7:0] = temp_8bit_bus1;
+    assign JB[7:0] = temp_8bit_bus1;
+    assign JC[7:0] = temp_8bit_bus2;
     assign ra_o[0] = adpll_11_gen_x;
     assign ra_o[1] = gen_reference_x;
-    assign ra_o[2] = ext_reference_r;
+    assign ra_o[2] = ext_reference_x;
     assign ra_o[3] = adpll_11_div8_x;
     assign ra_o[4] = adpll_12_gen_x;
     assign ra_o[5] = adpll_21_gen_x;
@@ -107,21 +108,24 @@ module TwoByTwoRingTest (
     assign clk5_x = clk5_0_x;
     assign kp_ki_c = {kp_sel_r,ki_sel_r};
 
-    localparam KP_WIDTH = 5;
-    localparam KP_FRAC_WIDTH = 4;
-    localparam KI_WIDTH = 8;
-    localparam KI_FRAC_WIDTH = 7;
+    localparam KP_WIDTH = 8;
+    localparam KP_FRAC_WIDTH = 7;
+    localparam KI_WIDTH = 10;
+    localparam KI_FRAC_WIDTH = 9;
     wire [KP_WIDTH-1:0] padded_kp_c;
     wire [KI_WIDTH-1:0] padded_ki_c;
     assign padded_kp_c = {{(KP_WIDTH-4){1'b0}},kp_sel_r}; 
     assign padded_ki_c = {{(KI_WIDTH-4){1'b0}},ki_sel_r}; 
     
-    wire reference_x = ext_reference_r;
+    assign reference_x = ext_reference_x;
+    assign ext_reference_x = ra_i;
 
+/*
     always @ (posedge clk258_x)
     begin
         ext_reference_r <= ra_i;
     end
+*/
 
     ClockReset5_258_PDiff  clkGen  (
         .clk100_i   (clk100_i),      // input clock at 100 MHz
@@ -197,7 +201,7 @@ module TwoByTwoRingTest (
         .BIAS(BIAS),
         .RO_WIDTH(PDET_WIDTH),
         .RINGSIZE(RINGSIZE),
-        .PDET_WIDTH(PDET_WIDTH),
+        .PDET_WIDTH(PDET_WIDTH-1),
         //.KP(5'b00001),
         .KP_WIDTH(KP_WIDTH),
         .KP_FRAC_WIDTH(KP_FRAC_WIDTH),

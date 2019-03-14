@@ -23,10 +23,10 @@ module LoopFilter2 #(
 	localparam KP_INT_WIDTH = KP_WIDTH-KP_FRAC_WIDTH;
 	localparam KI_INT_WIDTH = KI_WIDTH-KI_FRAC_WIDTH;
 
-	localparam KP_MULT_RES_INT_WIDTH = ERROR_WIDTH+KP_INT_WIDTH;
-	localparam KI_MULT_RES_INT_WIDTH = ERROR_WIDTH+KI_INT_WIDTH;
+	localparam KP_MULT_RES_INT_WIDTH = ERROR_WIDTH;//+KP_INT_WIDTH;
+	localparam KI_MULT_RES_INT_WIDTH = ERROR_WIDTH;//+KI_INT_WIDTH;
 
-	localparam SUM_INT_WIDTH = KP_MULT_RES_INT_WIDTH+1; //kp always bigger, but +1 for overflow
+	localparam SUM_INT_WIDTH = KP_MULT_RES_INT_WIDTH;//+1; //kp always bigger, but +1 for overflow
 	localparam SUM_FRAC_WIDTH = KI_FRAC_WIDTH; //ki always more bits
 
 	reg signed [KP_INT_WIDTH-1:-KP_FRAC_WIDTH] kp_x;
@@ -62,6 +62,7 @@ module LoopFilter2 #(
 
 	assign error_delay_r = error_i;
 	assign dco_cc_o = error_sum_trun_delay_r;
+
 	always @ (posedge gen_clk_i or posedge reset_i)
 	begin
 		if(reset_i) error_sum_trun_delay_r <= {(DCO_CC_WIDTH){1'b0}};
@@ -102,10 +103,10 @@ module LoopFilter2 #(
 	//assign error_sum_c = ki_error_inte_c; 
 	assign error_sum_c = $signed({kp_error_c, {(KI_FRAC_WIDTH-KP_FRAC_WIDTH){1'b0}} }) + ki_error_inte_c;
 	
-	assign error_sum_trun_c = error_sum_c[SUM_INT_WIDTH-1:SUM_INT_WIDTH-1-DCO_CC_WIDTH];
+	assign error_sum_trun_c = error_sum_c[4:1];//[SUM_INT_WIDTH-1:SUM_INT_WIDTH-1-DCO_CC_WIDTH]; //
 
 	//assign error_sum_trun_c = ki_error_c[KI_MULT_RES_INT_WIDTH-1:KI_MULT_RES_INT_WIDTH-1-DCO_CC_WIDTH];
 
-	assign temp_8bit_bus2 = {3'b000, error_i};
-	assign temp_8bit_bus1 = {3'b000, dco_cc_o};
+	//assign temp_8bit_bus2 = {2'd0, ki_error_inte_c[4:0]};
+	assign temp_8bit_bus1 = {3'd0, dco_cc_o};
 endmodule

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="PhaseDetectorDLTestBench_time_synth.wdb" id="1">
+         <top_modules>
+            <top_module name="PhaseDetectorDLTestBench" />
+            <top_module name="glbl" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="0fs"></ZoomStartTime>
+      <ZoomEndTime time="933000001fs"></ZoomEndTime>
+      <Cursor1Time time="101869000fs"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="283"></NameColumnWidth>
+      <ValueColumnWidth column_width="66"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="24" />
+   <wvobject type="logic" fp_name="/PhaseDetectorDLTestBench/lmao1pl8/reset_i">
+      <obj_property name="ElementShortName">reset_i</obj_property>
+      <obj_property name="ObjectShortName">reset_i</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/PhaseDetectorDLTestBench/lmao1pl8/reset_i_IBUF">
+      <obj_property name="ElementShortName">reset_i_IBUF</obj_property>
+      <obj_property name="ObjectShortName">reset_i_IBUF</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/PhaseDetectorDLTestBench/lmao1pl8/p_0_out">
+      <obj_property name="ElementShortName">p_0_out</obj_property>
+      <obj_property name="ObjectShortName">p_0_out</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/PhaseDetectorDLTestBench/lmao1pl8/ref_q_r">
+      <obj_property name="ElementShortName">ref_q_r</obj_property>
+      <obj_property name="ObjectShortName">ref_q_r</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/PhaseDetectorDLTestBench/lmao1pl8/gen_q_r">
+      <obj_property name="ElementShortName">gen_q_r</obj_property>
+      <obj_property name="ObjectShortName">gen_q_r</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/PhaseDetectorDLTestBench/lmao1pl8/ref_q_r_reg0">
+      <obj_property name="ElementShortName">ref_q_r_reg0</obj_property>
+      <obj_property name="ObjectShortName">ref_q_r_reg0</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/PhaseDetectorDLTestBench/lmao1pl8/reference_i_IBUF">
+      <obj_property name="ElementShortName">reference_i_IBUF</obj_property>
+      <obj_property name="ObjectShortName">reference_i_IBUF</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/PhaseDetectorDLTestBench/lmao1pl8/generated_i_IBUF">
+      <obj_property name="ElementShortName">generated_i_IBUF</obj_property>
+      <obj_property name="ObjectShortName">generated_i_IBUF</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/PhaseDetectorDLTestBench/lmao1pl8/reference_i_IBUF_BUFG">
+      <obj_property name="ElementShortName">reference_i_IBUF_BUFG</obj_property>
+      <obj_property name="ObjectShortName">reference_i_IBUF_BUFG</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/PhaseDetectorDLTestBench/lmao1pl8/generated_i_IBUF_BUFG">
+      <obj_property name="ElementShortName">generated_i_IBUF_BUFG</obj_property>
+      <obj_property name="ObjectShortName">generated_i_IBUF_BUFG</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/PhaseDetectorDLTestBench/lmao1pl8/clear_c">
+      <obj_property name="ElementShortName">clear_c</obj_property>
+      <obj_property name="ObjectShortName">clear_c</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/PhaseDetectorDLTestBench/lmao1pl8/clear_tdl_c">
+      <obj_property name="ElementShortName">clear_tdl_c</obj_property>
+      <obj_property name="ObjectShortName">clear_tdl_c</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/PhaseDetectorDLTestBench/lmao1pl8/count_c">
+      <obj_property name="ElementShortName">count_c</obj_property>
+      <obj_property name="ObjectShortName">count_c</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/PhaseDetectorDLTestBench/lmao1pl8/done_c">
+      <obj_property name="ElementShortName">done_c</obj_property>
+      <obj_property name="ObjectShortName">done_c</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/PhaseDetectorDLTestBench/lmao1pl8/sign_c">
+      <obj_property name="ElementShortName">sign_c</obj_property>
+      <obj_property name="ObjectShortName">sign_c</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/PhaseDetectorDLTestBench/lmao1pl8/sign_delay_o">
+      <obj_property name="ElementShortName">sign_delay_o</obj_property>
+      <obj_property name="ObjectShortName">sign_delay_o</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/PhaseDetectorDLTestBench/lmao1pl8/sign_delay_r">
+      <obj_property name="ElementShortName">sign_delay_r</obj_property>
+      <obj_property name="ObjectShortName">sign_delay_r</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/PhaseDetectorDLTestBench/lmao1pl8/sign_i_1_n_0">
+      <obj_property name="ElementShortName">sign_i_1_n_0</obj_property>
+      <obj_property name="ObjectShortName">sign_i_1_n_0</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/PhaseDetectorDLTestBench/lmao1pl8/which_first_c">
+      <obj_property name="ElementShortName">which_first_c</obj_property>
+      <obj_property name="ObjectShortName">which_first_c</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/PhaseDetectorDLTestBench/lmao1pl8/count_delayed_c">
+      <obj_property name="ElementShortName">count_delayed_c[0:30]</obj_property>
+      <obj_property name="ObjectShortName">count_delayed_c[0:30]</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/PhaseDetectorDLTestBench/lmao1pl8/count_input_c">
+      <obj_property name="ElementShortName">count_input_c[1:15]</obj_property>
+      <obj_property name="ObjectShortName">count_input_c[1:15]</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/PhaseDetectorDLTestBench/lmao1pl8/error_taps_r">
+      <obj_property name="ElementShortName">error_taps_r[1:15]</obj_property>
+      <obj_property name="ObjectShortName">error_taps_r[1:15]</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/PhaseDetectorDLTestBench/lmao1pl8/error_taps_buff_r">
+      <obj_property name="ElementShortName">error_taps_buff_r[1:15]</obj_property>
+      <obj_property name="ObjectShortName">error_taps_buff_r[1:15]</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/PhaseDetectorDLTestBench/lmao1pl8/pd_clock_cycles_o">
+      <obj_property name="ElementShortName">pd_clock_cycles_o[4:0]</obj_property>
+      <obj_property name="ObjectShortName">pd_clock_cycles_o[4:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+</wave_config>

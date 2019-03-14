@@ -6,18 +6,17 @@ resize_pblock [get_pblocks pblock_testRing] -add {SLICE_X12Y189:SLICE_X19Y198}
 
 create_pblock pblock_pDetLeft
 add_cells_to_pblock [get_pblocks pblock_pDetLeft] [get_cells -quiet [list adpll_11/pDetLeft]]
-resize_pblock [get_pblocks pblock_pDetLeft] -add {SLICE_X8Y175:SLICE_X11Y186}
+resize_pblock [get_pblocks pblock_pDetLeft] -add {SLICE_X4Y175:SLICE_X11Y186}
 
 create_pblock pblock_pDetAbove
 add_cells_to_pblock [get_pblocks pblock_pDetAbove] [get_cells -quiet [list adpll_11/pDetAbove]]
-resize_pblock [get_pblocks pblock_pDetAbove] -add {SLICE_X8Y187:SLICE_X11Y198}
+resize_pblock [get_pblocks pblock_pDetAbove] -add {SLICE_X4Y187:SLICE_X11Y198}
 
 create_pblock pblock_errorCombiner
 add_cells_to_pblock [get_pblocks pblock_errorCombiner] [get_cells -quiet [list adpll_11/errorCombiner]]
 resize_pblock [get_pblocks pblock_errorCombiner] -add {SLICE_X12Y175:SLICE_X19Y181}
 
 create_pblock pblock_div8
-add_cells_to_pblock [get_pblocks pblock_div8] [get_cells -quiet [list adpll_11/div8]]
 resize_pblock [get_pblocks pblock_div8] -add {SLICE_X12Y187:SLICE_X15Y188}
 
 
@@ -72,12 +71,12 @@ resize_pblock [get_pblocks pblock_pDetAbove_3] -add {SLICE_X22Y165:SLICE_X25Y173
 
 
 create_pblock pblock_div8Early
-add_cells_to_pblock [get_pblocks pblock_div8Early] [get_cells -quiet [list adpll_11/div8Early]]
 resize_pblock [get_pblocks pblock_div8Early] -add {SLICE_X16Y187:SLICE_X19Y189}
 
 
 create_pblock pblock_loopFilter
 add_cells_to_pblock [get_pblocks pblock_loopFilter] [get_cells -quiet [list adpll_11/loopFilter]]
 resize_pblock [get_pblocks pblock_loopFilter] -add {SLICE_X12Y182:SLICE_X19Y186}
+
 
 

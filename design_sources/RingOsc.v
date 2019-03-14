@@ -31,6 +31,6 @@ module RingOsc #(parameter RINGSIZE = 421, CTRL_WIDTH = 5)(
     assign ringwire_c[0] = !((f_sel_mux_out_r) & (enable_i));
 
     buf outbuf (clk_o, ringwire_c[INVERTERNUM]);
-    buf outbuf_early (early_clk_o, ringwire_c[INVERTERNUM-2*CTRL_WIDTH-60]); //ensures edge before clk edge
+    buf outbuf_early (early_clk_o, ringwire_c[INVERTERNUM-2*CTRL_WIDTH-75]); //ensures edge before clk edge
 
 endmodule

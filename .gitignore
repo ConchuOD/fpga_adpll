@@ -5,7 +5,6 @@ vivado*
 *.gz
 *.log
 junk/
-*.bin
 *.snm
 *.nav
 *.toc
