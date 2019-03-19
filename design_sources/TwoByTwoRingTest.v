@@ -27,7 +27,7 @@ module TwoByTwoRingTest (
     
     wire reset_x;
  
-    wire ext_reference_x;
+    reg ext_reference_r;
     wire reference_x;
     wire other_ref_div4_x;
     
@@ -100,7 +100,7 @@ module TwoByTwoRingTest (
     assign JC[7:0] = temp_8bit_bus2;
     assign ra_o[0] = adpll_11_gen_x;
     assign ra_o[1] = gen_reference_x;
-    assign ra_o[2] = ext_reference_x;
+    assign ra_o[2] = ext_reference_r;
     assign ra_o[3] = adpll_11_div8_x;
     assign ra_o[4] = adpll_12_gen_x;
     assign ra_o[5] = adpll_21_gen_x;
@@ -118,15 +118,15 @@ module TwoByTwoRingTest (
     assign padded_kp_c = {{(KP_WIDTH-4){1'b0}},kp_sel_r}; 
     assign padded_ki_c = {{(KI_WIDTH-4){1'b0}},ki_sel_r}; 
     
-    assign reference_x = ext_reference_x;
-    assign ext_reference_x = ra_i;
+    assign reference_x = ext_reference_r;
+//    assign ext_reference_r = ra_i;
 
-/*
+
     always @ (posedge clk258_x)
     begin
         ext_reference_r <= ra_i;
     end
-*/
+
 
     ClockReset5_258_PDiff  clkGen  (
         .clk100_i   (clk100_i),      // input clock at 100 MHz
@@ -335,7 +335,7 @@ module TwoByTwoRingTest (
     NetworkRing #(
         .BIAS(BIAS),
         .RO_WIDTH(RO_WIDTH),
-        .RINGSIZE(RINGSIZE),
+        .RINGSIZE(RINGSIZE-2),
         .PDET_WIDTH(PDET_WIDTH),
         //.KP(5'b00001),
         .KP_WIDTH(KP_WIDTH),
@@ -401,7 +401,7 @@ module TwoByTwoRingTest (
     NetworkRing #(
         .BIAS(BIAS),
         .RO_WIDTH(RO_WIDTH),
-        .RINGSIZE(RINGSIZE),
+        .RINGSIZE(RINGSIZE-12),
         .PDET_WIDTH(PDET_WIDTH),
         //.KP(5'b00001),
         .KP_WIDTH(KP_WIDTH),
@@ -431,7 +431,7 @@ module TwoByTwoRingTest (
         .kp_i(padded_kp_c), //padded_kp_c
         .ki_i(padded_ki_c) //padded_ki_c
     );
-
+//*/
     SignedDec2Hex sDec2Hex(
         .signed_dec_i(kp_ki_c),
         .hex_o(half_7seg_x)
