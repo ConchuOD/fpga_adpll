@@ -47,14 +47,15 @@ The particular system that this paper will discuss is an ADPLL network. Based on
 This paper will examine the process of creating such a system, highlight the differences between potential designs and address some of the challenges and pitfalls that may be encountered along the way. This paper will also demonstrate that FPGA based prototyping can play a central role on the pathway to the implementation of an ADPLL network on a custom chip, or indeed any number of similar applications. The paper is organised as follows: Section II describes the system that will be used on the FPGA and Section III the implementation thereof and the challenges encountered in the process. Finally Section IV will present example measurements made on the platform and discuss their merit.
 
 \section{System Architecture}
-An ADPLL network as the name would suggest is created from a number of ADPLLs that coupled using digital phase comparators which attempt to measure the phase error between two oscillators, with each non edge node being connected to four neighbours. Figure \ref{fig:adpll_network} illustrates such a system on a small scale. The individual ADPLLs are made up of a digitally controllable oscillator, an error combination block and a digital loop filter with the aforementioned digital phase detectors lying between each pair of oscillators.
+An ADPLL network as the name would suggest is created from a number of ADPLLs that coupled using digital phase comparators which attempt to measure the phase error between two oscillators, with each non edge node being connected to four neighbours. Figure \ref{fig:adpll_network} illustrates such a system on a small scale. The individual ADPLLs, often called distributed ADPLLs as the phase detectors are shared between nodes, are made up of a digitally controllable oscillator, an error combination block and a digital loop filter with the aforementioned digital phase detectors lying between each pair of oscillators.
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.25\textwidth]{example}
-	\caption{ADPLL Architecture.}
+	\includegraphics[width=0.25\textwidth]{adpll_network}
+	\caption{ADPLL Network Architecture.}
 	\label{fig:adpll_network}
-	\includegraphics[width=0.25\textwidth]{example}
-	\caption{ADPLL Architecture.}
+	\vspace{0.5cm}
+	\includegraphics[width=0.4\textwidth]{dist_adpll}
+	\caption{Distributed ADPLL Design.}
 	\label{fig:adpll_base}
 \end{figure}
  Figure \ref{fig:adpll_base} demonstrates the ADPLL design used in this paper.
