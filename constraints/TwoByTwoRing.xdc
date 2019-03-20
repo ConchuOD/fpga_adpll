@@ -101,6 +101,49 @@ add_cells_to_pblock [get_pblocks pblock_pDetAbove_3] [get_cells -quiet [list adp
 resize_pblock [get_pblocks pblock_pDetAbove_3] -add {SLICE_X22Y162:SLICE_X25Y173}
 
 
+# ADPLL 31
+create_pblock pblock_testRing_4
+add_cells_to_pblock [get_pblocks pblock_testRing_4] [get_cells -quiet [list adpll_31/testRing]]
+resize_pblock [get_pblocks pblock_testRing_4] -add {SLICE_X32Y137:SLICE_X39Y146}
+
+create_pblock pblock_pDetLeft_4
+add_cells_to_pblock [get_pblocks pblock_pDetLeft_4] [get_cells -quiet [list adpll_31/pDetLeft]]
+resize_pblock [get_pblocks pblock_pDetLeft_4] -add {SLICE_X28Y123:SLICE_X31Y134}
+
+create_pblock pblock_pDetAbove_4
+add_cells_to_pblock [get_pblocks pblock_pDetAbove_4] [get_cells -quiet [list adpll_31/pDetAbove]]
+resize_pblock [get_pblocks pblock_pDetAbove_4] -add {SLICE_X28Y135:SLICE_X31Y146}
+
+create_pblock pblock_loopFilter_4
+add_cells_to_pblock [get_pblocks pblock_loopFilter_4] [get_cells -quiet [list adpll_31/loopFilter]]
+resize_pblock [get_pblocks pblock_loopFilter_4] -add {SLICE_X32Y129:SLICE_X41Y134}
+
+create_pblock pblock_errorCombiner_4
+add_cells_to_pblock [get_pblocks pblock_errorCombiner_4] [get_cells -quiet [list adpll_31/errorCombiner]]
+resize_pblock [get_pblocks pblock_errorCombiner_4] -add {SLICE_X32Y123:SLICE_X41Y128}
+
+
+# ADPLL 32
+create_pblock pblock_testRing_5
+add_cells_to_pblock [get_pblocks pblock_testRing_5] [get_cells -quiet [list adpll_32/testRing]]
+resize_pblock [get_pblocks pblock_testRing_5] -add {SLICE_X46Y137:SLICE_X53Y146}
+
+create_pblock pblock_pDetLeft_5
+add_cells_to_pblock [get_pblocks pblock_pDetLeft_5] [get_cells -quiet [list adpll_32/pDetLeft]]
+resize_pblock [get_pblocks pblock_pDetLeft_5] -add {SLICE_X42Y123:SLICE_X45Y134}
+
+create_pblock pblock_pDetAbove_5
+add_cells_to_pblock [get_pblocks pblock_pDetAbove_5] [get_cells -quiet [list adpll_32/pDetAbove]]
+resize_pblock [get_pblocks pblock_pDetAbove_5] -add {SLICE_X42Y135:SLICE_X45Y146}
+
+create_pblock pblock_loopFilter_5
+add_cells_to_pblock [get_pblocks pblock_loopFilter_5] [get_cells -quiet [list adpll_32/loopFilter]]
+resize_pblock [get_pblocks pblock_loopFilter_5] -add {SLICE_X46Y129:SLICE_X55Y134}
+
+create_pblock pblock_errorCombiner_5
+add_cells_to_pblock [get_pblocks pblock_errorCombiner_5] [get_cells -quiet [list adpll_32/errorCombiner]]
+resize_pblock [get_pblocks pblock_errorCombiner_5] -add {SLICE_X46Y123:SLICE_X55Y128}
+
 
 
 

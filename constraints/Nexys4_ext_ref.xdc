@@ -310,29 +310,29 @@ set_property IOSTANDARD LVCMOS33 [get_ports {JC[7]}]
 
 ##Pmod Header JD, left side centre - for connecting external hardware
 ##Bank = 35, Pin name = IO_L21N_T2_DQS_35,					Sch name = JD1
-#set_property PACKAGE_PIN H4 [get_ports {JD[0]}]
-#set_property IOSTANDARD LVCMOS33 [get_ports {JD[0]}]
+set_property PACKAGE_PIN H4 [get_ports {JD[0]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {JD[0]}]
 ##Bank = 35, Pin name = IO_L17P_T2_35,						Sch name = JD2
-#set_property PACKAGE_PIN H1 [get_ports {JD[1]}]
-#set_property IOSTANDARD LVCMOS33 [get_ports {JD[1]}]
+set_property PACKAGE_PIN H1 [get_ports {JD[1]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {JD[1]}]
 ##Bank = 35, Pin name = IO_L17N_T2_35,						Sch name = JD3
-#set_property PACKAGE_PIN G1 [get_ports {JD[2]}]
-#set_property IOSTANDARD LVCMOS33 [get_ports {JD[2]}]
+set_property PACKAGE_PIN G1 [get_ports {JD[2]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {JD[2]}]
 ##Bank = 35, Pin name = IO_L20N_T3_35,						Sch name = JD4
-#set_property PACKAGE_PIN G3 [get_ports {JD[3]}]
-#set_property IOSTANDARD LVCMOS33 [get_ports {JD[3]}]
+set_property PACKAGE_PIN G3 [get_ports {JD[3]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {JD[3]}]
 ##Bank = 35, Pin name = IO_L15P_T2_DQS_35,					Sch name = JD7
-#set_property PACKAGE_PIN H2 [get_ports {JD[4]}]
-#set_property IOSTANDARD LVCMOS33 [get_ports {JD[4]}]
+set_property PACKAGE_PIN H2 [get_ports {JD[4]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {JD[4]}]
 ##Bank = 35, Pin name = IO_L20P_T3_35,						Sch name = JD8
-#set_property PACKAGE_PIN G4 [get_ports {JD[5]}]
-#set_property IOSTANDARD LVCMOS33 [get_ports {JD[5]}]
+set_property PACKAGE_PIN G4 [get_ports {JD[5]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {JD[5]}]
 ##Bank = 35, Pin name = IO_L15N_T2_DQS_35,					Sch name = JD9
-#set_property PACKAGE_PIN G2 [get_ports {JD[6]}]
-#set_property IOSTANDARD LVCMOS33 [get_ports {JD[6]}]
+set_property PACKAGE_PIN G2 [get_ports {JD[6]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {JD[6]}]
 ##Bank = 35, Pin name = IO_L13N_T2_MRCC_35,					Sch name = JD10
-#set_property PACKAGE_PIN F3 [get_ports {JD[7]}]
-#set_property IOSTANDARD LVCMOS33 [get_ports {JD[7]}]
+set_property PACKAGE_PIN F3 [get_ports {JD[7]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {JD[7]}]
 
 ##Pmod Header JXADC, right side back - for connecting analogue signals
 ##Bank = 15, Pin name = IO_L9P_T1_DQS_AD3P_15,				Sch name = XADC1_P -> XA1_P
@@ -746,18 +746,28 @@ set_property CONFIG_VOLTAGE 3.3 [current_design]
 #This line specifies generation of a compressed bitstream, for faster configuration
 set_property BITSTREAM.GENERAL.COMPRESS TRUE [current_design]
 
+set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets -of_objects [get_cells adpll/testRing/ringwire_c]]
+set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets -of_objects [get_cells ringwire_c_orig0]]
+set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets -of_objects [get_cells ringwire_c_inferred_i_1]]
+set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets -of_objects [get_cells adpll/testRing/ringwire_c_inferred_i_184_n_0]]
 
+set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets -of_objects [get_cells adpll/testRing/ringwire_c[420]]]
+set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets -of_objects [get_cells ringwire_c_orig0]]
 set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets -of_objects [get_cells adpll_11/pDetAbove/arbitration/Q_INST_0]]
+set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets -of_objects [get_cells adpll_11/pDetAbove/arbitration/Q]]
 
 set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets -of_objects [get_cells adpll_11/pDetAbove/sign/Q_INST_0]]
+set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets -of_objects [get_cells adpll_11/pDetAbove/sign/Q]]
 
 #[ adpll_11/pDetAbove/arbitration/Q. Please evaluate your design. The cells in the loop are: adpll_11/pDetAbove/arbitration/Q_INST_0.
 
 set_property CLOCK_DEDICATED_ROUTE FALSE [get_nets ra_i_IBUF]
-set_property CLOCK_DEDICATED_ROUTE FALSE [get_nets {ra_o_OBUF[2]}]
+set_property CLOCK_DEDICATED_ROUTE FALSE [get_nets ra_o_OBUF[2]]
 
 
+set_property SEVERITY {Warning}  [get_drc_checks LUTLP-1]
 
+set_property SEVERITY {Warning} [get_drc_checks NSTD-1]
 
 #create_pblock pblock_otherAdpll
 #add_cells_to_pblock [get_pblocks pblock_otherAdpll] [get_cells -quiet [list otherAdpll]]
@@ -772,4 +782,3 @@ set_property CLOCK_DEDICATED_ROUTE FALSE [get_nets {ra_o_OBUF[2]}]
 #create_pblock pblock_otherPDet
 #add_cells_to_pblock [get_pblocks pblock_otherPDet] [get_cells -quiet [list otherPDet]]
 #resize_pblock [get_pblocks pblock_otherPDet] -add {SLICE_X0Y145:SLICE_X7Y146}
-
