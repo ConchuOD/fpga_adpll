@@ -107,15 +107,13 @@ A tapped delay line can be emulated on an FPGA through the use of inverter pairs
 The resolution then is the propagation time through the pair, although this will once again depend on the layout specifics, which was approximately 600 picoseconds on an Artix-7. This is significantly lower than the 4 nanoseconds achieved using the previous design and thus more suitable for use with an inverter ring oscillator as this resolution is better than the time resolution of the oscillator. Figure \ref{fig:num_pdetdl} illustrates the configuration of the circuit used to emulate the function of a delay line that will be used in this paper.
 \begin{figure}[h]
     \centering
-    %\includegraphics[width=0.25\textwidth]{../new_pdet1}
-    \includegraphics[width=0.25\textwidth]{../bad_waveform}
+    \includegraphics[width=0.4\textwidth]{../new_pdet1}
     \caption{Design B Sign Detection RTL Diagram.}
     \label{fig:segn_pdetdl}
 \end{figure}
 \begin{figure}[h]
     \centering
-    %\includegraphics[width=0.4\textwidth]{../new_pdet2}
-    \includegraphics[width=0.25\textwidth]{../bad_waveform}
+    \includegraphics[width=0.4\textwidth]{../new_pdet2}
     \caption{Tapped Delay Line Emulation RTL Diagram.}
     \label{fig:num_pdetdl}
 \end{figure}
