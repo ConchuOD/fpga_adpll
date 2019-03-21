@@ -10,28 +10,28 @@
 \usepackage{xcolor}
 \usepackage[british]{babel}
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
-		T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+        T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 \begin{document}
 
 \title{FPGA Based Prototyping of an ADPLL Network.\\}
 
 \author{\IEEEauthorblockN{C. Dooley, E. Blokhina, B. Mulkeen}
-	\IEEEauthorblockA{\textit{School of Electronic Engineering} \\
-		\textit{University College Dublin}\\
-		Belfield, Dublin 4, Ireland. \\
-		email address} %TODO
+    \IEEEauthorblockA{\textit{School of Electronic Engineering} \\
+        \textit{University College Dublin}\\
+        Belfield, Dublin 4, Ireland. \\
+        email address} %TODO
 }
 
 \maketitle
 
 \begin{abstract}
-	This document is a model and instructions for \LaTeX.
-	This and the IEEEtran.cls file define the components of your paper [title, text, heads, etc.]. *CRITICAL: Do Not Use Symbols, Special Characters, Footnotes, 
-	or Math in Paper Title or Abstract.
+    This document is a model and instructions for \LaTeX.
+    This and the IEEEtran.cls file define the components of your paper [title, text, heads, etc.]. *CRITICAL: Do Not Use Symbols, Special Characters, Footnotes, 
+    or Math in Paper Title or Abstract.
 \end{abstract}
 
 \begin{IEEEkeywords}
-	FPGA, ADPLL, Simulation, Prototype
+    FPGA, ADPLL, Simulation, Prototype
 \end{IEEEkeywords}
 \section{Motivation}
 The technical motivation underlying this paper is the creation of an Field Programmable Gate Array (FPGA) based prototyping platform for All Digital Phase Lock Loop (ADPLL) networks. As the creation of Application Specific Integrated Circuits (ASICs) is an expensive and time consuming process, any mistake has the potential to be rather costly. As such prior to the manufacture of an IC it is important to ensure that any errors made in the design have been weeded out prior to this stage.
@@ -49,14 +49,14 @@ This paper will examine the process of creating such a system, highlight the dif
 \section{System Architecture}
 An ADPLL network as the name would suggest is created from a number of ADPLLs that coupled using digital phase comparators which attempt to measure the phase error between two oscillators, with each non edge node being connected to four neighbours. Figure \ref{fig:adpll_network} illustrates such a system on a small scale, with a number of ADPLLs laid out in a Cartesian grid. The individual ADPLLs, often called distributed ADPLLs as the phase detectors are shared between nodes, are made up of a digitally controllable oscillator, an error combination block and a digital loop filter with the aforementioned digital phase detectors lying between each pair of oscillators.
 \begin{figure}[h]
-	\centering
-	\includegraphics[width=0.25\textwidth]{adpll_network}
-	\caption{ADPLL Network Architecture.}
-	\label{fig:adpll_network}
-	\vspace{0.5cm}
-	\includegraphics[width=0.4\textwidth]{dist_adpll}
-	\caption{Distributed ADPLL Design.}
-	\label{fig:adpll_base}
+    \centering
+    \includegraphics[width=0.25\textwidth]{adpll_network}
+    \caption{ADPLL Network Architecture.}
+    \label{fig:adpll_network}
+    \vspace{0.5cm}
+    \includegraphics[width=0.4\textwidth]{dist_adpll}
+    \caption{Distributed ADPLL Design.}
+    \label{fig:adpll_base}
 \end{figure}
 \subsection{Digitally Controlled Oscillators}
 While regular Voltage Controlled Oscillator (VCO) is tuned by the input voltage over a continuous range of values in a digital system there are a very limited number of voltages representable, most commonly just two levels. As such using the voltage itself to control an oscillator is not a viable strategy and instead Digitally, or as they are sometimes known as Numerically, Controlled Oscillators (DCO) accept an \textit{n} bit wide control signal that alters the period of the output waveform. While tuning range, centre frequency and linearity apply as in a VCO, a DCO also has a minimum frequency step as a result of the non continuous control values. %TODO WORDING
@@ -80,12 +80,45 @@ Two potential solutions exist which alleviate this problem, and are suited to di
 The downside of this approach is that the minimum steps are dictated by the clock frequency of the FPGA, which at frequencies that are not orders of magnitude lower than the FPGA clock will result in coarse resolutions for detector or oscillator, and thus greater jitter seen at the oscillator output.\\
 The second solution to the problem is more akin to the real world system, and uses the delay through primitive elements such as inverters, which can be deduced from measurements on the FPGA of choice but will vary depending on the layout selected. In the case of the FPGA used for this paper, a Xilinx Artix-7 (XC7A100T-1CSG324C) this delay is in the region of 300 picoseconds but varies depending on the routing between elements. This design is better suited to scenarios where the desired operating frequency is a significant fraction of the maximum usable clock of the FPGA or it is particularly desirable to have asynchronous behaviour in the system as in an ASIC. It is not suited to lower frequency designs as the number of inverters required will run into spacial constraints.
 \subsection{Digitally Controlled Oscillators on an FPGA}
-There are three key designs that be used to implement a DCO on an FPGA, two of which rely on the FPGA clock and one using inverter primitives. 
+There are three key designs that be used to implement a DCO on an FPGA, two of which rely on the FPGA clock and one using inverter primitives. Each of these designs fulfil a different role in mimicking the behaviour of an ASIC based mixed signal DCO.
+
 \subsubsection*{Design 1}
-The first of these is a linear in period design using an accumulator architecture, with a variable reload value on overflow. Here the control code modifies the reload value around a bias point and thus adjusts the time taken for overflow to be reached with the oscillator's period given as $T_{osc} = (2^n - (\textrm{bias}+\textrm{code}))\times\textrm{clock period}$. Period linearity is a desirable characteristic as it mimics the behaviour of many mixed-signal implementations, and is the key use case of this method. The choice of output signal however highlights the drawbacks of this method. With the accumulator's MSB acting as the output less than half of the control codes are feasible. As the minimum period is set by the number of unused bits and the maximum period fixed at twice the minimum the frequency and tuning range combinations are very limited.
-In addition the wave output by this oscillator is not infact square, but skewed by the bias point.
+The first of these is a linear in period design using an accumulator architecture, with a variable reload value on overflow. Here the control code modifies the reload value around a bias point and thus adjusts the time taken for overflow to be reached with the oscillator's period given as $T_{osc} = (2^{\textrm{width}} - (\textrm{bias}+\textrm{code}))\times\textrm{clock period}$. Period linearity is a desirable characteristic as it mimics the behaviour of many mixed-signal implementations, and is the key use case of this method. The choice of the accumulator's Most Significant Bit (MSB) as the output signal however highlights the drawbacks of this method as less than half of the control codes are feasible. As the minimum period is set by the number of unused bits and the maximum period fixed at twice the minimum the frequency and tuning range combinations are very limited.
+In addition the wave output by this oscillator is only square at the maximum period and control code changes vary the duty cycle of the signal.
+
 \subsubsection*{Design 2}
-A linear in frequency design using an accumulator is also viable
+If frequency linearity is a desired characteristic of the oscillator an accumulator based, FPGA clock driven design exists for this use case also. 
+Here the control code $k$ is added to the value stored in the accumulator at each rising edge of the FPGA clock until overflow is reached at $2^n-1$ where $n$ is the bit width of the counter thus valuing each control code increment at $\frac{\textrm{FPGA clock}}{2^{\textrm{width}}}$ Hz. Once again the MSB of the accumulator is used as the output signal, however with this design the MSB will spend an equivalent duration at both logic high and low.
+Again this design is better suited to lower frequencies, where the output of the DCO is orders of magnitude lower than the clock signal driving it.
+
+\subsubsection*{Design 3}
+The third and final potential DCO design is an inverter ring/chain which makes use of the delay through inverter primitives, thus bearing significant resemblance to DCOs used on ASICs. On an FPGA the lack of precise control over the layout of blocks means the exact value of the delay is uncertain and may vary noticeably from one implementation to another, however this misalignment and the asynchronous behaviour stemming from the lack of an FPGA driven clock increase the similarity between this design and an ASIC. The period is set by the number of inverters at $2\times(\textrm{num inverters})\times(\textrm{delay})$, and is varied by adding or removing a pair of inverters for every control code increment. This design works best when the desired period is within a couple orders of magnitude of the delay through each pair of inverters, beyond this point the number of look-up tables and routing resources required to implement the design becomes unsustainable.
+
+\subsection{Phase Detectors on an FPGA}
+The two options for replicating the behaviour of a phase detector also employ the same two design principles, with the option better suited to lower frequency signals once again being driven by the clock generated by the FPGA and an inverter based design better suiting higher frequency systems where the greater resolution offered is beneficial.\\
+A  Sign-Number (SigNum) detector is a common method of performing phase-frequency detection in an ADPLL and is the method that will be discussed in this paper. As the name suggests this design constitutes two sections, with one determining the sign of the phase difference and the other its magnitude. The first issue with implementing a phase detector on an FPGA is the issue of metastability, where the output of a circuit element is at an undetermined level, which can occur if both signs were to have edges within a short time of another or the set-up/hold times of a register are violated. This issue is easily addressed in an ASIC with an arbiter, however an arbiter is a mixed signal circuit that is not synthesisable on an FPGA.
+
+\subsubsection*{Design A}
+The first potential design uses a Finite State Machine (FSM) to determine which edge which edge has occurred first and thus the sign, and a counter that computes the time difference between each rising edge. This counter is clocked by the FPGA clock, thus giving the system a time resolution of $\frac{1}{F_{\textrm{FPGA}}}$. As before this results in a design that is only suitable when the frequency of operation is well below that of the FPGA clock due to resolution constraints. In order to avoid the problem of metastability the incoming waveforms can be synchronised to the clock of the FPGA for no penalty beyond the extra clock cycle taken as this synchronisation performs the same quantisation that would otherwise have occurred in the counter measuring the time difference. This design is better suited for use with the accumulator based oscillators due to the overlapping frequency ranges, however it can also be used in conjunction with an inverter ring. Important to note is that in the case of the Artix-7 used in this paper this results in a four times worse phase difference resolution than period resolution which made low jitter operation difficult, but this combination could be made possible by removing eight rather than two inverters for each control code step. %TODO plot this later
+
+\subsubsection*{Design B}
+Better suited for use with the inverter based oscillator is a system that mimics the behaviour of a tapped delay line working asynchronously to the FPGA clock. As the FPGA clock is not used, and that of the ADPLL cannot be used to measure itself an unclocked sign detection circuit is required, an example of which can be seen in Figure \ref{fig:segn_pdetdl}. This is nearly identical to sign detection methods used on an ASIC with the arbitration circuit replaced by a second SR Latch which alleviates the issue of metastability.\\
+A tapped delay line can be emulated on an FPGA through the use of inverter pairs due to their short and approximately known delay placed between each tap.
+The resolution then is the propagation time through the pair, although this will once again depend on the layout specifics, which was approximately 600 picoseconds on an Artix-7. This is significantly lower than the 4 nanoseconds achieved using the previous design and thus more suitable for use with an inverter ring oscillator as this resolution is better than the time resolution of the oscillator. Figure \ref{fig:num_pdetdl} illustrates the configuration of the circuit used to emulate the function of a delay line that will be used in this paper.
+\begin{figure}[h]
+    \centering
+    %\includegraphics[width=0.25\textwidth]{../new_pdet1}
+    \includegraphics[width=0.25\textwidth]{../bad_waveform}
+    \caption{Design B Sign Detection RTL Diagram.}
+    \label{fig:segn_pdetdl}
+\end{figure}
+\begin{figure}[h]
+    \centering
+    %\includegraphics[width=0.4\textwidth]{../new_pdet2}
+    \includegraphics[width=0.25\textwidth]{../bad_waveform}
+    \caption{Tapped Delay Line Emulation RTL Diagram.}
+    \label{fig:num_pdetdl}
+\end{figure}
 
 \newpage
 \bibliography{conf.bib} 
