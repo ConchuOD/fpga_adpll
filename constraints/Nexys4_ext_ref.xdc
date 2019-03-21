@@ -753,6 +753,7 @@ set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets -of_objects [get_cells adp
 
 set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets -of_objects [get_cells adpll/testRing/ringwire_c[420]]]
 set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets -of_objects [get_cells ringwire_c_orig0]]
+
 set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets -of_objects [get_cells adpll_11/pDetAbove/arbitration/Q_INST_0]]
 set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets -of_objects [get_cells adpll_11/pDetAbove/arbitration/Q]]
 

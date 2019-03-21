@@ -20,8 +20,8 @@ module TwoByTwoRingTest (
     wire [7:0] temp_8bit_bus2;
 
     localparam BIAS = 6'd31; //154 = 10 MHz
-    localparam RO_WIDTH = 6;
-    localparam PDET_WIDTH = RO_WIDTH-1;
+    localparam RO_WIDTH = 5;
+    localparam PDET_WIDTH = RO_WIDTH;
     localparam RINGSIZE = 373;
     localparam ACCUM_WIDTH = 12;
     //network works at 0100 0001, 1.4, 1.7
@@ -40,8 +40,8 @@ module TwoByTwoRingTest (
     reg [3:0] weight_above_11;
     reg [3:0] weight_right_11;
     reg [3:0] weight_below_11;    
-    reg adpll_11_ref_left_c;
-    reg adpll_11_ref_above_c;
+    reg adpll_11_ref_left_r;
+    reg adpll_11_ref_above_r;
 
     wire adpll_12_gen_x;
     wire adpll_12_div8_x;
@@ -51,8 +51,19 @@ module TwoByTwoRingTest (
     reg [3:0] weight_above_12;
     reg [3:0] weight_right_12;
     reg [3:0] weight_below_12; 
-    reg adpll_12_ref_left_c;
-    reg adpll_12_ref_above_c;
+    reg adpll_12_ref_left_r;
+    reg adpll_12_ref_above_r;
+
+    wire adpll_13_gen_x;
+    wire adpll_13_div8_x;
+    wire [PDET_WIDTH-1:0] adpll_13_error_top_x;
+    wire [PDET_WIDTH-1:0] adpll_13_error_left_x;
+    reg [3:0] weight_left_13;
+    reg [3:0] weight_above_13;
+    reg [3:0] weight_right_13;
+    reg [3:0] weight_below_13; 
+    reg adpll_13_ref_left_r;
+    reg adpll_13_ref_above_r;
 
     wire adpll_21_gen_x;
     wire adpll_21_div8_x;
@@ -62,8 +73,8 @@ module TwoByTwoRingTest (
     reg [3:0] weight_above_21;
     reg [3:0] weight_right_21;
     reg [3:0] weight_below_21;       
-    reg adpll_21_ref_left_c;
-    reg adpll_21_ref_above_c;
+    reg adpll_21_ref_left_r;
+    reg adpll_21_ref_above_r;
 
     wire adpll_22_gen_x;
     wire adpll_22_div8_x;
@@ -73,8 +84,19 @@ module TwoByTwoRingTest (
     reg [3:0] weight_above_22;
     reg [3:0] weight_right_22;
     reg [3:0] weight_below_22;    
-    reg adpll_22_ref_left_c;
-    reg adpll_22_ref_above_c;
+    reg adpll_22_ref_left_r;
+    reg adpll_22_ref_above_r;
+
+    wire adpll_23_gen_x;
+    wire adpll_23_div8_x;
+    wire [PDET_WIDTH-1:0] adpll_23_error_top_x;
+    wire [PDET_WIDTH-1:0] adpll_23_error_left_x;
+    reg [3:0] weight_left_23;
+    reg [3:0] weight_above_23;
+    reg [3:0] weight_right_23;
+    reg [3:0] weight_below_23; 
+    reg adpll_23_ref_left_r;
+    reg adpll_23_ref_above_r;
 
     wire adpll_31_gen_x;
     wire adpll_31_div8_x;
@@ -84,8 +106,8 @@ module TwoByTwoRingTest (
     reg [3:0] weight_above_31;
     reg [3:0] weight_right_31;
     reg [3:0] weight_below_31;       
-    reg adpll_31_ref_left_c;
-    reg adpll_31_ref_above_c;
+    reg adpll_31_ref_left_r;
+    reg adpll_31_ref_above_r;
 
     wire adpll_32_gen_x;
     wire adpll_32_div8_x;
@@ -95,8 +117,19 @@ module TwoByTwoRingTest (
     reg [3:0] weight_above_32;
     reg [3:0] weight_right_32;
     reg [3:0] weight_below_32;    
-    reg adpll_32_ref_left_c;
-    reg adpll_32_ref_above_c;
+    reg adpll_32_ref_left_r;
+    reg adpll_32_ref_above_r;
+
+    wire adpll_33_gen_x;
+    wire adpll_33_div8_x;
+    wire [PDET_WIDTH-1:0] adpll_33_error_top_x;
+    wire [PDET_WIDTH-1:0] adpll_33_error_left_x;
+    reg [3:0] weight_left_33;
+    reg [3:0] weight_above_33;
+    reg [3:0] weight_right_33;
+    reg [3:0] weight_below_33; 
+    reg adpll_33_ref_left_r;
+    reg adpll_33_ref_above_r;
 
     wire clk5_x;
     wire clk5_0_x;
@@ -130,6 +163,9 @@ module TwoByTwoRingTest (
     assign ra_o[6] = adpll_22_gen_x;
     assign JD[0]   = adpll_31_gen_x;
     assign JD[1]   = adpll_32_gen_x;
+    assign JD[2]   = adpll_13_gen_x;
+    assign JD[3]   = adpll_23_gen_x;
+    assign JD[4]   = adpll_33_gen_x;
     
     assign clk5_x = clk5_0_x;
     assign kp_ki_c = {kp_sel_r,ki_sel_r};
@@ -213,20 +249,20 @@ module TwoByTwoRingTest (
     begin
         if (pll_or_network_x == 1'b0)
         begin
-            adpll_11_ref_left_c = reference_x;
-            adpll_11_ref_above_c = reference_x;
+            adpll_11_ref_left_r = reference_x;
+            adpll_11_ref_above_r = reference_x;
         end
         else
         begin
-            adpll_11_ref_left_c = reference_x;
-            adpll_11_ref_above_c = adpll_11_div8_x; //unused so just looping back
+            adpll_11_ref_left_r = reference_x;
+            adpll_11_ref_above_r = adpll_11_div8_x; //unused so just looping back
         end
     end
 
     NetworkRing #(
         .BIAS(BIAS),
         .RO_WIDTH(RO_WIDTH),
-        .RINGSIZE(RINGSIZE+12),
+        .RINGSIZE(RINGSIZE),
         .PDET_WIDTH(PDET_WIDTH),
         //.KP(5'b00001),
         .KP_WIDTH(KP_WIDTH),
@@ -245,8 +281,8 @@ module TwoByTwoRingTest (
         .enable_i(enable_x),
         .error_right_i(~adpll_12_error_left_x), 
         .error_bottom_i(~adpll_21_error_top_x), 
-        .ref_left_i(adpll_11_ref_left_c), //reference
-        .ref_above_i(adpll_11_ref_above_c), //unused so just looping back
+        .ref_left_i(adpll_11_ref_left_r), //reference
+        .ref_above_i(adpll_11_ref_above_r), 
         .weight_left_i(weight_left_11),
         .weight_above_i(weight_above_11),
         .weight_right_i(weight_right_11),
@@ -270,10 +306,10 @@ module TwoByTwoRingTest (
         end
         else
         begin
-            weight_left_12 = 4'd2;
+            weight_left_12 = 4'd1;
             weight_above_12 = 4'd0;
-            weight_right_12 = 4'd0;
-            weight_below_12 = 4'd2;
+            weight_right_12 = 4'd1;
+            weight_below_12 = 4'd1;
         end
     end
 
@@ -281,20 +317,20 @@ module TwoByTwoRingTest (
     begin
         if (pll_or_network_x == 1'b0)
         begin
-            adpll_12_ref_left_c = reference_x;
-            adpll_12_ref_above_c = reference_x;
+            adpll_12_ref_left_r = reference_x;
+            adpll_12_ref_above_r = reference_x;
         end
         else
         begin
-            adpll_12_ref_left_c = adpll_11_div8_x;
-            adpll_12_ref_above_c = adpll_12_div8_x; //unused so just looping back
+            adpll_12_ref_left_r = adpll_11_div8_x;
+            adpll_12_ref_above_r = adpll_12_div8_x; //unused so just looping back
         end
     end
 
     NetworkRing #(
         .BIAS(BIAS),
         .RO_WIDTH(RO_WIDTH),
-        .RINGSIZE(RINGSIZE+10),
+        .RINGSIZE(RINGSIZE+12),
         .PDET_WIDTH(PDET_WIDTH),
         //.KP(5'b00001),
         .KP_WIDTH(KP_WIDTH),
@@ -308,11 +344,11 @@ module TwoByTwoRingTest (
     (
         .reset_i(reset_x),
         .fpga_clk_i(clk258_x),
-        .enable_i(switches_i[15]),
-        .error_right_i({(PDET_WIDTH){1'b0}}), 
+        .enable_i(enable_x),
+        .error_right_i(~adpll_13_error_left_x), 
         .error_bottom_i(~adpll_22_error_top_x), 
-        .ref_left_i(adpll_12_ref_left_c), 
-        .ref_above_i(adpll_12_ref_above_c), //unused so just looping back
+        .ref_left_i(adpll_12_ref_left_r), 
+        .ref_above_i(adpll_12_ref_above_r), 
         .weight_left_i(weight_left_12),
         .weight_above_i(weight_above_12),
         .weight_right_i(weight_right_12),
@@ -321,6 +357,72 @@ module TwoByTwoRingTest (
         .error_above_o(adpll_12_error_top_x),       
         .gen_clk_o(adpll_12_gen_x),
         .gen_div8_o(adpll_12_div8_x),
+        .kp_i(padded_kp_c), //padded_kp_c
+        .ki_i(padded_ki_c) //padded_ki_c
+    );
+
+    always @ (uni_dir_x)
+    begin
+        if(uni_dir_x)
+        begin
+            weight_left_13 = 4'd4;
+            weight_above_13 = 4'd0;
+            weight_right_13 = 4'd0;
+            weight_below_13 = 4'd0;
+        end
+        else
+        begin
+            weight_left_13 = 4'd2;
+            weight_above_13 = 4'd0;
+            weight_right_13 = 4'd0;
+            weight_below_13 = 4'd2;
+        end
+    end
+
+    always @ (*)
+    begin
+        if (pll_or_network_x == 1'b0)
+        begin
+            adpll_13_ref_left_r = reference_x;
+            adpll_13_ref_above_r = reference_x;
+        end
+        else
+        begin
+            adpll_13_ref_left_r = adpll_12_div8_x;
+            adpll_13_ref_above_r = adpll_13_div8_x; //unused so just looping back
+        end
+    end
+
+    NetworkRing #(
+        .BIAS(BIAS),
+        .RO_WIDTH(RO_WIDTH),
+        .RINGSIZE(RINGSIZE),
+        .PDET_WIDTH(PDET_WIDTH),
+        //.KP(5'b00001),
+        .KP_WIDTH(KP_WIDTH),
+        .KP_FRAC_WIDTH(KP_FRAC_WIDTH),
+        .KI_WIDTH(KI_WIDTH),
+        .KI_FRAC_WIDTH(KI_FRAC_WIDTH),
+        //.KI(7'b0000001)
+        .DYNAMIC_VAL(1'b1) 
+    ) 
+    adpll_13
+    (
+        .reset_i(reset_x),
+        .fpga_clk_i(clk258_x),
+        .enable_i(enable_x),
+        .error_right_i({(PDET_WIDTH){1'b0}}), 
+        .error_bottom_i(~adpll_23_error_top_x), 
+        .ref_left_i(adpll_13_ref_left_r), 
+        .ref_above_i(adpll_13_ref_above_r),
+        .weight_left_i(weight_left_13),
+        .weight_above_i(weight_above_13),
+        .weight_right_i(weight_right_13),
+        .weight_below_i(weight_below_13), 
+        .error_left_o(adpll_13_error_left_x),
+        .error_above_o(adpll_13_error_top_x),       
+        .gen_clk_o(adpll_13_gen_x),
+        .gen_div8_o(adpll_13_div8_x),
         .kp_i(padded_kp_c), //padded_kp_c
         .ki_i(padded_ki_c) //padded_ki_c
     );
@@ -347,20 +449,20 @@ module TwoByTwoRingTest (
     begin
         if (pll_or_network_x == 1'b0)
         begin
-            adpll_21_ref_left_c = reference_x;
-            adpll_21_ref_above_c = reference_x;
+            adpll_21_ref_left_r = reference_x;
+            adpll_21_ref_above_r = reference_x;
         end
         else
         begin
-            adpll_21_ref_left_c = adpll_21_div8_x; //unused so just looping back
-            adpll_21_ref_above_c = adpll_11_div8_x; 
+            adpll_21_ref_left_r = adpll_21_div8_x; //unused so just looping back
+            adpll_21_ref_above_r = adpll_11_div8_x; 
         end
     end
 
     NetworkRing #(
         .BIAS(BIAS),
         .RO_WIDTH(RO_WIDTH),
-        .RINGSIZE(RINGSIZE-6),
+        .RINGSIZE(RINGSIZE+14),
         .PDET_WIDTH(PDET_WIDTH),
         //.KP(5'b00001),
         .KP_WIDTH(KP_WIDTH),
@@ -374,11 +476,11 @@ module TwoByTwoRingTest (
     (
         .reset_i(reset_x),
         .fpga_clk_i(clk258_x),
-        .enable_i(switches_i[15]),
+        .enable_i(enable_x),
         .error_right_i(~adpll_22_error_left_x), 
         .error_bottom_i(~adpll_32_error_top_x), 
-        .ref_left_i(adpll_21_ref_left_c), 
-        .ref_above_i(adpll_21_ref_above_c),
+        .ref_left_i(adpll_21_ref_left_r), 
+        .ref_above_i(adpll_21_ref_above_r),
         .weight_left_i(weight_left_21),
         .weight_above_i(weight_above_21),
         .weight_right_i(weight_right_21),
@@ -404,7 +506,7 @@ module TwoByTwoRingTest (
         begin
             weight_left_22 = 4'd1;
             weight_above_22 = 4'd1;
-            weight_right_22 = 4'd0;
+            weight_right_22 = 4'd1;
             weight_below_22 = 4'd1;
         end
     end
@@ -413,20 +515,20 @@ module TwoByTwoRingTest (
     begin
         if (pll_or_network_x == 1'b0)
         begin
-            adpll_22_ref_left_c = reference_x;
-            adpll_22_ref_above_c = reference_x;
+            adpll_22_ref_left_r = reference_x;
+            adpll_22_ref_above_r = reference_x;
         end
         else
         begin
-            adpll_22_ref_left_c = adpll_21_div8_x; 
-            adpll_22_ref_above_c = adpll_12_div8_x; 
+            adpll_22_ref_left_r = adpll_21_div8_x; 
+            adpll_22_ref_above_r = adpll_12_div8_x; 
         end
     end
 
     NetworkRing #(
         .BIAS(BIAS),
         .RO_WIDTH(RO_WIDTH),
-        .RINGSIZE(RINGSIZE-18),
+        .RINGSIZE(RINGSIZE),
         .PDET_WIDTH(PDET_WIDTH),
         //.KP(5'b00001),
         .KP_WIDTH(KP_WIDTH),
@@ -440,11 +542,11 @@ module TwoByTwoRingTest (
     (
         .reset_i(reset_x),
         .fpga_clk_i(clk258_x),
-        .enable_i(switches_i[15]),
-        .error_right_i({(PDET_WIDTH){1'b0}}), 
-        .error_bottom_i(adpll_32_error_top_x), 
-        .ref_left_i(adpll_22_ref_left_c), //reference
-        .ref_above_i(adpll_22_ref_above_c), //
+        .enable_i(enable_x),
+        .error_right_i(~adpll_23_error_left_x), 
+        .error_bottom_i(~adpll_32_error_top_x), 
+        .ref_left_i(adpll_22_ref_left_r), //reference
+        .ref_above_i(adpll_22_ref_above_r), //
         .weight_left_i(weight_left_22),
         .weight_above_i(weight_above_22),
         .weight_right_i(weight_right_22),
@@ -453,6 +555,72 @@ module TwoByTwoRingTest (
         .error_above_o(adpll_22_error_top_x),       
         .gen_clk_o(adpll_22_gen_x),
         .gen_div8_o(adpll_22_div8_x),
+        .kp_i(padded_kp_c), //padded_kp_c
+        .ki_i(padded_ki_c) //padded_ki_c
+    );
+
+    always @ (uni_dir_x)
+    begin
+        if(uni_dir_x)
+        begin
+            weight_left_23 = 4'd2;
+            weight_above_23 = 4'd2;
+            weight_right_23 = 4'd0;
+            weight_below_23 = 4'd0;
+        end
+        else
+        begin
+            weight_left_23 = 4'd1;
+            weight_above_23 = 4'd1;
+            weight_right_23 = 4'd0;
+            weight_below_23 = 4'd1;
+        end
+    end
+
+    always @ (*)
+    begin
+        if (pll_or_network_x == 1'b0)
+        begin
+            adpll_23_ref_left_r = reference_x;
+            adpll_23_ref_above_r = reference_x;
+        end
+        else
+        begin
+            adpll_23_ref_left_r = adpll_22_div8_x;
+            adpll_23_ref_above_r = adpll_13_div8_x; 
+        end
+    end
+
+    NetworkRing #(
+        .BIAS(BIAS),
+        .RO_WIDTH(RO_WIDTH),
+        .RINGSIZE(RINGSIZE),
+        .PDET_WIDTH(PDET_WIDTH),
+        //.KP(5'b00001),
+        .KP_WIDTH(KP_WIDTH),
+        .KP_FRAC_WIDTH(KP_FRAC_WIDTH),
+        .KI_WIDTH(KI_WIDTH),
+        .KI_FRAC_WIDTH(KI_FRAC_WIDTH),
+        //.KI(7'b0000001)
+        .DYNAMIC_VAL(1'b1) 
+    ) 
+    adpll_23
+    (
+        .reset_i(reset_x),
+        .fpga_clk_i(clk258_x),
+        .enable_i(enable_x),
+        .error_right_i({(PDET_WIDTH){1'b0}}), 
+        .error_bottom_i(~adpll_33_error_top_x), 
+        .ref_left_i(adpll_23_ref_left_r), 
+        .ref_above_i(adpll_23_ref_above_r), 
+        .weight_left_i(weight_left_23),
+        .weight_above_i(weight_above_23),
+        .weight_right_i(weight_right_23),
+        .weight_below_i(weight_below_23), 
+        .error_left_o(adpll_23_error_left_x),
+        .error_above_o(adpll_23_error_top_x),       
+        .gen_clk_o(adpll_23_gen_x),
+        .gen_div8_o(adpll_23_div8_x),
         .kp_i(padded_kp_c), //padded_kp_c
         .ki_i(padded_ki_c) //padded_ki_c
     );
@@ -479,20 +647,20 @@ module TwoByTwoRingTest (
     begin
         if (pll_or_network_x == 1'b0)
         begin
-            adpll_31_ref_left_c = reference_x;
-            adpll_31_ref_above_c = reference_x;
+            adpll_31_ref_left_r = reference_x;
+            adpll_31_ref_above_r = reference_x;
         end
         else
         begin
-            adpll_31_ref_left_c = adpll_31_div8_x; //unused, loopback
-            adpll_31_ref_above_c = adpll_21_div8_x; 
+            adpll_31_ref_left_r = adpll_31_div8_x; //unused, loopback
+            adpll_31_ref_above_r = adpll_21_div8_x; 
         end
     end
 
     NetworkRing #(
         .BIAS(BIAS),
         .RO_WIDTH(RO_WIDTH),
-        .RINGSIZE(RINGSIZE-6),
+        .RINGSIZE(RINGSIZE),
         .PDET_WIDTH(PDET_WIDTH),
         //.KP(5'b00001),
         .KP_WIDTH(KP_WIDTH),
@@ -506,11 +674,11 @@ module TwoByTwoRingTest (
     (
         .reset_i(reset_x),
         .fpga_clk_i(clk258_x),
-        .enable_i(switches_i[15]),
+        .enable_i(enable_x),
         .error_right_i(~adpll_32_error_left_x), 
         .error_bottom_i({(PDET_WIDTH){1'b0}}), 
-        .ref_left_i(adpll_31_ref_left_c), 
-        .ref_above_i(adpll_31_ref_above_c),
+        .ref_left_i(adpll_31_ref_left_r), 
+        .ref_above_i(adpll_31_ref_above_r),
         .weight_left_i(weight_left_31),
         .weight_above_i(weight_above_31),
         .weight_right_i(weight_right_31),
@@ -534,9 +702,9 @@ module TwoByTwoRingTest (
         end
         else
         begin
-            weight_left_32 = 4'd2;
+            weight_left_32 = 4'd1;
             weight_above_32 = 4'd2;
-            weight_right_32 = 4'd0;
+            weight_right_32 = 4'd1;
             weight_below_32 = 4'd0;
         end
     end
@@ -545,20 +713,20 @@ module TwoByTwoRingTest (
     begin
         if (pll_or_network_x == 1'b0)
         begin
-            adpll_32_ref_left_c = reference_x;
-            adpll_32_ref_above_c = reference_x;
+            adpll_32_ref_left_r = reference_x;
+            adpll_32_ref_above_r = reference_x;
         end
         else
         begin
-            adpll_32_ref_left_c = adpll_31_div8_x; 
-            adpll_32_ref_above_c = adpll_22_div8_x; 
+            adpll_32_ref_left_r = adpll_31_div8_x; 
+            adpll_32_ref_above_r = adpll_22_div8_x; 
         end
     end
 
     NetworkRing #(
         .BIAS(BIAS),
         .RO_WIDTH(RO_WIDTH),
-        .RINGSIZE(RINGSIZE-18),
+        .RINGSIZE(RINGSIZE),
         .PDET_WIDTH(PDET_WIDTH),
         //.KP(5'b00001),
         .KP_WIDTH(KP_WIDTH),
@@ -572,11 +740,11 @@ module TwoByTwoRingTest (
     (
         .reset_i(reset_x),
         .fpga_clk_i(clk258_x),
-        .enable_i(switches_i[15]),
-        .error_right_i({(PDET_WIDTH){1'b0}}), 
+        .enable_i(enable_x),
+        .error_right_i(~adpll_33_error_left_x), 
         .error_bottom_i({(PDET_WIDTH){1'b0}}), 
-        .ref_left_i(adpll_32_ref_left_c), 
-        .ref_above_i(adpll_32_ref_above_c), 
+        .ref_left_i(adpll_32_ref_left_r), 
+        .ref_above_i(adpll_32_ref_above_r), 
         .weight_left_i(weight_left_32),
         .weight_above_i(weight_above_32),
         .weight_right_i(weight_right_32),
@@ -585,6 +753,72 @@ module TwoByTwoRingTest (
         .error_above_o(adpll_32_error_top_x),       
         .gen_clk_o(adpll_32_gen_x),
         .gen_div8_o(adpll_32_div8_x),
+        .kp_i(padded_kp_c), //padded_kp_c
+        .ki_i(padded_ki_c) //padded_ki_c
+    );
+
+    always @ (uni_dir_x)
+    begin
+        if(uni_dir_x)
+        begin
+            weight_left_33 = 4'd2;
+            weight_above_33 = 4'd2;
+            weight_right_33 = 4'd0;
+            weight_below_33 = 4'd0;
+        end
+        else
+        begin
+            weight_left_33 = 4'd2;
+            weight_above_33 = 4'd2;
+            weight_right_33 = 4'd0;
+            weight_below_33 = 4'd0;
+        end
+    end
+
+    always @ (*)
+    begin
+        if (pll_or_network_x == 1'b0)
+        begin
+            adpll_33_ref_left_r = reference_x;
+            adpll_33_ref_above_r = reference_x;
+        end
+        else
+        begin
+            adpll_33_ref_left_r = adpll_32_div8_x;
+            adpll_33_ref_above_r = adpll_23_div8_x; 
+        end
+    end
+
+    NetworkRing #(
+        .BIAS(BIAS),
+        .RO_WIDTH(RO_WIDTH),
+        .RINGSIZE(RINGSIZE+8),
+        .PDET_WIDTH(PDET_WIDTH),
+        //.KP(5'b00001),
+        .KP_WIDTH(KP_WIDTH),
+        .KP_FRAC_WIDTH(KP_FRAC_WIDTH),
+        .KI_WIDTH(KI_WIDTH),
+        .KI_FRAC_WIDTH(KI_FRAC_WIDTH),
+        //.KI(7'b0000001)
+        .DYNAMIC_VAL(1'b1) 
+    ) 
+    adpll_33
+    (
+        .reset_i(reset_x),
+        .fpga_clk_i(clk258_x),
+        .enable_i(enable_x),
+        .error_right_i({(PDET_WIDTH){1'b0}}), 
+        .error_bottom_i({(PDET_WIDTH){1'b0}}), 
+        .ref_left_i(adpll_33_ref_left_r), 
+        .ref_above_i(adpll_33_ref_above_r), 
+        .weight_left_i(weight_left_33),
+        .weight_above_i(weight_above_33),
+        .weight_right_i(weight_right_33),
+        .weight_below_i(weight_below_33), 
+        .error_left_o(adpll_33_error_left_x),
+        .error_above_o(adpll_33_error_top_x),       
+        .gen_clk_o(adpll_33_gen_x),
+        .gen_div8_o(adpll_33_div8_x),
         .kp_i(padded_kp_c), //padded_kp_c
         .ki_i(padded_ki_c) //padded_ki_c
     );
