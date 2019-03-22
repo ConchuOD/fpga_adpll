@@ -9,6 +9,8 @@
 \usepackage{textcomp}
 \usepackage{xcolor}
 \usepackage[british]{babel}
+\newcommand\T{\rule{0pt}{2.6ex}}       % Top strut
+\newcommand\B{\rule[-1.2ex]{0pt}{0pt}} % Bottom strut
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
         T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 \begin{document}
@@ -118,14 +120,58 @@ The resolution then is the propagation time through the pair, although this will
     \label{fig:num_pdetdl}
 \end{figure}
 \section{Comparison of Designs}
-This paper will examine the performance of a number of combinations of these blocks and the performance thereof, specifically oscillator 2 with phase detector A and oscillator 3 with detectors A \& B, in a single oscillator configuration. 
+This paper will examine the performance of a number of combinations of these blocks and the performance thereof, specifically oscillator 2 with phase detector A and oscillator 3 with detectors A \& B. For each test there were four ADPLLs on the FPGA arranged in a Cartesian Grid and as such each ADPLL will be referred to using matrix indexing corresponding to their grid location. For each configuration three different modes of operation were examined: Each ADPLL locking to the same 5 MHz external reference, each ADPLL connected to the left and above neighbours in a ``uni-directional'' network and finally a true ADPLL network where all neighbours are connected. For comparing each configuration gains which had previously been determined to provide the best jitter performance were chosen. The data was captured using an Agilent MSO7054 A at 4 GSa/s. Each point of data is the mean of five 200 microsecond long captures which were then analysed in Matlab, and Table \ref{table:b_c_perf} displays the results of this analysis.\\
+The first columns of the table relate to the cycle-to-cycle jitter of the system, the difference between sequential distances, and the second portion gives the Time Interval Error, or difference between the actual timing of the edge and the ``ideal'' time as set by the reference. This combination of measurements will show how well each design performs the task of staying consistent from cycle to cycle both in relation to itself and the system at large.
 
-% What do I want to show?
-% - Briefly the lock and capture ranges of the different designs
-% - Cycle-to-cycle jitter of the three combinations.
-% - 
+\begin{table}[!ht]
+	\begin{center}
+		\begin{small}
+			\begin{tabular}{cc|c|c|c|c|c|c|}           
+				\cline{3-8}
+				&& \multicolumn{3}{c|}{Jitter Standard Deviation (ns)} & \multicolumn{3}{c|}{Time Interval Error. (ns)} \T\\
+				\cline{3-8}	
+				&&PLL 11&PLL 12&PLL 22&PLL 11&PLL 12&PLL 22\T\\
+				\hline
+				\multicolumn{2}{|l|}{Osc 2, PDET A}&-&-&-&-&-&-\T\\
+				\multicolumn{2}{|r|}{Free PLLs}&1.5988&1.6178&1.6220&&& \T\\
+				\multicolumn{2}{|r|}{Uni-dir.}&1.9804&2.0316&2.1317&&& \T\\
+				\multicolumn{2}{|r|}{Bi-dir.}&2.0124&2.0681&2.0732&&& \T\\
+				\hline
+				\multicolumn{2}{|l|}{Osc 3, PDET A}&-&-&-&-&-&-\T\\
+				\multicolumn{2}{|r|}{Free PLLs}&0.62499 $\mu$s&0.75919 $\mu$s&0.79049  $\mu$s&&& \T\\
+				\multicolumn{2}{|r|}{Uni-dir.}&0.76822 $\mu$s&0.9009 $\mu$s&1.1407 $\mu$s&&& \T\\
+				\multicolumn{2}{|r|}{Bi-dir.}&0.70393 $\mu$s&0.70201 $\mu$s&1.241 $\mu$s&&& \T\\
+				\hline
+				\multicolumn{2}{|l|}{Osc 3, PDET B}&-&-&-&-&-&-\T\\
+				\multicolumn{2}{|r|}{Free PLLs}&4.1680&3.9803&5.0741&&& \T\\
+				\multicolumn{2}{|r|}{Uni-dir.}&4.3820&5.7315&6.2336 &&& \T\\
+				\multicolumn{2}{|r|}{Bi-dir.}&5.6137&7.1831&7.1612 &&& \T\\
+				\hline
+				\B
+			\end{tabular}
+		\end{small}
+		\caption{}
+		\label{table:b_c_perf}
+	\end{center}
+\end{table}
 
-
+From the table it is apparent that the combination of the inverter chain DCO and the FPGA clock driven phase detector is an ill advised choice, as the jitter present in the system is several orders of magnitude worse than either other situation. In this system the FPGA clock is at 258 MHz, the maximum possible, thus giving a detection resolution of 4 nanoseconds. This is 4 times greater than the period resolution of approximately 1.2 nano seconds of the oscillator, and requires the gains of the PI filter to be increased fourfold in order to respond appropriately to the error detected. The problems of relatively inaccurate detection and increased gains combine to produce a system that is only able to achieve poor locking performance.
+Both other combinations work well however, delivering a level of jitter that is both low yet allows an indication how impactful variations in architecture or control parameters to be seen visually on an oscilloscope.\\
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.25\textwidth]{distrib_ring}
+	\caption{Design B Sign Detection RTL Diagram.}
+	\label{fig:dist1}
+\end{figure}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.25\textwidth]{distrib_pa}
+	\caption{Tapped Delay Line Emulation RTL Diagram.}
+	\label{fig:dist2}
+\end{figure}
+Figures \ref{fig:dist1} \& \ref{fig:dist2} paint a picture of the unrealistic nature of the FPGA clocked designs as in comparison to the ring based design each oscillator will have identical intrinsic period steps thus eliminating any jitter that maybe be seen in the system due to misalignment. This effects the suitability of the FPGA clocked designs for the improvement of simulation models or the examination of how a novel block maybe impact the behaviour of the network.
+\section*{Conclusion}
+An FPGA is a suitable environment for the prototyping of ADPLL networks and can fill a number of roles depending on the designer's requirements. However the designer should bear in mind the platform's limitations especially when attempting to use a frequency that is not orders of magnitude lower than the maximum clock available from the FPGA's clock manager. Inverter based and FPGA clocked designs both have a niche in which they are the preferred option, with the clocked design better suiting replication of an existing design at scaled down frequencies and the inverter based designs better in the modelling and analysis of ADPLL network behaviour.
 \bibliography{conf.bib} 
 \bibliographystyle{IEEEtran}
 
