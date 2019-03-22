@@ -1,4 +1,4 @@
-filename = 'c_____0.bin';
+filename = 'scope_41.bin';
 [scope_x_data,scope_y_data] = importAgilentBin(filename,3);
 
 f_samp = 4E9;
