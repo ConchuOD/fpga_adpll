@@ -46,18 +46,7 @@ module LoopFilterTestBench ();
 	*/
 	
 
-	LoopFilter2 #(
-		.ERROR_WIDTH(PDET_WIDTH),
-		.DCO_CC_WIDTH(RO_WIDTH),
-		.KP_WIDTH(KP_WIDTH),
-		.KP_FRAC_WIDTH(KP_FRAC_WIDTH),
-		.KP(KP),
-		.KI_WIDTH(KI_WIDTH),
-		.KI_FRAC_WIDTH(KI_FRAC_WIDTH),
-		.KI(KI),
-		.DYNAMIC_VAL(DYNAMIC_VAL)	
-	)
-	loopFilter 
+	LoopFilterTest loopFilter 
 	(
         .gen_clk_i(clk5_x),
         .reset_i(reset_x),

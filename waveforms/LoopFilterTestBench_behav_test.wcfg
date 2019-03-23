@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="LoopFilterTestBench_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="LoopFilterTestBench" />
+            <top_module name="glbl" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="0fs"></ZoomStartTime>
+      <ZoomEndTime time="1000000000fs"></ZoomEndTime>
+      <Cursor1Time time="258970000fs"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="195"></NameColumnWidth>
+      <ValueColumnWidth column_width="138"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="26" />
+   <wvobject fp_name="/LoopFilterTestBench/loopFilter/gen_clk_i" type="logic">
+      <obj_property name="ElementShortName">gen_clk_i</obj_property>
+      <obj_property name="ObjectShortName">gen_clk_i</obj_property>
+   </wvobject>
+   <wvobject fp_name="/LoopFilterTestBench/loopFilter/reset_i" type="logic">
+      <obj_property name="ElementShortName">reset_i</obj_property>
+      <obj_property name="ObjectShortName">reset_i</obj_property>
+   </wvobject>
+   <wvobject fp_name="/LoopFilterTestBench/loopFilter/kp_i" type="array">
+      <obj_property name="ElementShortName">kp_i[4:0]</obj_property>
+      <obj_property name="ObjectShortName">kp_i[4:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
+      <obj_property name="radix_fractionWidth">0</obj_property>
+      <obj_property name="radix_otherWidth">0</obj_property>
+   </wvobject>
+   <wvobject fp_name="/LoopFilterTestBench/loopFilter/ki_i" type="array">
+      <obj_property name="ElementShortName">ki_i[6:0]</obj_property>
+      <obj_property name="ObjectShortName">ki_i[6:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
+      <obj_property name="radix_fractionWidth">0</obj_property>
+      <obj_property name="radix_otherWidth">0</obj_property>
+   </wvobject>
+   <wvobject fp_name="/LoopFilterTestBench/loopFilter/error_i" type="array">
+      <obj_property name="ElementShortName">error_i[4:0]</obj_property>
+      <obj_property name="ObjectShortName">error_i[4:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
+      <obj_property name="radix_fractionWidth">0</obj_property>
+      <obj_property name="radix_otherWidth">0</obj_property>
+   </wvobject>
+   <wvobject fp_name="/LoopFilterTestBench/loopFilter/dco_cc_o" type="array">
+      <obj_property name="ElementShortName">dco_cc_o[4:0]</obj_property>
+      <obj_property name="ObjectShortName">dco_cc_o[4:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
+      <obj_property name="radix_fractionWidth">0</obj_property>
+      <obj_property name="radix_otherWidth">0</obj_property>
+   </wvobject>
+   <wvobject fp_name="/LoopFilterTestBench/loopFilter/kp_x" type="array">
+      <obj_property name="ElementShortName">kp_x[4:0]</obj_property>
+      <obj_property name="ObjectShortName">kp_x[4:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
+      <obj_property name="radix_fractionWidth">0</obj_property>
+      <obj_property name="radix_otherWidth">0</obj_property>
+   </wvobject>
+   <wvobject fp_name="/LoopFilterTestBench/loopFilter/ki_x" type="array">
+      <obj_property name="ElementShortName">ki_x[6:0]</obj_property>
+      <obj_property name="ObjectShortName">ki_x[6:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
+      <obj_property name="radix_fractionWidth">0</obj_property>
+      <obj_property name="radix_otherWidth">0</obj_property>
+   </wvobject>
+   <wvobject fp_name="/LoopFilterTestBench/loopFilter/kp_error_c" type="array">
+      <obj_property name="ElementShortName">kp_error_c[9:0]</obj_property>
+      <obj_property name="ObjectShortName">kp_error_c[9:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
+      <obj_property name="radix_fractionWidth">0</obj_property>
+      <obj_property name="radix_otherWidth">0</obj_property>
+   </wvobject>
+   <wvobject fp_name="/LoopFilterTestBench/loopFilter/kp_error_padded_c" type="array">
+      <obj_property name="ElementShortName">kp_error_padded_c[11:0]</obj_property>
+      <obj_property name="ObjectShortName">kp_error_padded_c[11:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/LoopFilterTestBench/loopFilter/ki_error_c" type="array">
+      <obj_property name="ElementShortName">ki_error_c[11:0]</obj_property>
+      <obj_property name="ObjectShortName">ki_error_c[11:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
+      <obj_property name="radix_fractionWidth">0</obj_property>
+      <obj_property name="radix_otherWidth">0</obj_property>
+   </wvobject>
+   <wvobject fp_name="/LoopFilterTestBench/loopFilter/ki_error_inte_c" type="array">
+      <obj_property name="ElementShortName">ki_error_inte_c[11:0]</obj_property>
+      <obj_property name="ObjectShortName">ki_error_inte_c[11:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
+      <obj_property name="radix_fractionWidth">0</obj_property>
+      <obj_property name="radix_otherWidth">0</obj_property>
+   </wvobject>
+   <wvobject fp_name="/LoopFilterTestBench/loopFilter/ki_error_inte_delay_r" type="array">
+      <obj_property name="ElementShortName">ki_error_inte_delay_r[11:0]</obj_property>
+      <obj_property name="ObjectShortName">ki_error_inte_delay_r[11:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
+      <obj_property name="radix_fractionWidth">0</obj_property>
+      <obj_property name="radix_otherWidth">0</obj_property>
+   </wvobject>
+   <wvobject fp_name="/LoopFilterTestBench/loopFilter/error_sum_c" type="array">
+      <obj_property name="ElementShortName">error_sum_c[9:0]</obj_property>
+      <obj_property name="ObjectShortName">error_sum_c[9:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
+      <obj_property name="radix_fractionWidth">0</obj_property>
+      <obj_property name="radix_otherWidth">0</obj_property>
+   </wvobject>
+   <wvobject fp_name="/LoopFilterTestBench/loopFilter/error_sum_trun_c" type="array">
+      <obj_property name="ElementShortName">error_sum_trun_c[4:0]</obj_property>
+      <obj_property name="ObjectShortName">error_sum_trun_c[4:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
+      <obj_property name="radix_fractionWidth">0</obj_property>
+      <obj_property name="radix_otherWidth">0</obj_property>
+   </wvobject>
+   <wvobject fp_name="/LoopFilterTestBench/loopFilter/error_sum_trun_delay_r" type="array">
+      <obj_property name="ElementShortName">error_sum_trun_delay_r[4:0]</obj_property>
+      <obj_property name="ObjectShortName">error_sum_trun_delay_r[4:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
+      <obj_property name="radix_fractionWidth">0</obj_property>
+      <obj_property name="radix_otherWidth">0</obj_property>
+   </wvobject>
+   <wvobject fp_name="/LoopFilterTestBench/loopFilter/DYNAMIC_VAL" type="array">
+      <obj_property name="ElementShortName">DYNAMIC_VAL[31:0]</obj_property>
+      <obj_property name="ObjectShortName">DYNAMIC_VAL[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/LoopFilterTestBench/loopFilter/ERROR_WIDTH" type="array">
+      <obj_property name="ElementShortName">ERROR_WIDTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">ERROR_WIDTH[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
+      <obj_property name="radix_fractionWidth">0</obj_property>
+      <obj_property name="radix_otherWidth">0</obj_property>
+   </wvobject>
+   <wvobject fp_name="/LoopFilterTestBench/loopFilter/DCO_CC_WIDTH" type="array">
+      <obj_property name="ElementShortName">DCO_CC_WIDTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">DCO_CC_WIDTH[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
+      <obj_property name="radix_fractionWidth">0</obj_property>
+      <obj_property name="radix_otherWidth">0</obj_property>
+   </wvobject>
+   <wvobject fp_name="/LoopFilterTestBench/loopFilter/KP_WIDTH" type="array">
+      <obj_property name="ElementShortName">KP_WIDTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">KP_WIDTH[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
+      <obj_property name="radix_fractionWidth">0</obj_property>
+      <obj_property name="radix_otherWidth">0</obj_property>
+   </wvobject>
+   <wvobject fp_name="/LoopFilterTestBench/loopFilter/KP" type="array">
+      <obj_property name="ElementShortName">KP[4:0]</obj_property>
+      <obj_property name="ObjectShortName">KP[4:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
+      <obj_property name="radix_fractionWidth">0</obj_property>
+      <obj_property name="radix_otherWidth">0</obj_property>
+   </wvobject>
+   <wvobject fp_name="/LoopFilterTestBench/loopFilter/KI_WIDTH" type="array">
+      <obj_property name="ElementShortName">KI_WIDTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">KI_WIDTH[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
+      <obj_property name="radix_fractionWidth">0</obj_property>
+      <obj_property name="radix_otherWidth">0</obj_property>
+   </wvobject>
+   <wvobject fp_name="/LoopFilterTestBench/loopFilter/KI" type="array">
+      <obj_property name="ElementShortName">KI[6:0]</obj_property>
+      <obj_property name="ObjectShortName">KI[6:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
+      <obj_property name="radix_fractionWidth">0</obj_property>
+      <obj_property name="radix_otherWidth">0</obj_property>
+   </wvobject>
+   <wvobject fp_name="/LoopFilterTestBench/loopFilter/KP_MULT_RES_WIDTH" type="array">
+      <obj_property name="ElementShortName">KP_MULT_RES_WIDTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">KP_MULT_RES_WIDTH[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
+      <obj_property name="radix_fractionWidth">0</obj_property>
+      <obj_property name="radix_otherWidth">0</obj_property>
+   </wvobject>
+   <wvobject fp_name="/LoopFilterTestBench/loopFilter/KI_MULT_RES_WIDTH" type="array">
+      <obj_property name="ElementShortName">KI_MULT_RES_WIDTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">KI_MULT_RES_WIDTH[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
+      <obj_property name="radix_fractionWidth">0</obj_property>
+      <obj_property name="radix_otherWidth">0</obj_property>
+   </wvobject>
+   <wvobject fp_name="/LoopFilterTestBench/loopFilter/SUM_WIDTH" type="array">
+      <obj_property name="ElementShortName">SUM_WIDTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">SUM_WIDTH[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
+      <obj_property name="radix_fractionWidth">0</obj_property>
+      <obj_property name="radix_otherWidth">0</obj_property>
+   </wvobject>
+</wave_config>

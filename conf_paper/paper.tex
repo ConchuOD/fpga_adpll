@@ -27,20 +27,18 @@
 \maketitle
 
 \begin{abstract}
-    This document is a model and instructions for \LaTeX.
-    This and the IEEEtran.cls file define the components of your paper [title, text, heads, etc.]. *CRITICAL: Do Not Use Symbols, Special Characters, Footnotes, 
-    or Math in Paper Title or Abstract.
+    This paper introduces and compares the implementation of a number of FPGA based ADPLL network prototyping architectures. Comparison is then made between the expected performance and role of each method as a development tool.
 \end{abstract}
 
 \begin{IEEEkeywords}
-    FPGA, ADPLL, Simulation, Prototype
+    FPGA, ADPLL, Simulation, Prototyping
 \end{IEEEkeywords}
 \section{Motivation}
 The technical motivation underlying this paper is the creation of an Field Programmable Gate Array (FPGA) based prototyping platform for All Digital Phase Lock Loop (ADPLL) networks. As the creation of Application Specific Integrated Circuits (ASICs) is an expensive and time consuming process, any mistake has the potential to be rather costly. As such prior to the manufacture of an IC it is important to ensure that any errors made in the design have been weeded out prior to this stage.
 Simulations at either at theoretical or gate/transistor levels have global usage in minimising such errors due to the ubiquity of simulators and their ease of use.\\
 However simulations are only as good as the model used to describe the dynamics of the system, and emulating real jitter and other behaviours of a complex system is a rather difficult task. %TODO wording of this last sentence
 An FPGA based prototype allows the system designers to validate the performance of both design and simulation, particularly the response to key noise sources such as power supply noise. An FPGA is ideal for this task as it leverages the existing skill set of a digital designer, permits the re-use of certain blocks, and most importantly enables cost effective and rapid reworking of the design.\\
-An FPGA as a prototyping tool has seen use in the work of Dimitri Galayko and his research group in UPMC Sorbonne and in Elena Blokhina's team in University College Dublin, and has been used in the testing of established designs prior to their implementation in custom silicon\cite{zianbetov2013phd,shan2014phd}, the creation of realistic models for use in high level simulations\cite{theboys2019} and the exploration of new designs for digital blocks before progressing on to true digital design on a gate level.  %TODO references
+An FPGA as a prototyping tool has seen use in UPMC Sorbonne and University College Dublin, and has been used in the testing of established designs prior to their implementation in custom silicon\cite{zianbetov2013phd,shan2014phd}, the validation of realistic models for use in high level simulations\cite{theboys2019} and the exploration of new designs for digital blocks before progressing on to true digital design on a gate level.  %TODO references
 In the case of Shan et. al \cite{shan2014phd} direct testing of control parameters was performed using an FPGA based design where all parameters were scaled down proportionally and thus the ideal gains for the loop filter found in simulation could be tested in a more realistic setting.\\
 Similarly Koskin et. al \cite{theboys2019} used the analysis of a number of ADPLLs implemented on an FPGA both independently and in a network to validate previously obtained theoretical results while avoiding the costs associated with the development of a custom IC.\\
 Prototyping on an FPGA does have its drawbacks, most notably the mixed-signal circuits central to the operation of an ADPLL are not implementable on an FPGA and while most fundamental digital circuit elements are present these elements are not true transistor level implementations of their functionality but rather implemented by lookup tables and other multi-role structures on the FPGA. These drawbacks present a challenge to a designer as they restrict the potential architectures of key blocks. This is of particular concern when trying to mimic the behaviour of an established design on an FPGA.\\
@@ -84,17 +82,18 @@ The second solution to the problem is more akin to the real world system, and us
 \subsection{Digitally Controlled Oscillators on an FPGA}
 There are three key designs that be used to implement a DCO on an FPGA, two of which rely on the FPGA clock and one using inverter primitives. Each of these designs fulfil a different role in mimicking the behaviour of an ASIC based mixed signal DCO.
 
-\subsubsection*{Design 1}
-The first of these is a linear in period design using an accumulator architecture, with a variable reload value on overflow. Here the control code modifies the reload value around a bias point and thus adjusts the time taken for overflow to be reached with the oscillator's period given as $T_{osc} = (2^{\textrm{width}} - (\textrm{bias}+\textrm{code}))\times\textrm{clock period}$. Period linearity is a desirable characteristic as it mimics the behaviour of many mixed-signal implementations, and is the key use case of this method. The choice of the accumulator's Most Significant Bit (MSB) as the output signal however highlights the drawbacks of this method as less than half of the control codes are feasible. As the minimum period is set by the number of unused bits and the maximum period fixed at twice the minimum the frequency and tuning range combinations are very limited.
-In addition the wave output by this oscillator is only square at the maximum period and control code changes vary the duty cycle of the signal.
+%\subsubsection*{Design 1}
+%The first of these is a linear in period design using an accumulator architecture, with a variable reload value on overflow. Here the control code modifies the reload value around a bias point and thus adjusts the time taken for overflow to be reached with the oscillator's period given as $T_{osc} = (2^{\textrm{width}} - (\textrm{bias}+\textrm{code}))\times\textrm{clock period}$. Period linearity is a desirable characteristic as it mimics the behaviour of many mixed-signal implementations, and is the key use case of this method. The choice of the accumulator's Most Significant Bit (MSB) as the output signal however highlights the drawbacks of this method as less than half of the control codes are feasible. As the minimum period is set by the number of unused bits and the maximum period fixed at twice the minimum the frequency and tuning range combinations are very limited.
+%In addition the wave output by this oscillator is only square at the maximum period and control code changes vary the duty cycle of the signal.
 
-\subsubsection*{Design 2}
+\subsubsection*{Design 1}
 If frequency linearity is a desired characteristic of the oscillator an accumulator based, FPGA clock driven design exists for this use case also. 
 Here the control code $k$ is added to the value stored in the accumulator at each rising edge of the FPGA clock until overflow is reached at $2^n-1$ where $n$ is the bit width of the counter thus valuing each control code increment at $\frac{\textrm{FPGA clock}}{2^{\textrm{width}}}$ Hz. Once again the MSB of the accumulator is used as the output signal, however with this design the MSB will spend an equivalent duration at both logic high and low.
 Again this design is better suited to lower frequencies, where the output of the DCO is orders of magnitude lower than the clock signal driving it.
 
-\subsubsection*{Design 3}
-The third and final potential DCO design is an inverter ring/chain which makes use of the delay through inverter primitives, thus bearing significant resemblance to DCOs used on ASICs. On an FPGA the lack of precise control over the layout of blocks means the exact value of the delay is uncertain and may vary noticeably from one implementation to another, however this misalignment and the asynchronous behaviour stemming from the lack of an FPGA driven clock increase the similarity between this design and an ASIC. The period is set by the number of inverters at $2\times(\textrm{num inverters})\times(\textrm{delay})$, and is varied by adding or removing a pair of inverters for every control code increment. This design works best when the desired period is within a couple orders of magnitude of the delay through each pair of inverters, beyond this point the number of look-up tables and routing resources required to implement the design becomes unsustainable.
+\subsubsection*{Design 2}
+The third and final potential DCO design is an inverter ring/chain which makes use of the delay through inverter primitives, thus bearing significant resemblance to DCOs used on ASICs. On an FPGA the lack of precise control over the layout of blocks means the exact value of the delay is uncertain and may vary noticeably from one implementation to another, however this misalignment and the asynchronous behaviour stemming from the lack of an FPGA driven clock increase the similarity between this design and an ASIC. The period is set by the number of inverters at $2\times(\textrm{num inverters})\times(\textrm{delay})$, and is varied by adding or removing a pair of inverters for every control code increment. This design works best when the desired period is within a couple orders of magnitude of the delay through each pair of inverters, beyond this point the number of look-up tables and routing resources required to implement the design becomes unsustainable.\\
+A third potential design exists, similar to Oscillator 1 in which the control code varies the reload value of the accumulator at overflow, however this design will not be discussed in this paper.
 
 \subsection{Phase Detectors on an FPGA}
 The two options for replicating the behaviour of a phase detector also employ the same two design principles, with the option better suited to lower frequency signals once again being driven by the clock generated by the FPGA and an inverter based design better suiting higher frequency systems where the greater resolution offered is beneficial.\\
@@ -120,36 +119,36 @@ The resolution then is the propagation time through the pair, although this will
     \label{fig:num_pdetdl}
 \end{figure}
 \section{Comparison of Designs}
-This paper will examine the performance of a number of combinations of these blocks and the performance thereof, specifically oscillator 2 with phase detector A and oscillator 3 with detectors A \& B. For each test there were four ADPLLs on the FPGA arranged in a Cartesian Grid and as such each ADPLL will be referred to using matrix indexing corresponding to their grid location. For each configuration three different modes of operation were examined: Each ADPLL locking to the same 5 MHz external reference, each ADPLL connected to the left and above neighbours in a ``uni-directional'' network and finally a true ADPLL network where all neighbours are connected. For comparing each configuration gains which had previously been determined to provide the best jitter performance were chosen. The data was captured using an Agilent MSO7054 A at 4 GSa/s. Each point of data is the mean of five 200 microsecond long captures which were then analysed in Matlab, and Table \ref{table:b_c_perf} displays the results of this analysis.\\
+This paper will examine the performance of a number of combinations of these blocks and the performance thereof, specifically oscillator 1 with phase detector A and oscillator 2 with detectors A \& B. For each test there were four ADPLLs on the FPGA arranged in a Cartesian Grid and as such each ADPLL will be referred to using matrix indexing corresponding to their grid location. For each configuration three different modes of operation were examined: Each ADPLL locking to the same 5 MHz external reference, each ADPLL connected to the left and above neighbours in a ``uni-directional'' network and finally a true ADPLL network where all neighbours are connected. For comparing each configuration gains which had previously been determined to provide the best jitter performance were chosen. The data was captured using an Agilent MSO7054 A at 4 GSa/s. Each point of data is the mean of five 200 microsecond long captures which were then analysed in Matlab, and Table \ref{table:b_c_perf} displays the results of this analysis.\\
 The first columns of the table relate to the cycle-to-cycle jitter of the system, the difference between sequential distances, and the second portion gives the Time Interval Error, or difference between the actual timing of the edge and the ``ideal'' time as set by the reference. This combination of measurements will show how well each design performs the task of staying consistent from cycle to cycle both in relation to itself and the system at large.
 
 \begin{table}[!ht]
 	\begin{center}
-		\begin{small}
+		\begin{tiny}
 			\begin{tabular}{cc|c|c|c|c|c|c|}           
 				\cline{3-8}
 				&& \multicolumn{3}{c|}{Jitter Standard Deviation (ns)} & \multicolumn{3}{c|}{Time Interval Error. (ns)} \T\\
 				\cline{3-8}	
 				&&PLL 11&PLL 12&PLL 22&PLL 11&PLL 12&PLL 22\T\\
 				\hline
-				\multicolumn{2}{|l|}{Osc 2, PDET A}&-&-&-&-&-&-\T\\
+				\multicolumn{2}{|l|}{Osc 1, PDET A}&-&-&-&-&-&-\T\\
 				\multicolumn{2}{|r|}{Free PLLs}&1.5988&1.6178&1.6220&&& \T\\
 				\multicolumn{2}{|r|}{Uni-dir.}&1.9804&2.0316&2.1317&&& \T\\
 				\multicolumn{2}{|r|}{Bi-dir.}&2.0124&2.0681&2.0732&&& \T\\
 				\hline
-				\multicolumn{2}{|l|}{Osc 3, PDET A}&-&-&-&-&-&-\T\\
+				\multicolumn{2}{|l|}{Osc 2, PDET A}&-&-&-&-&-&-\T\\
 				\multicolumn{2}{|r|}{Free PLLs}&0.62499 $\mu$s&0.75919 $\mu$s&0.79049  $\mu$s&&& \T\\
 				\multicolumn{2}{|r|}{Uni-dir.}&0.76822 $\mu$s&0.9009 $\mu$s&1.1407 $\mu$s&&& \T\\
 				\multicolumn{2}{|r|}{Bi-dir.}&0.70393 $\mu$s&0.70201 $\mu$s&1.241 $\mu$s&&& \T\\
 				\hline
-				\multicolumn{2}{|l|}{Osc 3, PDET B}&-&-&-&-&-&-\T\\
+				\multicolumn{2}{|l|}{Osc 2, PDET B}&-&-&-&-&-&-\T\\
 				\multicolumn{2}{|r|}{Free PLLs}&4.1680&3.9803&5.0741&&& \T\\
 				\multicolumn{2}{|r|}{Uni-dir.}&4.3820&5.7315&6.2336 &&& \T\\
 				\multicolumn{2}{|r|}{Bi-dir.}&5.6137&7.1831&7.1612 &&& \T\\
 				\hline
 				\B
 			\end{tabular}
-		\end{small}
+		\end{tiny}
 		\caption{}
 		\label{table:b_c_perf}
 	\end{center}
@@ -160,20 +159,21 @@ Both other combinations work well however, delivering a level of jitter that is 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.25\textwidth]{distrib_ring}
-	\caption{Design B Sign Detection RTL Diagram.}
+	\caption{Distribution of Periods for Inverter Based Design.}
 	\label{fig:dist1}
 \end{figure}
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.25\textwidth]{distrib_pa}
-	\caption{Tapped Delay Line Emulation RTL Diagram.}
+	\caption{Distribution of Periods for FPGA Clocked Design.}
 	\label{fig:dist2}
 \end{figure}
 Figures \ref{fig:dist1} \& \ref{fig:dist2} paint a picture of the unrealistic nature of the FPGA clocked designs as in comparison to the ring based design each oscillator will have identical intrinsic period steps thus eliminating any jitter that maybe be seen in the system due to misalignment. This effects the suitability of the FPGA clocked designs for the improvement of simulation models or the examination of how a novel block maybe impact the behaviour of the network.
 \section*{Conclusion}
 An FPGA is a suitable environment for the prototyping of ADPLL networks and can fill a number of roles depending on the designer's requirements. However the designer should bear in mind the platform's limitations especially when attempting to use a frequency that is not orders of magnitude lower than the maximum clock available from the FPGA's clock manager. Inverter based and FPGA clocked designs both have a niche in which they are the preferred option, with the clocked design better suiting replication of an existing design at scaled down frequencies and the inverter based designs better in the modelling and analysis of ADPLL network behaviour.
-\bibliography{conf.bib} 
-\bibliographystyle{IEEEtran}
+
+\bibliographystyle{ieeetran}
+\bibliography{conf} 
 
 \end{document}
 
