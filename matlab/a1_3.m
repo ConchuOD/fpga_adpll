@@ -1,5 +1,6 @@
-for inc = 1:15
-    filename = char("new/z1a_" + num2str(inc) + ".bin");
+for inc = 1:1
+    %filename = char("new/z1a_" + num2str(inc) + ".bin");
+    filename = 'cdcd5.bin';
     [~,scope_y_data1] = importAgilentBin(filename,1);
     [~,scope_y_data2] = importAgilentBin(filename,2);
     [~,scope_y_data3] = importAgilentBin(filename,3);
@@ -15,6 +16,7 @@ for inc = 1:15
     [~,init_cross3,~,~] = pulsewidth(scope_y_data3,scope_x_data, 'Polarity', 'Positive');
     [~,init_cross4,~,~] = pulsewidth(scope_y_data4,scope_x_data, 'Polarity', 'Positive');
 
+    len = length(init_cross1);
     periods1 = getPeriods(init_cross1); 
     periods2 = getPeriods(init_cross2);
     periods3 = getPeriods(init_cross3);
@@ -38,11 +40,25 @@ for inc = 1:15
 %     max_4 = max(periods4-mean(periods4));
 %     min_4 = min(periods4-mean(periods4));
 %     p2p_4 = max_4-min_4;
-
-    TIE_2(inc) = max(abs(periods2-mean_period_1));
-    TIE_3(inc) = max(abs(periods3-mean_period_1));
-    TIE_4(inc) = max(abs(periods4-mean_period_1));
-
+%     length(init_cross2) - length(init_cross1)
+%     if length(init_cross2) == length(init_cross1)
+%         TIE_2(inc) = max(abs(init_cross2(1:len)-init_cross1));
+%     elseif length(init_cross2) > length(init_cross1)
+%         TIE_2(inc) = max(abs(init_cross2(2:end)-init_cross1));
+%         inc
+%     end
+%     if length(init_cross3) == length(init_cross1)
+%         TIE_3(inc) = max(abs(init_cross3(1:len)-init_cross1));
+%     elseif length(init_cross3) > length(init_cross1)
+%         TIE_3(inc) = max(abs(init_cross3(2:end)-init_cross1));
+%         inc
+%         end
+%     if length(init_cross4) == length(init_cross1)
+%         TIE_4(inc) = max(abs(init_cross4(1:len)-init_cross1));
+%     elseif length(init_cross4) > length(init_cross1)
+%         TIE_4(inc) = max(abs(init_cross4(2:end)-init_cross1));
+%         inc
+%     end
 
 %     string = num2str(std_period_2) + ", " + num2str(std_period_3) + ", " + num2str(std_period_4) + ", " + ...
 %              num2str(TIE_2) + ", " +  num2str(TIE_3) + ", " + num2str(TIE_4) + ", "
@@ -84,14 +100,16 @@ mean_jitter_4_s3 = mean(std_period_4(11:15))
 % plot(t*1e6-7.95-0.09,scope_y_data3+5,'g');
 % plot(t*1e6-7.95-0.09,scope_y_data4+0,'k');
 % 
-% figure
-% hold on;
-% histfit((periods2)*1e9)
-% histfit((periods3)*1e9)
-% histfit((periods4)*1e9)
-% title('')
-% xlabel('Period (ns)')
-% ylabel('Occurance Rate')
-% yticklabels([])
-% alpha(.33)
-% legend("ADPLL 11","ADPLL 12","ADPLL 22")
+figure
+hold on;
+histfit((periods2)*1e9)
+histfit((periods3)*1e9)
+histfit((periods4)*1e9)
+title('')
+xlabel('Period (ns)','fontsize',16);
+ylabel('Occurance Rate','fontsize',16);
+yticklabels([])
+ax = gca;
+ax.FontSize = 16;
+alpha(.33)
+legend("ADPLL 11","ADPLL 12","ADPLL 22")
