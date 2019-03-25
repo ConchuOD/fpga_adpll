@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-module TwoByTwoRingTest (
+module ThreeByThreeRingTest (
         input clk100_i,        // 100 MHz clock from oscillator on board
         input rst_pbn_i,        // reset signal, active low, from CPU RESET pushbutton //
         input [15:0] switches_i,

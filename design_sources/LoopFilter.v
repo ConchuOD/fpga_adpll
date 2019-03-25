@@ -90,6 +90,6 @@ module LoopFilter #(
 	//assign error_sum_c = ki_error_inte_c; 
 	assign error_sum_c = $signed({kp_error_c, {(KI_FRAC_WIDTH-KP_FRAC_WIDTH){1'b0}} }) + ki_error_inte_c;
 
-	assign error_sum_trun_c = error_sum_c[4:0];//[SUM_INT_WIDTH-1:SUM_INT_WIDTH-1-DCO_CC_WIDTH]; //
+	assign error_sum_trun_c = error_sum_c[4:1];//[SUM_INT_WIDTH-1:SUM_INT_WIDTH-1-DCO_CC_WIDTH]; //
 
 endmodule
