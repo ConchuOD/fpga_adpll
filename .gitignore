@@ -10,3 +10,4 @@ junk/
 *.toc
 *.out
 matlab/*.txt
+matlab/new/*.txt
