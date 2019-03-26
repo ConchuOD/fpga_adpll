@@ -20,10 +20,10 @@
 
 \author{\IEEEauthorblockN{C. Dooley, E. Blokhina, B. Mulkeen}
     \IEEEauthorblockA{\textit{School of Electrical \& Electronic Engineering, University College Dublin}
+    	\vspace{-1.2cm}
 	}
 }
 \maketitle
-\vspace{-4.5cm}
 \begin{abstract}
     This paper introduces and compares the implementation of a number of FPGA based ADPLL network prototyping architectures. Comparison is then made between the expected performance and role of each method as a development tool.
 \end{abstract}
@@ -130,14 +130,14 @@ The first columns of the table relate to the cycle-to-cycle jitter of the system
                 &&PLL 11&PLL 12&PLL 22&PLL 11&PLL 12&PLL 22\T\\
                 \hline
                 \multicolumn{2}{|l|}{Osc 1, PDET A}&-&-&-&-&-&-\T\\
-                \multicolumn{2}{|r|}{Free PLLs} &1.4377 &1.4714&1.4217   &6.1910&6.3667&6.8052 \T\\
-                \multicolumn{2}{|r|}{Uni-dir.}  &0.91589&1.0993&1.0875   &8.3619&8.9768&10.974 \T\\
-                \multicolumn{2}{|r|}{Bi-dir.}   &1.0470 &1.0979&1.0306   &24.998&33.767&33.204 \T\\
+                \multicolumn{2}{|r|}{Free PLLs} &1.4377 &1.4714&1.4217  &6.1910&6.3667&6.8052 \T\\
+                \multicolumn{2}{|r|}{Uni-dir.}  &0.91589&1.0993&1.0875  &8.3619&8.9768&10.974 \T\\
+                \multicolumn{2}{|r|}{Bi-dir.}   &1.0470 &1.0979&1.0306  &24.998&33.767&33.204 \T\\
                 \hline
                 \multicolumn{2}{|l|}{Osc 2, PDET A}&-&-&-&-&-&-\T\\
-                \multicolumn{2}{|r|}{Free PLLs}&&& 0&&& \T\\
-                \multicolumn{2}{|r|}{Uni-dir.}&&& 0&&& \T\\
-                \multicolumn{2}{|r|}{Bi-dir.}&&& 0&&& \T\\
+                \multicolumn{2}{|r|}{Free PLLs} &78.458&74.025&67.779  &146.09&143.70&142.03 \T\\
+                \multicolumn{2}{|r|}{Uni-dir.}  &78.428&72.646&65.665  &146.23&298.49&200.10 \T\\
+                \multicolumn{2}{|r|}{Bi-dir.}   &78.436&73.827&67.648  &235.73&497.60&311.28 \T\\
                 \hline
                 \multicolumn{2}{|l|}{Osc 2, PDET B}&-&-&-&-&-&-\T\\
                 \multicolumn{2}{|r|}{Free PLLs} &7.8090&7.8827&6.6272   &17.336&21.151&24.302 \T\\
@@ -152,8 +152,12 @@ The first columns of the table relate to the cycle-to-cycle jitter of the system
     \end{center}
 \vspace{-0.5cm}
 \end{table}
-From the table it is apparent that the combination of the inverter chain DCO and the FPGA clock driven phase detector is an ill-advised choice, as the jitter present in the system is several orders of magnitude worse than either other situation. In this system, the FPGA clock is at 258 MHz, the maximum possible, thus giving a detection resolution of 3.875 nanoseconds. This is 3.5 times greater than the period resolution of approximately 1.2 nano second period resolution of the oscillator, and requires the gains of the PI filter to be increased fourfold in order to respond appropriately to the error detected. The problems of relatively inaccurate detection and increased gains combine to produce a system that is only able to achieve poor locking performance.
-Both other combinations work well however, delivering a level of jitter that is both low yet allows an indication of how impactful variations in architecture or control parameters are to be seen visually on an oscilloscope.\\
+It is apparently that the combination of the inverter chain DCO and the FPGA clocked phase detector is an ill advised choice, with the system's jitter being an order of magnitude worse than the design using inverter delay based detector. However when the resolution of the detector is then considered, a potential cause for this issue is found. The detector in case two has a resolution of 3.875 nanoseconds in comparison to the 1.2 nanosecond period step of the oscillator, requiring an increase in the loop filter gains. The problems of relatively inaccurate detection and increased gains combine to produce a system that is only able to achieve poor locking performance. In case three then the detector's resolution improves to 0.6 nanoseconds and produces relatively good system performance. This combination does not perform as well as that of case one, but that is attributable to the unrealistic nature of the FPGA clocked design. Both case one and three work well, delivering a level of jitter that is both low yet allows an indication of how impactful variations in architecture or control parameters are to be seen visually on an oscilloscope with appropriate persistence.\\
+
+
+%From the table it is apparent that the combination of the inverter chain DCO and the FPGA clock driven phase detector is an ill-advised choice, as the jitter present in the system is several orders of magnitude worse than either other situation. In order to obtain these measurements a four times divider was inserted into the feedback path, and hence the presence of jitter greater than the period of 200 ns. In this system, the FPGA clock is at 258 MHz, the maximum possible, thus giving a detection resolution of 3.875 nanoseconds. 
+%This is 3.5 times greater than the period resolution of approximately 1.2 nano second period resolution of the oscillator, and requires the gains of the PI filter to be increased fourfold in order to respond appropriately to the error detected. The 
+%Both other combinations work well however, delivering a level of jitter that is both low yet allows an indication of how impactful variations in architecture or control parameters are to be seen visually on an oscilloscope.\\
 
 \begin{figure}[h]%
     \centering
@@ -168,7 +172,7 @@ Both other combinations work well however, delivering a level of jitter that is 
 %   \caption{Distribution of Periods.}
 %   \label{fig:dist2}
 %\end{figure}
-Figure \ref{fig:dists} paints a picture of the unrealistic nature of the FPGA clocked designs as in comparison to the ring based design, each oscillator will have identical intrinsic period steps thus eliminating any jitter that maybe be seen in the system due to misalignment. This effects the suitability of the FPGA clocked designs for the improvement of simulation models, or the examination of how a novel block may impact the behaviour of the network.
+Figure \ref{fig:dists} paints a picture of the unrealistic nature of the FPGA clocked design in comparison to its inverter based counterpart, each oscillator will have identical intrinsic period steps thus eliminating any jitter that maybe be seen in the system due to misalignment. This effects the suitability of the FPGA clocked designs for the improvement of simulation models, or the examination of how a novel block may impact the behaviour of the network.
 \section*{Conclusion}
 An FPGA is a suitable environment for the prototyping of ADPLL networks and can fill a number of roles depending on the designer's requirements. However, the designer should bear in mind the platform's limitations, especially when attempting to use a frequency that is not orders of magnitude lower than the maximum clock available from the FPGA's clock manager. Inverter based and FPGA clocked designs, both have a niche in which they are the preferred option, with the clocked design better suiting replication of an existing design at scaled-down frequencies and the inverter based designs better in the modelling and analysis of ADPLL network behaviour.
 

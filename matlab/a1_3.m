@@ -1,6 +1,6 @@
 for inc = 1:1
-    %filename = char("new/z1a_" + num2str(inc) + ".bin");
-    filename = 'cdcd5.bin';
+    %filename = char("new/des2a_" + num2str(inc) + ".bin");
+    filename = char("scope_41.bin");
     [~,scope_y_data1] = importAgilentBin(filename,1);
     [~,scope_y_data2] = importAgilentBin(filename,2);
     [~,scope_y_data3] = importAgilentBin(filename,3);
@@ -40,7 +40,7 @@ for inc = 1:1
 %     max_4 = max(periods4-mean(periods4));
 %     min_4 = min(periods4-mean(periods4));
 %     p2p_4 = max_4-min_4;
-%     length(init_cross2) - length(init_cross1)
+% 
 %     if length(init_cross2) == length(init_cross1)
 %         TIE_2(inc) = max(abs(init_cross2(1:len)-init_cross1));
 %     elseif length(init_cross2) > length(init_cross1)
@@ -102,9 +102,9 @@ mean_jitter_4_s3 = mean(std_period_4(11:15))
 % 
 figure
 hold on;
-histfit((periods2)*1e9)
-histfit((periods3)*1e9)
-histfit((periods4)*1e9)
+histfit((periods2)*1e9+6)
+histfit((periods3)*1e9+6)
+histfit((periods4)*1e9+6)
 title('')
 xlabel('Period (ns)','fontsize',16);
 ylabel('Occurance Rate','fontsize',16);
