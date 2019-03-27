@@ -90,6 +90,27 @@ module NetworkRing #(
         .error_comb_o(error_x)
     );
 
+    LoopFilterTest #(
+        .ERROR_WIDTH(PDET_WIDTH),
+        .DCO_CC_WIDTH(RO_WIDTH),
+        .KP_WIDTH(KP_FRAC_WIDTH),
+        .KP(KP),
+        .KI_WIDTH(KI_FRAC_WIDTH),
+        .KI(KI),
+        .DYNAMIC_VAL(DYNAMIC_VAL)   
+    )
+    loopFilter 
+    (
+        //.temp_8bit_bus1(temp_8bit_bus1),
+        //.temp_8bit_bus2(temp_8bit_bus2),
+        .gen_clk_i(early_div_x),
+        .reset_i(reset_i),
+        .error_i(error_x),
+        .kp_i(kp_i),
+        .ki_i(ki_i),
+        .dco_cc_o(lf_out_x) 
+    );
+    /*
     LoopFilter #(
         .ERROR_WIDTH(PDET_WIDTH),
         .DCO_CC_WIDTH(RO_WIDTH),
@@ -112,6 +133,7 @@ module NetworkRing #(
         .ki_i(ki_i),
         .dco_cc_o(lf_out_x) 
     );
+    */
 
     RingOsc #(.RINGSIZE(RINGSIZE), .CTRL_WIDTH(RO_WIDTH)) testRing( 
         .enable_i (enable_i),

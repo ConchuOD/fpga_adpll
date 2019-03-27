@@ -3,9 +3,9 @@ module LoopFilterTestBench ();
 
     reg clk5_x;
 
-    wire signed [7:0] error_x = 8'd10;
+    wire signed [5:0] error_x = 5'd10;
 
-    wire [4:0] ra_o;
+    wire [4:0] ra_o, dco_cc_x;
 
     wire reset_x;
 
@@ -20,7 +20,7 @@ module LoopFilterTestBench ();
 		end
 	end
 
-	localparam PDET_WIDTH = 6;
+	localparam PDET_WIDTH = 5;
 	localparam RO_WIDTH = 5;
 	localparam DYNAMIC_VAL = 1;
 	localparam DCO_CC_WIDTH = 5;
@@ -53,7 +53,7 @@ module LoopFilterTestBench ();
         .error_i(error_x),
         .kp_i(KP),
         .ki_i(KI),
-        .dco_cc_o(ra_o) 
+        .dco_cc_o(dco_cc_x) 
     );
 
 	initial
@@ -64,5 +64,7 @@ module LoopFilterTestBench ();
 		#1000
 		$stop;
 	end
+
+	assign ra_o = 5'd16 - dco_cc_x;
 
 endmodule // LoopFilterTestBench

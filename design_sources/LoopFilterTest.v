@@ -1,5 +1,5 @@
 module LoopFilterTest #(
-		parameter DYNAMIC_VAL = 1,
+		parameter DYNAMIC_VAL = 0,
 		parameter ERROR_WIDTH = 5,
 		parameter DCO_CC_WIDTH = 5,
 		parameter KP_WIDTH = 5,
@@ -19,7 +19,7 @@ module LoopFilterTest #(
 	localparam KP_MULT_RES_WIDTH = ERROR_WIDTH+KP_WIDTH;
 	localparam KI_MULT_RES_WIDTH = ERROR_WIDTH+KI_WIDTH;
 
-	localparam SUM_WIDTH = KP_MULT_RES_WIDTH;//kp always bigger
+	localparam SUM_WIDTH = KI_MULT_RES_WIDTH;//ki always wider
 
 	reg signed [KP_WIDTH-1:0] kp_x;
 	reg signed [KI_WIDTH-1:0] ki_x;
@@ -81,6 +81,6 @@ module LoopFilterTest #(
     assign kp_error_padded_c = $signed({kp_error_c, {(KI_WIDTH-KP_WIDTH){1'b0}} }) ;
 	assign error_sum_c = kp_error_padded_c + ki_error_inte_c;
 
-	assign error_sum_trun_c = error_sum_c[SUM_WIDTH-1:SUM_WIDTH-1-DCO_CC_WIDTH];
+	assign error_sum_trun_c = error_sum_c[SUM_WIDTH-1:SUM_WIDTH-DCO_CC_WIDTH];
 
 endmodule
