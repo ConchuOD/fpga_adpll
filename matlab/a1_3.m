@@ -1,6 +1,6 @@
-for inc = 1:1
-    %filename = char("new/des2a_" + num2str(inc) + ".bin");
-    filename = char("scope_41.bin");
+for inc = 1:10
+    filename = char("new/uhh" + num2str(inc) + ".bin");
+    %filename = char("scope_41.bin");
     [~,scope_y_data1] = importAgilentBin(filename,1);
     [~,scope_y_data2] = importAgilentBin(filename,2);
     [~,scope_y_data3] = importAgilentBin(filename,3);
@@ -31,34 +31,34 @@ for inc = 1:1
     std_period_3(inc) = std(periods3);
     std_period_4(inc) = std(periods4);
 
-%     max_2 = max(periods2-mean(periods2));
-%     min_2 = min(periods2-mean(periods2));
-%     p2p_2 = max_2-min_2;
-%     max_3 = max(periods3-mean(periods3));
-%     min_3 = min(periods3-mean(periods3));
-%     p2p_3 = max_3-min_3;
-%     max_4 = max(periods4-mean(periods4));
-%     min_4 = min(periods4-mean(periods4));
-%     p2p_4 = max_4-min_4;
-% 
-%     if length(init_cross2) == length(init_cross1)
-%         TIE_2(inc) = max(abs(init_cross2(1:len)-init_cross1));
-%     elseif length(init_cross2) > length(init_cross1)
-%         TIE_2(inc) = max(abs(init_cross2(2:end)-init_cross1));
-%         inc
-%     end
-%     if length(init_cross3) == length(init_cross1)
-%         TIE_3(inc) = max(abs(init_cross3(1:len)-init_cross1));
-%     elseif length(init_cross3) > length(init_cross1)
-%         TIE_3(inc) = max(abs(init_cross3(2:end)-init_cross1));
-%         inc
-%         end
-%     if length(init_cross4) == length(init_cross1)
-%         TIE_4(inc) = max(abs(init_cross4(1:len)-init_cross1));
-%     elseif length(init_cross4) > length(init_cross1)
-%         TIE_4(inc) = max(abs(init_cross4(2:end)-init_cross1));
-%         inc
-%     end
+    max_2 = max(periods2-mean(periods2));
+    min_2 = min(periods2-mean(periods2));
+    p2p_2 = max_2-min_2;
+    max_3 = max(periods3-mean(periods3));
+    min_3 = min(periods3-mean(periods3));
+    p2p_3 = max_3-min_3;
+    max_4 = max(periods4-mean(periods4));
+    min_4 = min(periods4-mean(periods4));
+    p2p_4 = max_4-min_4;
+
+    if length(init_cross2) == length(init_cross1)
+        TIE_2(inc) = max(abs(init_cross2(1:len)-init_cross1));
+    elseif length(init_cross2) > length(init_cross1)
+        TIE_2(inc) = max(abs(init_cross2(2:end)-init_cross1));
+        inc
+    end
+    if length(init_cross3) == length(init_cross1)
+        TIE_3(inc) = max(abs(init_cross3(1:len)-init_cross1));
+    elseif length(init_cross3) > length(init_cross1)
+        TIE_3(inc) = max(abs(init_cross3(2:end)-init_cross1));
+        inc
+        end
+    if length(init_cross4) == length(init_cross1)
+        TIE_4(inc) = max(abs(init_cross4(1:len)-init_cross1));
+    elseif length(init_cross4) > length(init_cross1)
+        TIE_4(inc) = max(abs(init_cross4(2:end)-init_cross1));
+        inc
+    end
 
 %     string = num2str(std_period_2) + ", " + num2str(std_period_3) + ", " + num2str(std_period_4) + ", " + ...
 %              num2str(TIE_2) + ", " +  num2str(TIE_3) + ", " + num2str(TIE_4) + ", "
@@ -66,27 +66,27 @@ end
 
 mean_tie_2_s1 = mean(TIE_2(1:5))
 mean_tie_2_s2 = mean(TIE_2(6:10))
-mean_tie_2_s3 = mean(TIE_2(11:15))
+% mean_tie_2_s3 = mean(TIE_2(11:15))
 
 mean_tie_3_s1 = mean(TIE_3(1:5))
 mean_tie_3_s2 = mean(TIE_3(6:10))
-mean_tie_3_s3 = mean(TIE_3(11:15))
+% mean_tie_3_s3 = mean(TIE_3(11:15))
 
 mean_tie_4_s1 = mean(TIE_4(1:5))
 mean_tie_4_s2 = mean(TIE_4(6:10))
-mean_tie_4_s3 = mean(TIE_4(11:15))
+% mean_tie_4_s3 = mean(TIE_4(11:15))
 %%
 mean_jitter_2_s1 = mean(std_period_2(1:5))
 mean_jitter_2_s2 = mean(std_period_2(6:10))
-mean_jitter_2_s3 = mean(std_period_2(11:15))
+% mean_jitter_2_s3 = mean(std_period_2(11:15))
 
 mean_jitter_3_s1 = mean(std_period_3(1:5))
 mean_jitter_3_s2 = mean(std_period_3(6:10))
-mean_jitter_3_s3 = mean(std_period_3(11:15))
+% mean_jitter_3_s3 = mean(std_period_3(11:15))
 
 mean_jitter_4_s1 = mean(std_period_4(1:5))
 mean_jitter_4_s2 = mean(std_period_4(6:10))
-mean_jitter_4_s3 = mean(std_period_4(11:15))
+% mean_jitter_4_s3 = mean(std_period_4(11:15))
 
 % + ...
 % num2str(mean2_3) + "+-" +  num2str(std_diff2_3) + ", " + ...

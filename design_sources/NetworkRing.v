@@ -49,6 +49,9 @@ module NetworkRing #(
     wire signed [PDET_WIDTH-1:0] error_left_x;
     wire signed [PDET_WIDTH-1:0] error_above_x;
 
+    //assign temp_8bit_bus1 = f_sel_sw_ro_x;//$unsigned(error_x);
+    //assign temp_8bit_bus2 = lf_out_x;
+
     assign dco_cc_o = lf_out_x;
 
     assign gen_clk_o = gen_clk_x;
@@ -101,8 +104,8 @@ module NetworkRing #(
     )
     loopFilter 
     (
-        //.temp_8bit_bus1(temp_8bit_bus1),
-        //.temp_8bit_bus2(temp_8bit_bus2),
+        .temp_8bit_bus1(temp_8bit_bus1),
+        .temp_8bit_bus2(temp_8bit_bus2),
         .gen_clk_i(early_div_x),
         .reset_i(reset_i),
         .error_i(error_x),
