@@ -4,7 +4,7 @@ use IEEE.std_logic_signed.all;
 use IEEE.MATH_REAL.all;
 use IEEE.NUMERIC_STD.all;
 
-entity PI_Filter_v0 is
+entity PI_Filter_v1 is
 	port(	RST 		 : in  std_logic;
             Error 	     : in  std_logic_vector(4 downto 0);
             Ki_i         : in  std_logic_vector(3 downto 0);
@@ -14,9 +14,9 @@ entity PI_Filter_v0 is
             temp_8bit_bus1 : out std_logic_vector(7 downto 0);
             temp_8bit_bus2 : out std_logic_vector(7 downto 0);
 			Sig_out 	 : out std_logic_vector(4 DOWNTO 0));
-end PI_Filter_v0;
+end PI_Filter_v1;
 
-architecture Behavioral of PI_Filter_v0 is
+architecture Behavioral of PI_Filter_v1 is
 signal Kp 	        : integer range 0 to 15; -- de 1 à 32, divided by 64 later
 signal Ki   		: integer range 0 to 15; -- divided by 2048 later
 
@@ -66,13 +66,13 @@ kw4  <= 4 when Ke(11 downto 9)  ="100" else
         1 when Ke(11 downto 9)  ="001"else 
         0 when Ke(11 downto 9)  ="000";
 
-e1  <= kw1 * to_integer(signed(Error1));
-e2  <= kw2 * to_integer(signed(Error2));
-e3  <= kw3 * to_integer(signed(Error3));
-e4  <= kw4 * to_integer(signed(Error4));
+-- e1  <= kw1 * to_integer(signed(Error1));
+-- e2  <= kw2 * to_integer(signed(Error2));
+-- e3  <= kw3 * to_integer(signed(Error3));
+-- e4  <= kw4 * to_integer(signed(Error4));
 
 -- Error_int_buf  <= (e1 + e2 + e3 + e4)/4;
-Error_int_buf   <= Error;
+Error_int_buf   <= to_integer(signed(Error));
 
 -- ********************************************************* --
 --                  REGISTRE D'ENTRE                         --
@@ -89,8 +89,8 @@ end process;
 --          CHEMIN PROPORTIONNEL ET INTEGRATEUR              --
 --          PROPORTIONAL AND INTEGRAL PATH                   --
 -- ********************************************************* --
-Kp              <= Kp_i; -- to_integer(unsigned(Ke(19 downto 16)));
-Ki              <= Ki_i; -- to_integer(unsigned(Ke(15 downto 12)));
+Kp              <= to_integer(unsigned(Kp_i)); -- to_integer(unsigned(Ke(19 downto 16)));
+Ki              <= to_integer(unsigned(Ki_i)); -- to_integer(unsigned(Ke(15 downto 12)));
 
 x_prop 	        <= Kp * Error_int;   
 --x_prop 	        <= Error_int;   
@@ -125,7 +125,7 @@ end process;
 -- ********************************************************* --
 process (RST, CLK_DCO) begin
     if (RST = '0') then
-        Sig_out		<= "000000";
+        Sig_out		<= "00000";
     elsif (CLK_DCO'event and CLK_DCO='1') then
         Sig_out		<=  std_logic_vector(to_signed(Sig_out_tmp, 5));
     end if;

@@ -93,6 +93,21 @@ module NetworkRing #(
         .error_comb_o(error_x)
     );
 
+    //VHDL module here
+    PI_Filter_v1 loopFilter
+    (
+        .RST(reset_i),
+        .Error(error_x),
+        .Kp_i(kp_i),
+        .Ki_i(ki_i),
+        .Ke(16'd0),
+        .CLK_DCO(early_div_x),
+        .temp_8bit_bus1(temp_8bit_bus1),
+        .temp_8bit_bus2(temp_8bit_bus2),
+        .Sig_out(lf_out_x)
+    );
+   
+    /*
     LoopFilterTest #(
         .ERROR_WIDTH(PDET_WIDTH),
         .DCO_CC_WIDTH(RO_WIDTH),
@@ -113,6 +128,7 @@ module NetworkRing #(
         .ki_i(ki_i),
         .dco_cc_o(lf_out_x) 
     );
+    */
     /*
     LoopFilter #(
         .ERROR_WIDTH(PDET_WIDTH),
