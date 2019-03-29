@@ -22,7 +22,6 @@ signal Ki   		: integer range 0 to 15; -- divided by 2048 later
 
 signal Error_int    : integer range -2**4  to 2**4-1 ;
 signal Error_int_buf: integer range -2**4  to 2**4-1 ;
-
 signal x_prop 		: integer range -2**8 to 2**8-1;
 
 signal x_int1   	: integer range -2**16 to 2**16-1;
@@ -91,6 +90,9 @@ end process;
 -- ********************************************************* --
 Kp              <= to_integer(unsigned(Kp_i)); -- to_integer(unsigned(Ke(19 downto 16)));
 Ki              <= to_integer(unsigned(Ki_i)); -- to_integer(unsigned(Ke(15 downto 12)));
+
+-- temp_8bit_bus1 <= std_logic_vector(to_signed(Error_int(4 downto 0)));
+-- temp_8bit_bus2 <= std_logic_vector(to_signed(x_prop(7 downto 0)));
 
 x_prop 	        <= Kp * Error_int;   
 --x_prop 	        <= Error_int;   

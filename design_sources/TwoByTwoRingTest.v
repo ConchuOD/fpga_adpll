@@ -18,7 +18,7 @@ module TwoByTwoRingTest (
     wire [7:0] temp_8bit_bus1;
     wire [7:0] temp_8bit_bus2;
 
-    localparam BIAS = 5'd15; //154 = 10 MHz
+    localparam BIAS = 5'd16; //154 = 10 MHz
     localparam RO_WIDTH = 5;
     localparam PDET_WIDTH = RO_WIDTH;
     localparam RINGSIZE = 373;
@@ -109,10 +109,10 @@ module TwoByTwoRingTest (
     assign clk5_x = clk5_0_x;
     assign kp_ki_c = {kp_sel_r,ki_sel_r};
 
-    localparam KP_WIDTH = 9;
-    localparam KP_FRAC_WIDTH = 8;
-    localparam KI_WIDTH = 11;
-    localparam KI_FRAC_WIDTH = 10;
+    localparam KP_WIDTH = 8;
+    localparam KP_FRAC_WIDTH = 7;
+    localparam KI_WIDTH = 10;
+    localparam KI_FRAC_WIDTH = 9;
     wire [KP_WIDTH-1:0] padded_kp_c;
     wire [KI_WIDTH-1:0] padded_ki_c;
     assign padded_kp_c = {{(KP_WIDTH-4){1'b0}},kp_sel_r}; 
