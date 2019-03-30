@@ -1,5 +1,5 @@
-for inc = 1:15
-    filename = char("new/des2a_" + num2str(inc) + ".bin");
+for inc = 1:10
+    filename = char("new/uhh" + num2str(inc) + ".bin");
     [scope_x_data,scope_y_data] = importAgilentBin(filename,3);
 
     f_samp = 4E9;
