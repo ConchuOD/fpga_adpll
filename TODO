@@ -1,6 +1,0 @@
-2 - Record this gain (should be on the board as is). (1011, 0111)
-3 - Reinsert error combiner & see if it locks. (All interior lock to eachother, not to ext ref.)
-4 - ???
-5 - 1.07 - 1.3 (*8)
-6 - Redo maths on division output of Loopfilter.
-7 - Change ringosc to having 8 bit control.
