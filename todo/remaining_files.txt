@@ -1,0 +1,61 @@
+/*****************************************************************************/
+/* Author   : Conor Dooley                                                   */
+/* Date     : DD-Month-YYYY                                                  */
+/* Function :                                                                */
+/*****************************************************************************/
+
+
+Action  Status  Filename
+keep    n/a     2x2_locking_network_ring_dl.bit
+comment done    ADPLL.v
+keep    n/a     ADPLLw2Inputs.sv
+keep    n/a     ADPLLwNoPDet.v
+keep    n/a     BangBangPD.v
+keep    n/a     clockReset.v
+keep    n/a     ClockReset5_258_PDiff.v
+junk    todo    ClockReset5_400.v
+junk    todo    ClockReset5_400_PDiff.v
+keep    n/a     displayInterface.v
+comment done    Div8.v
+comment done    ErrorCombiner.v
+keep    n/a     ExtRefTest.v
+keep    n/a     ExtRefTest5M.v
+keep    n/a     GainTest.v
+keep    n/a     hex2seg.v
+junk    todo    JitterDetect.v
+junk    todo    lf_test.v
+keep    n/a     list.txt
+junk    todo    LoopFilter.v
+junk    todo    LoopFilterPierre.vhd
+comment done    LoopFilterTest.v
+comment todo    NetworkADPLL.v
+comment todo    NetworkRing.v
+junk    todo    OldLoopFilter.v
+keep    n/a     OscTestTopLevel.v
+comment todo    PhaseAccum.v
+comment todo    PhaseDetector.v
+comment todo    PhaseDetectorDL.v
+keep    n/a     PhDetTestLockRange.v
+keep    n/a     PhDetTopLevel.v
+junk    todo    PI_Filter_v0.vhd
+keep    n/a     pm10ns_single_ring_dlpdet_75inv.bit
+comment todo    PulseOnNegEdge.v
+comment todo    PulseOnPosEdge.v
+junk    todo    ReferenceSelector.v
+comment todo    RingADPLL.v
+comment todo    RingOsc.v
+keep    n/a     RingOscADPLLTopLevel.v
+keep    n/a     RingOscTopLevel.v
+keep    n/a     RingRangeTest.v
+comment todo    SaveCounter.v
+keep    n/a     SignedDec2Hex.v
+comment todo    SRLatchGate.v
+comment todo    stateMachine.v
+comment todo    Synchroniser.v
+junk    todo    TDC.v
+comment todo    ThreeByThreeRingTest.v
+comment todo    TwoByTwoRingTest.v
+comment todo    TwoByTwoTest.v
+keep    n/a     TwoConnectedTest.v
+junk    todo    untitled.sv
+comment todo    UpDownCounter.v
