@@ -1,3 +1,9 @@
+`timescale 1ns / 1ps
+/*****************************************************************************/
+/* Author   : Conor Dooley                                                   */
+/* Date     : ??-November-2018                                               */
+/* Function : Rising edge detection circuit                                  */
+/*****************************************************************************/
 module PulseOnPosEdge (
 	input fpga_clk_i,
 	input trigger_i,

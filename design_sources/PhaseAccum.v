@@ -1,6 +1,6 @@
 /*****************************************************************************/
 /* Author   : Conor Dooley                                                   */
-/* Date     : October-2019                                                   */
+/* Date     : ??-October-2019                                                   */
 /* Function : Phase accumulator based oscillator with period set by the      */
 /*            width and control code                                         */
 /*****************************************************************************/
@@ -37,7 +37,7 @@ module PhaseAccum #(parameter WIDTH = 4)(
         else         cnt_val_r <= next_cnt_val_r;
     end
 
-    //assign output as the MSB
+    //assign count MSB is the output
     assign clk_o = cnt_val_r[WIDTH-1];
                     
 endmodule                    
