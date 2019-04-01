@@ -111,7 +111,7 @@ module NetworkRing #(
     );
     */
     
-    LoopFilterTest #(
+    LoopFilter #(
         .ERROR_WIDTH(PDET_WIDTH),
         .DCO_CC_WIDTH(RO_WIDTH),
         .KP_WIDTH(KP_FRAC_WIDTH),

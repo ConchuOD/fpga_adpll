@@ -20,7 +20,7 @@ module ADPLL #(
 		parameter KI = 4'b0001
 	)
 	(
-        input  wire reset_i,
+        input  wire reset_i, //reset high
         input  wire fpga_clk_i,
         input  wire ref_clk_i,
         input  wire enable_i,

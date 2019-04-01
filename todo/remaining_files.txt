@@ -3,8 +3,6 @@
 /* Date     : DD-Month-YYYY                                                  */
 /* Function :                                                                */
 /*****************************************************************************/
-
-
 Action  Status  Filename
 keep    n/a     2x2_locking_network_ring_dl.bit
 comment done    ADPLL.v
@@ -25,9 +23,9 @@ keep    n/a     hex2seg.v
 junk    todo    JitterDetect.v
 junk    todo    lf_test.v
 keep    n/a     list.txt
-junk    todo    LoopFilter.v
+junk    todo    LoopFilterJunk.v
 junk    todo    LoopFilterPierre.vhd
-comment done    LoopFilterTest.v
+comment done    LoopFilter.v
 comment todo    NetworkADPLL.v
 comment todo    NetworkRing.v
 junk    todo    OldLoopFilter.v

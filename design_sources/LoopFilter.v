@@ -15,7 +15,7 @@ module LoopFilter #(
 	)
 	(
 		input  wire gen_clk_i,
-		input  wire reset_i,
+		input  wire reset_i, //reset high
 		input  wire [KP_WIDTH-1:0] kp_i,
 		input  wire [KI_WIDTH-1:0] ki_i,
 		input  wire signed [ERROR_WIDTH-1:0] error_i,

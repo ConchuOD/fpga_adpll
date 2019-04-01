@@ -18,9 +18,11 @@
 
 \title{FPGA Based Modelling of an ADPLL Network\\}
 
-\author{\IEEEauthorblockN{C. Dooley, E. Blokhina, B. Mulkeen}
-    \IEEEauthorblockA{\textit{School of Electrical \& Electronic Engineering, University College Dublin}
-    	\vspace{-1.2cm}
+\author{\IEEEauthorblockN{C. Dooley$^1$, E. Blokhina$^1$, B. Mulkeen$^1$, D. Galayko$^2$}
+    \IEEEauthorblockA{\textit{$^1$School of Electrical \& Electronic Engineering, University College Dublin}\\
+    \textit{$^2$LIP6 Lab, Sorbonne Université}
+    	\vspace{-0.8cm}
+    }
 	}
 }
 \maketitle
@@ -136,14 +138,14 @@ The first columns of the table relate to the cycle-to-cycle jitter of the system
                 \multicolumn{2}{|r|}{Bi-dir.}   &1.0470 &1.0979&1.0306  &24.998&33.767&33.204 \T\\
                 \hline
                 \multicolumn{2}{|l|}{Osc 2, PDET A}&-&-&-&-&-&-\T\\
-                \multicolumn{2}{|r|}{Free PLLs} &0.56728&0& 0&5.3797&0&0 \T\\
-                \multicolumn{2}{|r|}{Uni-dir.}  &0.57365&0& 0&6.0632&0&0 \T\\
-                \multicolumn{2}{|r|}{Bi-dir.}   &0.58760&0& 0&15.466&0&0 \T\\
+                \multicolumn{2}{|r|}{Free PLLs} &0.56222&0.49224&0.64124 &5.3039&7.8626&5.4634 \T\\
+                \multicolumn{2}{|r|}{Uni-dir.}  &0.55040&0.51284&0.62796 &5.5312&7.5359&7.9697 \T\\
+                \multicolumn{2}{|r|}{Bi-dir.}   &0.57056&0.50403&0.61644 &11.515&15.943&17.428 \T\\
                 \hline
                 \multicolumn{2}{|l|}{Osc 2, PDET B}&-&-&-&-&-&-\T\\
-                \multicolumn{2}{|r|}{Free PLLs} &0.71635&0&0  &4.8293&0&0 \T\\
-                \multicolumn{2}{|r|}{Uni-dir.}  &0.76883&0&0  &4.7922&0&0 \T\\
-                \multicolumn{2}{|r|}{Bi-dir.}   &0.79292&0&0  &6.5277&0&0 \T\\
+                \multicolumn{2}{|r|}{Free PLLs} &0.66757&0.84477&0.71308 &5.9142&6.1353&5.3939 \T\\
+                \multicolumn{2}{|r|}{Uni-dir.}  &0.66934&0.83894&0.71271 &5.8779&7.1746&6.8914 \T\\
+                \multicolumn{2}{|r|}{Bi-dir.}   &0.68372&0.83193&0.68570 &7.5705&9.6292&9.7715 \T\\
                 \hline
                 \B
                 %% old 2b
@@ -168,7 +170,6 @@ The first columns of the table relate to the cycle-to-cycle jitter of the system
 \end{table}
 From the table it is apparent that the coarser period and detection steps of Design ``1A''  (3.875 nanoseconds as at greater clock frequencies timing violations would occur) cannot deliver the same jitter performance as the inverter ring driven designs. Looking at the two subsequent designs their lesser flexibility is made up for by their more realistic jitter behaviour. As would be expected best performance occurs when the network is in PLL mode and as the quality of the reference degrades as the network is connected up performance becomes worse. In terms of cycle-to-cycle jitter the best performing design is that of ``2A'', however, its time interval error is significantly worse especially in bilateral network mode. This more aggressive degradation as the network is linked up can be attributed to the worse detection resolution of the FPGA clocked phase detector, four times worse than the 1.2 second step of the entirely inverter based Design ``2B''.\\
 The further a PLL is away from the reference feeding ADPLL 11 the worse performance is, peaking furthest from the reference in ADPLL 22.
-%TODO insert comment here when I have more oscillators for 1 lines or so.
 
 The lesser cycle-to-cycle of Design ``2A'' follows from the implementation independent design of the phase detector. Unlike the inverter based design where the implementation may result in the propagation delay between taps on the delay line changing, from both tap to tap in the same detector and the same tap in different detectors, the clocked design has identical detection resolutions as each register is driven by the FPGA clock. This can be highlighted in the more easily demonstrable case of the clocked and inverter based oscillators.\\
 \begin{figure}[h]%

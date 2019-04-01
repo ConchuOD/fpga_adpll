@@ -46,7 +46,7 @@ module LoopFilterTestBench ();
 	*/
 	
 
-	LoopFilterTest loopFilter 
+	LoopFilter loopFilter 
 	(
         .gen_clk_i(clk5_x),
         .reset_i(reset_x),

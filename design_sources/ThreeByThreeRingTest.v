@@ -330,7 +330,7 @@ module ThreeByThreeRingTest (
     NetworkRing #(
         .BIAS(BIAS),
         .RO_WIDTH(RO_WIDTH),
-        .RINGSIZE(RINGSIZE+12),
+        .RINGSIZE(RINGSIZE),
         .PDET_WIDTH(PDET_WIDTH),
         //.KP(5'b00001),
         .KP_WIDTH(KP_WIDTH),
@@ -462,7 +462,7 @@ module ThreeByThreeRingTest (
     NetworkRing #(
         .BIAS(BIAS),
         .RO_WIDTH(RO_WIDTH),
-        .RINGSIZE(RINGSIZE+14),
+        .RINGSIZE(RINGSIZE),
         .PDET_WIDTH(PDET_WIDTH),
         //.KP(5'b00001),
         .KP_WIDTH(KP_WIDTH),
@@ -792,7 +792,7 @@ module ThreeByThreeRingTest (
     NetworkRing #(
         .BIAS(BIAS),
         .RO_WIDTH(RO_WIDTH),
-        .RINGSIZE(RINGSIZE+8),
+        .RINGSIZE(RINGSIZE),
         .PDET_WIDTH(PDET_WIDTH),
         //.KP(5'b00001),
         .KP_WIDTH(KP_WIDTH),

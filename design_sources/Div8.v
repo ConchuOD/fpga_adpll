@@ -6,7 +6,7 @@
 /*****************************************************************************/
 module Div8 (
         input wire signal_i,
-        input wire reset_i,
+        input wire reset_i, //reset high
         output wire div1_o, //loopback
         output wire div2_o,
         output wire div4_o,
