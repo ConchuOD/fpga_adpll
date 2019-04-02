@@ -258,7 +258,7 @@ module ThreeByThreeRingTest (
         end
     end
 
-    NetworkRing #(
+    NetworkRingADPLL #(
         .BIAS(BIAS),
         .RO_WIDTH(RO_WIDTH),
         .RINGSIZE(RINGSIZE),
@@ -326,7 +326,7 @@ module ThreeByThreeRingTest (
         end
     end
 
-    NetworkRing #(
+    NetworkRingADPLL #(
         .BIAS(BIAS),
         .RO_WIDTH(RO_WIDTH),
         .RINGSIZE(RINGSIZE+2),
@@ -392,7 +392,7 @@ module ThreeByThreeRingTest (
         end
     end
 
-    NetworkRing #(
+    NetworkRingADPLL #(
         .BIAS(BIAS),
         .RO_WIDTH(RO_WIDTH),
         .RINGSIZE(RINGSIZE+18),
@@ -458,7 +458,7 @@ module ThreeByThreeRingTest (
         end
     end
 
-    NetworkRing #(
+    NetworkRingADPLL #(
         .BIAS(BIAS),
         .RO_WIDTH(RO_WIDTH),
         .RINGSIZE(RINGSIZE+12),
@@ -524,7 +524,7 @@ module ThreeByThreeRingTest (
         end
     end
 
-    NetworkRing #(
+    NetworkRingADPLL #(
         .BIAS(BIAS),
         .RO_WIDTH(RO_WIDTH),
         .RINGSIZE(RINGSIZE+10),
@@ -590,7 +590,7 @@ module ThreeByThreeRingTest (
         end
     end
 
-    NetworkRing #(
+    NetworkRingADPLL #(
         .BIAS(BIAS),
         .RO_WIDTH(RO_WIDTH),
         .RINGSIZE(RINGSIZE-4),
@@ -656,7 +656,7 @@ module ThreeByThreeRingTest (
         end
     end
 
-    NetworkRing #(
+    NetworkRingADPLL #(
         .BIAS(BIAS),
         .RO_WIDTH(RO_WIDTH),
         .RINGSIZE(RINGSIZE),
@@ -722,7 +722,7 @@ module ThreeByThreeRingTest (
         end
     end
 
-    NetworkRing #(
+    NetworkRingADPLL #(
         .BIAS(BIAS),
         .RO_WIDTH(RO_WIDTH),
         .RINGSIZE(RINGSIZE+8),
@@ -788,7 +788,7 @@ module ThreeByThreeRingTest (
         end
     end
 
-    NetworkRing #(
+    NetworkRingADPLL #(
         .BIAS(BIAS),
         .RO_WIDTH(RO_WIDTH),
         .RINGSIZE(RINGSIZE),

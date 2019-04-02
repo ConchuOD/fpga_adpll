@@ -27,7 +27,7 @@ keep    n/a     LoopFilterFrac.v
 junk    done    LoopFilterPierre.vhd
 comment done    LoopFilter.v
 comment todo    NetworkADPLL.v
-comment todo    NetworkRing.v
+comment todo    NetworkRingADPLL.v
 junk    done    OldLoopFilter.v
 keep    n/a     OscTestTopLevel.v
 comment done    PhaseAccum.v
@@ -40,7 +40,7 @@ keep    n/a     pm10ns_single_ring_dlpdet_75inv.bit
 comment done    PulseOnNegEdge.v
 comment done    PulseOnPosEdge.v
 junk    done    ReferenceSelector.v
-comment todo    RingADPLL.v
+comment done    RingADPLL.v
 comment done    RingOsc.v
 keep    n/a     RingOscADPLLTopLevel.v
 keep    n/a     RingOscTopLevel.v

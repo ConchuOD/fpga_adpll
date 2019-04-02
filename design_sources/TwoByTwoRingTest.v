@@ -198,7 +198,7 @@ module TwoByTwoRingTest (
         end
     end
 
-    NetworkRing #(
+    NetworkRingADPLL #(
         .BIAS(BIAS),
         .RO_WIDTH(RO_WIDTH),
         .RINGSIZE(RINGSIZE+8),
@@ -266,7 +266,7 @@ module TwoByTwoRingTest (
         end
     end
 
-    NetworkRing #(
+    NetworkRingADPLL #(
         .BIAS(BIAS),
         .RO_WIDTH(RO_WIDTH),
         .RINGSIZE(RINGSIZE),
@@ -332,7 +332,7 @@ module TwoByTwoRingTest (
         end
     end
 
-    NetworkRing #(
+    NetworkRingADPLL #(
         .BIAS(BIAS),
         .RO_WIDTH(RO_WIDTH),
         .RINGSIZE(RINGSIZE-2),
@@ -398,7 +398,7 @@ module TwoByTwoRingTest (
         end
     end
 
-    NetworkRing #(
+    NetworkRingADPLL #(
         .BIAS(BIAS),
         .RO_WIDTH(RO_WIDTH),
         .RINGSIZE(RINGSIZE-12),

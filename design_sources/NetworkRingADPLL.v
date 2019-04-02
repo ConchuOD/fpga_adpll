@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-module NetworkRing #(
+module NetworkRingADPLL #(
         parameter RO_WIDTH = 5,
         parameter PDET_WIDTH = 5,
         parameter RINGSIZE = 401, 
