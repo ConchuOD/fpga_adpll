@@ -48,10 +48,9 @@ module ADPLL #(
     assign error_o = error_x;
 
     /*************************************************************************/
-    /* Module instantiation                                             */
+    /* Module instantiation                                                  */
     /*************************************************************************/
     
-    //oscillator
     PhaseAccum #(.WIDTH(ACCUM_WIDTH)) testOsc (
         .enable_i(enable_i),
         .reset_i(reset_i),
@@ -60,14 +59,12 @@ module ADPLL #(
         .k_val_i(f_sel_sw_pa_x)
 	); 
     
-    //feedback divider
 	Div8 div8 ( 
 		.reset_i(reset_i),
     	.signal_i(gen_clk_x),
     	.div8_o(gen_div8_x)
    	);
     
-    //phase detector
 	PhaseDetector #(.WIDTH(PDET_WITH)) testPDet (
 		.reset_i(reset_i), 
 		.fpga_clk_i(fpga_clk_i),
@@ -76,7 +73,6 @@ module ADPLL #(
 		.pd_clock_cycles_o(error_x)
 	);
     
-    //loop filter
     LoopFilter #(
 		.ERROR_WIDTH(ERROR_WIDTH),
 		.DCO_CC_WIDTH(DCO_CC_WIDTH),

@@ -41,7 +41,7 @@ comment done    PulseOnNegEdge.v
 comment done    PulseOnPosEdge.v
 junk    done    ReferenceSelector.v
 comment todo    RingADPLL.v
-comment todo    RingOsc.v
+comment done    RingOsc.v
 keep    n/a     RingOscADPLLTopLevel.v
 keep    n/a     RingOscTopLevel.v
 keep    n/a     RingRangeTest.v

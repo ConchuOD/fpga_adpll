@@ -7,7 +7,7 @@
 
 module PhaseAccum #(parameter WIDTH = 4)(
     input  wire enable_i,
-    input  wire [WIDTH-1:0] k_val_i, //control code
+    input  wire [WIDTH-1:0] k_val_i, //control code - bigger is high freq
     input  wire fpga_clk_i,
     input  wire reset_i, //reset high
     output wire clk_o
