@@ -746,29 +746,19 @@ set_property CONFIG_VOLTAGE 3.3 [current_design]
 #This line specifies generation of a compressed bitstream, for faster configuration
 set_property BITSTREAM.GENERAL.COMPRESS TRUE [current_design]
 
-set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets -of_objects [get_cells adpll/testRing/ringwire_c]]
-set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets -of_objects [get_cells ringwire_c_orig0]]
-set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets -of_objects [get_cells ringwire_c_inferred_i_1]]
-set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets -of_objects [get_cells adpll/testRing/ringwire_c_inferred_i_184_n_0]] 
 
-set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets -of_objects [get_cells adpll/testRing/ringwire_c[420]]]
-set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets -of_objects [get_cells ringwire_c_orig0]]
 
 set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets -of_objects [get_cells adpll_11/pDetAbove/arbitration/Q_INST_0]]
-set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets -of_objects [get_cells adpll_11/pDetAbove/arbitration/Q]]
 
 set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets -of_objects [get_cells adpll_11/pDetAbove/sign/Q_INST_0]]
-set_property ALLOW_COMBINATORIAL_LOOPS true [get_nets -of_objects [get_cells adpll_11/pDetAbove/sign/Q]]
 
 #[ adpll_11/pDetAbove/arbitration/Q. Please evaluate your design. The cells in the loop are: adpll_11/pDetAbove/arbitration/Q_INST_0.
 
 set_property CLOCK_DEDICATED_ROUTE FALSE [get_nets ra_i_IBUF]
-set_property CLOCK_DEDICATED_ROUTE FALSE [get_nets ra_o_OBUF[2]]
+set_property CLOCK_DEDICATED_ROUTE FALSE [get_nets {ra_o_OBUF[2]}]
 
 
-set_property SEVERITY {Warning}  [get_drc_checks LUTLP-1]
 
-set_property SEVERITY {Warning} [get_drc_checks NSTD-1]
 
 #create_pblock pblock_otherAdpll
 #add_cells_to_pblock [get_pblocks pblock_otherAdpll] [get_cells -quiet [list otherAdpll]]
@@ -783,3 +773,4 @@ set_property SEVERITY {Warning} [get_drc_checks NSTD-1]
 #create_pblock pblock_otherPDet
 #add_cells_to_pblock [get_pblocks pblock_otherPDet] [get_cells -quiet [list otherPDet]]
 #resize_pblock [get_pblocks pblock_otherPDet] -add {SLICE_X0Y145:SLICE_X7Y146}
+

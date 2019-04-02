@@ -6,7 +6,7 @@
 /*			  is a 2s complement signed integer                              */
 /*****************************************************************************/
 module UpDownCounter #(parameter WIDTH = 20)(
-		input wire reset_i, reset high
+		input wire reset_i, //reset high
 		input wire clear_i,
 		input wire fpga_clk_i,
 		input wire [1:0] count_instr_i,

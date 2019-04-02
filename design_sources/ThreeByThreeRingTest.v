@@ -151,7 +151,6 @@ module ThreeByThreeRingTest (
     wire ref_or_gains_x = switches_i[12]; //0 gains
     reg [ACCUM_WIDTH-1:0] ref_sel_r;
 
-
     assign JB[7:0] = temp_8bit_bus1;
     assign JC[7:0] = temp_8bit_bus2;
     assign ra_o[0] = adpll_11_gen_x;
@@ -330,7 +329,7 @@ module ThreeByThreeRingTest (
     NetworkRing #(
         .BIAS(BIAS),
         .RO_WIDTH(RO_WIDTH),
-        .RINGSIZE(RINGSIZE),
+        .RINGSIZE(RINGSIZE+2),
         .PDET_WIDTH(PDET_WIDTH),
         //.KP(5'b00001),
         .KP_WIDTH(KP_WIDTH),
@@ -396,7 +395,7 @@ module ThreeByThreeRingTest (
     NetworkRing #(
         .BIAS(BIAS),
         .RO_WIDTH(RO_WIDTH),
-        .RINGSIZE(RINGSIZE),
+        .RINGSIZE(RINGSIZE+18),
         .PDET_WIDTH(PDET_WIDTH),
         //.KP(5'b00001),
         .KP_WIDTH(KP_WIDTH),
@@ -462,7 +461,7 @@ module ThreeByThreeRingTest (
     NetworkRing #(
         .BIAS(BIAS),
         .RO_WIDTH(RO_WIDTH),
-        .RINGSIZE(RINGSIZE),
+        .RINGSIZE(RINGSIZE+12),
         .PDET_WIDTH(PDET_WIDTH),
         //.KP(5'b00001),
         .KP_WIDTH(KP_WIDTH),
@@ -528,7 +527,7 @@ module ThreeByThreeRingTest (
     NetworkRing #(
         .BIAS(BIAS),
         .RO_WIDTH(RO_WIDTH),
-        .RINGSIZE(RINGSIZE),
+        .RINGSIZE(RINGSIZE+10),
         .PDET_WIDTH(PDET_WIDTH),
         //.KP(5'b00001),
         .KP_WIDTH(KP_WIDTH),
@@ -594,7 +593,7 @@ module ThreeByThreeRingTest (
     NetworkRing #(
         .BIAS(BIAS),
         .RO_WIDTH(RO_WIDTH),
-        .RINGSIZE(RINGSIZE),
+        .RINGSIZE(RINGSIZE-4),
         .PDET_WIDTH(PDET_WIDTH),
         //.KP(5'b00001),
         .KP_WIDTH(KP_WIDTH),
@@ -726,7 +725,7 @@ module ThreeByThreeRingTest (
     NetworkRing #(
         .BIAS(BIAS),
         .RO_WIDTH(RO_WIDTH),
-        .RINGSIZE(RINGSIZE),
+        .RINGSIZE(RINGSIZE+8),
         .PDET_WIDTH(PDET_WIDTH),
         //.KP(5'b00001),
         .KP_WIDTH(KP_WIDTH),
