@@ -1,106 +1,142 @@
 `timescale 1ns / 1ps
-
+/*****************************************************************************/
+/* Author   : Conor Dooley                                                   */
+/* Date     : ??-February-2019                                               */
+/* Function : 2x2 ADPLL network using FPGA clocked oscillator                */
+/*****************************************************************************/
 module TwoByTwoTest (
-        input clk100_i,        // 100 MHz clock from oscillator on board
-        input rst_pbn_i,        // reset signal, active low, from CPU RESET pushbutton //
-        input [15:0] switches_i,
-        output [2:0] led_o,
-        output [6:0] ra_o,
-		input ra_i, // external reference
-        output [7:0] JB,
-        output [7:0] segment_o,
-        output [7:0] digit_o/*,  
-        input temp,
-        input temp_rst */
+        input         clk100_i,         // 100 MHz clock from oscillator on board
+        input         rst_pbn_i,        // reset signal, active low, from CPU RESET pushbutton //
+        input         ra_i,             // external reference
+        input  [15:0] switches_i,
+        output [2:0]  led_o,
+        output [6:0]  ra_o,
+        output [7:0]  JB,
+        output [7:0]  segment_o,
+        output [7:0]  digit_o
     );
+    
+    /*************************************************************************/
+    /* Define nets and assign outputs                                        */
+    /*************************************************************************/
 
     localparam ACCUM_WIDTH = 12;
-    localparam BIAS = 12'd77; //154 = 10 MHz
+    localparam BIAS = 12'd77;
     localparam PDET_WIDTH = 8;
-    //optimal gains w/ 10 M => kp @ 1.5 = 1110 lower
-    //                         ki @ 1.7 = 0001 lower 
-    
-    wire reset_x;
- 
-    reg ext_reference_r;
-    wire gen_reference_x;
-    wire other_ref_div4_x;
-    
-    wire adpll_11_gen_x;
-    wire adpll_11_div8_x;
-    wire [PDET_WIDTH-1:0] adpll_11_error_top_x;
-    wire [PDET_WIDTH-1:0] adpll_11_error_left_x;
-    reg [3:0] weight_left_11;
-    reg [3:0] weight_above_11;
-    reg [3:0] weight_right_11;
-    reg [3:0] weight_below_11;
-
-    wire adpll_12_gen_x;
-    wire adpll_12_div8_x;
-    wire [PDET_WIDTH-1:0] adpll_12_error_top_x;
-    wire [PDET_WIDTH-1:0] adpll_12_error_left_x;
-    reg [3:0] weight_left_12;
-    reg [3:0] weight_above_12;
-    reg [3:0] weight_right_12;
-    reg [3:0] weight_below_12;
-
-    wire adpll_21_gen_x;
-    wire adpll_21_div8_x;
-    wire [PDET_WIDTH-1:0] adpll_21_error_top_x;
-    wire [PDET_WIDTH-1:0] adpll_21_error_left_x;
-    reg [3:0] weight_left_21;
-    reg [3:0] weight_above_21;
-    reg [3:0] weight_right_21;
-    reg [3:0] weight_below_21;
-
-    wire adpll_22_gen_x;
-    wire adpll_22_div8_x;
-    wire [PDET_WIDTH-1:0] adpll_22_error_top_x;
-    wire [PDET_WIDTH-1:0] adpll_22_error_left_x;
-    reg [3:0] weight_left_22;
-    reg [3:0] weight_above_22;
-    reg [3:0] weight_right_22;
-    reg [3:0] weight_below_22;
-
-    wire clk5_x;
-    wire clk5_0_x;
-    wire clk5_45_x;
-    wire clk5_90_x;
-    wire clk5_135_x;
-
-    wire clk258_x;
-
-    wire [ACCUM_WIDTH-1:0] ref_sel_c;
-
-    wire [3:0] kp_sel_x;
-    wire [3:0] ki_sel_x;
-    wire [7:0] kp_ki_c;
-
-    wire [7:0] half_7seg_x;
-
-    wire enable_x = switches_i[15];
-    wire uni_dir_x = switches_i[14];
-    wire ref_sel_x = switches_i[13];
-    
-    assign ref_sel_c = 12'd36;
-    
-    assign kp_sel_x = switches_i[11:8];
-    assign ki_sel_x = switches_i[3:0];
-    assign kp_ki_c = {kp_sel_x,ki_sel_x};
 
     localparam KP_WIDTH = 6;
     localparam KP_FRAC_WIDTH = 5;
     localparam KI_WIDTH = 9;
     localparam KI_FRAC_WIDTH = 8;
+    
+    wire reset_x;
+    
+    //reference signals
+ 
+    reg ext_reference_r;
+    wire gen_reference_x;
+    
+    //ADPLL 11 connections
+    wire adpll_11_gen_x;
+    wire adpll_11_div8_x;
+    wire [PDET_WIDTH-1:0] adpll_11_error_top_x;
+    wire [PDET_WIDTH-1:0] adpll_11_error_left_x;
+    reg  [3:0] weight_left_11;
+    reg  [3:0] weight_above_11;
+    reg  [3:0] weight_right_11;
+    reg  [3:0] weight_below_11;
+    
+    //ADPLL 12 connections
+    wire adpll_12_gen_x;
+    wire adpll_12_div8_x;
+    wire [PDET_WIDTH-1:0] adpll_12_error_top_x;
+    wire [PDET_WIDTH-1:0] adpll_12_error_left_x;
+    reg  [3:0] weight_left_12;
+    reg  [3:0] weight_above_12;
+    reg  [3:0] weight_right_12;
+    reg  [3:0] weight_below_12;
+    
+    //ADPLL 21 connections
+    wire adpll_21_gen_x;
+    wire adpll_21_div8_x;
+    wire [PDET_WIDTH-1:0] adpll_21_error_top_x;
+    wire [PDET_WIDTH-1:0] adpll_21_error_left_x;
+    reg  [3:0] weight_left_21;
+    reg  [3:0] weight_above_21;
+    reg  [3:0] weight_right_21;
+    reg  [3:0] weight_below_21;
+    
+    //ADPLL 22 connections
+    wire adpll_22_gen_x;
+    wire adpll_22_div8_x;
+    wire [PDET_WIDTH-1:0] adpll_22_error_top_x;
+    wire [PDET_WIDTH-1:0] adpll_22_error_left_x;
+    reg  [3:0] weight_left_22;
+    reg  [3:0] weight_above_22;
+    reg  [3:0] weight_right_22;
+    reg  [3:0] weight_below_22;
+
+    //clock outputsfrom clock manager
+    wire clk5_x;
+    wire clk5_0_x;
+    wire clk5_45_x;
+    wire clk5_90_x;
+    wire clk5_135_x;
+    wire clk258_x;
+
+    //internal reference bias point
+    wire [ACCUM_WIDTH-1:0] ref_sel_c;
+
+    //Loop filter runtime game selection
+    wire [3:0] kp_sel_x;
+    wire [3:0] ki_sel_x;
+    wire [7:0] kp_ki_c;
     wire [KP_WIDTH-1:0] padded_kp_c;
     wire [KI_WIDTH-1:0] padded_ki_c;
-    assign padded_kp_c = {{(KP_WIDTH-4){1'b0}},kp_sel_x}; //opt is 0100, kp @ 1.5
-    assign padded_ki_c = {{(KI_WIDTH-4){1'b0}},ki_sel_x}; //opt is 0100, ki @ 1.10
 
+    //Output to 7 seg displays
+    wire [7:0] half_7seg_x;
+
+    //network configuration
+    wire enable_x  = switches_i[15]; //0 disable,  1 enable
+    wire uni_dir_x = switches_i[14]; //0 bi-dir,   1 uni-dir
+    wire ref_sel_x = switches_i[13]; //0 internal, 1 external
+
+    /*************************************************************************/
+    /* Output assignments                                                    */
+    /*************************************************************************/
+
+    assign JB[6:0] = adpll_11_error_left_x[6:0]; 
+    assign ra_o[0] = adpll_11_gen_x;
+    assign ra_o[1] = gen_reference_x;
+    assign ra_o[2] = ext_reference_r;
+    assign ra_o[3] = adpll_11_div8_x;
+    assign ra_o[4] = adpll_12_gen_x;
+    assign ra_o[5] = adpll_21_gen_x;
+    assign ra_o[6] = adpll_22_gen_x;
+
+    /*************************************************************************/
+    /* Continuous assignments                                                */
+    /*************************************************************************/
+    
+    assign ref_sel_c = 12'd36;    
+    assign clk5_x  = clk5_0_x;
+    
+    assign kp_sel_x    = switches_i[11:8];
+    assign ki_sel_x    = switches_i[3:0];
+    assign kp_ki_c     = {kp_sel_x,ki_sel_x};
+    assign padded_kp_c = {{(KP_WIDTH-4){1'b0}},kp_sel_x};
+    assign padded_ki_c = {{(KI_WIDTH-4){1'b0}},ki_sel_x};
+
+    //clock input buffer register
     always @ (posedge clk258_x)
     begin
         ext_reference_r <= ra_i;
     end
+
+    /*************************************************************************/
+    /* Clock generation modules                                              */
+    /*************************************************************************/
 
     ClockReset5_258_PDiff  clkGen  (
         .clk100_i   (clk100_i),      // input clock at 100 MHz
@@ -111,11 +147,9 @@ module TwoByTwoTest (
         .clk5_135_o (),
         .clk258_o   (clk258_x),
         .reset_o    (reset_x)        // output reset, active high
-    );//*/
+    );
 
-    //assign clk258_x = temp;
-    //assign reset_x = temp_rst;
-
+    //tunable internal reference provider
     PhaseAccum #(.WIDTH(ACCUM_WIDTH)) referenceOsc (
         .enable_i(1'b1),
         .reset_i(reset_x),
@@ -124,15 +158,9 @@ module TwoByTwoTest (
         .k_val_i(12'd20)
     );
 
-    assign JB[6:0] = adpll_11_error_left_x[6:0]; 
-    assign clk5_x = clk5_0_x;
-    assign ra_o[0] = adpll_11_gen_x;
-    assign ra_o[1] = gen_reference_x;
-    assign ra_o[2] = ext_reference_r;
-    assign ra_o[3] = adpll_11_div8_x;
-    assign ra_o[4] = adpll_12_gen_x;
-    assign ra_o[5] = adpll_21_gen_x;
-    assign ra_o[6] = adpll_22_gen_x;
+    /*************************************************************************/
+    /* ADPLL 11                                                              */
+    /*************************************************************************/
 
     always @ (uni_dir_x)
     begin
@@ -155,12 +183,10 @@ module TwoByTwoTest (
     NetworkADPLL #(
         .BIAS(BIAS),
         .PDET_WIDTH(PDET_WIDTH),
-        //.KP(5'b00001),
         .KP_WIDTH(KP_WIDTH),
         .KP_FRAC_WIDTH(KP_FRAC_WIDTH),
         .KI_WIDTH(KI_WIDTH),
         .KI_FRAC_WIDTH(KI_FRAC_WIDTH),
-        //.KI(7'b0000001)
         .DYNAMIC_VAL(1'b1) 
     ) 
     adpll_11
@@ -184,6 +210,10 @@ module TwoByTwoTest (
         .ki_i(padded_ki_c) //padded_ki_c
     );
 
+    /*************************************************************************/
+    /* ADPLL 12                                                              */
+    /*************************************************************************/
+
     always @ (uni_dir_x)
     begin
         if(uni_dir_x)
@@ -205,12 +235,10 @@ module TwoByTwoTest (
     NetworkADPLL #(
         .BIAS(BIAS+12'd1),
         .PDET_WIDTH(PDET_WIDTH),
-        //.KP(5'b00001),
         .KP_WIDTH(KP_WIDTH),
         .KP_FRAC_WIDTH(KP_FRAC_WIDTH),
         .KI_WIDTH(KI_WIDTH),
         .KI_FRAC_WIDTH(KI_FRAC_WIDTH),
-        //.KI(7'b0000001)
         .DYNAMIC_VAL(1'b1) 
     ) 
     adpll_12
@@ -234,6 +262,10 @@ module TwoByTwoTest (
         .ki_i(padded_ki_c) //padded_ki_c
     );
 
+    /*************************************************************************/
+    /* ADPLL 21                                                              */
+    /*************************************************************************/
+
     always @ (uni_dir_x)
     begin
         if(uni_dir_x)
@@ -255,12 +287,10 @@ module TwoByTwoTest (
     NetworkADPLL #(
         .BIAS(BIAS-12'd3),
         .PDET_WIDTH(PDET_WIDTH),
-        //.KP(5'b00001),
         .KP_WIDTH(KP_WIDTH),
         .KP_FRAC_WIDTH(KP_FRAC_WIDTH),
         .KI_WIDTH(KI_WIDTH),
         .KI_FRAC_WIDTH(KI_FRAC_WIDTH),
-        //.KI(7'b0000001)
         .DYNAMIC_VAL(1'b1) 
     ) 
     adpll_21
@@ -284,6 +314,10 @@ module TwoByTwoTest (
         .ki_i(padded_ki_c) //padded_ki_c
     );
 
+    /*************************************************************************/
+    /* ADPLL 22                                                              */
+    /*************************************************************************/
+
     always @ (uni_dir_x)
     begin
         if(uni_dir_x)
@@ -305,12 +339,10 @@ module TwoByTwoTest (
     NetworkADPLL #(
         .BIAS(BIAS+12'd2),
         .PDET_WIDTH(PDET_WIDTH),
-        //.KP(5'b00001),
         .KP_WIDTH(KP_WIDTH),
         .KP_FRAC_WIDTH(KP_FRAC_WIDTH),
         .KI_WIDTH(KI_WIDTH),
         .KI_FRAC_WIDTH(KI_FRAC_WIDTH),
-        //.KI(7'b0000001)
         .DYNAMIC_VAL(1'b1) 
     ) 
     adpll_22
@@ -333,6 +365,10 @@ module TwoByTwoTest (
         .kp_i(padded_kp_c), //padded_kp_c
         .ki_i(padded_ki_c) //padded_ki_c
     );
+
+    /*************************************************************************/
+    /* Display modules                                                       */
+    /*************************************************************************/
 
     SignedDec2Hex sDec2Hex(
         .signed_dec_i(kp_ki_c),

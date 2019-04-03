@@ -26,8 +26,8 @@ keep    n/a     list.txt
 keep    n/a     LoopFilterFrac.v
 junk    done    LoopFilterPierre.vhd
 comment done    LoopFilter.v
-comment todo    NetworkADPLL.v
-comment todo    NetworkRingADPLL.v
+comment done    NetworkADPLL.v
+comment done    NetworkRingADPLL.v
 junk    done    OldLoopFilter.v
 keep    n/a     OscTestTopLevel.v
 comment done    PhaseAccum.v
@@ -52,8 +52,8 @@ comment done    stateMachine.v
 comment done    Synchroniser.v
 junk    done    TDC.v
 comment todo    ThreeByThreeRingTest.v
-comment todo    TwoByTwoRingTest.v
-comment todo    TwoByTwoTest.v
+comment done    TwoByTwoRingTest.v
+comment done    TwoByTwoTest.v
 keep    n/a     TwoConnectedTest.v
 junk    done    untitled.sv
 comment done    UpDownCounter.v

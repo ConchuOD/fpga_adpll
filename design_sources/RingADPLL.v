@@ -1,34 +1,34 @@
 `timescale 1ns / 1ps
 /*****************************************************************************/
 /* Author   : Conor Dooley                                                   */
-/* Date     : ??-December-2019                                               */
+/* Date     : ??-December-2018                                               */
 /* Function : ADPLL using inverter based oscillator                          */
 /*****************************************************************************/
 module RingADPLL #(
-		parameter RO_WIDTH = 5,			//control width of oscillator
-		parameter PDET_WIDTH = 5,		//width of phase detector output
-		parameter RINGSIZE = 401,   	//default number of inverters
-		parameter BIAS = 5'd16, 		//bias point for oscillator
-		//LoopFilter
-		parameter DYNAMIC_VAL = 0,		//whether filter gains will chain at runtime
-		parameter KP_WIDTH = 6,			//width of kp
-		parameter KP_FRAC_WIDTH = 5,	//fractional width of kp
-		parameter KP = 5'b01001,		//kp compile time value
-		parameter KI_WIDTH = 4,			//width of ki
-		parameter KI_FRAC_WIDTH = 7,	//fractional width of ki
-		parameter KI = 8'b00000001		//ki compile time value
+		parameter RO_WIDTH        = 5,			  //control width of oscillator
+		parameter PDET_WIDTH      = 5,		      //width of phase detector output
+		parameter RINGSIZE        = 401,   	      //default number of inverters
+		parameter BIAS            = 5'd16, 		  //bias point for oscillator
+		//LoopFilter  
+		parameter DYNAMIC_VAL     = 0,		      //whether filter gains will chain at runtime
+		parameter KP_WIDTH        = 6,            //width of kp
+		parameter KP_FRAC_WIDTH   = 5,	          //fractional width of kp
+		parameter KP              = 5'b01001,	  //kp compile time value
+		parameter KI_WIDTH        = 4,			  //width of ki
+		parameter KI_FRAC_WIDTH   = 7,	          //fractional width of ki
+		parameter KI              = 8'b00000001   //ki compile time value
 	)
 	(
-        input wire reset_i,				//reset high
-        input wire fpga_clk_i,
-        input wire ref_clk_i,			//reference clock
-        input wire enable_i,
-		input wire [KP_WIDTH-1:0] kp_i, //kp runtime value
-		input wire [KI_WIDTH-1:0] ki_i,	//ki runtime value
-        output wire gen_clk_o,			//clock output
-        output wire gen_div8_o,			//divided clock output
-        output wire signed [PDET_WIDTH-1:0] error_o,
-        output wire signed [RO_WIDTH-1:0] dco_cc_o
+        input  wire                         reset_i,	//reset high
+        input  wire                         fpga_clk_i,
+        input  wire                         ref_clk_i,	//reference clock
+        input  wire                         enable_i,
+		input  wire        [KP_WIDTH-1:0]   kp_i,       //kp runtime value
+		input  wire        [KI_WIDTH-1:0]   ki_i,	    //ki runtime value
+        output wire                         gen_clk_o,	//clock output
+        output wire                         gen_div8_o, //divided clock output
+        output wire signed [PDET_WIDTH-1:0] error_o,    //error output from detector
+        output wire signed [RO_WIDTH-1:0]   dco_cc_o    //dco control code 
     );
     
     /*************************************************************************/
