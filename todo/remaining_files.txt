@@ -21,7 +21,7 @@ junk    done    ExtRefTest5M.v
 junk    done    GainTest.v
 keep    n/a     hex2seg.v
 remove  done    JitterDetect.v
-junk    todo    lf_test.v
+junk    done    lf_test.v
 keep    n/a     list.txt
 keep    n/a     LoopFilterFrac.v
 junk    done    LoopFilterPierre.vhd
@@ -32,7 +32,7 @@ junk    done    OldLoopFilter.v
 keep    n/a     OscTestTopLevel.v
 comment done    PhaseAccum.v
 comment done    PhaseDetector.v
-comment todo    PhaseDetectorDL.v
+comment done    PhaseDetectorDL.v
 keep    n/a     PhDetTestLockRange.v
 keep    n/a     PhDetTopLevel.v
 junk    done    PI_Filter_v0.vhd
