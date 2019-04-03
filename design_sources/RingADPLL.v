@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 /*****************************************************************************/
 /* Author   : Conor Dooley                                                   */
-/* Date     : DD-Month-YYYY                                                  */
+/* Date     : ??-December-2019                                               */
 /* Function : ADPLL using inverter based oscillator                          */
 /*****************************************************************************/
 module RingADPLL #(

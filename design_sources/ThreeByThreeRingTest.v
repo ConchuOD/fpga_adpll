@@ -35,7 +35,7 @@ module ThreeByThreeRingTest (
     wire adpll_11_gen_x;
     wire adpll_11_div8_x;
     wire [PDET_WIDTH-1:0] adpll_11_error_top_x;
-    wire [PDET_WIDTH-1:0] adpll_11_error_left_x; //TODO WARNING WIDTH
+    wire [PDET_WIDTH-1:0] adpll_11_error_left_x;
     reg [3:0] weight_left_11;
     reg [3:0] weight_above_11;
     reg [3:0] weight_right_11;
