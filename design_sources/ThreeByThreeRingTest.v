@@ -38,7 +38,7 @@ module ThreeByThreeRingTest (
     wire reset_x;
      
     //reference signals
-    reg ext_reference_r;
+    wire ext_reference_r;
     wire reference_x;
         
     //ADPLL 11 connections
@@ -178,8 +178,6 @@ module ThreeByThreeRingTest (
     /* Output assignments                                                    */
     /*************************************************************************/
 
-    assign JB[7:0] = temp_8bit_bus1;
-    assign JC[7:0] = temp_8bit_bus2;
     assign ra_o[0] = adpll_11_gen_x;
     assign ra_o[1] = gen_reference_x;
     assign ra_o[2] = ext_reference_r;
@@ -202,13 +200,13 @@ module ThreeByThreeRingTest (
     assign padded_kp_c = {{(KP_WIDTH-4){1'b0}},kp_sel_r}; 
     assign padded_ki_c = {{(KI_WIDTH-4){1'b0}},ki_sel_r}; 
     assign ext_reference_r = ra_i;
-    //assign reference_x = ext_reference_r;
+    assign reference_x = ext_reference_r;
 
     //clock input buffer register
-    always @ (posedge clk258_x)
-    begin
-        ext_reference_r <= ra_i;
-    end
+    //always @ (posedge clk258_x)
+    //begin
+    //    ext_reference_r <= ra_i;
+    //end
 
     /*************************************************************************/
     /* Clock generation modules                                              */
