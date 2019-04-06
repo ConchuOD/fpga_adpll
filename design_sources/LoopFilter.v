@@ -5,13 +5,13 @@
 /* Function : Variable gain PI controller for use in ADPLLs                  */
 /*****************************************************************************/
 module LoopFilter #(
-		parameter DYNAMIC_VAL = 0,
-		parameter ERROR_WIDTH = 5,
-		parameter DCO_CC_WIDTH = 5,
+		parameter DYNAMIC_VAL = 0,  //whether or not to set gains at runtime
+		parameter ERROR_WIDTH = 5,  //width of the error signal
+		parameter DCO_CC_WIDTH = 5, //width of the filter output
 		parameter KP_WIDTH = 5,
-		parameter KP = 5'd1,
+		parameter KP = 5'd1,        //compile time default kp
 		parameter KI_WIDTH = 7,
-		parameter KI = 7'd1
+		parameter KI = 7'd1         //compile time default ki
 	)
 	(
 		input  wire gen_clk_i,
@@ -72,7 +72,7 @@ module LoopFilter #(
 	end
     
     /*************************************************************************/
-    /* Input & output buffers                                                */
+    /* Input & output delays                                                 */
     /*************************************************************************/
 
 	always @ (posedge gen_clk_i or posedge reset_i)

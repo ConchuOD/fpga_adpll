@@ -22,7 +22,6 @@
     \IEEEauthorblockA{\textit{$^1$School of Electrical \& Electronic Engineering, University College Dublin}\\
     \textit{$^2$LIP6 Lab, Sorbonne Université}
     	\vspace{-0.8cm}
-    }
 	}
 }
 \maketitle
@@ -168,9 +167,8 @@ The first columns of the table relate to the cycle-to-cycle jitter of the system
     \end{center}
 \vspace{-0.5cm}
 \end{table}
-From the table it is apparent that the coarser period and detection steps of Design ``1A''  (3.875 nanoseconds as at greater clock frequencies timing violations would occur) cannot deliver the same jitter performance as the inverter ring driven designs. Looking at the two subsequent designs their lesser flexibility is made up for by their more realistic jitter behaviour. As would be expected best performance occurs when the network is in PLL mode and as the quality of the reference degrades as the network is connected up performance becomes worse. In terms of cycle-to-cycle jitter the best performing design is that of ``2A'', however, its time interval error is significantly worse especially in bilateral network mode. This more aggressive degradation as the network is linked up can be attributed to the worse detection resolution of the FPGA clocked phase detector, four times worse than the 1.2 second step of the entirely inverter based Design ``2B''.\\
+From the table it is apparent that the coarser period and detection steps of Design ``1A'' (3.875 nanoseconds as at greater clock frequencies timing violations would occur) cannot deliver the same jitter performance as the inverter ring driven designs. Looking at the two subsequent designs their lesser flexibility is made up for by their more realistic jitter behaviour. As would be expected best performance occurs when the network is in PLL mode and as the quality of the reference degrades as the network is connected up performance becomes worse. In terms of cycle-to-cycle jitter the best performing design is that of ``2A'', however, its time interval error is significantly worse especially in bilateral network mode. This more aggressive degradation as the network is linked up can be attributed to the worse detection resolution of the FPGA clocked phase detector, four times worse than the 1.2 nanosecond step of the entirely inverter based Design ``2B''.\\
 The further a PLL is away from the reference feeding ADPLL 11 the worse performance is, peaking furthest from the reference in ADPLL 22.
-
 The lesser cycle-to-cycle of Design ``2A'' follows from the implementation independent design of the phase detector. Unlike the inverter based design where the implementation may result in the propagation delay between taps on the delay line changing, from both tap to tap in the same detector and the same tap in different detectors, the clocked design has identical detection resolutions as each register is driven by the FPGA clock. This can be highlighted in the more easily demonstrable case of the clocked and inverter based oscillators.\\
 \begin{figure}[h]%
     \centering
