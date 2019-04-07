@@ -90,6 +90,8 @@ This architecture of clock distribution network was then implemented by Gutnik \
 \begin{quote}
 	\textit{Design and measurements on this chip confirm that generating and synchronizing multiple clocks on chip is feasible. Neither the power nor the area overhead of multiple \acs{PLL}s is substantial compared to the cost of distributing the clock by conventional means} \cite{gutnik2000active}.
 \end{quote}
+
+The remaining benefits of such a clock distribution system are: As the individual oscillators have their own control signal mismatch between different oscillators is not a factor as they will also receive different control signals. Secondly, and unlike the conventional methods, sources of jitter in the system such as power supply dynamics can be accounted for. Finally symmetry between the different oscillators is not required, once again attributable to the individual control signals in use. 
 \section{ADPLL Networks}
 As a \ac{PLL} network is an analog circuit, its integration in a modern \ac{IC} is a barrier to usage, and as such it has not been used in any commercial designs \cite{zianbetov2013distributed}. An alternative design that is more suitable for current fabrication techniques eschews from using analogue components and instead implements the network of controlled oscillators using only digital circuitry, hence the name All-Digital \ac{PLL}. A 4x4 \ac{ADPLL} network was designed and prototyped in 65 nm CMOS by Zianbetov and Shan in order to test the suitability of the technique as a clock distributor \cite{zianbetov2013phd,shan2014phd}.
 
@@ -103,8 +105,8 @@ In this design the oscillators are once again laid out in a Cartesian grid, with
 
 Looking at the design of a given node it is notable that the function carried out by the Error Combiner is akin to a average, therefore as mentioned by Pratt and Nyugen, there is potential to a mode locked equilibrium in which the oscillators are not synchronised. In their paper, they presented a method where initial start-up was performed uni-directionally and, once all nodes are close to alignment, full connectivity could be restored, however this was not viable in an analogue system as reconfigurability was not an option \cite{pratt1995distributed}. In creating an entirely digital system, Zianbetov and Shan could exploit reconfigurability and implement a uni-directional start-up and thus avoid the problem of convergence into a mode locked state, without having to design a non-linear phase detector.
 
-\section{ADPLL Architecture}
-As indicated in Figure \ref{fig:mulkeen_pll} the three main building blocks of a conventional \ac{PLL} are the \ac{PD}, \ac{LF} and \ac{VCO}. In an \ac{ADPLL} these blocks are then replaced by their digital counterparts, necessitating quantisation in order to remain physically realisable. 
+\section{\acl{ADPLL} Architecture}
+As indicated in Figure \ref{fig:mulkeen_pll} the three main building blocks of a conventional \ac{PLL} are the \ac{PD}, \ac{LF} and \ac{VCO}. In an \ac{ADPLL} these blocks are then replaced by their digital counterparts, necessitating quantisation in order to remain physically realisable. The ``All-Digital'' moniker is a misnomer as the oscillator and \acl{PD} are usually both implemented by mixed signal circuits.
 \begin{figure}[h]
 	\centering
 	\includegraphics[scale=0.5]{../tex_files/mulkeen_pll}
@@ -112,7 +114,7 @@ As indicated in Figure \ref{fig:mulkeen_pll} the three main building blocks of a
 	\label{fig:mulkeen_pll}
 \end{figure}
 
-\subsection{Digitally Controllable Oscillator}
+\subsection{Digitally Controlled Oscillator}
 In a digital system there are a very limited number of voltages representable, most commonly just two, so using a voltage to control the oscillator is not a viable strategy. Instead a fixed bit width signal is used to control the oscillator's period, selecting the number of inverters in a ring oscillator or the varactor configuration of a travelling wave oscillator \cite{chen2011rotary}. The decisions made in the design of the \ac{DCO}, or \ac{NCO}, determine many of the other \ac{ADPLL} parameters. While tuning range and centre frequency, as well as linearity, carry over from the analogue counterpart, a \ac{DCO} also has a frequency step which in combination with the bit width of the control signal determines the range over which the oscillator can be tuned. Figure \ref{fig:my_ring} illustrates a basic ring oscillator design. A ring oscillator is an inherently unstable circuit composed of an odd number of inverters connected in a circle, which allows a signal to propagate infinitely, with the signal at any point in the circuit appearing as a square wave. The half-period of this oscillator is the time taken for the signal to propagate once through the chain, $n$ times the propagation delay through one inverter. The frequency of operation can then be set by modulating the length of the chain, in steps of two inverters to maintain an odd number, by means of \texttt{f\_select}. The main impact of output frequency quantisation is that only frequencies which are integer multiples of the frequency step away from the centre frequency can be easily reproduced, with intermediate values only obtainable in a manner akin to Fractional-N synthesis with the control code toggling back and forth. This acts as a source of jitter in the system.
 \begin{figure}[h]
 	\centering
@@ -121,28 +123,68 @@ In a digital system there are a very limited number of voltages representable, m
 	\label{fig:my_ring}
 \end{figure}
 
-It is also possible to implement a \ac{NCO} by means of a counter, in a manner that will produce either linear period or linear frequency steps. The former is achieved by setting the reload point of the counter
+It is also possible to implement an \ac{NCO} by means of a counter, in a manner that will produce either linear period or linear frequency steps. Both methods use the most significant bit of the counter's value to form the output signal. Period linearity is achieved by varying the reload value of the counter after overflow depending on the control code, thereby changing the period by a multiple of a fixed step. Alternatively frequency linearity can be achieved if the reload value is left constant, but instead the amount added to the counter every clock cycle is changed according to the control code, once again a fixed step size is used.
 
 \subsection{Digital Phase Detector}
-Once again quantisation impacts the Phase Detector, as rather than a continuous output the phase detector in an ADPLL has a finite number of output values, thus limiting the accuracy of the phase detector. A second form of quantisation is also present, as unlike an analog system, a digital phase detector does not provide continuous data in the time domain either, instead relying on sampling. At its most basic, a digital phase comparator may only output an indication of which signal is leading, a design known as a Bang-Bang Detector, which can be constructed using a single D Flip Flop. As the output only has two levels the resultant word is only 1 bit wide and as such, limits the range over which the output frequency can be controlled. More complex designs such as that in Figure \ref{fig:shan_bb_pd}, implemented by Shan, build on this by measuring the time difference between edges of the signals using a Time-to-Digital Converter, or TDC, in his case using a tapped delay line \cite{shan2014phd}. This essentially mimics a counter and allows for a non binary form of phase measurement.
+Once again quantisation impacts the \acl{PD}, as rather than a continuous output the phase detector in an \ac{ADPLL} has a finite number of output values, thus limiting the accuracy of the phase detector. A second form of quantisation is also present, as unlike an analog system, a digital phase detector does not provide continuous data in the time domain either, instead relying on sampling. At its most basic, a digital phase comparator may only output an indication of which signal is leading, a design known as a Bang-Bang Detector, which can be constructed using a single D Flip Flop with one the generated signal connected to the ``D'' input and the reference signal acting as the clock. As the output only has two levels the resultant word is only 1 bit wide and as such, limits the range over which the output frequency can be controlled. More complex designs such as that in Figure \ref{fig:shan_bb_pd}, implemented by Shan, build on this by measuring the time difference between edges of the signals using a \ac{TDC} in his case using a \ac{TDL} \cite{shan2014phd}. A \ac{TDL} is constructed by a chain of elements of a fixed delay, and the signal to be timed is applied to this start of this chain. After the timing interval elapsed the values at each point in the chain are examined, and using temperature coding, these are converted to a digital signal, the width of which is the bit width of the \ac{PD}'s error signal. This mimics a time measurement and allows for the phase difference to be recorded in a non binary manner.
 
-\begin{figure}[h] %TODO top
+\begin{figure}[h]
 	\centering
 	\includegraphics[scale=0.35]{../shan_bb_pd}
 	\caption{Bang-bang phase/frequency detector architecture. \cite{shan2014phd}.}
 	\label{fig:shan_bb_pd}
 \end{figure}
+
 \subsection{Digital Loop Filter}
 \begin{figure}[h]
 	\centering
-	\includegraphics[scale=0.45]{../pi_simple} %TODO this diagram
+	\includegraphics[scale=0.45]{../pi_simple}
 	\caption{Basic PI Controller Architecture.}
 	\label{fig:my_simple_pi}
-\end{figure}
-The loop filter in an ADPLL can be implemented as a PI controller as it is just a low pass filter, such as that in Figure \ref{fig:my_simple_pi}. In the case of an ADPLL node in a network the input of this filter is a weighted sum of two to four phase errors, each corresponding to a neighbouring node. In a digital system the proportional section is implemented by a simple multiplier, whereas the integral path is a combination of a multiplier and a delayed summation stage. The value of these gains determine the response and stability of the oscillator system. The transfer function of such a circuit is given by \cite{shan2014phd}:
+\end{figure}%TODO ask mulkeen if this is IIR
+The \acl{LF} in an \ac{ADPLL} can be implemented as a \ac{PI} controller, as only a low-pass filter is required, such as that in Figure \ref{fig:my_simple_pi}. In the case of a node in an \ac{ADPLL} network the input of this filter is a weighted of the phase difference relative to the neighbouring local clocking areas. In one example topology a digital system the proportional section can be implemented by a simple multiplier, whereas the integral path is constructed by adding the result of a multiplication by the proportional gain to an accumulator. This delayed summation can be easily implemented by an accumulator to which the current value of the multiplication is added each cycle, and as such the system has an infinite impulse response. The value of these gains determine the response and stability of the \ac{ADPLL} network. The transfer function of such a controller is given by \cite{shan2014phd}:
 \begin{equation*}
 	H(z) = \alpha + \beta\frac{1}{1-z^{-1}} = \frac{(\alpha + \beta) - \alpha z^{-1}}{1-z^{-1}}
 \end{equation*}
 It has been found by Koskin \textit{et al} (2018) that stable operation can be achieved when the integral gain, $k_i$, is less than half the proportional gain, $k_p$ \cite{koskin2018generation}. In the same study a range of values was found which would produce low jitter operation of the network. As these values are all less than one, the filter must implement fixed point arithmetic in an effort to maintain the simplicity of the clock distribution network, rather than incurring the complexity penalty of floating point calculations.
 
-\section{The Role of FPGAs}
+\subsection{Error Combiner}
+The \ac{ADPLL}s used in a network need to combine the error signals from multiple neighbours to determine what the average difference from its neighbours is, and this necessitates the addition of the Error Combiner. In a digital system this can be implemented by a weighted average of the different error signals, with the weight being modifiable at run-time. This configurability is what permits the system to implement uni-directional mode and also allows for the weighting applied to certain signals, such as the external reference, to be modified. The ease of implementation of a configurable error combiner is one of the main advantages of an \ac{ADPLL} over an analogue system.
+
+\section{The Role of the FPGA}
+A \acl{FPGA} is a type of \ac{IC} that is designed to be configured by a designer after the chip itself has been manufactured. An \ac{FPGA} contains a large number of logic elements that can be connected together in order to perform complex logic, written using the same \ac{HDL}s used to design the digital blocks of \ac{ASIC}s. They may also implement started modules such as adders, multiplexers and \ac{RAM} as a fundamental element. More complex logic is often implemented using multiplexed lookup tables rather than true logic elements. High end devices such as the Xilinx Zynq Ultrascale even implement Multi-Processor \ac{SOC}s. Compared to an \ac{ASIC} the designer does not have direct control over the layout of the system but rather describes its behaviour, possibly down to the basic logic elements of inverters or other gates. Limited control is possible over the placement of the individual modules, but \ac{EDA} tools are responsible for the exact placement of elements. As a result, it is not possible to have precise control over the delays experienced as signals propagate through the design. To assist with the resolution of any issues \ac{EDA}s provide tools to analyse timing behaviour.
+
+Prototyping on an \ac{FPGA} is a common verification stage for conventional \ac{ASIC} designs as it allows for a hardware validation of any digital circuitry, and the detection of any potential flaws or errors made by the design before the expensive of an \ac{ASIC} implementation. In their 2013 \ac{ADPLL} network implementation Zianbetov and Shan used an \ac{FPGA} in order to validate their programming interface, the design of the error processing block, ensure they had eliminated mode locking behaviour and to ensure phase synchronisation was possible \cite{zianbetov2013phd,shan2014phd}. However they experienced two main limitations, they were not able to implement the mixed-signal \ac{PFD} and \ac{DCO}, and the maximum frequency of operation possible was orders of magnitude lower than the GHz range of their \ac{ASIC} implementation. These issues were circumvented by implementing an alternative \ac{PFD} and \ac{DCO} designs which were driven by the clock distribution network provided by the \ac{FPGA} and every clock frequency scaled by the same amount such that the results of testing would remain indicative. One of the main advantages they saw was that the hardware description used for the digital blocks of their \ac{ASIC} could be directly ported over to the \ac{FPGA}.
+
+It is however possible to implement limited mixed-signal circuits on an \ac{FPGA} through the use of primitive logic elements, however, as control over the implementation is restricted to the module level it is not possible to mirror the implementation of a design intended for an \ac{ASIC}. As these implementations are analogous to a mixed-signal circuit on an \ac{ASIC}, the verification of theoretical behaviours, as done by Koskin \textit{et all}, in order to test the findings of his PhD thesis \cite{theboys2019}, is made possible without the expense of \ac{ASIC} fabrication. An \ac{FPGA} based mixed-signal \ac{ADPLL} network is also seeing use here in \ac{UCD} as a initial prototyping platform for the validation of new modules for use in \ac{ASIC} based \ac{ADPLL} networks.
+
+\ac{FPGA}s have been used in other fields to simulate and experiment with new technologies, although not all of these attempt to implement the mixed-signal circuitry using primitive elements. Fernandez-Alvarez \textit{et al} (2016) proposed a method suited to higher end \ac{FPGA}s in which a co-processor on the \ac{FPGA} simulates the mixed-signal circuitry while the digital section of the design is implemented on the \ac{FPGA} itself \cite{fernandez2017hw}. While the interfacing between hardware and software remains a challenge they found:
+\begin{quotation}
+	Obtained data are compared to the data obtained by means of using PSIM and ModelSim co-simulation. The proposed solution speeds up the evaluation in around one order of magnitude keeping the accuracy. The output signal differs in less than 0.6 mV (RMSD).
+\end{quotation}
+
+Mixed-signal circuits were, however, simulated in hardware by \'{O}scar Luc\'{i}a \textit{et al} (2011) on an \ac{FPGA} in order to overcome the excessive time penalty imposed by software based simulations that required the behaviour of both a digital and mixed-signal peripheral and that of a micro controller running code in C to be simulated side by side \cite{lucia2011real}. They concluded
+\begin{quotation}
+	... the proposed system provides a versatile and fast method to develop ad hoc control architectures, avoiding the need for time-consuming mixed-signal simulations and the risk of damaging the actual power converter implementation.
+\end{quotation}
+By carrying out simulations on an \ac{FPGA}, Guanhua Wang \textit{et al} (2013) achieved a 3000 times decrease in run-time when compared to an identical simulation in MATLAB used for the verification of a calibration algorithm for successive approximation analog-to-digital converters \cite{wang2013fast}. Many other examples exist of \ac{FPGA}s used for the simulation of mixed-signal or \acl{RF} circuits in literature.
+%TODO Elena had suggestions?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
