@@ -69,26 +69,46 @@
 
 %%%% ACRONYMS %%%%
 \DeclareAcronym{FPGA}{
-	short = FPGA, %TODO plural
+	short = FPGA, 
 	short-indefinite = an,
 	long = Field Programmable Gate Array
 }
 \DeclareAcronym{ADPLL}{
-short = ADPLL, %TODO plural
-short-indefinite = an,
-long = All-Digital Phase Lock Loop
+	short = ADPLL, 
+	short-indefinite = an,
+	long = All-Digital Phase Lock Loop
+}
+\DeclareAcronym{PLL}{
+	short = PLL, 
+	long = Phase Lock Loop
+}
+\DeclareAcronym{VCO}{
+short = VCO, 
+long = Voltage Controlled Oscillator
+}
+\DeclareAcronym{LF}{
+	short = LF, 
+	long = Loop Filter
+}
+\DeclareAcronym{PFD}{
+	short = PFD, 
+	long = Phase Frequency Detector
+}
+\DeclareAcronym{PD}{
+	short = PD, 
+	long = Phase Frequency Detector
 }
 \DeclareAcronym{UCD}{
 	short = UCD, 
 	long = University College Dublin
 }
 \DeclareAcronym{ASIC}{
-	short = ASIC, %TODO plural
+	short = ASIC, 
 	short-indefinite = an,
 	long = Application Specific Integrated Circuit
 }
 \DeclareAcronym{SOC}{
-	short = SoC, %TODO plural
+	short = SoC, 
 	short-indefinite = an,
 	long = System-On-Chip
 }
@@ -105,13 +125,25 @@ long = All-Digital Phase Lock Loop
 	long = Globally Asynchronous Locally Synchronous
 }
 \DeclareAcronym{IC}{
-short = IC,  
-long = Integrated Circuit,
-long-plural = s
+	short = IC,  
+	long = Integrated Circuit,
+	long-plural = s
 }
 \DeclareAcronym{CPU}{
-short = CPU, 
-long = Central Processing Unit
+	short = CPU, 
+	long = Central Processing Unit
+}
+\DeclareAcronym{CMOS}{
+	short = CMOS, 
+	long = Complementary Metal Oxide Semiconductor
+}
+\DeclareAcronym{DCO}{
+short = DCO, 
+long = Digitally Controlled Oscillator
+}
+\DeclareAcronym{NCO}{
+short = NCO, 
+long = Numerically Controlled Oscillator
 }
 %%%% ACRONYMS %%%%
 
@@ -233,13 +265,13 @@ long = Central Processing Unit
 \pagestyle{plain}
 
 \setstretch{1.3}
-
 %\chapter*{Acknowledgements } \addcontentsline{toc}{chapter}{Acknowledgements }
 %\input{ackns.tex}
 
 \chapter*{Acronyms} \addcontentsline{toc}{chapter}{Acronyms}
 \printacronyms
 
+\doublespacing
 \chapter*{Abstract} \addcontentsline{toc}{chapter}{Abstract}
 \input{Abstract.tex}
 
