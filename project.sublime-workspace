@@ -4,20 +4,68 @@
 		"selected_items":
 		[
 			[
+				"as",
+				"async_i"
+			],
+			[
+				"p",
+				"posedge\tkeyword"
+			],
+			[
+				"std_lo",
+				"std_logic_vector"
+			],
+			[
+				"te",
+				"temp_8bit_bus2"
+			],
+			[
+				"erro",
+				"error_i"
+			],
+			[
+				"l",
+				"lf_out_x"
+			],
+			[
+				"t",
+				"temp_8bit_bus2"
+			],
+			[
+				"KI",
+				"Ki_i"
+			],
+			[
+				"err",
+				"error_x"
+			],
+			[
+				"ki",
+				"ki_error_inte_c"
+			],
+			[
+				"adpll_33_",
+				"adpll_33_error_left_x"
+			],
+			[
+				"adpll_23_error",
+				"adpll_23_error_left_x"
+			],
+			[
+				"adpll_23",
+				"adpll_23_gen_x"
+			],
+			[
+				"d1",
+				"d1"
+			],
+			[
 				"adpll_32_err",
 				"adpll_32_error_top_x"
 			],
 			[
-				"ki",
-				"ki_error_c"
-			],
-			[
 				"KP_PA",
 				"KP_PART_SEL_INT_WIDTH-1"
-			],
-			[
-				"KI",
-				"KI_MULT_RES_INT_WIDTH"
 			],
 			[
 				"KI_MU",
@@ -32,10 +80,6 @@
 				"reference_x"
 			],
 			[
-				"err",
-				"error_i"
-			],
-			[
 				"ki_error_",
 				"ki_error_inte_c"
 			],
@@ -45,10 +89,6 @@
 			],
 			[
 				"temp",
-				"temp_8bit_bus1"
-			],
-			[
-				"te",
 				"temp_8bit_bus1"
 			],
 			[
@@ -474,51 +514,47 @@
 			[
 				"get",
 				"get"
-			],
-			[
-				"cars",
-				"cars_dict"
-			],
-			[
-				"se",
-				"sector_3"
-			],
-			[
-				"lap",
-				"lap_time"
-			],
-			[
-				"Lap",
-				"lap_time"
-			],
-			[
-				"h",
-				"hour_str"
-			],
-			[
-				"mi",
-				"min_str"
-			],
-			[
-				"DR",
-				"DRIVER_NUMBER"
-			],
-			[
-				"lap_",
-				"lap_time"
-			],
-			[
-				"s1",
-				"s1_large"
-			],
-			[
-				"el",
-				"elapsed"
 			]
 		]
 	},
 	"buffers":
 	[
+		{
+			"file": "thesis/Thesis_Main_File.tex",
+			"settings":
+			{
+				"buffer_size": 5365,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "thesis/Abstract.tex",
+			"settings":
+			{
+				"buffer_size": 2733,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "thesis/LayAbstract.tex",
+			"settings":
+			{
+				"buffer_size": 2158,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "conf_paper/paper.tex",
+			"settings":
+			{
+				"buffer_size": 28624,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -532,6 +568,18 @@
 		"selected_items":
 		[
 			[
+				"pack",
+				"Package Control: Install Package"
+			],
+			[
+				"vmen",
+				"View: Toggle Menu"
+			],
+			[
+				"package control:",
+				"Package Control: Install Package"
+			],
+			[
 				"hexviewer:edit",
 				"HexViewer: Show Hex Edit Panel"
 			],
@@ -544,9 +592,11 @@
 	},
 	"console":
 	{
-		"height": 0.0,
+		"height": 414.0,
 		"history":
 		[
+			"close",
+			"sublime.message_dialog(\"You fuckin ape\")"
 		]
 	},
 	"distraction_free":
@@ -560,20 +610,66 @@
 	},
 	"expanded_folders":
 	[
-		"/home/conor/Documents/Year_5/Project/project_git_files"
+		"/home/conor/Documents/Year_5/Project/project_git_files",
+		"/home/conor/Documents/Year_5/Project/project_git_files/thesis"
 	],
 	"file_history":
 	[
-		"/home/conor/Documents/Year_5/Project/project_git_files/measurements",
-		"/home/conor/Documents/Year_5/Python/ass1/preserved_data.csv",
-		"/home/conor/Documents/Year_5/Project/project_git_files/sim_sources/LoopFilterTestBench.sv",
+		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/TwoByTwoTest.v",
+		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/NetworkRingADPLL.v",
+		"/home/conor/Documents/Year_5/Project/project_git_files/constraints/ThreeByThreeRing_FixedEverything.xdc",
+		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/TwoByTwoRingTest.v",
+		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/ThreeByThreeRingTest.v",
+		"/home/conor/Documents/Year_5/Embedded/assign_3/verilog/design_sources/AHBliteTop.v",
+		"/home/conor/Documents/Year_5/Project/project_git_files/constraints/Nexys4_ext_ref.xdc",
+		"/home/conor/Documents/Year_5/Project/project_git_files/todo/remaining_files.txt",
+		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/RingADPLL.v",
 		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/NetworkADPLL.v",
+		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/PhaseDetectorDL.v",
+		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/ADPLL.v",
+		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/RingOsc.v",
+		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/PhaseAccum.v",
+		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/PhaseDetector.v",
+		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/ReferenceSelector.v",
+		"/home/conor/Documents/Year_5/Project/project_git_files/conf_paper/distrib_ring.png",
+		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/UpDownCounter.v",
+		"/home/conor/Documents/Year_5/Project/project_git_files/conf_paper/paper.pdf",
+		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/junk/TDC.v",
+		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/junk/LoopFilterJunk.v",
+		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/untitled.sv",
+		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/OldLoopFilter.v",
+		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/stateMachine.v",
+		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/Synchroniser.v",
+		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/SaveCounter.v",
+		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/SRLatchGate.v",
+		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/LoopFilter.v",
+		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/PulseOnNegEdge.v",
+		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/PulseOnPosEdge.v",
+		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/Div8.v",
+		"/home/conor/Documents/Year_5/Project/project_git_files/vivado.jou",
+		"/home/conor/Documents/Year_5/Project/project_git_files/project.sublime-project",
+		"/home/conor/Documents/Year_5/Project/project_git_files/conf_paper/paper.tex",
+		"/home/conor/Documents/Year_5/Project/project_git_files/matlab/a1_3.m",
+		"/home/conor/Documents/Year_5/Project/project_git_files/sim_sources/LoopFilterTestBench.sv",
+		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/ADPLLw2Inputs.sv",
+		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/NetworkRing.v",
+		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/LoopFilterPierre.vhd",
+		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/LoopFilterTest.v",
+		"/home/conor/Documents/Year_5/Project/project_git_files/constraints/TwoByTwoRing_FixedEverything.xdc",
+		"/home/conor/Documents/Year_5/Project/project_git_files/tex_files/Journal.tex",
+		"/home/conor/Documents/Year_5/Project/project_git_files/conf_paper/critique.tex",
+		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/ErrorCombiner.v",
+		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/lf_test.v",
+		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/PI_Filter_v0.vhd",
+		"/home/conor/Documents/Year_5/Project/project_git_files/constraints/ThreeByThreeRing.xdc",
+		"/home/conor/Documents/Year_5/Project/project_git_files/measurements",
+		"/home/conor/Documents/Year_5/Project/project_git_files/tex_files/placeholder.tex",
+		"/home/conor/.config/sublime-text-3/Packages/User/LaTeX.sublime-build",
+		"/home/conor/Documents/Year_5/Project/project_git_files/constraints/TwoByTwoRing.xdc",
+		"/home/conor/Documents/Year_5/Project/project_git_files/impl_locking.png",
+		"/home/conor/Documents/Year_5/Python/ass1/preserved_data.csv",
 		"/home/conor/Documents/Year_5/Python/ass1/assign1.ipynb",
 		"/home/conor/Documents/Year_5/Python/ass1/process_data.py",
-		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/TwoByTwoTest.v",
-		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/UpDownCounter.v",
-		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/Div8.v",
-		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/NetworkRing.v",
 		"/home/conor/Documents/Year_5/Embedded/ass1/adc.c",
 		"/home/conor/Documents/Year_5/Embedded/ass1/spi.c",
 		"/home/conor/Documents/Year_5/Embedded/ass1/main.c",
@@ -590,32 +686,19 @@
 		"/home/conor/Documents/Year_5/Embedded/ass1/combined_test.c",
 		"/home/conor/Documents/Year_5/Embedded/ass1/voltage.h",
 		"/home/conor/Documents/Year_5/Embedded/ass1/voltage.c",
-		"/home/conor/Documents/Year_5/Project/project_git_files/constraints/Nexys4_ext_ref.xdc",
-		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/TwoByTwoRingTest.v",
 		"/home/conor/Documents/Year_5/Embedded/ass1/voltage",
-		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/PhaseDetector.v",
-		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/PhaseAccum.v",
-		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/PhaseDetectorDL.v",
 		"/home/conor/Documents/Year_5/Embedded/ass1/f_measure.h",
-		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/stateMachine.v",
-		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/RingOsc.v",
 		"/home/conor/Documents/Year_5/Project/project_git_files/sim_sources/PhaseDetectorDLTestBench.sv",
-		"/home/conor/Documents/Year_5/Project/project_git_files/constraints/TwoByTwoRing.xdc",
 		"/home/conor/Documents/Year_5/Project/project_git_files/waveforms/arb_test.wcfg",
 		"/home/conor/Documents/Year_5/Project/project_vivado_files/non_network_att2/project_1.sim/sim_1/synth/timing/xsim/xvlog.log",
 		"/home/conor/Documents/Year_5/Python/ass1/get_item_data.py",
-		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/untitled.sv",
 		"/home/conor/Documents/Year_5/Project/project_git_files/sim_sources/PhaseDetectorTestBench.sv",
-		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/SRLatchGate.v",
 		"/home/conor/Documents/Year_5/Python/ass1/query_result.csv",
 		"/home/conor/Documents/Year_5/Python/ass1/dfsds.json",
 		"/home/conor/Documents/Year_5/Project/project_git_files/measurement",
-		"/home/conor/Documents/Year_5/Project/project_git_files/constraints/TwoByTwoRing_FixedEverything.xdc",
 		"/home/conor/Documents/Year_3/Cpp/ass8/Trailer.h",
 		"/home/conor/Documents/Year_3/Cpp/ass8/Trailer.cpp",
 		"/home/conor/Documents/Year_5/Project/project_git_files/sim_sources/PhDetTopTestBench.sv",
-		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/LoopFilter.v",
-		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/ErrorCombiner.v",
 		"/home/conor/Documents/Year_5/Project/project_git_files/sim_sources/TwoByTwoTestBench.sv",
 		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/TwoConnectedTest.v",
 		"/home/conor/Documents/Year_5/Project/project_git_files/sim_sources/ErrorCombinerTestBench.sv",
@@ -625,7 +708,6 @@
 		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/ExtRefTest5M.v",
 		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/OscTestTopLevel.v",
 		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/RingRangeTest.v",
-		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/RingADPLL.v",
 		"/home/conor/Documents/Year_5/Project/project_git_files/constraints/Nexys4_RingADPLLTop_Placement_new.xdc",
 		"/home/conor/Documents/Year_5/Python/Racing/import_csv.py",
 		"/home/conor/Documents/Year_5/Python/ass1/people.csv",
@@ -639,11 +721,8 @@
 		"/home/conor/Documents/Year_5/Project/project_git_files/sim_sources/RingOscTest.v",
 		"/home/conor/Documents/Year_5/Project/project_vivado_files/non_network_att2/project_1.sim/sim_1/impl/timing/xsim/elaborate.log",
 		"/home/conor/Documents/Year_5/Project/project_git_files/constraints/TwoByTwo.xdc",
-		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/SaveCounter.v",
 		"/home/conor/Documents/Year_5/Project/project_vivado_files/non_network_att2/project_1.sim/sim_1/behav/xsim/elaborate.log",
-		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/ADPLLw2Inputs.sv",
 		"/home/conor/Documents/Year_5/Project/project_vivado_files/non_network_att2/project_1.runs/synth_1/runme.log",
-		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/ADPLL.v",
 		"/home/conor/Documents/Year_5/Project/project_git_files/sim_sources/PhDetTopTestBenchSaveVal.sv",
 		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/PhDetTopLevel.v",
 		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/RingOscADPLLTopLevel.v",
@@ -663,39 +742,11 @@
 		"/home/conor/Documents/Year_5/Project/project_git_files/sim_sources/Div8Test.sv",
 		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/clockReset.v",
 		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/RingOscTopLevel.v",
-		"/home/conor/Documents/Year_5/SoftwareEng/caffeine/doc/state_machine.dia",
-		"/home/conor/Documents/Year_5/Project/project_vivado_files/non_network_att2/project_1.srcs/sim_1/new/TestMaths.v",
-		"/home/conor/Documents/Year_5/SoftwareEng/essay/essay.tex",
-		"/home/conor/Documents/Year_5/Project/project_git_files/tex_files/presentation.tex",
-		"/home/conor/Documents/Year_4/ASP/ASP_ConorDooley_Assign2_Updated.m",
-		"/home/conor/Documents/Year_5/Project/project_git_files/tex_files/presentation.",
-		"/home/conor/Documents/Year_5/Project/project_vivado_files/non_network_adpll/non_network_adpll.sim/sim_1/synth/timing/xsim/elaborate.log",
-		"/home/conor/Documents/Year_5/Project/project_vivado_files/non_network_adpll/non_network_adpll.sim/sim_1/impl/timing/xsim/UpDownCounterTestBench_time_impl.v",
-		"/home/conor/Documents/Year_5/Project/project_vivado_files/non_network_adpll/non_network_adpll.sim/sim_1/impl/timing/xsim/PhaseDetectorTestBench_time_impl.v",
-		"/home/conor/Documents/Year_5/Project/project_vivado_files/non_network_adpll/non_network_adpll.sim/sim_1/impl/timing/xsim/elaborate.log",
-		"/home/conor/Documents/Year_5/Project/project_vivado_files/non_network_adpll/non_network_adpll.sim/sim_1/synth/timing/xsim/PhaseDetectorTestBench_time_synth.v",
-		"/home/conor/Documents/Year_5/Project/project_git_files/sim_sources/UpDownCounterTestBench.sv",
-		"/home/conor/Documents/Year_5/Project/project_git_files/sim_sources/SaveAndClearTestBench.sv",
-		"/home/conor/Documents/Year_5/Project/project_vivado_files/non_network_adpll/non_network_adpll.sim/sim_1/impl/timing/xsim/PhDetTopTestBenchValSave_time_impl.v",
-		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/PulseOnPosEdge.v",
-		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/Synchroniser.v",
-		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/displayInterface.v",
-		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/ClockReset5_258_PDiff.v",
-		"/home/conor/Documents/Year_5/Project/project_vivado_files/non_network_adpll/non_network_adpll.sim/sim_1/behav/xsim/log",
-		"/home/conor/Documents/Year_5/Project/project_git_files/waveforms/PhDetTopTestBenchSaveVal_behav.wcfg",
-		"/home/conor/Documents/Year_5/Project/project_vivado_files/non_network_adpll/non_network_adpll.sim/sim_1/behav/xsim/elaborate.log",
-		"/home/conor/Documents/Year_5/Project/project_vivado_files/non_network_adpll/non_network_adpll.sim/sim_1/behav/xsim/xvlog.log",
-		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/PulseOnNegEdge.v",
-		"/home/conor/Documents/Year_5/Project/project_vivado_files/non_network_adpll/non_network_adpll.sim/sim_1/synth/timing/xsim/xvlog.log",
-		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/ClockReset5_400_PDiff.v",
-		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/ReferenceSelector.v",
-		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/hex2seg.v",
-		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/SignedDec2Hex.v",
-		"/home/conor/Documents/Year_5/Project/project_vivado_files/non_network_adpll/non_network_adpll.runs/impl_1/PhDetTopLevel.vdi"
+		"/home/conor/Documents/Year_5/SoftwareEng/caffeine/doc/state_machine.dia"
 	],
 	"find":
 	{
-		"height": 26.0
+		"height": 44.0
 	},
 	"find_in_files":
 	{
@@ -706,9 +757,48 @@
 	},
 	"find_state":
 	{
-		"case_sensitive": true,
+		"case_sensitive": false,
 		"find_history":
 		[
+			"_i_373__4",
+			"_i_373",
+			"373__4",
+			"todo",
+			"temp_8bit_bus2",
+			"temp_8bit_bus1",
+			"todo",
+			"junk    todo",
+			"NetworkRing",
+			"adpll_12",
+			"NetworkRing",
+			"adpll_22",
+			"+10",
+			"ringsize",
+			"neg",
+			"64",
+			"335__2",
+			"333",
+			"PI_Filter_v0",
+			"results the",
+			"reference_x",
+			"JD",
+			"clock driven",
+			"matlab and table",
+			"(",
+			"JD",
+			"RINGSI",
+			"adpll_22",
+			"adpll_13",
+			"adpll_23",
+			"ref_above_c",
+			"ref_left_c",
+			"unused",
+			"13",
+			"12",
+			"switches_i[15])",
+			"12",
+			"23",
+			"13"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -716,6 +806,19 @@
 		"regex": false,
 		"replace_history":
 		[
+			"oscope_8bit_bus2",
+			"oscope_8bit_bus1",
+			"junk    done",
+			"NetworkRingADPLL",
+			"ext_reference_r",
+			"ref_above_r",
+			"ref_left_r",
+			"23",
+			"13",
+			"enable_x)",
+			"13",
+			"33",
+			"23"
 		],
 		"reverse": false,
 		"show_context": true,
@@ -726,14 +829,152 @@
 	"groups":
 	[
 		{
+			"selected": 2,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "thesis/Thesis_Main_File.tex",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5365,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								172,
+								172
+							]
+						],
+						"settings":
+						{
+							"SL.173.region_keys":
+							[
+							],
+							"syntax": "Packages/LaTeX/LaTeX.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "thesis/Abstract.tex",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2733,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2375,
+								2375
+							]
+						],
+						"settings":
+						{
+							"SL.174.region_keys":
+							[
+							],
+							"spell_check": true,
+							"syntax": "Packages/LaTeX/LaTeX.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "thesis/LayAbstract.tex",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2158,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								163,
+								163
+							]
+						],
+						"settings":
+						{
+							"SL.15.region_keys":
+							[
+							],
+							"SL.176.region_keys":
+							[
+							],
+							"spell_check": true,
+							"syntax": "Packages/LaTeX/LaTeX.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "conf_paper/paper.tex",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 28624,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1002,
+								1002
+							]
+						],
+						"settings":
+						{
+							"SL.175.region_keys":
+							[
+								"SL.annotations.Highlights.|3cc1af7a25d04fb6c6dabdd91c07ba04dae8d61d2f08ff7de3931e8d2c8431d2|region.yellowish markup.warning.sublime_linter|32",
+								"SL.annotations.Highlights.|226a19939595e4f2cc79198b2362a8e9f7891dcb6ad9069f43c043a766a37b70|region.yellowish markup.warning.sublime_linter|32",
+								"SL.annotations.Gutter.|region.yellowish markup.warning.sublime_linter|dot",
+								"SL.annotations.Highlights.|31a3e33eee3e4a6a56596958ea06559e00bb3c2a3f717be00ac5c478d2f87fc6|region.yellowish markup.warning.sublime_linter|32",
+								"sublime_linter.protected_regions",
+								"SL.annotations.Highlights.|1e6441eb3fad83d520ada2814cff72a6576fd5a2eccbbcbf12c51f09449c1185|region.yellowish markup.warning.sublime_linter|32"
+							],
+							"syntax": "Packages/LaTeX/LaTeX.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 162.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				}
 			]
 		}
 	],
 	"incremental_find":
 	{
-		"height": 26.0
+		"height": 31.0
 	},
 	"input":
 	{
@@ -762,6 +1003,14 @@
 		]
 	},
 	"menu_visible": true,
+	"output.SublimeLinter":
+	{
+		"height": 0.0
+	},
+	"output.exec":
+	{
+		"height": 0.0
+	},
 	"output.find_results":
 	{
 		"height": 0.0
@@ -770,11 +1019,15 @@
 	{
 		"height": 120.0
 	},
-	"pinned_build_system": "",
+	"output.unsaved_changes":
+	{
+		"height": 127.0
+	},
+	"pinned_build_system": "Packages/User/LaTeX.sublime-build",
 	"project": "project.sublime-project",
 	"replace":
 	{
-		"height": 48.0
+		"height": 79.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -812,7 +1065,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 285.0,
+	"side_bar_width": 236.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

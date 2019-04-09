@@ -22,6 +22,7 @@
 \usepackage{listings}
 \usepackage{setspace}
 \usepackage{acro}
+\usepackage{etoolbox}
 
 %%maths
 \usepackage{units}
@@ -45,7 +46,7 @@
 \usepackage{float}
 \usepackage{caption}
 
-\usepackage{tikz}
+%\usepackage{tikz}
 
 \usepackage[
 	unicode=true,pdfusetitle,
@@ -185,6 +186,7 @@ long = Radio Frequency
 \fancyfoot[C]{\thepage}
 
 \preto\chapter
+\preto\chapter\acresetall
 
 \@ifundefined{showcaptionsetup}{}{%
  \PassOptionsToPackage{caption=false}{subfig}}
