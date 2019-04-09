@@ -68,115 +68,7 @@
 }
 
 %%%% ACRONYMS %%%%
-\DeclareAcronym{FPGA}{
-	short = FPGA, 
-	short-indefinite = an,
-	long = Field Programmable Gate Array
-}
-\DeclareAcronym{ADPLL}{
-	short = ADPLL, 
-	short-indefinite = an,
-	long = All-Digital Phase Lock Loop
-}
-\DeclareAcronym{PLL}{
-	short = PLL, 
-	long = Phase Lock Loop
-}
-\DeclareAcronym{VCO}{
-short = VCO, 
-long = Voltage Controlled Oscillator
-}
-\DeclareAcronym{LF}{
-	short = LF, 
-	long = Loop Filter
-}
-\DeclareAcronym{PFD}{
-	short = PFD, 
-	long = Phase Frequency Detector
-}
-\DeclareAcronym{PD}{
-	short = PD, 
-	long = Phase Detector
-}
-\DeclareAcronym{UCD}{
-	short = UCD, 
-	long = University College Dublin
-}
-\DeclareAcronym{ASIC}{
-	short = ASIC, 
-	short-indefinite = an,
-	long = Application Specific Integrated Circuit
-}
-\DeclareAcronym{SOC}{
-	short = SoC, 
-	short-indefinite = an,
-	long = System-On-Chip
-}
-\DeclareAcronym{IOT}{
-	short = IOT, 
-	long = Internet Of Things
-}
-\DeclareAcronym{GSLS}{
-	short = GSLS, 
-	long = Globally Synchronous Locally Synchronous
-}
-\DeclareAcronym{GALS}{
-	short = GALS, 
-	long = Globally Asynchronous Locally Synchronous
-}
-\DeclareAcronym{IC}{
-	short = IC,  
-	long = Integrated Circuit,
-	long-plural = s
-}
-\DeclareAcronym{CPU}{
-	short = CPU, 
-	long = Central Processing Unit
-}
-\DeclareAcronym{CMOS}{
-	short = CMOS, 
-	long = Complementary Metal Oxide Semiconductor
-}
-\DeclareAcronym{DCO}{
-short = DCO, 
-long = Digitally Controlled Oscillator
-}
-\DeclareAcronym{NCO}{
-short = NCO, 
-long = Numerically Controlled Oscillator
-}
-\DeclareAcronym{TDC}{
-	short = TDC, 
-	long = Time to Digital Converter
-}
-\DeclareAcronym{TDL}{
-short = TDL, 
-long = Tapped Delay Line
-}
-\DeclareAcronym{PI}{
-short = PI, 
-long = Proportional Integral
-}
-\DeclareAcronym{IIR}{
-short = IIR, 
-long = Infinite Impulse Response
-}
-\DeclareAcronym{HDL}{
-short = HDL, 
-long = Hardware Description Language
-}
-\DeclareAcronym{RAM}{
-short = RAM, 
-long = Random Access Memory
-}
-\DeclareAcronym{EDA}{
-short = EDA, 
-long = Electronic Design Automation
-}
-\DeclareAcronym{RF}{
-short = RF, 
-long = Radio Frequency
-}
+\input{Acronyms}
 %%%% ACRONYMS %%%%
 
 \fancyhead{}
@@ -328,19 +220,14 @@ long = Radio Frequency
 
 \chapter{Introduction}\label{chap:1}
 \input{Introduction.tex}
-
 \setcounter{chapter}{1}
 
 \chapter{Background Review}\label{chap:2}
-
 \input{Background.tex}
-%
-%\setcounter{chapter}{2}
-%
-%\chapter{Kinetic Energy Harvesters}\label{chap:3}
-%
-%\input{Chapter_3.tex}
-%
+
+\chapter{FPGA Based ADPLL Design}\label{chap:3}
+\input{Background.tex}
+
 \pagebreak{}
 \phantomsection
 \addcontentsline{toc}{chapter}{Bibliography}
