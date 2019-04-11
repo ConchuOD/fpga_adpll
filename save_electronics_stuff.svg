@@ -184,6 +184,13 @@
        apply_no_weight="true"
        apply_with_weight="true"
        only_selected="false" />
+    <pattern
+       y="0"
+       x="0"
+       height="6"
+       width="6"
+       patternUnits="userSpaceOnUse"
+       id="EMFhbasepattern" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -1018,6 +1025,26 @@
        style="fill:none;stroke:#000000;stroke-width:0.30000001;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="M 90.771057,8.2473385 H 87.076056"
        id="path6270-4"
+       inkscape:connector-curvature="0" />
+    <path
+       id="path1097"
+       d="m 89.005813,51.69008 2.645813,1.33349 v 5.291628 l -2.645813,1.312323 z"
+       style="fill:none;stroke:#000000;stroke-width:0.27516463px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       inkscape:connector-curvature="0" />
+    <path
+       id="path1099"
+       d="m 91.651626,55.669384 h 1.333491"
+       style="fill:none;stroke:#000000;stroke-width:0.27516463px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       inkscape:connector-curvature="0" />
+    <path
+       id="path1101"
+       d="M 89.005813,53.806731 H 86.359999"
+       style="fill:none;stroke:#000000;stroke-width:0.27516463px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       inkscape:connector-curvature="0" />
+    <path
+       id="path1103"
+       d="M 89.005813,57.51087 H 86.359999"
+       style="fill:none;stroke:#000000;stroke-width:0.27516463px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        inkscape:connector-curvature="0" />
   </g>
 </svg>
