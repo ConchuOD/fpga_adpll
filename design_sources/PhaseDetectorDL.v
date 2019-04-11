@@ -161,7 +161,7 @@ module PhaseDetectorDL #(parameter WIDTH = 5) (
     //concatanation of sign and magnutide
     always @ (error_bin_r or sign_delay_r)
     begin
-        if(sign_delay_r)    error_2s_comp_c = $signed({sign_delay_r,~(error_bin_r[MAG_WIDTH-1:0]}-1'b1));
+        if(sign_delay_r)    error_2s_comp_c = $signed({sign_delay_r,~(error_bin_r[MAG_WIDTH-1:0])}-1'b1);
         else                error_2s_comp_c = $signed({sign_delay_r,error_bin_r[MAG_WIDTH-1:0]});
     end
     
