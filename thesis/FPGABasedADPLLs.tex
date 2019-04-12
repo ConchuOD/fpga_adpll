@@ -63,7 +63,7 @@ The output value of the inverter at the end of the chain changes a non-zero amou
 \end{equation}
 Here, $\tau_{inv}$ is the propagation time through one inverter, $N$ is the number of inverters in the chain and the multiple of two arises from the necessity to invert twice to produce a square wave.
 
-The main advantage of this type of oscillator stems from its similarity to that used on an \ac{ASIC} which leads to many non-idealities carrying over from the truly mixed-signal implementation. Rather than being just a tool to validate that other modules, the performance of this oscillator can be analysed more deeply as well as the performance of networks containing it. Koskin \textit{et al} used such a design to test theories proposed regarding the synchronisation of oscillators during his PhD using this type of oscillator implemented on an \ac{FPGA} \cite{koskin2019phd,theboys2019}.
+The main advantage of this type of oscillator stems from its similarity to that used on an \ac{ASIC} which leads to many non-idealities carrying over from the truly mixed-signal implementation. Rather than being just a tool to validate that other modules, the performance of this oscillator can be analysed more deeply as well as the performance of networks containing it. Koskin \textit{et al} used such a design to test theories proposed regarding the synchronisation of oscillators during his PhD using this type of oscillator implemented on an \ac{FPGA} \cite{koskin2019phd,theboys2019}. Also in this design's favour is the period step size, four times the inverter propagation delay, which was found experimentally to be than in the region of a nanosecond on Xilinx Artix-7 and Zynq \ac{FPGA}s.
 
 While it is advantageous for the purposes of analysis that this design is affected by variation in temperature, implementation and other non-idealities this brings with it challenges not present in a true mixed-signal design. In a design intended for an \ac{ASIC} the design has near total control over the placement of circuit elements, however, the \ac{FPGA} based counterpart control is available over just the area in which the oscillator may lie, and the \ac{EDA} is responsible for the exact placement. Unlike the \ac{ASIC} implementation, in which the propagation delay through each element of the ring is well bounded, the lack of control over placement means that the propagation time through each inverter is not well bounded and may vary wildly. This makes it time consuming to ensure that the frequency tuning ranges of each oscillator match that desired, and use of this oscillator less straight-forward than that of the previous two designs.
 
@@ -83,14 +83,24 @@ Three potential \acl{PD} designs will be addressed in this thesis, sign-only det
 
 \subsection{Bang-Bang Detector}
 A Bang-Bang Detector is a sign-only detector, thus outputting a phase error just a single bit wide. This can be accomplished using a single flip-flop, with the reference signal acting as the clock, in this case using the rising edge, a design verified by Predrag in his 2011 thesis \cite{redrag}. The generated signal is applied to the $D$ input, thus when a rising edge is seen on the reference the value of the generated signal is held as the $Q$ output until the next rising edge of the reference. If the generated signal has gone high prior to the reference, and leading it, the value of $Q$ will be 1, thereby matching the expected sign behaviour. Trivially it can be seen that the case where the generated signal lags the reference the $Q$ will show 0.
-
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.4\textwidth]{../BB}
+	\caption[Bang-bang phase detector \ac{RTL} diagram]{Bang-bang phase detector \ac{RTL} diagram.}
+	\label{fig:bang_bang}
+\end{figure}
 
 This design is simple but effective, and can even be used without a loop filter, albeit with a very limited oscillator tuning range. This is especially valuable an attribute at an early stage of platform development, as it may be used in order to test that other aspects of the system work as intended. The binary resolution of this detector, however, restricts its usefulness as the \ac{ADPLL} cannot react more quickly to larger phase differences.
 
 \subsection{\acs{FPGA} Clocked Phase Detector}
+The easier to implement of the two designs uses a combination of a state machine to determine which edge occurred first, and to control a twos' complement up-down counter the estimates the magnitude of the error.
+
 \subsubsection{State Machine Based Detection}
-The easier to implement of the two designs uses a combination of a state machine to determine
 \subsubsection{Up-Down Counter}
+The up-down counter in this design performs estimates the magnitude of the phase difference between the reference and generated signals. The state machine provides control instructions, indicating whether the count should be in the increasing or decreasing directions, and and holds the counter in reset once the measurement interval has been completed. The counter counts in twos' complement, so counting in the downward direction can be carried out by adding on the representation of -1, the binary signal containing all 1s. The other advantage of counting in two's complement is that count value is already in the correct format for the follow block, the phase detector in a regular \ac{ADPLL} or the error combiner in this instance, therefore the count value at the end of the measurement interval can be stored in a register, which maintains the output value of the phase detector between measurements. Twos' complement is an advantageous way to represent signed numbers in hardware as the mathematical operations are identical to their unsigned counterparts, thus allowing use of any adder or carry hardware that may be present on the \ac{FPGA}.
+
+This counter is best suited for use with the aforementioned \ac{FSM} sign detection circuitry, and would see no benefit from a combination with the un-clocked sign detection circuit that will be presented in the following section. This is the case as if quantisation to the \ac{FPGA} clock had not already occurred in the sign detection circuit it would occur in this counter, as increments are only possible at \ac{FPGA} clocking events, thereby enforcing quantisation to the \ac{FPGA} clock. The coarseness of this measurement, restricted to time delay increments equal to the \ac{FPGA} clock period means that it is an ideal detection method for the clocked oscillators, as the minimum phase difference that can be detected matches exactly with the minimum step by which the oscillator period can be tuned. This design can, however, be used with the \acl{RO}, provided the \acl{LF} gains are adjusted to maintain the oscillator to detector step relationship.
+
 \subsection{SigNum Detector}
 \subsubsection{Sign Detection}
 \subsubsection{Tapped Delay Line}
@@ -106,12 +116,19 @@ Similarly this reasoning can be expanded to the division, where the complicated 
 The \acl{LF} in an \ac{ADPLL} can be implemented as a \ac{PI} controller, a circuit that can be implemented in a wide variety of ways, with the exact implementation having little impact on behaviour. The first choice to be made is whether the designer wishes to implement the controller as an \ac{FIR} or \ac{IIR} filter. Both methods will produce a controller that fundamentally behaves the same way, but will have a starkly different implementation. In both cases the filter can be implemented using either fractional or integer representation of the data, depending on the wishes of the designer. Carrying out computations using fractional values may be conceptually easier to understand as the magnitude of individual paths or taps will be independent of another, whereas using integer representations allows for a simpler implementation. If fractional representation is used, it will be done with fixed-point arithmetic as the time complexity of floating point calculations is too great and the potential benefits are inconsequential. The \acl{LF} output may be applied directly to the oscillator, or an intermediate calculation done to set a bias point.
 
 \subsection{\ac{FIR} \acl{LF}}
-The \ac{FIR} implementation of the \acl{LF} will take the form presented in Figure \ref{fig:fir_pi} (a), and consists series of time delays, or ``taps'', the output of which is multiplied by a coefficient and the result of each multiplier added together to form the filter output. Various tools, Matlab for example, can be used to compute the coefficients and number of taps required to obtain a specific filter response. Using an \ac{FIR} filter is advantageous as it is always stable due to the lack of a feedback path, however a large number of taps are required to obtain a frequency response akin to that of the \ac{IIR} implementation, thus requiring an equal number of multipliers and $taps-1$ adders. Compared to an \ac{IIR}, which requires just a two adders, two multipliers and a flip-flop this has a much greater hardware footprint. It is possible to condense the \ac{FIR} multiplication and addition to a single multiplier and adder, depicted in \ref{fig:fir_pi} (b), however this will take as many clock cycles to complete as there are taps. This, however, is not viable in this system as the filter must produce its output in a single clock cycle.
+The \ac{FIR} implementation of the \acl{LF} will take the form presented in Figure \ref{fig:fir_pi} (a), and consists series of time delays, or ``taps'', the output of which is multiplied by a coefficient and the result of each multiplier added together to form the filter output. Various tools, Matlab for example, can be used to compute the coefficients and number of taps required to obtain a specific filter response. Using an \ac{FIR} filter is advantageous as it is always stable due to the lack of a feedback path, however a large number of taps are required to obtain a frequency response akin to that of the \ac{IIR} implementation, thus requiring an equal number of multipliers and $taps-1$ adders. Compared to an \ac{IIR}, which requires just a two adders, two multipliers and a flip-flop this has a much greater hardware footprint. It is possible to condense the \ac{FIR} multiplication and addition to a single multiplier and adder, depicted in \ref{fig:fir_pi} (b), however this will take as many clock cycles to complete as there are taps. This, however, is not viable in this system as the filter must produce its output in a single clock cycle. In the case of any coefficient symmetry, addition can be performed prior to multiplication, thus reducing the number of multipliers for each identical coefficient.
+\begin{figure}[h]
+	\centering
+	\subfloat[Typical FIR Filter]{{\includegraphics[width=0.6\textwidth]{../FIR_1} }}\\
+	\subfloat[Single Multiplier FIR Filter]{{\includegraphics[width=0.6\textwidth]{../FIR_2} }}%
+	\caption[\ac{FIR} \ac{PI} loop filter RTL diagrams]{\ac{FIR} \ac{PI} loop filter RTL diagrams.}
+	\label{fig:fir_pi}
+\end{figure}
 
 The filter can be implemented using fixed-point arithmetic, in which the designer must ensure alignment of the radix in additions and correct radix position in multiplication results. Consequently the fractional width of the each multiplication need not be the same, most commonly used when the proportional gain, the output of the 0th tap multiplication, is significantly larger than that of the other taps. Integer arithmetic instead assumes all calculations are carried out using integers, and output of the addition stage is divided by a large number to form the module output. The integer approach simplifies the task of the designer and reduces the likelihood of incorrect calculations due to misalignment.
 
 \subsection{\ac{IIR} \acl{LF}}
-A \ac{PI} controller can be easily implemented as an \ac{IIR} filter in hardware, as in \Figure \ref{fig:iir_pi}, requiring significantly fewer circuit elements than an \ac{FIR} based design as the long series of taps and multipliers is not required, as instead integration is performed by a single multiplier and an accumulator. As before the frequency response of the controller can be calculated using the following equation, where $\alpha$ is the proportional and $\beta$ the integral gain:
+A \ac{PI} controller can be easily implemented as an \ac{IIR} filter in hardware, as in Figure \ref{fig:iir_pi}, requiring significantly fewer circuit elements than an \ac{FIR} based design as the long series of taps and multipliers is not required, as instead integration is performed by a single multiplier and an accumulator. As before the frequency response of the controller can be calculated using the following equation, where $\alpha$ is the proportional and $\beta$ the integral gain:
 \begin{equation*}
 	H(z) = \alpha + \beta\frac{1}{1-z^{-1}} = \frac{(\alpha + \beta) - \alpha z^{-1}}{1-z^{-1}}
 \end{equation*}
@@ -119,7 +136,7 @@ A \ac{PI} controller can be easily implemented as an \ac{IIR} filter in hardware
 As the scaling factor used in this multiplier is the $k_i$ gain itself, reconfiguration of the integral path of the \acl{LF} can be carried out solely by varying this gain, as opposed to the \ac{FIR} solution where the value of each tap must be recalculated to change the response of the system. The combination of reconfigurability and simpler hardware make the \ac{IIR} the more desirable \ac{LF} design.
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.6\textwidth]{../simple_pi}
+	\includegraphics[width=0.6\textwidth]{../simple_pi.pdf}
 	\caption[Basic \ac{IIR} \ac{PI} loop filter]{Basic \ac{IIR} \ac{PI} loop filter.}
 	\label{fig:iir_pi}
 \end{figure}
@@ -127,7 +144,7 @@ As the scaling factor used in this multiplier is the $k_i$ gain itself, reconfig
 Again both integer and fixed-point methods of \ac{LF} design are possible, with the integer method requiring logic combining the two paths to preserve the relationship between the proportional and integral gains, which from the work of Koskin \textit{et al} is known to be several binary orders of magnitude \cite{koskin2018generation}. Failure to preserve a relationship of this order may lead to the filter becoming unstable, as in the upper-left region of Figure \ref{fig:gain_grid}. In the fixed-point system the relationship between $k_p$ and $k_i$ is preserved during the combination of proportional and integral paths as both values have their radix point aligned before addition is carried out.
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.6\textwidth]{example-image-a}%{../koskin_gain_grid} %TODO
+	\includegraphics[width=0.6\textwidth]{../eugene}%{../koskin_gain_grid} %TODO
 	\caption[Stability of \acl{LF} gains]{Stability of \acl{LF} gains \cite{koskin2018generation}.}
 	\label{fig:gain_grid}
 \end{figure}
