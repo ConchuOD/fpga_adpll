@@ -73,7 +73,7 @@ Many \ac{PLL}s, be they digital or analogue, incorporate a frequency divider in 
 	\centering
 	\subfloat[Divider 1]{{\includegraphics[width=0.6\textwidth]{../divider1} }}\\
 	\subfloat[Divider 2]{{\includegraphics[width=0.6\textwidth]{../divider2} }}%
-	\caption{Frequency divider \ac{RTL} diagrams.}
+	\caption[Frequency Divider \ac{RTL} Diagrams]{Frequency Divider \ac{RTL} Diagrams.}
 	\label{fig:divs}
 \end{figure}
 By limiting to division by powers of two, the divider can be simplified with the removal of any comparison logic. One flip-flop and an inverter are required per power of two. As in Figure \ref{fig:divs} (b), the inverted $\overline{Q}$ output of each flip-flop is inverted and connected to the $D$ input, with the non-inverted $Q$ of the previous flip-flop acting as the clock. The first flip-flop in the chain is clocked by the \ac{DCO} output. 
@@ -133,7 +133,7 @@ To determine the sign itself, which clock edge first had a rising edge must be r
 			1&0&1&0\T\\
 			1&1&\multicolumn{2}{c}{undefined}\T\\					
 		\end{tabular}
-		\caption{SR Latch Truth Table}
+		\caption{SR latch truth table}
 		\label{table:sr_tt}
 	\end{center}
 \end{table}
@@ -141,6 +141,7 @@ To determine the sign itself, which clock edge first had a rising edge must be r
 This, however, ignores the potential for metastability which may arise if both signals have a rising edge within an extremely short period of time. While it may in other systems be feasible to dismiss this occurrence as a low probability event, the goal of a \ac{PLL} is to reduce the time delay between rising edges to zero which increases the possibility of this occurring, which may lead to indeterminate behaviour in other parts of the feedback network. In order to avoid this in an \ac{ASIC}, an arbitration circuit is placed between the \ac{SR} latch and the register storing the sign between measurements, which will default to one of the two signals in this case. This is however a mixed signal circuit, such as that proposed by Tierno \textit{et al} (2008) and implemented by Zianbetov and Shan \cite{tierno2008wide,zianbetov2013phd,shan2014phd}, which requires two \ac{PMOS} and two \ac{NMOS} transistors and cannot be implemented on an \ac{FPGA}. As the output of the \ac{SR} latch will be indeterminate prior to the detection of the first edge, the impact of both edge detection registers' output is that the \ac{SR} latch attempts to hold this indeterminate value as an output. To avoid this unwanted behaviour the arbiter present on an \ac{ASIC} is replaced by a second \ac{SR} latch, connected as in Figure \ref{fig:arbitration}. This ensures the value presented to the register storing the sign is always determinate.
 \begin{table}[!ht]
 	\begin{center}
+		\setlength{\tabcolsep}{.5\tabcolsep}
 		\begin{tabular}{l|cc|cc|c|cc|c}           
 			When&$Gen$&$Ref$&$\overline{Gen}/S^a$&$\overline{Ref}/R^a$&$Q^a$&$S^b$&$R^b$&$Sign/Q^b$\\
 			\hline
@@ -149,7 +150,7 @@ This, however, ignores the potential for metastability which may arise if both s
 			Gen. First&1&0&0&1&0&1&0&1\T\\	
 			Measurement Complete&1&1&0&0&$Q^a_{n-1}$&$\overline{Q}^a_{n-1}$&$Q^a_{n-1}$&$\overline{Q}^a_{n-1}$\T\\					
 		\end{tabular}
-		\caption{Sign Detector Truth Table}
+		\caption{Sign detector truth table}
 		\label{table:sign_tt}
 	\end{center}
 \end{table}
@@ -200,7 +201,7 @@ A \ac{PI} controller can be easily implemented as an \ac{IIR} filter in hardware
 	H(z) = \alpha + \beta\frac{1}{1-z^{-1}} = \frac{(\alpha + \beta) - \alpha z^{-1}}{1-z^{-1}}
 \end{equation*}
 
-As the scaling factor used in this multiplier is the $k_i$ gain itself, reconfiguration of the integral path of the \acl{LF} can be carried out solely by varying this gain, as opposed to the \ac{FIR} solution where the value of each tap must be recalculated to change the response of the system. The combination of reconfigurability and simpler hardware make the \ac{IIR} the more desirable \ac{LF} design.
+As the scaling factor used in this multiplier is the \ac{ki} itself, reconfiguration of the integral path of the \acl{LF} can be carried out solely by varying this gain, as opposed to the \ac{FIR} solution where the value of each tap must be recalculated to change the response of the system. The combination of reconfigurability and simpler hardware make the \ac{IIR} the more desirable \ac{LF} design.
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.6\textwidth]{../simple_pi.pdf}
@@ -208,7 +209,7 @@ As the scaling factor used in this multiplier is the $k_i$ gain itself, reconfig
 	\label{fig:iir_pi}
 \end{figure}
 
-Again both integer and fixed-point methods of \ac{LF} design are possible, with the integer method requiring logic combining the two paths to preserve the relationship between the proportional and integral gains, which from the work of Koskin \textit{et al} is known to be several binary orders of magnitude \cite{koskin2018generation}. Failure to preserve a relationship of this order may lead to the filter becoming unstable, as in the upper-left region of Figure \ref{fig:gain_grid}. In the fixed-point system the relationship between $k_p$ and $k_i$ is preserved during the combination of proportional and integral paths as both values have their radix point aligned before addition is carried out.
+Again both integer and fixed-point methods of \ac{LF} design are possible, with the integer method requiring logic combining the two paths to preserve the relationship between the proportional and integral gains, which from the work of Koskin \textit{et al} is known to be several binary orders of magnitude \cite{koskin2018generation}. Failure to preserve a relationship of this order may lead to the \ac{ADPLL} becoming unstable, as in the upper-left region of Figure \ref{fig:gain_grid}. In the fixed-point system the relationship between \ac{kp} and \ac{ki} is preserved during the combination of proportional and integral paths as both values have their radix point aligned before addition is carried out.
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.6\textwidth]{../eugene}

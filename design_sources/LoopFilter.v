@@ -92,14 +92,14 @@ module LoopFilter #(
     /*************************************************************************/
     
 	//multiply by kp
-	assign kp_error_c = error_delay_r*kp_x;
+	assign kp_error_c = error_i*kp_x;
 
 	/*************************************************************************/
     /* Ki path                                                               */
     /*************************************************************************/
     
 	//multiply by ki
-	assign ki_error_c = error_delay_r*ki_x;
+	assign ki_error_c = error_i*ki_x;
 	
     //add to value in accumulator to perform integration
 	assign ki_error_inte_c = ki_error_inte_delay_r+ki_error_c;
@@ -108,7 +108,7 @@ module LoopFilter #(
     //accumulator register
 	always @ (posedge gen_clk_i or posedge reset_i)
 	begin
-		if(reset_i) ki_error_inte_delay_r <= {(KI_MULT_RES_WIDTH-1){1'b0}};
+		if(reset_i) ki_error_inte_delay_r <= {(KI_ACCUM_OVERHEAD+KI_MULT_RES_WIDTH-1){1'b0}};
 		else ki_error_inte_delay_r <= ki_error_inte_c;
 	end
 

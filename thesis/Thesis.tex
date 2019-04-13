@@ -23,6 +23,7 @@
 \usepackage{setspace}
 \usepackage{acro}
 \usepackage{etoolbox}
+\usepackage{inconsolata}
 
 %%maths
 \usepackage{units}
@@ -79,8 +80,10 @@
 
 \newcommand\T{\rule{0pt}{2.6ex}}       % Top strut
 \newcommand\B{\rule[-1.2ex]{0pt}{0pt}} % Bottom strut
-
+\renewcommand\ttdefault{cmvtt}
 \preto\chapter\acresetall
+%\DeclareInstance{acro-title}{empty}{sectioning}{name-format =}
+
 
 \@ifundefined{showcaptionsetup}{}{%
  \PassOptionsToPackage{caption=false}{subfig}}
@@ -199,7 +202,7 @@
 %\input{ackns.tex}
 
 \chapter*{Acronyms} \addcontentsline{toc}{chapter}{Acronyms}
-\printacronyms
+\printacronyms[heading=none]
 
 \doublespacing
 \chapter*{Abstract} \addcontentsline{toc}{chapter}{Abstract}
@@ -239,12 +242,15 @@
 
 \input{FPGABasedADPLLs.tex}
 
-\setcounter{chapter}{2}
-%
-%\chapter{Kinetic Energy Harvesters}\label{chap:3}
-%
-%\input{Chapter_3.tex}
-%
+\setcounter{chapter}{3}
+
+\chapter{Network Implementation}\label{chap:4}
+
+\input{NetworkImplemenation.tex}
+
+\setcounter{chapter}{5}
+
+
 \pagebreak{}
 \phantomsection
 \addcontentsline{toc}{chapter}{Bibliography}
