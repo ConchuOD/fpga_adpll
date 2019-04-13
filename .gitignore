@@ -1,6 +1,5 @@
 .Xil/
 vivado*
-*.pdf
 *.aux
 *.gz
 *.log
@@ -8,6 +7,13 @@ junk/
 *.snm
 *.nav
 *.toc
+*.brf
+*.lof
+*.lot
 *.out
+*.bbl
+*.blg
 matlab/*.txt
 matlab/new/*.txt
+*.orig
+
