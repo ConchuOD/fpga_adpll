@@ -1,5 +1,5 @@
 \section{Chapter Overview}
-This chapter will cover the network implemented in the course of the project, beginning with the individual \ac{ADPLL}'s composition. A number of attributes for each design will be used to analyse and compare their performance. The impact of some minor architectural changes will also be covered, before the implementation of test network will be described. This chapter will also highlight some pitfalls encountered in the process. The \ac{HDL} Verilog was selected for use in this project due to my prior exposure to that language.
+This chapter will cover the network implemented in the course of the project, beginning with the individual \ac{ADPLL}'s composition. A number of attributes for each design will be used to analyse and compare their performance. The impact of some minor architectural changes will also be covered, before the implementation of test network will be described. This chapter will also highlight some pitfalls encountered in the process. The \ac{HDL} Verilog was selected for use in this project due to my prior exposure to that language. 5 MHz was chosen as the target centre frequency for these \ac{ADPLL}s, during initial testing it was discovered that the waveform output via the Digilent Nexys4 development board's \ac{GPIO} ports began to degrade around the 10 MHz mark, preventing accurate analysis.
 
 \section{\acs{ADPLL} Architectures}
 Three different architectures of \ac{ADPLL} were implemented in this project for the purposes of testing, and re-use in the future within the research team in \acl{UCD}. Between each design a number of blocks remain constant, as only a single instance of that block was implemented, as variation its design would have negligible impact on the final system. These blocks were the error combiner and frequency divider. The loop filter was implemented both using fractional and integer arithmetic, but as the exact same calculation was performed in both cases there was no impact on the output of the module.
@@ -39,21 +39,102 @@ Figure \ref{fig:integer_lf} contains an \ac{RTL} diagram describing the implemen
 The Verilog implementation of the \ac{LF} using integer arithmetic can be found in \textsc{LoopFilter.v}, attached in Appendix \ref{adx:code} Listing \ref{lst:loop_filter}.
 
 \subsection{\acs{ADPLL} Design 1}
-\subsubsection{Oscillator}
+\acs{ADPLL} Design 1 is comprised of the aforementioned generic components and \ac{FPGA} clocked implementations of the \ac{PFD} and \ac{DCO}. This was the first solution addressed in the course of this project as it is the simplest to both implement and test, as all aspects of the \ac{ADPLL} are driven by the \ac{FPGA} clock. Compared to later designs utilising the \ac{RO}, Vivado simulations could be carried out, with accurate timing behaviour, depicting the locking process. The \ac{DCO} was chosen to be linear in frequency in order to obtain a square wave output as it was not yet known whether the varying pulse width of a period linear design would cause a problem in modules which, at that stage in the project, had not yet been designed. Indeed, a later discarded version of the \ac{FPGA} clocked \ac{PFD} relied on equal low and high times. The \ac{PFD} itself was implemented using a Moore type \ac{FSM} driving a up-down counter to convert the time between rising edges to a digital signal.
+
+\subsubsection{\acl{DCO}}
+As the \ac{FPGA} clocked, linear frequency oscillator is based on the use of counters, the first stage in its design was the decisions as to their required widths. The equation given previously is used here, with the control code set to zero in order to obtain the centre frequency, and 5 MHz as the target \ac{DCO} frequency:
+\begin{align}
+f_{osc} &= f_{FPGA}\times\frac{BIAS+CC}{2^{width}}\\
+5\times 10^6 &= f_{FPGA}\times\frac{BIAS}{2^{width}}
+\end{align}
+This still leaves three parameters undecided: The \ac{FPGA} clock, the bit width of the counter and the bias point. As the \ac{FPGA} clock determines the frequency step of the design, a test counter was implemented initially to determine the maximum frequency at which the timing violations would not occur, at this was determined to be 275 MHz. The equation can then be updated, giving the relationship between bias point and counter width:
+\begin{align}
+5\times 10^6 &= f_{FPGA}\times\frac{BIAS}{2^{width}}\\
+\frac{5}{275} &= \frac{BIAS}{2^{width}}
+\end{align}
+The maximum value of the counter must also be large enough such that with a bias point that allows for a reasonable range of frequency steps to be added or removed. 
+This oscillator was originally designed to allow for 64 control codes either side of the bias, which called for a bias point of 65 or greater.
+\begin{align}
+\frac{5}{275} &= \frac{65}{2^{width}}\\
+2^{width} &= \frac{65\cdot275}{5} = 3575 \\
+width &= \left \lceil{\log_2 3575}\right \rceil = 12
+\end{align}
+From the above equation, the smallest counter that can satisfy this constraint is 12 bits wide, however when testing was carried out using a 275 MHz clock timing violations were discovered by Vivado, resulting \ac{FPGA} clock speed reduction to 258 MHz in order to resolve these violations. The correct bias point could then be calculated as $80$:
+\begin{align}
+\frac{5}{258} &= \frac{BIAS}{2^{12}}\\
+ BIAS &= \left \lceil{\frac{5\cdot 2^{12}}{258}}\right \rceil = \left \lceil{\frac{20480}{258}}\right \rceil = 80
+\end{align}
+The frequency step can now be computed as all parameters have been chosen:
+\begin{equation}
+f_{step} = \frac{f_{FPGA}}{2^{12}} = 62.988~\si{\kilo\hertz}
+\end{equation}
+
+Figure \ref{fig:osc2_impl} contains an \ac{RTL} diagram of this oscillator's implementation. As phase error is a two's complement signed value, its addition to the bias must be carried out using signed arithmetic. Provided the bias is greater than the minimum possible phase error, as has been ensured in this case, the result of this addition is positive signed integer. Being a positive quantity, additional logic performing a conversion from a signed to an unsigned representation is required.
+\begin{figure}[h]%
+	\centering
+	\includegraphics[width=0.8\textwidth]{../osc2_impl} 
+	\caption[\ac{DCO} \ac{RTL} diagram as implemented]{\ac{DCO} \ac{RTL} diagram as implemented.}
+	\label{fig:osc2_impl}
+\end{figure}
+
 \subsubsection{Phase Detector}
+As previously mentioned the \ac{PFD} is also implemented using the \ac{FPGA} clocked approach, with sign detection carried out using a Moore Machine. The state transition diagram given as the example in Chapter \ref{chap:3} is that used to design this sign detector. 
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.8\textwidth]{../state_trans_new}
+	\caption[Example State Transition Diagram for a Moore Machine]{Example State Transition Diagram for a Moore Machine.}
+	\label{fig:state_trans_reprint}
+\end{figure}
+
+The synchroniser circuits are implemented by a pair of ``D'' flip-flips connected in series, clocked on the \ac{FPGA} clock. This synchroniser works by assuming that metastability will only persist for the duration of one \ac{FPGA} clock cycle as depicted in Figure \ref{fig:synchroniser_behav}. In the case where only one clock signal may experience metastability, two synchronisers are required in order to maintain symmetry in the phase comparison.
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.4\textwidth]{../synchroniser_behav}
+\caption[Double ``D'' flip-flip synchroniser circuit \ac{RTL} diagram]{Double ``D'' flip-flip synchroniser circuit \ac{RTL} diagram.}
+\label{fig:synchroniser_behav}
+\end{figure}
+%TODO context for above
+
+This \ac{FSM} then controls an Up-Down counter of the same width as the control code, counting in two's complement. As the control code has already been defined as a 7 bit wide two's complement integer, the phase detector's output can theoretically lie in the range $[-64,63]\cap\mathbb{Z}$. 
+
+As this detector samples each signal at the \ac{FPGA} clock frequency, the phase detector resolution is equal to the \ac{FPGA} clock period at:
+\begin{equation}
+t_{res} = T_{FPGA} = \frac{1}{258\times 10^{6}} = 3.875~\si{\nano\second}
+\end{equation}
+an angular resolution of:
+\begin{equation}
+res = \frac{t_{res}}{T_{osc}} \cdot 360^\circ = \frac{3.875~\text{ns}}{200~\text{ns}} \cdot 360^\circ = 6.975^\circ
+\end{equation}
+
+The counter is implemented using saturation arithmetic to prevent overflow at high phase differences which could potentially harm the ability of the \ac{ADPLL} to obtain a lock. In the case of this \ac{PD} the phase error at which overflow may occur can be computed using the bit width of the counter and temporal resolution. $error_{max} = 63\cdot3.875~\text{ns} = 244.125~\text{ns}$. As this is greater than the period it cannot occur for purely a phase difference, but may occur in the presence of either a frequency divider in the feedback path, thus increasing the period of the signal used for comparison, or of a significant frequency difference between the signals. When implementing the clamping logic, the decision was taken to make the detection range symmetrical, thus the output range was reduced by one increment to $[-63,63]\cap\mathbb{Z}$.
+
+
+%TODO updown counter RTL diagram & discuss
+
+A major pitfall was encountered in this design of phase detector, which lead in some conditions to a form of mode-locking, in which each oscillator would lock $180\si{\degree}$ phase shifted from the oscillators used as a reference. This was later discovered to be as a result of the measurement interval termination conditions in the \ac{FSM}, which in addition to those described in Figure \ref{fig:state_trans_reprint}, would terminate the interval if a falling edge was observed on the signal that originally triggered the measurement. Figure \ref{fig:uncertainty} will be used to describe the exact circumstances of the error.
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.6\textwidth]{../uncertain}
+	\caption[Circumstances of mode locking behaviour]{Circumstances of mode locking behaviour.}
+	\label{fig:uncertainty}
+\end{figure}
+
+The situation would occur when the measurement interval began with a large phase difference between the generated and reference signals and a simultaneous difference in frequency. Without a frequency difference the measurement beginning at ``interval start'' would terminate at location ``a'', measuring a large lag, with the following measurement interval starting at location ``d''. However in the presence of a frequency differential, the rising edge on the generated signal may occur only at location ``c'', and with the falling edge termination condition causing the interval to terminate before this edge was detected, at point ``b''. This lead to a slightly lower magnitude phase lag detected, however this is a minor flaw, and not the cause of the mode locking. As the rising edge at point ``c'' occurs after the interval has terminated, it is treated as a fresh measurement interval, terminating at ``d''. As in this interval, the generated signal has seen the first rising edge, a large lead will be recorded. As each correction is made with a delay of one cycle, in order to avoid timing violations in the feedback path, there is potential for oscillation between lead and lag detection to occur depending on the initial conditions. This low probability behaviour was observed by chance, due to coding error, while using a frequency divider in the feedback path as this ensured the lead and lag measurements were of identical magnitude. 
+
 
 \subsection{\acs{ADPLL} Design 2}
-\subsubsection{Oscillator}
+\subsubsection{\acl{DCO}}
 \subsubsection{Phase Detector}
 
 \subsection{\acs{ADPLL} Design 3}
-\subsubsection{Oscillator}
+\subsubsection{\acl{DCO}}
 \subsubsection{Phase Detector}
 
 
 \section{\acs{ADPLL} Characterisation}
 
 \section{Minor Variations}\label{section:minor_variations}
+%TODO osc side
 
 \section{\acs{ADPLL} Network Implementation}
 \subsection{2x2 Network}
