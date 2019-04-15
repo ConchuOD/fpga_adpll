@@ -96,7 +96,7 @@ module NetworkADPLL #(
         .error_3_i(error_bottom_i),
         .error_comb_o(error_x)
     );
-    LoopFilter #(
+    LoopFilterFrac #(
         .ERROR_WIDTH(PDET_WIDTH),
         .DCO_CC_WIDTH(DCO_CC_WIDTH),
         .KP_WIDTH(KP_WIDTH),

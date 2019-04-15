@@ -24,7 +24,7 @@ module RingOsc #(
     //first "inverter" is actually a nand with enable signal
     localparam INVERTERNUM = RINGSIZE-1;
 
-    //DONT_TOUCH ensures "useless" logic will not be removed
+    //DONT_TOUCH ensures that what vivado deems to be "useless" logic will not be removed
     (* DONT_TOUCH = "TRUE" *) wire [0:INVERTERNUM] ringwire_c;
 
     reg f_sel_mux_out_r;

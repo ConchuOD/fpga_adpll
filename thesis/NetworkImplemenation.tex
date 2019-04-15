@@ -59,15 +59,28 @@ This oscillator was originally designed to allow for 64 control codes either sid
 2^{width} &= \frac{65\cdot275}{5} = 3575 \\
 width &= \left \lceil{\log_2 3575}\right \rceil = 12
 \end{align}
-From the above equation, the smallest counter that can satisfy this constraint is 12 bits wide, however when testing was carried out using a 275 MHz clock timing violations were discovered by Vivado, resulting \ac{FPGA} clock speed reduction to 258 MHz in order to resolve these violations. The correct bias point could then be calculated as $80$:
+From the above equation, the smallest counter that can satisfy this constraint is 12 bits wide, however when testing was carried out using a 275 MHz clock timing violations were discovered by Vivado, resulting \ac{FPGA} clock speed reduction to 258 MHz in order to resolve these violations. The correct bias point could then be calculated as $79$:
 \begin{align}
 \frac{5}{258} &= \frac{BIAS}{2^{12}}\\
- BIAS &= \left \lceil{\frac{5\cdot 2^{12}}{258}}\right \rceil = \left \lceil{\frac{20480}{258}}\right \rceil = 80
+ BIAS &= \left \lfloor{\frac{5\cdot 2^{12}}{258}}\right \rceil = \left \lfloor{\frac{20480}{258}}\right \rceil = 79
 \end{align}
 The frequency step can now be computed as all parameters have been chosen:
 \begin{equation}
 f_{step} = \frac{f_{FPGA}}{2^{12}} = 62.988~\si{\kilo\hertz}
 \end{equation}
+At the target frequency of 5 MHz this corresponds to a change in period of:
+\begin{align}
+f_{step0} &= 79 \times f_{step} = 79 \times 62.988~\si{\kilo\hertz} = 4.976~\si{\mega\hertz} \\
+f_{step1} &= 80 \times f_{step} = 80 \times 62.988~\si{\kilo\hertz} = 5.039~\si{\mega\hertz} \\
+T_{step}  &= \frac{1}{f_{step0}} - \frac{1}{f_{step1}} = \frac{1}{4.976\times 10^6} - \frac{1}{5.039\times 10^6} \\
+T_{step}  &= 2.5~\si{\nano\second}
+\end{align}
+From the frequency step, control code range and bias the frequency range of this oscillator can be found:
+\begin{align}
+f_{osc} &= (BIAS+CC)\times f_{step} = (79+CC)\times 62.988~\si{\kilo\hertz}\\
+f_{min} &= (79+CC_{min})\times 62.988~\si{\kilo\hertz} = (79-63)\times 62.988~\si{\kilo\hertz} = 1.008~\si{\mega\hertz}\\
+f_{max} &= (79+CC_{max})\times 62.988~\si{\kilo\hertz} = (79+63)\times 62.988~\si{\kilo\hertz} = 8.944~\si{\mega\hertz}
+\end{align}
 
 Figure \ref{fig:osc2_impl} contains an \ac{RTL} diagram of this oscillator's implementation. As phase error is a two's complement signed value, its addition to the bias must be carried out using signed arithmetic. Provided the bias is greater than the minimum possible phase error, as has been ensured in this case, the result of this addition is positive signed integer. Being a positive quantity, additional logic performing a conversion from a signed to an unsigned representation is required.
 \begin{figure}[h]%
@@ -93,7 +106,6 @@ The synchroniser circuits are implemented by a pair of ``D'' flip-flips connecte
 \caption[Double ``D'' flip-flip synchroniser circuit \ac{RTL} diagram]{Double ``D'' flip-flip synchroniser circuit \ac{RTL} diagram.}
 \label{fig:synchroniser_behav}
 \end{figure}
-%TODO context for above
 
 This \ac{FSM} then controls an Up-Down counter of the same width as the control code, counting in two's complement. As the control code has already been defined as a 7 bit wide two's complement integer, the phase detector's output can theoretically lie in the range $[-64,63]\cap\mathbb{Z}$. 
 
@@ -103,13 +115,19 @@ t_{res} = T_{FPGA} = \frac{1}{258\times 10^{6}} = 3.875~\si{\nano\second}
 \end{equation}
 an angular resolution of:
 \begin{equation}
-res = \frac{t_{res}}{T_{osc}} \cdot 360^\circ = \frac{3.875~\text{ns}}{200~\text{ns}} \cdot 360^\circ = 6.975^\circ
+res = \frac{t_{res}}{T_{osc}} \cdot 360\si{\degree} = \frac{3.875~\si{\nano\second}}{200~\si{\nano\second}} \cdot 360\si{\degree} = 6.975\si{\degree}
 \end{equation}
 
-The counter is implemented using saturation arithmetic to prevent overflow at high phase differences which could potentially harm the ability of the \ac{ADPLL} to obtain a lock. In the case of this \ac{PD} the phase error at which overflow may occur can be computed using the bit width of the counter and temporal resolution. $error_{max} = 63\cdot3.875~\text{ns} = 244.125~\text{ns}$. As this is greater than the period it cannot occur for purely a phase difference, but may occur in the presence of either a frequency divider in the feedback path, thus increasing the period of the signal used for comparison, or of a significant frequency difference between the signals. When implementing the clamping logic, the decision was taken to make the detection range symmetrical, thus the output range was reduced by one increment to $[-63,63]\cap\mathbb{Z}$.
+The counter is implemented using saturation arithmetic to prevent overflow at high phase differences which could potentially harm the ability of the \ac{ADPLL} to obtain a lock. In the case of this \ac{PD} the phase error at which overflow may occur can be computed using the bit width of the counter and temporal resolution. $error_{max} = 63\cdot3.875~\si{\nano\second} = 244.125~\si{\nano\second}$. As this is greater than the period it cannot occur for purely a phase difference, but may occur in the presence of either a frequency divider in the feedback path, thus increasing the period of the signal used for comparison, or of a significant frequency difference between the signals. When implementing the clamping logic, the decision was taken to make the detection range symmetrical, thus the output range was reduced by one increment to $[-63,63]\cap\mathbb{Z}$.
 
-
-%TODO updown counter RTL diagram & discuss
+Figure \ref{fig:updown_ctr} depicts the implementation of this counter. Apart from the aforementioned capping of the measurement range implemented using a pair of comparators and a multiplexer, important to note is the bit width of the increment. Despite overflow being disallowed when the number is interpreted as a signed number, the addition of a 7 bit wide -1 to the accumulator value will cause overflow in the adder. This, however, is perfectly valid as an implementation of subtraction in two's complement. On the right side of the diagram the output register can be seen. Clocked using the \ac{FSM}s measurement interval complete signal, this register preserves the phase error until the termination of the following interval.
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.6\textwidth]{../bad_waveform}
+	\caption[\ac{RTL} diagram of up-down counter]{\ac{RTL} diagram of up-down counter.}
+	\label{fig:updown_ctr}
+\end{figure}
+%TODO updown counter RTL diagram
 
 A major pitfall was encountered in this design of phase detector, which lead in some conditions to a form of mode-locking, in which each oscillator would lock $180\si{\degree}$ phase shifted from the oscillators used as a reference. This was later discovered to be as a result of the measurement interval termination conditions in the \ac{FSM}, which in addition to those described in Figure \ref{fig:state_trans_reprint}, would terminate the interval if a falling edge was observed on the signal that originally triggered the measurement. Figure \ref{fig:uncertainty} will be used to describe the exact circumstances of the error.
 \begin{figure}[h]
@@ -121,10 +139,39 @@ A major pitfall was encountered in this design of phase detector, which lead in 
 
 The situation would occur when the measurement interval began with a large phase difference between the generated and reference signals and a simultaneous difference in frequency. Without a frequency difference the measurement beginning at ``interval start'' would terminate at location ``a'', measuring a large lag, with the following measurement interval starting at location ``d''. However in the presence of a frequency differential, the rising edge on the generated signal may occur only at location ``c'', and with the falling edge termination condition causing the interval to terminate before this edge was detected, at point ``b''. This lead to a slightly lower magnitude phase lag detected, however this is a minor flaw, and not the cause of the mode locking. As the rising edge at point ``c'' occurs after the interval has terminated, it is treated as a fresh measurement interval, terminating at ``d''. As in this interval, the generated signal has seen the first rising edge, a large lead will be recorded. As each correction is made with a delay of one cycle, in order to avoid timing violations in the feedback path, there is potential for oscillation between lead and lag detection to occur depending on the initial conditions. This low probability behaviour was observed by chance, due to coding error, while using a frequency divider in the feedback path as this ensured the lead and lag measurements were of identical magnitude. 
 
-
 \subsection{\acs{ADPLL} Design 2}
+The second \ac{ADPLL} design implemented during the course of this project was somewhat of a stepping stone between fully synchronous and asynchronous to the \ac{FPGA} clock. The clocked phase detector is reused from above, albeit with an altered error width, while the \ac{DCO} is replaced by a \acl{RO}. While the phase detector was known to work due to testing in \ac{ADPLL} 1, the \ac{DCO} could not be simulated using accurate timings so all testing had to be done in hardware. This presented a challenge, as depending on the implementation, the characteristics of the \ac{DCO} could change, most importantly the centre frequency. 
+
 \subsubsection{\acl{DCO}}
+\ac{ADPLL} 2 exchanges the \ac{FPGA} clocked oscillator for \ac{RO}, with the aim of obtaining performance more akin to that of an \ac{ASIC} based mixed-signal implementation, due to the variation in period steps both between oscillators and within the same oscillator due to the oscillator layout. Also advantageous is the improvement in period resolution obtained using this design, when compared to that of the \ac{FPGA} clocked design. Taking the formula given in Chapter \ref{chap:3} and the inverter propagation time used by Vivado in post synthesis/implementation simulations of $315~\si{\pico\second}$, the period step can be computed:
+\begin{align}
+t_{step} &= \text{inverters per step}\times\text{inversions per cycle}\times\text{propagation delay} \\
+t_{step} &= 2\times 2\times 315~\si{\pico\second} = 1.26~\si{\nano\second}
+\end{align}
+Using this period step, the number of inverters required to produce the signal of period $200~\si{\nano\second}$ can easily be computed:
+\begin{equation}
+\text{num\_inverters} = \left \lfloor{ T_{osc 5~\si{\mega\hertz}}}\times \frac{2}{t_{step}}}\right \rceil = \left \lfloor{ 200~\si{\nano\second}\frac{2}{1.26~\si{\nano\second}}}\right \rceil = 317
+\end{equation}
+
+Figure \ref{fig:ro_impl} contains an \ac{RTL} diagram of the \ac{RO} as implemented. %TODO impl & discuss
+
+A control code width of 5 bits was chosen as with two inverters removed per control code, the tunable range would consist of $20\%$ of the total inverter count. To achieve this range with a centre of $317$ inverters, the maximum number of inverters in the chain was required to be $317+2\times 2^{5-1} = 349$, dropped to a minimum at $285$. The corresponding minimum and maximum frequencies then are:
+\begin{align}
+f_{osc} &= \frac{1}{T_{osc}} = \frac{1}{\text{num. inverters}\times\text{propagation delay}} = \frac{1}{\text{num. inverters}\0.5\timest_{step}} \\
+f_{min} &= \frac{1}{T_{max}} = \frac{1}{349\times 0.5\times1.136~\si{\nano\second}} = 4.354~\si{\mega\hertz} \\
+f_{max} &= \frac{1}{T_{min}} = \frac{1}{285\times 0.5\times1.136~\si{\nano\second}} = 5.332~\si{\mega\hertz}
+\end{align}
+
+The first pitfall with this type of \ac{DCO} comes in the \ac{HDL} stage, with the \ac{EDA} likely to optimise away what it sees as a long chain of inverters carrying out no function. This can be avoided by adding an \texttt{attribute} as a prefix to the instantiation of a logic element or net that should not be ``optimised'' away. It is important to choose the correct directive, otherwise the compiler may not behave as expected. In the case of Vivado, it is important not to confuse the \texttt{KEEP} or \texttt{KEEP\_HIERARCHY} commands with that of \texttt{DONT\_TOUCH}, with former commands only ensuring that the logic elements will be maintained in synthesis, but not in any subsequent stages \cite{synth_ug}.
+
+As mentioned in previous chapters, the absence of direct control over layout can lead to significant variation of the propagation time though inverters. This may occur in three ways: Firstly, the layout of individual \ac{RO}s may be significantly different, thus resulting in poor overlap of tuning regions. Anecdotally, while implementing a 3x3 network, 7 of the 9 oscillators had centre frequencies within a $100~\si{\kilo\hertz}$ span but two lay more than $500~\si{\kilo\hertz}$ away in opposite directions which prevented the network from locking. Secondly, within an \ac{RO} the propagation delay between each inverter may vary, which results in a variable frequency step, possibly changing the locking range. These two effects represent an extreme version of the variation due to process or manufacturing seen on \ac{ASIC}s. The final variation is possibly the most frustrating, and occurs when between implementations the \ac{EDA}, Vivado in the case of this project, changes the layout of the \ac{RO}. This may occur as a result of a direct change, or as a result of seemingly innocuous changes to unrelated modules. While the final problem can be avoided, once the performance of the \ac{RO} is satisfactory, by locking down module, the remaining two problems can only be mitigated somewhat.
+
+This is achieved by assigning specific areas of the chip in which that module must lie, although these must be of a size approximately $40\%$ larger than the minimum space required in order to avoid having the router create a complex, delay intensive layout to fit the \ac{RO}. To achieve greater consistency, the implementation directive can be modified such that the router will attempt to use the minimum area that does not require complex routing. \texttt{congestion_spreadlogic_low} was used for this purpose in this project, although other options may obtain similar results. The other options available in Vivado can be viewed in the \textit{Vivado Design Suite User Guide - Implementation} \cite{impl_ug}.
+
+with small tweaks to unrelated modules likely to cause Vivado to rearrange the layout of the \ac{RO}s and thus change the centre frequency of a given \ac{DCO}.
+
 \subsubsection{Phase Detector}
+The \ac{PFD} used in this oscillator is, apart from the bit width of the counter, identical to that used in the previous design. The reduction in counter width will have no impact of performance of the \ac{ADPLL} once a lock has been acquired, however, the capture speed will be reduced for large phase differences due to the counter reaching saturation point significantly sooner. 5 bits corresponds to a counter range of $[-15,15]\cap\mathbb{Z}$, which will saturate at a time delay of $15\times3.875\si{\nano\second} = 58.125~\si{\nano\second}$, a phase lead or lag of $\frac{}{}\times360\si{\degree} = 104.4\si{\degree}$ at $5~\si{\mega\hertz}$. This is an adequate range, as saturation will occur well outside of the normal operating range. This reduction is most noticeable when a divider is active in the feedback path, however during locked operation a phase shift of $58.125~\si{\nano\second}$ will not occur, so this impact is only felt during acquisition.
 
 \subsection{\acs{ADPLL} Design 3}
 \subsubsection{\acl{DCO}}

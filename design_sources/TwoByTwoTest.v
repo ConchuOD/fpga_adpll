@@ -23,6 +23,7 @@ module TwoByTwoTest (
     localparam ACCUM_WIDTH = 12;
     localparam BIAS = 12'd77;
     localparam PDET_WIDTH = 8;
+    localparam DCO_CC_WIDTH = 8;
 
     localparam KP_WIDTH = 6;
     localparam KP_FRAC_WIDTH = 5;
@@ -183,6 +184,7 @@ module TwoByTwoTest (
     NetworkADPLL #(
         .BIAS(BIAS),
         .PDET_WIDTH(PDET_WIDTH),
+        .DCO_CC_WIDTH(DCO_CC_WIDTH),
         .KP_WIDTH(KP_WIDTH),
         .KP_FRAC_WIDTH(KP_FRAC_WIDTH),
         .KI_WIDTH(KI_WIDTH),
@@ -235,6 +237,7 @@ module TwoByTwoTest (
     NetworkADPLL #(
         .BIAS(BIAS+12'd1),
         .PDET_WIDTH(PDET_WIDTH),
+        .DCO_CC_WIDTH(DCO_CC_WIDTH),
         .KP_WIDTH(KP_WIDTH),
         .KP_FRAC_WIDTH(KP_FRAC_WIDTH),
         .KI_WIDTH(KI_WIDTH),
@@ -287,6 +290,7 @@ module TwoByTwoTest (
     NetworkADPLL #(
         .BIAS(BIAS-12'd3),
         .PDET_WIDTH(PDET_WIDTH),
+        .DCO_CC_WIDTH(DCO_CC_WIDTH),
         .KP_WIDTH(KP_WIDTH),
         .KP_FRAC_WIDTH(KP_FRAC_WIDTH),
         .KI_WIDTH(KI_WIDTH),
@@ -339,6 +343,7 @@ module TwoByTwoTest (
     NetworkADPLL #(
         .BIAS(BIAS+12'd2),
         .PDET_WIDTH(PDET_WIDTH),
+        .DCO_CC_WIDTH(DCO_CC_WIDTH),
         .KP_WIDTH(KP_WIDTH),
         .KP_FRAC_WIDTH(KP_FRAC_WIDTH),
         .KI_WIDTH(KI_WIDTH),
