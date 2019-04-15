@@ -123,11 +123,10 @@ The counter is implemented using saturation arithmetic to prevent overflow at hi
 Figure \ref{fig:updown_ctr} depicts the implementation of this counter. Apart from the aforementioned capping of the measurement range implemented using a pair of comparators and a multiplexer, important to note is the bit width of the increment. Despite overflow being disallowed when the number is interpreted as a signed number, the addition of a 7 bit wide -1 to the accumulator value will cause overflow in the adder. This, however, is perfectly valid as an implementation of subtraction in two's complement. On the right side of the diagram the output register can be seen. Clocked using the \ac{FSM}s measurement interval complete signal, this register preserves the phase error until the termination of the following interval.
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.6\textwidth]{../bad_waveform}
+	\includegraphics[width=0.8\textwidth]{../updown}
 	\caption[\ac{RTL} diagram of up-down counter]{\ac{RTL} diagram of up-down counter.}
 	\label{fig:updown_ctr}
 \end{figure}
-%TODO updown counter RTL diagram
 
 A major pitfall was encountered in this design of phase detector, which lead in some conditions to a form of mode-locking, in which each oscillator would lock $180\si{\degree}$ phase shifted from the oscillators used as a reference. This was later discovered to be as a result of the measurement interval termination conditions in the \ac{FSM}, which in addition to those described in Figure \ref{fig:state_trans_reprint}, would terminate the interval if a falling edge was observed on the signal that originally triggered the measurement. Figure \ref{fig:uncertainty} will be used to describe the exact circumstances of the error.
 \begin{figure}[h]
@@ -150,14 +149,20 @@ t_{step} &= 2\times 2\times 315~\si{\pico\second} = 1.26~\si{\nano\second}
 \end{align}
 Using this period step, the number of inverters required to produce the signal of period $200~\si{\nano\second}$ can easily be computed:
 \begin{equation}
-\text{num\_inverters} = \left \lfloor{ T_{osc 5~\si{\mega\hertz}}}\times \frac{2}{t_{step}}}\right \rceil = \left \lfloor{ 200~\si{\nano\second}\frac{2}{1.26~\si{\nano\second}}}\right \rceil = 317
+\text{num\_inverters} = \left \lfloor{ T_{osc 5~\si{\mega\hertz}}\times \frac{2}{t_{step}}}\right \rceil = \left \lfloor{ 200~\si{\nano\second}\frac{2}{1.26~\si{\nano\second}}}\right \rceil = 317
 \end{equation}
 
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.8\textwidth]{../ro_new}
+	\caption[\acl{RO} RTL diagram]{\acl{RO} RTL diagram.}
+	\label{fig:ro_impl}
+\end{figure}
 Figure \ref{fig:ro_impl} contains an \ac{RTL} diagram of the \ac{RO} as implemented. %TODO impl & discuss
 
 A control code width of 5 bits was chosen as with two inverters removed per control code, the tunable range would consist of $20\%$ of the total inverter count. To achieve this range with a centre of $317$ inverters, the maximum number of inverters in the chain was required to be $317+2\times 2^{5-1} = 349$, dropped to a minimum at $285$. The corresponding minimum and maximum frequencies then are:
 \begin{align}
-f_{osc} &= \frac{1}{T_{osc}} = \frac{1}{\text{num. inverters}\times\text{propagation delay}} = \frac{1}{\text{num. inverters}\0.5\timest_{step}} \\
+f_{osc} &= \frac{1}{T_{osc}} = \frac{1}{\text{num. inverters}\times 2\times\text{propagation delay}} = \frac{1}{\text{num. inverters}\times 0.5t_{step}} \\
 f_{min} &= \frac{1}{T_{max}} = \frac{1}{349\times 0.5\times1.136~\si{\nano\second}} = 4.354~\si{\mega\hertz} \\
 f_{max} &= \frac{1}{T_{min}} = \frac{1}{285\times 0.5\times1.136~\si{\nano\second}} = 5.332~\si{\mega\hertz}
 \end{align}
@@ -166,12 +171,12 @@ The first pitfall with this type of \ac{DCO} comes in the \ac{HDL} stage, with t
 
 As mentioned in previous chapters, the absence of direct control over layout can lead to significant variation of the propagation time though inverters. This may occur in three ways: Firstly, the layout of individual \ac{RO}s may be significantly different, thus resulting in poor overlap of tuning regions. Anecdotally, while implementing a 3x3 network, 7 of the 9 oscillators had centre frequencies within a $100~\si{\kilo\hertz}$ span but two lay more than $500~\si{\kilo\hertz}$ away in opposite directions which prevented the network from locking. Secondly, within an \ac{RO} the propagation delay between each inverter may vary, which results in a variable frequency step, possibly changing the locking range. These two effects represent an extreme version of the variation due to process or manufacturing seen on \ac{ASIC}s. The final variation is possibly the most frustrating, and occurs when between implementations the \ac{EDA}, Vivado in the case of this project, changes the layout of the \ac{RO}. This may occur as a result of a direct change, or as a result of seemingly innocuous changes to unrelated modules. While the final problem can be avoided, once the performance of the \ac{RO} is satisfactory, by locking down module, the remaining two problems can only be mitigated somewhat.
 
-This is achieved by assigning specific areas of the chip in which that module must lie, although these must be of a size approximately $40\%$ larger than the minimum space required in order to avoid having the router create a complex, delay intensive layout to fit the \ac{RO}. To achieve greater consistency, the implementation directive can be modified such that the router will attempt to use the minimum area that does not require complex routing. \texttt{congestion_spreadlogic_low} was used for this purpose in this project, although other options may obtain similar results. The other options available in Vivado can be viewed in the \textit{Vivado Design Suite User Guide - Implementation} \cite{impl_ug}.
+This is achieved by assigning specific areas of the chip in which that module must lie, although these must be of a size approximately $40\%$ larger than the minimum space required in order to avoid having the router create a complex, delay intensive layout to fit the \ac{RO}. To achieve greater consistency, the implementation directive can be modified such that the router will attempt to use the minimum area that does not require complex routing. \texttt{congestion\_spreadlogic\_low} was used for this purpose in this project, although other options may obtain similar results. The other options available in Vivado can be viewed in the \textit{Vivado Design Suite User Guide - Implementation} \cite{impl_ug}.
 
 With the hardware description of the \ac{RO} completed, testing of an instance of the \ac{RO} with a constant control code of zero was attempted, and it was discovered that the estimation of the centre frequency based on the propagation delay was off by $100$s of $\si{\kilo\hertz}$. The addition of 100 inverters was required to restore a centre of $5~\si{\mega\hertz}$. After the \ac{RO} was integrated into \ac{ADPLL} 2 the centre frequency was discovered to have changed once more. The minor variation caused by the now variable control code had changed the average propagation delay through the inverters once more, now requiring 373 inverters for $5~\si{\mega\hertz}$.
+%TODO possibily problematic in the last two paragraphs
 
 When, later in the project, additional \ac{RO}s were implemented to form networks, 373 inverters proved a suitable starting point which consistently delievered \ac{DCO}s with a centre frequency within $200~\si{\kilo\hertz}$ of $5~\si{\mega\hertz}$. For the purposes of describing a typical tuning range, the average propagation delay of an \ac{RO} consisting of 373 inverters with a centre frequency of $5.06~\si{\mega\hertz}$ will be used. To avoid the aforementioned issues with constant control codes, the fixed code was achieved by implementing an \ac{ADPLL} and setting the \ac{PI} filter gains to zero at runtime before performing a reset.
-%TODO possibily problematic in the last two paragraphs
 
 %TODO freqs n stuff
 
@@ -186,7 +191,7 @@ The \ac{PFD} used in this oscillator is, apart from the bit width of the counter
 \section{\acs{ADPLL} Characterisation}
 
 \section{Minor Variations}\label{section:minor_variations}
-%TODO osc side
+%TODO osc size
 
 \section{\acs{ADPLL} Network Implementation}
 \subsection{2x2 Network}
