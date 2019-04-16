@@ -21,7 +21,7 @@ The frequency divider is implemented using ``Divider 2'' from Chapter \ref{chap:
 	\centering
 	\includegraphics[width=0.6\textwidth]{../divider2}
 	\caption[Frequency divider \ac{RTL} diagram]{Frequency divider \ac{RTL} diagram.}
-	\label{fig:divs_iompl}
+	\label{fig:divs_impl}
 \end{figure}
 
 \subsubsection{Loop Filter}
@@ -138,6 +138,8 @@ A major pitfall was encountered in this design of phase detector, which lead in 
 
 The situation would occur when the measurement interval began with a large phase difference between the generated and reference signals and a simultaneous difference in frequency. Without a frequency difference the measurement beginning at ``interval start'' would terminate at location ``a'', measuring a large lag, with the following measurement interval starting at location ``d''. However in the presence of a frequency differential, the rising edge on the generated signal may occur only at location ``c'', and with the falling edge termination condition causing the interval to terminate before this edge was detected, at point ``b''. This lead to a slightly lower magnitude phase lag detected, however this is a minor flaw, and not the cause of the mode locking. As the rising edge at point ``c'' occurs after the interval has terminated, it is treated as a fresh measurement interval, terminating at ``d''. As in this interval, the generated signal has seen the first rising edge, a large lead will be recorded. As each correction is made with a delay of one cycle, in order to avoid timing violations in the feedback path, there is potential for oscillation between lead and lag detection to occur depending on the initial conditions. This low probability behaviour was observed by chance, due to coding error, while using a frequency divider in the feedback path as this ensured the lead and lag measurements were of identical magnitude. 
 
+\subsubsection{\acs{ADPLL} 1 Design Summary}
+
 \subsection{\acs{ADPLL} Design 2}
 The second \ac{ADPLL} design implemented during the course of this project was somewhat of a stepping stone between fully synchronous and asynchronous to the \ac{FPGA} clock. The clocked phase detector is reused from above, albeit with an altered error width, while the \ac{DCO} is replaced by a \acl{RO}. While the phase detector was known to work due to testing in \ac{ADPLL} 1, the \ac{DCO} could not be simulated using accurate timings so all testing had to be done in hardware. This presented a challenge, as depending on the implementation, the characteristics of the \ac{DCO} could change, most importantly the centre frequency. 
 
@@ -158,13 +160,19 @@ Using this period step, the number of inverters required to produce the signal o
 	\caption[\acl{RO} RTL diagram]{\acl{RO} RTL diagram.}
 	\label{fig:ro_impl}
 \end{figure}
-Figure \ref{fig:ro_impl} contains an \ac{RTL} diagram of the \ac{RO} as implemented. %TODO impl & discuss
+Figure \ref{fig:ro_impl} contains an \ac{RTL} diagram of the \ac{RO} as implemented. The inverter chain is specified with a maximum length of $n$ and a maximum number of removable inverters of $k$. In order to preserve the unstable circuit, by maintaining an odd number of inverters, only multiples of two inverters may be removed at a time. The already introduced \ac{DCO} and \ac{PFD} designs all followed the same convention regarding phase error and the corresponding impact on the control code: In the \ac{PFD}, if the generated signal was lagging the reference, meaning it should ``go faster'' in order to ``catch up'', the error given a positive sign. Similarly in the \ac{FPGA} clocked \ac{DCO}, a positive change in the magnitude of the control code resulted in a higher frequency. In the interests of consistency and extensibility the same behaviour was implemented for this \ac{DCO} also, with the number of inverters in the chain given as:
+\begin{equation}
+\text{num\_inverters} = inv_{max} - 2\times\text{control\_code},~\text{control\_code}<\frac{k}{2}
+\end{equation}
+$k$ is determined by the bit width of the control code which, as in the case of the clocked \ac{DCO}, is also an unsigned number. An inverter chain will oscillate freely and cannot be disabled. To this end the first inverter in the chain was replaced by a \ac{NAND} gate to grant control over its operation.
 
-A control code width of 5 bits was chosen as with two inverters removed per control code, the tunable range would consist of $20\%$ of the total inverter count. To achieve this range with a centre of $317$ inverters, the maximum number of inverters in the chain was required to be $317+2\times 2^{5-1} = 349$, dropped to a minimum at $285$. The corresponding minimum and maximum frequencies then are:
+The bias point functions differently in this oscillator, as unlike the \ac{FPGA} clocked design it is not required to set the centre of the tuning range, as in the \ac{RO} this lies at $n-\frac{k}{2}$. Instead the bias point servers as a conversion between the signed \ac{LF} output, which is in two's complement form, and the unsigned requirement of the control code. This is achieved by adding on the midpoint of the unsigned range and storing the result in an unsigned value. Using the case where the width of the control code is three: The range of the signed three bit integer is from $-4$ (100) to $3$ (011) which when directly converted to unsigned values become $4$ and $3$, thus destroying the relationship between lead and lag. Worse still the signed value of $-1$ (111) becomes $7$. Adding on the mid range value solves this problem, with a signed value of $-4$ now mapping to $0$ and $3$ to $7$. Comparing this behaviour to response of the \ac{RO} to the control code, it can be trivially seen that the minimum possible period will still correspond to the largest control code prior to conversion and vice versa for the maximum period.
+
+A control code width of 5 bits was chosen, as with two inverters removed per control code, the tunable range would consist of $20\%$ of the total inverter count. To achieve this range with a centre of $317$ inverters, the maximum number of inverters in the chain was required to be $317+2\times 2^{5-1} = 349$, dropped to a minimum at $285$. The corresponding minimum and maximum frequencies then are:
 \begin{align}
 f_{osc} &= \frac{1}{T_{osc}} = \frac{1}{\text{num. inverters}\times 2\times\text{propagation delay}} = \frac{1}{\text{num. inverters}\times 0.5t_{step}} \\
-f_{min} &= \frac{1}{T_{max}} = \frac{1}{349\times 0.5\times1.136~\si{\nano\second}} = 4.354~\si{\mega\hertz} \\
-f_{max} &= \frac{1}{T_{min}} = \frac{1}{285\times 0.5\times1.136~\si{\nano\second}} = 5.332~\si{\mega\hertz}
+f_{min} &= \frac{1}{T_{max}} = \frac{1}{349\times 0.5\times1.26~\si{\nano\second}} = 4.548~\si{\mega\hertz} \\
+f_{max} &= \frac{1}{T_{min}} = \frac{1}{285\times 0.5\times1.26~\si{\nano\second}} = 5.569~\si{\mega\hertz}
 \end{align}
 
 The first pitfall with this type of \ac{DCO} comes in the \ac{HDL} stage, with the \ac{EDA} likely to optimise away what it sees as a long chain of inverters carrying out no function. This can be avoided by adding an \texttt{attribute} as a prefix to the instantiation of a logic element or net that should not be ``optimised'' away. It is important to choose the correct directive, otherwise the compiler may not behave as expected. In the case of Vivado, it is important not to confuse the \texttt{KEEP} or \texttt{KEEP\_HIERARCHY} commands with that of \texttt{DONT\_TOUCH}, with former commands only ensuring that the logic elements will be maintained in synthesis, but not in any subsequent stages \cite{synth_ug}.
@@ -176,16 +184,31 @@ This is achieved by assigning specific areas of the chip in which that module mu
 With the hardware description of the \ac{RO} completed, testing of an instance of the \ac{RO} with a constant control code of zero was attempted, and it was discovered that the estimation of the centre frequency based on the propagation delay was off by $100$s of $\si{\kilo\hertz}$. The addition of 100 inverters was required to restore a centre of $5~\si{\mega\hertz}$. After the \ac{RO} was integrated into \ac{ADPLL} 2 the centre frequency was discovered to have changed once more. The minor variation caused by the now variable control code had changed the average propagation delay through the inverters once more, now requiring 373 inverters for $5~\si{\mega\hertz}$.
 %TODO possibily problematic in the last two paragraphs
 
-When, later in the project, additional \ac{RO}s were implemented to form networks, 373 inverters proved a suitable starting point which consistently delievered \ac{DCO}s with a centre frequency within $200~\si{\kilo\hertz}$ of $5~\si{\mega\hertz}$. For the purposes of describing a typical tuning range, the average propagation delay of an \ac{RO} consisting of 373 inverters with a centre frequency of $5.06~\si{\mega\hertz}$ will be used. To avoid the aforementioned issues with constant control codes, the fixed code was achieved by implementing an \ac{ADPLL} and setting the \ac{PI} filter gains to zero at runtime before performing a reset.
+When, later in the project, additional \ac{RO}s were implemented to form networks, 373 inverters proved a suitable starting point which consistently delivered \ac{DCO}s with a centre frequency within $200~\si{\kilo\hertz}$ of $5~\si{\mega\hertz}$. For the purposes of describing a typical tuning range, the average propagation delay of an \ac{RO} consisting of 373 inverters with a centre frequency of $5.06~\si{\mega\hertz}$ will be used. To avoid the aforementioned issues with constant control codes, the fixed code was achieved by implementing an \ac{ADPLL} and setting the \ac{PI} filter gains to zero at runtime before performing a reset.
+
+Using this updated maximum number of inverters the frequency range can be recalculated. Firstly, the new minimum and maximum numbers of inverters are $309$ and $373$ respectively, with a mid point at $341$. The inverter delay and period step are then recomputed based on the centre frequency of $5~\si{\mega\hertz}$ as:
+\begin{align}%TODO 2 x 2 x midpoint justification - in prev. chapter?
+t_{step} = \frac{T_{osc}}{0.5\times\text{inverter midpoint}} = \frac{200\si{\nano\second}}{0.5\times 341} = 1.176~\si{\nano\second}
+\text{propagation delay} &= \frac{t_{step}}{2\times2} = \frac{1.176~\si{\nano\second}}{4} = 293~\si{\pico\second} \\
+\end{align}
+The frequency range is then:
+\begin{align} %TODO inconsisentl calculation approach with previous version
+f_{osc} &= \frac{1}{T_{osc}} = \frac{1}{\text{num. inverters}\times 2\times\text{propagation delay}}
+f_{min} &= \frac{1}{T_{max}} = \frac{1}{373\times 2\times 293~\si{\pico\second}} = 4.571~\si{\mega\hertz} \\
+f_{max} &= \frac{1}{T_{min}} = \frac{1}{309\times 2\times 293~\si{\pico\second}} = 5.518~\si{\mega\hertz}
+\end{align}
 
 %TODO freqs n stuff
 
 \subsubsection{Phase Detector}
 The \ac{PFD} used in this oscillator is, apart from the bit width of the counter, identical to that used in the previous design. The reduction in counter width will have no impact of performance of the \ac{ADPLL} once a lock has been acquired, however, the capture speed will be reduced for large phase differences due to the counter reaching saturation point significantly sooner. 5 bits corresponds to a counter range of $[-15,15]\cap\mathbb{Z}$, which will saturate at a time delay of $15\times3.875\si{\nano\second} = 58.125~\si{\nano\second}$, a phase lead or lag of $\frac{}{}\times360\si{\degree} = 104.4\si{\degree}$ at $5~\si{\mega\hertz}$. This is an adequate range, as saturation will occur well outside of the normal operating range. This reduction is most noticeable when a divider is active in the feedback path, however during locked operation a phase shift of $58.125~\si{\nano\second}$ will not occur, so this impact is only felt during acquisition.
 
+\subsubsection{\acs{ADPLL} 2 Design Summary}
+
 \subsection{\acs{ADPLL} Design 3}
 \subsubsection{\acl{DCO}}
 \subsubsection{Phase Detector}
+\subsubsection{\acs{ADPLL} 1 Design Summary}
 
 
 \section{\acs{ADPLL} Characterisation}
