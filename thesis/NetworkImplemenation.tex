@@ -35,7 +35,16 @@ Each of integer and fixed-point arithmetic were used to implement a filter respe
 	\label{fig:integer_lf}
 \end{figure}
 
-Figure \ref{fig:integer_lf} contains an \ac{RTL} diagram describing the implementation. Important to note is the shift applied to the result of the multiplication by \acs{kp} which, as the integration is performed with a larger width to avoid accumulator overflow, preserves the intended relationship between proportional and integral gains.
+Figure \ref{fig:integer_lf} contains an \ac{RTL} diagram describing the implementation. Important to note is the shift applied to the result of the multiplication by \acs{kp} which, as the integration is performed with a larger width to avoid accumulator overflow, preserves the intended relationship between proportional and integral gains. The value of $k_p$ and $k_i$ can be computed using the following formulae:
+\begin{gather}
+\text{Proportional gain} = k_p\times 2^{-path\_width\_change\_p} \\
+path\_width\_change\_p = lsh\_width - rsh\_width \\
+lsh\_width = ki\_width - kp\_width  \\
+rsh\_width = error\_width + kp\_width + lsh\_width - control\_code\_width \\
+\text{Integral gain} = k_i\times 2^{-path\_width\_change\_i} \\
+path\_width\_change\_i = - rsh\_width
+\end{gather}
+In the example system shown in Figure \ref{fig:integer_lf} the proportional gain can be computed as $k_p\times 2^{3-8} = \frac{k_p}{32}$ and the integral gain is $k_i\times 2^{-8} = \frac{k_i}{128}$.
 The Verilog implementation of the \ac{LF} using integer arithmetic can be found in \textsc{LoopFilter.v}, attached in Appendix \ref{adx:code} Listing \ref{lst:loop_filter}.
 
 \subsection{\acs{ADPLL} Design 1}
@@ -144,7 +153,7 @@ As this was the first \ac{ADPLL} design implemented, various Vivado test benches
 
 \begin{figure}[h]
 	\centering
-	\subfloat[Vivado simulation.]{{\includegraphics[width=0.45\textwidth]{../sim_locking} }}\\
+	\subfloat[Vivado simulation.]{{\includegraphics[width=0.45\textwidth]{../sim_locking} }}%
 	\subfloat[Hardware measurement.]{{\includegraphics[width=0.45\textwidth]{../impl_locking} }}%
 	\caption[\ac{ADPLL} 1 Vivado locking simulations]{\ac{ADPLL} 1 Vivado locking simulations.}
 	\label{fig:sim_locking}
@@ -177,6 +186,7 @@ Table \ref{table:adpll1} contains a brief overview of the bit widths, tuning ran
 			\hline
 			Phase Detector Error Width & 7 & Error Sum Weight Width & 4 \T\\
 			\hline
+			\acs{kp} width & $2^{-5}\times[0,15]\cap\mathbb{Z}$ & \acs{ki} & $2^{-8}\times[0,15]\cap\mathbb{Z}$ \T\\
 			\acs{kp} & $2^{-5}\times[0,15]\cap\mathbb{Z}$ & \acs{ki} & $2^{-8}\times[0,15]\cap\mathbb{Z}$ \T\\
 			\hline
 			Detection Resolution & $3.875~\si{\nano\second}$ & Detection Phase Resolution & $6.975\si{\degree}$ (at $5~\si{\mega\hertz}$)\\
@@ -240,7 +250,7 @@ t_{step} &= \frac{T_{osc}}{0.5\times(n-\frac{k}{2})} = \frac{200\si{\nano\second
 \tau_{inv} &= \frac{t_{step}}{2\times\text{inverters per step}} = \frac{t_{step}}{2\times2} = \frac{1.176~\si{\nano\second}}{4} = 293~\si{\pico\second}
 \end{align}
 The frequency range is then:
-\begin{align} %TODO inconsisentl calculation approach with previous version
+\begin{align} 
 f_{osc} &= \frac{1}{T_{osc}} = \frac{1}{(n-2CC)\times 2\times\tau_{inv}} \\
 f_{min} &= \frac{1}{T_{max}} = \frac{1}{(373-0)\times 2\times 293~\si{\pico\second}} = 4.571~\si{\mega\hertz} \\
 f_{max} &= \frac{1}{T_{min}} = \frac{1}{(373-2\times32)\times 2\times 293~\si{\pico\second}} = 5.518~\si{\mega\hertz}
@@ -254,7 +264,7 @@ The \ac{PFD} used in this oscillator is, apart from the bit width of the counter
 \subsubsection{\acs{ADPLL} 2 Design Summary}
 As previously mentioned, \ac{ADPLL} 2 represents a midway point between \ac{FPGA} clocked designs and those which are asynchronous. As the source of the asynchronicity is the inverter chain \ac{DCO}, a more realistic jitter would be expected from this design, with there being a significant distribution of period steps. Among other aspects, this will have a noticeable impact in steady state conditions, where the degree of fractional synthesis required will vary from oscillator to oscillator depending on the closest distance from the reference period to a period obtainable by the individual oscillator. This is a source of jitter that was not present in the clocked \ac{DCO} used in \ac{ADPLL} 1, as all period steps were equal. Once again the \ac{DCO} tuning ranges and configuration details for future measurements are listed below, in Table \ref{table:adpll2}.
 
-\begin{table}[!h]%TODO redo numbers!
+\begin{table}[!h]
 	\begin{center}
 		\begin{tabular}{|l|r|r|r|}
 			\multicolumn{4}{c}{\ac{DCO} Tuning Range} \T\\
@@ -275,7 +285,9 @@ As previously mentioned, \ac{ADPLL} 2 represents a midway point between \ac{FPGA
 			\hline
 			Phase Detector Error Width & 5 & Error Sum Weight Width & 4 \T\\
 			\hline
-			\acs{kp} & $2^{-7}\times[0,15]\cap\mathbb{Z}$ & \acs{ki} & $2^{-9}\times[0,15]\cap\mathbb{Z}$ \T\\
+			\acs{kp} width & $4$ & \acs{ki} & $6$ \T\\
+			\hline
+			\acs{kp} & $2^{-4}\times[0,15]\cap\mathbb{Z}$ & \acs{ki} & $2^{-6}\times[0,15]\cap\mathbb{Z}$ \T\\
 			\hline
 			Detection Resolution & $3.875~\si{\nano\second}$ & Detection Phase Resolution & $6.975\si{\degree}$ (at $5~\si{\mega\hertz}$)\\
 			\hline
@@ -322,9 +334,10 @@ The output of the \ac{TDL} itself is not a binary signal, but rather the thermom
 The now unsigned binary representation of the error magnitude can be combined then with the sign bit to form a two's complement error signal. The file \textsc{PhaseDetectorDL.v} in Appendix \ref{adx:code} Listing \ref{lst:phase_detector_dl} contains the Verilog implementation of this module. \texttt{DONT\_TOUCH} compiler directives were used here in a number of places to ensure that the inverters and other elements that are key for timing are not removed in the synthesis process, as similarly to \ac{RO}, Vivado sees these as unneeded elements serving no purpose.
 
 \subsubsection{\acs{ADPLL} 3 Design Summary}
-Table \ref{table:adpll3}.
+Compared to the oscillators suggested earlier, \ac{ADPLL} 3 achieves a significantly finer detection resolution, at the expense of significant variation in the detection step. This can be viewed as advantageous however, as the \ac{ADPLL} exhibits an exaggerated version of the implementation and manufacturing defect based variability present in an \ac{ASIC}. It is this type of \ac{ADPLL} that both the \acs{UCD} and Sorbonne research teams are using to examine potential designs and test theoretical results. As before, Table \ref{table:adpll3} presents the important numeric characteristics of this \ac{ADPLL}.
 
-\begin{table}[!h]%TODO numbers!
+
+\begin{table}[!h]
 	\begin{center}
 		\begin{tabular}{|l|r|r|r|}
 			\multicolumn{4}{c}{\ac{DCO} Tuning Range} \T\\
@@ -345,9 +358,11 @@ Table \ref{table:adpll3}.
 			\hline
 			Phase Detector Error Width & 5 & Error Sum Weight Width & 4 \T\\
 			\hline
-			\acs{kp} & $2^{-7}\times[0,15]\cap\mathbb{Z}$ & \acs{ki} & $2^{-9}\times[0,15]\cap\mathbb{Z}$ \T\\
+			\acs{kp} width & $4$ & \acs{ki} & $6$ \T\\
 			\hline
-			Detection Resolution & $3.875~\si{\nano\second}$ & Detection Phase Resolution & $6.975\si{\degree}$ (at $5~\si{\mega\hertz}$)\\
+			\acs{kp} & $2^{-4}\times[0,15]\cap\mathbb{Z}$ & \acs{ki} & $2^{-6}\times[0,15]\cap\mathbb{Z}$ \T\\
+			\hline
+			Detection Resolution & $\approx0.63~\si{\nano\second}$ & Detection Phase Resolution & $1.134\si{\degree}$ (at $5~\si{\mega\hertz}$)\\
 			\hline
 		\end{tabular}
 	\end{center}
@@ -370,6 +385,9 @@ Measurements were performed using an Agilent MSO7054A, a four channel, $4~\si[pe
 
 \section{\acs{ADPLL} Characterisation}
 %TODO why each PLL
+
+% //9 for older tests @1111 = 4@0000, but >> 5 cos of extra size
+% <4 is a no can do //7 for older tests @1111 = 4@0001
 
 \section{Minor Variations}\label{section:minor_variations}
 %TODO osc size

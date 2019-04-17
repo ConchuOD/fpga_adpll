@@ -28,7 +28,7 @@ module LoopFilter #(
 
 	localparam KP_MULT_RES_WIDTH = ERROR_WIDTH+KP_WIDTH;
 	localparam KI_MULT_RES_WIDTH = ERROR_WIDTH+KI_WIDTH;
-	localparam KI_ACCUM_OVERHEAD = 1; //integration accumulator extra width
+	localparam KI_ACCUM_OVERHEAD = 0; //integration accumulator extra width
 	localparam SUM_WIDTH         = KI_MULT_RES_WIDTH;
 
     //gains
