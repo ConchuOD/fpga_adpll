@@ -5,7 +5,7 @@
 /* Function : 3x3 ADPLL network using inverter based oscillator              */
 /*****************************************************************************/
 
-module ThreeByThreeRingTest (
+module ThreeByThreeRingClockedPDTest (
         input         clk100_i,     // 100 MHz clock from oscillator on board
         input         rst_pbn_i,    // reset signal, active low, from CPU RESET pushbutton //
         input         ra_i,         // external reference
@@ -30,9 +30,9 @@ module ThreeByThreeRingTest (
     localparam ACCUM_WIDTH = 12;
 
     localparam KP_WIDTH = 8;
-    localparam KP_FRAC_WIDTH = 4;//<4 is a no can do //7 for older tests @1111 = 4@0001
+    localparam KP_FRAC_WIDTH = 7;
     localparam KI_WIDTH = 10;
-    localparam KI_FRAC_WIDTH = 5; //8 for older tests @1111 = 4@0001
+    localparam KI_FRAC_WIDTH = 9;
 
     //oscilloscope analysais buses    
     wire reset_x;
@@ -496,7 +496,7 @@ module ThreeByThreeRingTest (
     NetworkRingADPLL #(
         .BIAS(BIAS),
         .RO_WIDTH(RO_WIDTH),
-        .RINGSIZE(RINGSIZE+12),
+        .RINGSIZE(RINGSIZE+16),
         .PDET_WIDTH(PDET_WIDTH),
         .KP_WIDTH(KP_WIDTH),
         .KP_FRAC_WIDTH(KP_FRAC_WIDTH),
@@ -768,7 +768,7 @@ module ThreeByThreeRingTest (
     NetworkRingADPLL #(
         .BIAS(BIAS),
         .RO_WIDTH(RO_WIDTH),
-        .RINGSIZE(RINGSIZE+8),
+        .RINGSIZE(RINGSIZE+18),
         .PDET_WIDTH(PDET_WIDTH),
         .KP_WIDTH(KP_WIDTH),
         .KP_FRAC_WIDTH(KP_FRAC_WIDTH),
@@ -836,7 +836,7 @@ module ThreeByThreeRingTest (
     NetworkRingADPLL #(
         .BIAS(BIAS),
         .RO_WIDTH(RO_WIDTH),
-        .RINGSIZE(RINGSIZE),
+        .RINGSIZE(RINGSIZE+16),
         .PDET_WIDTH(PDET_WIDTH),
         .KP_WIDTH(KP_WIDTH),
         .KP_FRAC_WIDTH(KP_FRAC_WIDTH),

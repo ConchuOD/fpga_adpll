@@ -70,7 +70,7 @@ module NetworkRingADPLL #(
     /* Module instantiations                                                 */
     /*************************************************************************/  
     
-    (* DONT_TOUCH = "TRUE" *)  PhaseDetector #(.WIDTH(PDET_WIDTH)) pDetLeft (
+    (* DONT_TOUCH = "TRUE" *)  PhaseDetectorDL #(.WIDTH(PDET_WIDTH)) pDetLeft (
         .reset_i(reset_i), 
         .fpga_clk_i(fpga_clk_i),
         .reference_i(ref_left_i),
@@ -78,7 +78,7 @@ module NetworkRingADPLL #(
         .pd_clock_cycles_o(error_left_x)
     );
 
-    (* DONT_TOUCH = "TRUE" *)  PhaseDetector #(.WIDTH(PDET_WIDTH)) pDetAbove (
+    (* DONT_TOUCH = "TRUE" *)  PhaseDetectorDL #(.WIDTH(PDET_WIDTH)) pDetAbove (
         .reset_i(reset_i), 
         .fpga_clk_i(fpga_clk_i),
         .reference_i(ref_above_i),
