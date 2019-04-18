@@ -30,9 +30,9 @@ module ThreeByThreeRingTest (
     localparam ACCUM_WIDTH = 12;
 
     localparam KP_WIDTH = 8;
-    localparam KP_FRAC_WIDTH = 4;//<4 is a no can do //7 for older tests @1111 = 4@0001
+    localparam KP_FRAC_WIDTH = 4; //<4 is a no can do for K?_FRAC_WIDTH with LoopFilter
     localparam KI_WIDTH = 10;
-    localparam KI_FRAC_WIDTH = 5; //8 for older tests @1111 = 4@0001
+    localparam KI_FRAC_WIDTH = 6; //and for K?_WIDTH with LoopFilterFrac
 
     //oscilloscope analysais buses    
     wire reset_x;
