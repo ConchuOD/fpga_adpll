@@ -355,7 +355,6 @@ Table \ref{table:adpll3}.
 	\label{table:adpll3}
 \end{table}
 
-
 \section{Measurement Setup}\label{section:measurement_setup}
 For the following sections in which the performance of either individual \ac{ADPLL}s or \ac{ADPLL} networks the same measurement setup was used. The \ac{FPGA} used was a Xilinx Artix-7 \acl{Nexys} on a Digilent \acs{Nexys} board. The \acl{Nexys} features 15850 logic slices, each with 4 lookup tables and 8 flip-flops. There are six clock management tiles, 240 dedicated digital signal processing slices and an analog-to-digital converter. The maximum operating frequency is $464~\si{\mega\hertz}$ and 210 input/output ports are available for use. Further information can be found in the datasheet \cite{a7_datasheet}. The \acs{Nexys} is an evaluation/development board for the aforementioned \ac{FPGA}, however directed at the education sector. It contains useful peripherals such as 16 switches, 8 7-segment displays and 4 user addressable \ac{PMOD} headers and can be used with the free of charge ``Webpack'' version of Vivado \cite{n4_datasheet}.
 \begin{figure}[h]
@@ -365,7 +364,7 @@ For the following sections in which the performance of either individual \ac{ADP
 	\label{fig:n4}
 \end{figure}
 
-Measurements were performed using an Agilent MSO7054A, a four channel, $4~\si[per-mode=symbol]{\giga\sample\per\second}$ oscilloscope. Signals were extracted over the regular \ac{PMOD} headers as the board does not provide outputs better suited to the measurement of signals that are available to the user, such as SMA or BNC connectors, and the \ac{PMOD} header for the analog-to-digital converter, which has lower impedance traces, is not available for the designer to re-configure. Data was acquired with the oscilloscope in quad channel mode at a sampling rate of $2\si{\giga\sample\per\second}$. One of the four channels was consumed by the external reference, leaving three free for signal measurements, in most cases the generated output of three \ac{ADPLL}s were connected. $200\si{\micro\second}$ long captures were saved to an Agilent specified binary format which could be opened in Matlab for analysis.
+Measurements were performed using an Agilent MSO7054A, a four channel, $4~\si[per-mode=symbol]{\giga\sample\per\second}$ oscilloscope. Signals were extracted over the regular \ac{PMOD} headers as the board does not provide outputs better suited to the measurement of signals that are available to the user, such as SMA or BNC connectors, and the \ac{PMOD} header for the analog-to-digital converter, which has lower impedance traces, is not available for the designer to re-configure. Data was acquired with the oscilloscope in quad channel mode at a sampling rate of $2\si[per-mode=symbol]{\giga\sample\per\second}$. One of the four channels was consumed by the external reference, leaving three free for signal measurements, in most cases the generated output of three \ac{ADPLL}s were connected. $200\si{\micro\second}$ long captures were saved to an Agilent specified binary format which could be opened in Matlab for analysis.
 %TODO diagram or picture of some sort
 
 \section{\acs{ADPLL} Characterisation}
