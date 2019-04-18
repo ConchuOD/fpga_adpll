@@ -1,8 +1,8 @@
-for inc = 1:15
+for inc = 1:10
     %filename = char("conor_test/settings1_" + num2str(inc) + ".bin");
     %filename = char("scope_41.bin");
     
-    path3       = "test_conor/monday/design2b_" + num2str(inc) + ".bin";
+    path3       = "~/gdrive/measurements/monday2/adpll_1b" + num2str(inc) + ".bin";
     fileID      = fopen(path3);
     A           = fread(fileID, 'double');
     fclose(fileID);
@@ -76,21 +76,35 @@ for inc = 1:15
 %     p2p_4 = max_4-min_4;
 % 
     if length(init_cross2) == length(init_cross1)
-        TIE(2,inc) = max(abs(init_cross2(1:len)-init_cross1));
+        TIE_max(2,inc) = max(abs(init_cross2(1:len)-init_cross1));
     elseif length(init_cross2) > length(init_cross1)
-        TIE(2,inc) = max(abs(init_cross2(2:end)-init_cross1));
+        TIE_max(2,inc) = max(abs(init_cross2(2:end)-init_cross1));
     end
     if length(init_cross3) == length(init_cross1)
-        TIE(3,inc) = max(abs(init_cross3(1:len)-init_cross1));
+        TIE_max(3,inc) = max(abs(init_cross3(1:len)-init_cross1));
     elseif length(init_cross3) > length(init_cross1)
-        TIE(3,inc) = max(abs(init_cross3(2:end)-init_cross1));
-        inc
+        TIE_max(3,inc) = max(abs(init_cross3(2:end)-init_cross1));
+    end
+    if length(init_cross4) == length(init_cross1)
+        TIE_max(4,inc) = max(abs(init_cross4(1:len)-init_cross1));
+    elseif length(init_cross4) > length(init_cross1)
+        TIE_max(4,inc) = max(abs(init_cross4(2:end)-init_cross1));
+    end
+    
+    if length(init_cross2) == length(init_cross1)
+        TIE(2,inc) = max((init_cross2(1:len)-init_cross1));
+    elseif length(init_cross2) > length(init_cross1)
+        TIE(2,inc) = max((init_cross2(2:end)-init_cross1));
+    end
+    if length(init_cross3) == length(init_cross1)
+        TIE(3,inc) = max((init_cross3(1:len)-init_cross1));
+    elseif length(init_cross3) > length(init_cross1)
+        TIE(3,inc) = max((init_cross3(2:end)-init_cross1));
         end
     if length(init_cross4) == length(init_cross1)
-        TIE(4,inc) = max(abs(init_cross4(1:len)-init_cross1));
+        TIE(4,inc) = max((init_cross4(1:len)-init_cross1));
     elseif length(init_cross4) > length(init_cross1)
-        TIE(4,inc) = max(abs(init_cross4(2:end)-init_cross1));
-        inc
+        TIE(4,inc) = max((init_cross4(2:end)-init_cross1));
     end
 
 
@@ -98,19 +112,25 @@ for inc = 1:15
 %              num2str(TIE_2) + ", " +  num2str(TIE_3) + ", " + num2str(TIE_4) + ", "
 end
 
-result = zeros(3,6);
+result = zeros(3,9);
 for inc = 1:3
-    result(inc,4) = mean(TIE(2,inc:5*inc));
+    result(inc,4) = mean(TIE_max(2,inc:5*inc));
 
-    result(inc,5) = mean(TIE(3,inc:5*inc));
+    result(inc,5) = mean(TIE_max(3,inc:5*inc));
     
-    result(inc,6) = mean(TIE(4,inc:5*inc));
+    result(inc,6) = mean(TIE_max(4,inc:5*inc));
     %
     result(inc,1) = mean(std_period(2,inc:5*inc));
 
     result(inc,2) = mean(std_period(3,inc:5*inc));
     
     result(inc,3) = mean(std_period(4,inc:5*inc));
+    %
+    result(inc,7) = mean(TIE(2,inc:5*inc));
+
+    result(inc,8) = mean(TIE(3,inc:5*inc));
+    
+    result(inc,9) = mean(TIE(4,inc:5*inc));
 end
 
 str = "";
