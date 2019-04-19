@@ -383,7 +383,7 @@ Measurements were performed using an Agilent MSO7054A, a four channel, $4~\si[pe
 %TODO diagram or picture of some sort
 
 \section{\acs{ADPLL} Characterisation}
-Before combining the \ac{ADPLL}s in a network it was important to analyse the designs locked to an ideal reference, in order to establish a baseline performance. These tests were carried out with the \ac{ADPLL}s locked to an external reference at $5~\si{\mega\hertz}$. As \ac{ADPLL} 2 \& 3 have significant variance in the step sizes, for these oscillators range and step based measurements were obtained by measuring a number of oscillators, and typical values will be shown. Jitter was calculated based on the performance on nine individual \ac{ADPLL}s all locked simultaneously to the $5~\si{\mega\hertz}$ external reference. While jitter and skew are the key indicators of \ac{ADPLL} network performance, when it comes to the individual \ac{ADPLL}s themselves it is important to check lock and capture ranges also, to check that the implemented designs match with their intended values.
+Before combining the \ac{ADPLL}s in a network it was important to analyse the designs locked to an ideal reference, in order to establish a baseline performance. These tests were carried out with the \ac{ADPLL}s locked to an external reference at $5~\si{\mega\hertz}$. As \ac{ADPLL} 2 \& 3 have significant variance in the step sizes, for these oscillators range and step based measurements were obtained by measuring a number of oscillators, and typical values will be shown. Jitter was calculated based on the performance on nine individual \ac{ADPLL}s all locked simultaneously to the $5~\si{\mega\hertz}$ external reference. While jitter and skew are the key indicators of \ac{ADPLL} network performance, when it comes to the individual \ac{ADPLL}s themselves it is important to check lock and capture ranges also, to check that the implemented designs match with their intended values. The lock and capture ranges are given based on typical values, whereas jitter and skew are the median values from the \ac{ADPLL}s tested.
 
 The \label{table:characterisation} contains the results of this analysis. The first thing to note is that to the $\si{\kilo\hertz}$ the lock and capture ranges of the \ac{ADPLL}s implementing \ac{RO}s are identical. As the lock range would be expected to be slightly wider than the capture range in a design limited by the loop filter, it can be deduced that the limiting factor in the tuning range of the \ac{ADPLL} is the \ac{DCO} frequency range. This is confirmed by a cursory comparison against the values in Table \ref{table:adpll2}, where the \ac{RO} range is given as $4.571-5.518~\si{\mega\hertz}$. This range of $0.947~si{\mega\hertz}$ is almost identical to those of the \ac{ADPLL} $1$ \& $3$ which confirms the \ac{RO} is the limiting factor. In \ac{ADPLL} 1 however, the lock and capture ranges show some difference, with the lock range being slightly wider. The lower end of both ranges is identical, as rather than the instant loss of lock seen at all other thresholds, the low end of both lock and capture ranges saw a more gradual degradation, and $1.08~\si{\mega\hertz}$ is the point that the lock was observed to be lost.
 
@@ -394,8 +394,8 @@ The \label{table:characterisation} contains the results of this analysis. The fi
         Capture Range                 & $1.08-8.61~\si{\mega\hertz}$       & $4.869-5.877~\si{\mega\hertz}$    & $4.377-5.363~\si{\mega\hertz}$       \\
         Lock Range                    & $1.08-8.635~\si{\mega\hertz}$      & As above                           & As above                            \\
         Jitter                        & $1.8385~\si{\nano\second}$         & $0.5623~\si{\nano\second}$         & $0.7410~\si{\nano\second}$          \\
-        Skew (Mean \acs{TIE} to Ref.) & $7.7939~\si{\nano\second}$         & $6.2101~\si{\nano\second}$         & $5.8145~\si{\nano\second}$          \\
-        Maximum \acs{TIE}             & $8.7847~\si{\nano\second}$         & $6.4770~\si{\nano\second}$         & $6.4578~\si{\nano\second}$          \\
+        Skew (Mean \acs{TIE} to Ref.) & $1.7439~\si{\nano\second}$         & $0.3741~\si{\nano\second}$         & $0.6381~\si{\nano\second}$          \\
+        Maximum \acs{TIE}             & $7.2840~\si{\nano\second}$         & $6.4770~\si{\nano\second}$         & $6.4578~\si{\nano\second}$          \\
         $k_p$                         & $\frac{1}{32}$                     & $\frac{1}{16}$                     & $\frac{1}{16}$                      \\
         $k_i$                         & $\frac{1}{256}$                    & $\frac{1}{64}$                     & $\frac{1}{64}$  
         \end{tabular}
@@ -404,7 +404,9 @@ The \label{table:characterisation} contains the results of this analysis. The fi
     \label{table:characterisation}
 \end{table}
 
-Looking then at the jitter and skew data, unsurprisingly the entirely \ac{FPGA} clocked \ac{ADPLL} with its larger period step is has the worst jitter, by a significant amount. The maximum \ac{TIE} is also correspondingly worse, which unless significant skew was present in the other \ac{ADPLL} designs is also to be expected.
+Looking then at the jitter and skew data, unsurprisingly the entirely \ac{FPGA} clocked \ac{ADPLL} with its larger period step is has the worst jitter, by a significant amount. The maximum \ac{TIE} is also correspondingly worse, which unless significant skew was present in the other \ac{ADPLL} designs is also to be expected. \ac{ADPLL} 2 \& 3 experience low jitter, at less than $1\%$ of the period. Somewhat surprisingly there is no apparent benefit in terms of jitter reduction due to the better delay resolution of the inverter based \ac{TDL}. This may be down to either the increase in jitter from a second source of variation, or a less favourable fractional-N synthesis due to the distribution of periods.
+
+Despite Vivado being forced to use the same layout for both \ac{ADPLL} 2 \& 3 through the use of fixed cells, the minimum and maximum frequencies are still significantly different, although the size of the range is almost identical. This highlights the difficulty of ensuring identical conditions between measurements which is the most significant downside of inverter based modules. 
 
 % //9 for older tests @1111 = 4@0000, but >> 5 cos of extra size
 % <4 is a no can do //7 for older tests @1111 = 4@0001
@@ -460,9 +462,16 @@ The plots paint a a picture of the unrealistic nature of the \ac{FPGA} clocked d
 This effects the suitability of the FPGA clocked \ac{DCO} for the improvement of simulation models, or the examination of how a novel block may impact the behaviour of the network. If this analysis was carried out for the period steps, similar behaviour would be observed.
 
 %TODO removal of delay
+%TODO early
 %TODO osc size
 
 \section{\acs{ADPLL} Network Implementation}
+As the \ac{ADPLL}s were designed with network usage in mind, the \ac{HDL} aspect of their integration into a network is straightforward. For \ac{ADPLL} 1, the oscillators need only be wired together, but for Design 2 \& 3 which are reliant on inverters require some care to ensure their lock ranges overlap sufficiently. This is a time consuming task, as a number of iterations may be required, even when locking down the cells of lined up \ac{RO}s, as the nets forming the connections may change. It is recommended only to carry out alignment when all other aspects of the design are unlikely to change and to save the bitstream generated. The projected time requirement in aligning \ac{RO}s meant that the creation of a 4x4 network was abandoned. \ac{FPGA} clocked \ac{ADPLL}s are more suited to larger networks as their centre point can be determined with ease.
+
+The network operates using an external reference which is input over a \ac{PMOD} header that is shared with a number of output signals, however it could be configured to use an internal reference generated by either the \ac{FPGA} clock management utility or a \ac{DCO} of the designer's choice. 
+
+In order to increase the flexibility of the network, the switches on the \acs{Nexys} are used to change both the proportional and integral gains and the configuration of the network at runtime. The reconfigurability aspect of the error combiner allows for the network to operate in either uni- or bi-directional mode, or as a number of individual \ac{PLL}s all connected to the external reference. This is particularly advantageous for the inverter based designs, as multiple combinations can be measured without reimplementing, and thus changing the layout of either oscillator or \acl{PD}.
+
 %TODO why use each PLL
 \subsection{2x2 Network}
 \subsection{3x3 Network}

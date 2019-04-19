@@ -1,8 +1,9 @@
-for inc = 1:10
+for inc = 1:5
     %filename = char("conor_test/settings1_" + num2str(inc) + ".bin");
     %filename = char("scope_41.bin");
     
-    path3       = "~/gdrive/measurements/monday2/adpll_1b" + num2str(inc) + ".bin";
+    %path3       = "~/gdrive/measurements/monday2/adpll_1b" + num2str(inc) + ".bin";
+    path3       = "~/gdrive/measurements/monday/design2b_" + num2str(inc) + ".bin";
     fileID      = fopen(path3);
     A           = fread(fileID, 'double');
     fclose(fileID);
@@ -92,19 +93,19 @@ for inc = 1:10
     end
     
     if length(init_cross2) == length(init_cross1)
-        TIE(2,inc) = max((init_cross2(1:len)-init_cross1));
+        TIE(2,inc) = mean((init_cross2(1:len)-init_cross1));
     elseif length(init_cross2) > length(init_cross1)
-        TIE(2,inc) = max((init_cross2(2:end)-init_cross1));
+        TIE(2,inc) = mean((init_cross2(2:end)-init_cross1));
     end
     if length(init_cross3) == length(init_cross1)
-        TIE(3,inc) = max((init_cross3(1:len)-init_cross1));
+        TIE(3,inc) = mean((init_cross3(1:len)-init_cross1));
     elseif length(init_cross3) > length(init_cross1)
-        TIE(3,inc) = max((init_cross3(2:end)-init_cross1));
+        TIE(3,inc) = mean((init_cross3(2:end)-init_cross1));
         end
     if length(init_cross4) == length(init_cross1)
-        TIE(4,inc) = max((init_cross4(1:len)-init_cross1));
+        TIE(4,inc) = mean((init_cross4(1:len)-init_cross1));
     elseif length(init_cross4) > length(init_cross1)
-        TIE(4,inc) = max((init_cross4(2:end)-init_cross1));
+        TIE(4,inc) = mean((init_cross4(2:end)-init_cross1));
     end
 
 
