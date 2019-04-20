@@ -45,6 +45,7 @@
 \usepackage{xcolor}
 \usepackage{float}
 \usepackage{caption}
+\usepackage{placeins}
 
 %\usepackage{tikz}
 
@@ -54,20 +55,30 @@
 	breaklinks=true,pdfborder={0 0 0},backref=page,colorlinks=false
 	]{hyperref}
 
+
+%\makeatother
 \makeatletter
-
-\newenvironment{dedication}
-{\clearpage           % we want a new page
-	\thispagestyle{empty}% no header and footer
-	\vspace*{\stretch{1}}% some space at the top 
-	\itshape             % the text is in italics
-	\raggedleft          % flush to the right margin
-}
-{\par % end the paragraph
-	\vspace{\stretch{3}} % space at bottom is three times that at the top
-	\clearpage           % finish off the page
-}
-
+\def\@makechapterhead#1{%
+	\vspace*{-25\p@}% %%% removed!
+	{\parindent \z@ \raggedright \normalfont
+		\ifnum \c@secnumdepth >\m@ne
+		\huge\bfseries \@chapapp\space \thechapter
+		\par\nobreak
+		\vskip 20\p@
+		\fi
+		\interlinepenalty\@M
+		\Huge \bfseries #1\par\nobreak
+		\vskip 20\p@
+}}
+\def\@makeschapterhead#1{%
+	\vspace*{-25\p@}% %%% removed!
+	{\parindent \z@ \raggedright
+		\normalfont
+		\interlinepenalty\@M
+		\Huge \bfseries  #1\par\nobreak
+		\vskip 20\p@
+}}
+\makeatother
 %%%% ACRONYMS %%%%
 \input{Acronyms.tex}
 %%%% ACRONYMS %%%%
@@ -75,20 +86,23 @@
 \fancyhead{}
 \fancyhead[LE,RO]{\slshape \nouppercase{\rightmark}}
 \fancyhead[LO,RE]{\slshape \nouppercase{\leftmark}}
+\setlength{\headheight}{13.6pt}
 \fancyfoot[C]{\thepage}
 
 \newcommand\T{\rule{0pt}{2.6ex}}       % Top strut
 \newcommand\B{\rule[-1.2ex]{0pt}{0pt}} % Bottom strut
 \renewcommand\ttdefault{cmvtt}
-\preto\chapter\acresetall
+\preto\chapter\acresetall\vspace{-5cm}
 \DeclareSIUnit{\sample}{Sa}
 %\DeclareInstance{acro-title}{empty}{sectioning}{name-format =}
 
 
+
+\makeatletter
 \@ifundefined{showcaptionsetup}{}{%
  \PassOptionsToPackage{caption=false}{subfig}}
 
-%\graphicspath{{Front_matter//Front_matter_images//},{Chapter_2/Chapter_2_Images//},{Chapter_3/Chapter_3_Images//},{Chapter_4/Chapter_4_Images//},{Chapter_5/Chapter_5_Images//}}
+\acsetup{only-used=true,hyperref=true,single=true,single-form=first}
 
 \makeatletter
 \newcommand{\customlabel}[2]{%
@@ -178,7 +192,7 @@
 \fancyhead[LO]{\slshape \nouppercase{Contents}}
 
 \tableofcontents{}
-\listoffigures %TODO https://tex.stackexchange.com/questions/67745/remove-citation-from-list-of-figures
+\listoffigures
 \listoftables
 
 \pagebreak{}
@@ -203,6 +217,9 @@
 
 \chapter*{Acronyms} \addcontentsline{toc}{chapter}{Acronyms}
 \printacronyms[heading=none]
+
+\chapter*{Acknowledgements} \addcontentsline{toc}{chapter}{Acknowledgements}
+\input{Acknowledgements.tex}
 
 \doublespacing
 \chapter*{Abstract} \addcontentsline{toc}{chapter}{Abstract}
@@ -267,5 +284,4 @@
 \addcontentsline{toc}{chapter}{Bibliography}
 \fancyhead[LO,RE]{\slshape \nouppercase{\leftmark}}\bibliographystyle{IEEEtran}
 \bibliography{thesis}
-
 \end{document}

@@ -186,7 +186,8 @@ Table \ref{table:adpll1} contains a brief overview of the bit widths, tuning ran
             \hline
             Phase Detector Error Width & 7 & Error Sum Weight Width & 4 \T\\
             \hline
-            \acs{kp} width & $2^{-5}\times[0,15]\cap\mathbb{Z}$ & \acs{ki} & $2^{-8}\times[0,15]\cap\mathbb{Z}$ \T\\
+            \acs{kp} width & 5 & \acs{ki} & 8 \T\\
+            \hline
             \acs{kp} & $2^{-5}\times[0,15]\cap\mathbb{Z}$ & \acs{ki} & $2^{-8}\times[0,15]\cap\mathbb{Z}$ \T\\
             \hline
             Detection Resolution & $3.875~\si{\nano\second}$ & Detection Phase Resolution & $6.975\si{\degree}$ (at $5~\si{\mega\hertz}$)\\
@@ -245,7 +246,7 @@ With the hardware description of the \ac{RO} completed, testing of an instance o
 When, later in the project, additional \ac{RO}s were implemented to form networks, 373 inverters proved a suitable starting point which consistently delivered \ac{DCO}s with a centre frequency within $200~\si{\kilo\hertz}$ of $5~\si{\mega\hertz}$. For the purposes of describing a typical tuning range, the average propagation delay of an \ac{RO} consisting of 373 inverters with a centre frequency of $5.06~\si{\mega\hertz}$ will be used. To avoid the aforementioned issues with constant control codes, the fixed code was achieved by implementing an \ac{ADPLL} and setting the \ac{PI} filter gains to zero at runtime before performing a reset.
 
 Using this updated maximum number of inverters the frequency range can be recalculated. Firstly, the new minimum and maximum numbers of inverters are $309$ and $373$ respectively, with a mid point at $341$. The inverter delay and period step are then recomputed based on the centre frequency of $5~\si{\mega\hertz}$ as:
-\begin{align}%TODO 2 x 2 x midpoint justification - in prev. chapter?
+\begin{align}
 t_{step} &= \frac{T_{osc}}{0.5\times(n-\frac{k}{2})} = \frac{200\si{\nano\second}}{0.5\times 341} = 1.176~\si{\nano\second} \\
 \tau_{inv} &= \frac{t_{step}}{2\times\text{inverters per step}} = \frac{t_{step}}{2\times2} = \frac{1.176~\si{\nano\second}}{4} = 293~\si{\pico\second}
 \end{align}
@@ -256,7 +257,7 @@ f_{min} &= \frac{1}{T_{max}} = \frac{1}{(373-0)\times 2\times 293~\si{\pico\seco
 f_{max} &= \frac{1}{T_{min}} = \frac{1}{(373-2\times32)\times 2\times 293~\si{\pico\second}} = 5.518~\si{\mega\hertz}
 \end{align}
 
-The module implementing the \ac{RO} can be found in \textsc{RingOsc.v}, attached in Appendix \ref{adx:code} Listing \ref{lst:ring_osc}.
+The module implementing the \ac{RO} can be found in \textsc{RingOsc.v}, attached in Appendix \ref{adx:code} Listing \ref{lst:ring_osc}. In the module instance statement it can be seen that a second generated output is also present. This second output is taken from a point in the fixed part of the chain, a significant number of inverters prior to the minimum possible due to control code adjustment. This signal is at an identical frequency to that of the generated signal, however will not be immediately affected by a change in the control code, which could in some edge cases change the polarity of the signal. This signal is used to drive the \ac{LF} in order to avoid an extraneous addition to the accumulator in the integral path. This early signal must be taken from an inverter at an index significantly lower than $n-k$ to prevent this addition causing the problem it has been implemented to avoid.
 
 \subsubsection{Phase Detector}
 The \ac{PFD} used in this oscillator is, apart from the bit width of the counter, identical to that used in the previous design. The reduction in counter width will have no impact of performance of the \ac{ADPLL} once a lock has been acquired, however, the capture speed will be reduced for large phase differences due to the counter reaching saturation point significantly sooner. 5 bits corresponds to a counter range of $[-15,15]\cap\mathbb{Z}$, which will saturate at a time delay of $15\times3.875\si{\nano\second} = 58.125~\si{\nano\second}$, a phase lead or lag of $\frac{}{}\times360\si{\degree} = 104.4\si{\degree}$ at $5~\si{\mega\hertz}$. This is an adequate range, as saturation will occur well outside of the normal operating range. This reduction is most noticeable when a divider is active in the feedback path, however during locked operation a phase shift of $58.125~\si{\nano\second}$ will not occur, so this impact is only felt during acquisition.
@@ -371,27 +372,32 @@ Compared to the oscillators suggested earlier, \ac{ADPLL} 3 achieves a significa
 \end{table}
 
 \section{Measurement Setup}\label{section:measurement_setup}
-For the following sections in which the performance of either individual \ac{ADPLL}s or \ac{ADPLL} networks the same measurement setup was used. The \ac{FPGA} used was a Xilinx Artix-7 \acl{Nexys} on a Digilent \acs{Nexys} board. The \acl{Nexys} features 15850 logic slices, each with 4 lookup tables and 8 flip-flops. There are six clock management tiles, 240 dedicated digital signal processing slices and an analog-to-digital converter. The maximum operating frequency is $464~\si{\mega\hertz}$ and 210 input/output ports are available for use. Further information can be found in the datasheet \cite{a7_datasheet}. The \acs{Nexys} is an evaluation/development board for the aforementioned \ac{FPGA}, however directed at the education sector. It contains useful peripherals such as 16 switches, 8 7-segment displays and 4 user addressable \ac{PMOD} headers and can be used with the free of charge ``Webpack'' version of Vivado \cite{n4_datasheet}.
+For the following sections in which the performance of either individual \ac{ADPLL}s or \ac{ADPLL} networks the same measurement setup was used. The \ac{FPGA} used was a Xilinx Artix-7 \acl*{Nexys} on a Digilent \acs*{Nexys} board. The \acl*{Nexys} features 15850 logic slices, each with 4 lookup tables and 8 flip-flops. There are six clock management tiles, 240 dedicated digital signal processing slices and an analog-to-digital converter. The maximum operating frequency is $464~\si{\mega\hertz}$ and 210 input/output ports are available for use. Further information can be found in the datasheet \cite{a7_datasheet}. The \acs*{Nexys} is an evaluation/development board for the aforementioned \ac{FPGA}, however directed at the education sector. It contains useful peripherals such as 16 switches, 8 7-segment displays and 4 user addressable \ac{PMOD} headers and can be used with the free of charge ``Webpack'' version of Vivado \cite{n4_datasheet}.
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.6\textwidth]{../n4}
-    \caption[\acs{Nexys} development board]{\acs{Nexys} development board.}
+    \caption[\acs*{Nexys} development board]{\acs*{Nexys} development board.}
     \label{fig:n4}
 \end{figure}
 
 Measurements were performed using an Agilent MSO7054A, a four channel, $4~\si[per-mode=symbol]{\giga\sample\per\second}$ oscilloscope. Signals were extracted over the regular \ac{PMOD} headers as the board does not provide outputs better suited to the measurement of signals that are available to the user, such as SMA or BNC connectors, and the \ac{PMOD} header for the analog-to-digital converter, which has lower impedance traces, is not available for the designer to re-configure. Data was acquired with the oscilloscope in quad channel mode at a sampling rate of $2\si[per-mode=symbol]{\giga\sample\per\second}$. One of the four channels was consumed by the external reference, leaving three free for signal measurements, in most cases the generated output of three \ac{ADPLL}s were connected. $200\si{\micro\second}$ long captures were saved to an Agilent specified binary format which could be opened in Matlab for analysis.
-%TODO diagram or picture of some sort
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.6\textwidth]{../measurement_setup}
+	\caption[Measurement setup]{Measurement setup.}
+	\label{fig:setup}
+\end{figure}
 
 \section{\acs{ADPLL} Characterisation}
 Before combining the \ac{ADPLL}s in a network it was important to analyse the designs locked to an ideal reference, in order to establish a baseline performance. These tests were carried out with the \ac{ADPLL}s locked to an external reference at $5~\si{\mega\hertz}$. As \ac{ADPLL} 2 \& 3 have significant variance in the step sizes, for these oscillators range and step based measurements were obtained by measuring a number of oscillators, and typical values will be shown. Jitter was calculated based on the performance on nine individual \ac{ADPLL}s all locked simultaneously to the $5~\si{\mega\hertz}$ external reference. While jitter and skew are the key indicators of \ac{ADPLL} network performance, when it comes to the individual \ac{ADPLL}s themselves it is important to check lock and capture ranges also, to check that the implemented designs match with their intended values. The lock and capture ranges are given based on typical values, whereas jitter and skew are the median values from the \ac{ADPLL}s tested.
 
-The \label{table:characterisation} contains the results of this analysis. The first thing to note is that to the $\si{\kilo\hertz}$ the lock and capture ranges of the \ac{ADPLL}s implementing \ac{RO}s are identical. As the lock range would be expected to be slightly wider than the capture range in a design limited by the loop filter, it can be deduced that the limiting factor in the tuning range of the \ac{ADPLL} is the \ac{DCO} frequency range. This is confirmed by a cursory comparison against the values in Table \ref{table:adpll2}, where the \ac{RO} range is given as $4.571-5.518~\si{\mega\hertz}$. This range of $0.947~si{\mega\hertz}$ is almost identical to those of the \ac{ADPLL} $1$ \& $3$ which confirms the \ac{RO} is the limiting factor. In \ac{ADPLL} 1 however, the lock and capture ranges show some difference, with the lock range being slightly wider. The lower end of both ranges is identical, as rather than the instant loss of lock seen at all other thresholds, the low end of both lock and capture ranges saw a more gradual degradation, and $1.08~\si{\mega\hertz}$ is the point that the lock was observed to be lost.
+The \ref{table:characterisation} contains the results of this analysis. The first thing to note is that to the $\si{\kilo\hertz}$ the lock and capture ranges of the \ac{ADPLL}s implementing \ac{RO}s are identical. As the lock range would be expected to be slightly wider than the capture range in a design limited by the loop filter, it can be deduced that the limiting factor in the tuning range of the \ac{ADPLL} is the \ac{DCO} frequency range. This is confirmed by a cursory comparison against the values in Table \ref{table:adpll2}, where the \ac{RO} range is given as $4.571-5.518~\si{\mega\hertz}$. This range of $0.947~\si{\mega\hertz}$ is almost identical to those of the \ac{ADPLL} $1$ \& $3$ which confirms the \ac{RO} is the limiting factor. In \ac{ADPLL} 1 however, the lock and capture ranges show some difference, with the lock range being slightly wider. The lower end of both ranges is identical, as rather than the instant loss of lock seen at all other thresholds, the low end of both lock and capture ranges saw a more gradual degradation, and $1.08~\si{\mega\hertz}$ is the point that the lock was observed to be lost.
 
 \begin{table}[]
-    \begin{centre}
+    \begin{center}
         \begin{tabular}{lrrr}
         \multicolumn{1}{c}{}          & \multicolumn{1}{c}{ADPLL Design 1}  & \multicolumn{1}{c}{ADPLL Design 2} & \multicolumn{1}{c}{ADPLL Design 3} \\ \cline{2-4}       
-        Capture Range                 & $1.08-8.61~\si{\mega\hertz}$       & $4.869-5.877~\si{\mega\hertz}$    & $4.377-5.363~\si{\mega\hertz}$       \\
+        Capture Range                 & $1.08-8.61~\si{\mega\hertz}$       & $4.869-5.877~\si{\mega\hertz}$    & $4.377-5.363~\si{\mega\hertz}$       \T\\
         Lock Range                    & $1.08-8.635~\si{\mega\hertz}$      & As above                           & As above                            \\
         Jitter                        & $1.8385~\si{\nano\second}$         & $0.5623~\si{\nano\second}$         & $0.7410~\si{\nano\second}$          \\
         Skew (Mean \acs{TIE} to Ref.) & $1.7439~\si{\nano\second}$         & $0.3741~\si{\nano\second}$         & $0.6381~\si{\nano\second}$          \\
@@ -399,7 +405,7 @@ The \label{table:characterisation} contains the results of this analysis. The fi
         $k_p$                         & $\frac{1}{32}$                     & $\frac{1}{16}$                     & $\frac{1}{16}$                      \\
         $k_i$                         & $\frac{1}{256}$                    & $\frac{1}{64}$                     & $\frac{1}{64}$  
         \end{tabular}
-    \end{centre}
+    \end{center}
     \caption[\ac{ADPLL} Design Comparison]{\ac{ADPLL} Design Comparison.}
     \label{table:characterisation}
 \end{table}
@@ -411,67 +417,24 @@ Despite Vivado being forced to use the same layout for both \ac{ADPLL} 2 \& 3 th
 % //9 for older tests @1111 = 4@0000, but >> 5 cos of extra size
 % <4 is a no can do //7 for older tests @1111 = 4@0001
 
-\section{Minor Variations}\label{section:minor_variations}
-
-\subsection{Impact of Gain Variation}
-The gains chosen for use in the \acl{LF} have significant impact on the performance of the system, as the \ac{LF} governs the response of the \ac{ADPLL} to a given phase error. To large a proportional gain will result in overly aggressive overcompensation, thus negatively affecting the jitter. Eventually the violence of the jitter will result in a loss of lock. However, if the gain is too small, the frequency or period adjustment will not be sufficiently large to cause the \ac{ADPLL} to lock. Similarly, appropriate values of $k_i$ are required, and the relationship between proportional and integral gains must satisfy the conditions set out by Koskin \cite{koskin2018generation}.
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.6\textwidth]{../fixed_kp.png}
-    \caption[Fixed $k_p$ integral gain sweeps]{\Fixed $k_p$ integral gain sweeps.}
-    \label{fig:gain_sweep}
-\end{figure}
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.6\textwidth]{../fixed_kp_zoom.png} 
-    \caption[Fixed $k_p$ integral gain sweeps]{\Fixed $k_p$ integral gain sweeps.}
-    \label{fig:gain_sweep_zoom}
-\end{figure}
-
-Figure \ref{fig:gain_sweep} contains a sweep across the possible range of integral gains for four different proportional gains. It can clearly be observed that there are two distinct regions in the graph, with jitter values of less than $1~\si{\nano\second}$ contrasting sharply with the points with jitter in the region of $10~\si{\nano\second}$. These distinct sections of the plot represent locked and unlocked operation respectively. Zooming in on the low jitter region in Figure \ref{fig:gain_sweep_zoom}, the loss of lock thresholds can be compared with the theoretical relationship of $k_i = 0.5\times k_p$.
-\begin{table}[!h]
-    \begin{center}
-        \begin{tabular}{lrr}
-            \multicolumn{1}{c}{$k_p$} & \multicolumn{1}{c}{$k_i$} & \multicolumn{1}{c}{Ratio} \T\B\\
-            \hlines
-            $\frac{1}{16}$            & $\frac{5}{64}$            & $0.8$                     \T\B\\
-            $\frac{2}{16}$            & $\frac{10}{64}$           & $0.8$                     \T\B\\
-            $\frac{3}{16}$            & $\frac{12}{64}$           & $1$                       \T\B\\
-            $\frac{4}{16}$            & $\frac{14}{64}$           & $1.1428$                  \T\B
-        \end{tabular}
-    \end{center}
-    \vspace{-0.5cm}
-    \caption[Loss of Lock Gains]{Loss of Lock Gains.}
-    \label{table:lolgains}
-\end{table}
-
-Despite the relatively small number of proportional gains, it is clear that the relationship set out by Koskin does not hold in this system, but rather a scaled version of it.  This difference is attributable to a difference in \ac{LF} structure. In his simulations the \ac{LF} design contains a register forming an input buffer, absent in the \ac{LF} used for these tests. The presence of this register, clocked on the generated signal, causes the \ac{ADPLL} to react more slowly to changes in the phase difference, thus increasing the jitter. The removal of this register causes a change in the relationship between proportional and integral gains, a change that will be investigated further in a later section.
-
-\subsection{Distribution of Period Steps}
-To add context to the jitter numbers produced for each oscillator previously, the variation of period steps in the \ac{RO}, and delays in the \ac{TDL} due to implementation should be examined. The best way to visualise this distribution is through a histogram, placing periods of in a certain range into the same bin. This can be visualised effectively using Matlab's \texttt{histplot}. In order to obtain data, three \ac{ADPLL}s implementing both the \ac{FPGA} clocked and inverter based \ac{DCO}s were locked to an external reference signal at $5~\si{\mega\hertz}$, and the period of each clock cycle measured.
-\begin{figure}[h]%
-    \centering
-    \subfloat[Inverted delay based \ac{RO}.]{{\includegraphics[width=0.5\textwidth]{../conf_paper/distrib_ring} }}%
-    \subfloat[\ac{FPGA} clocked \ac{DCO}.]{{\includegraphics[width=0.5\textwidth]{../conf_paper/distrib_pa} }}%
-    \caption[Example distribution of periods]{Example distribution of periods.}    
-    \label{fig:dists}
-\end{figure}
-Figure \ref{fig:dists} contains the output of \texttt[histplot} for each of the three oscillators superimposed in one plot for each \ac{DCO} type. As the \ac{RO} has significantly finer period resolution, the period steps would be overlaid on each-other thereby making the plot difficult to read. In order to avoid this behaviour, the \ac{RO}'s mapping of control code to inverters to remove was altered from twice the control code to 16 times the control code. This results in a more pronounced separation of period steps while being indicative of the variation due to implementation.
-The plots paint a a picture of the unrealistic nature of the \ac{FPGA} clocked design in comparison to its inverter based counterpart, as each oscillator will have identical intrinsic period steps thus eliminating any jitter that maybe be seen in the system due to misalignment.
-This effects the suitability of the FPGA clocked \ac{DCO} for the improvement of simulation models, or the examination of how a novel block may impact the behaviour of the network. If this analysis was carried out for the period steps, similar behaviour would be observed.
-
-%TODO removal of delay
-%TODO early
-%TODO osc size
-
 \section{\acs{ADPLL} Network Implementation}
 As the \ac{ADPLL}s were designed with network usage in mind, the \ac{HDL} aspect of their integration into a network is straightforward. For \ac{ADPLL} 1, the oscillators need only be wired together, but for Design 2 \& 3 which are reliant on inverters require some care to ensure their lock ranges overlap sufficiently. This is a time consuming task, as a number of iterations may be required, even when locking down the cells of lined up \ac{RO}s, as the nets forming the connections may change. It is recommended only to carry out alignment when all other aspects of the design are unlikely to change and to save the bitstream generated. The projected time requirement in aligning \ac{RO}s meant that the creation of a 4x4 network was abandoned. \ac{FPGA} clocked \ac{ADPLL}s are more suited to larger networks as their centre point can be determined with ease.
 
 The network operates using an external reference which is input over a \ac{PMOD} header that is shared with a number of output signals, however it could be configured to use an internal reference generated by either the \ac{FPGA} clock management utility or a \ac{DCO} of the designer's choice. 
 
-In order to increase the flexibility of the network, the switches on the \acs{Nexys} are used to change both the proportional and integral gains and the configuration of the network at runtime. The reconfigurability aspect of the error combiner allows for the network to operate in either uni- or bi-directional mode, or as a number of individual \ac{PLL}s all connected to the external reference. This is particularly advantageous for the inverter based designs, as multiple combinations can be measured without reimplementing, and thus changing the layout of either oscillator or \acl{PD}.
+In order to increase the flexibility of the network, the switches on the \acs*{Nexys} are used to change both the proportional and integral gains and the configuration of the network at runtime. The reconfigurability aspect of the error combiner allows for the network to operate in either uni- or bi-directional mode, or as a number of individual \ac{PLL}s all connected to the external reference. This is particularly advantageous for the inverter based designs, as multiple combinations can be measured without reimplementing, and thus changing the layout of either oscillator or \acl{PD}.
+
+Two different network sizes were implemented, a 2x2 and a 3x3 grid respectively. The 2x2 network was implemented first, and then this design extended to a 3x3 once measurements had been carried out on and any errors made had been corrected. In later sections matrix indexing will be used to refer to each oscillator, with \ac{ADPLL}$_{1,1}$ closest to the reference, and higher numbers in either index getting progressively further from the reference, as in Figure \ref{fig:network_mine}. A 3x3 network was the minimum goal, with the aforementioned but eventually not implemented 4x4 a stretch-goal if time permitted. A 3x3 network set as the primary goal, as it is the minimum size network in which there exists an \ac{ADPLL} with four neighbours. As will be explained in Chapter \ref{chap:5}, \ac{ADPLL} Design 1 was only implemented in a 2x2 configuration while both other \ac{ADPLL}s were tested in a 3x3 configuration.
+
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.5\textwidth]{../network_annotated}
+	\caption[ADPLL indexing explanation]{ADPLL indexing explanation.}
+	\label{fig:network_mine}
+\end{figure}
 
 %TODO why use each PLL
-\subsection{2x2 Network}
-\subsection{3x3 Network}
+
+
+

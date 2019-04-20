@@ -1,4 +1,18 @@
 \section{Conclusions}
-\section{Impact of Research}
 \section{Suggested Future Work}
+\subsection{\acl{TDL} Characterisation}
+\acreset{TDL}
+As previously mentioned, characterisation of the \ac{TDL} was not carried out due to the time it would have taken to perform the required measurements and tests. This characteristion can be accomplished through the use of an off-chip tunable delay. Off-chip is unfortunately a requirement, as the only delays available of the order required to test the step sizes are the variable delay of the inverters themselves. A resistor \& capacitor delay circuit can be used to perform these test, and the output of the \ac{PFD} analysed on a mixed-signal oscilloscope alongside the delayed and reference waveforms. The use of an off-chip delay element necessitates careful construction/cailbration of the measurement environment to eliminate the delay stemming from the signal path through input/output buffers as it leaves the chip.
+
+\subsection{Increased Network Size}
+A 4x4 network was a stretch-goal of this project, depending on the time remaining after once the minumim goal of a 3x3 network had been reached. Unfortuantely due to problems with the clocked phase detector which resulted in mode-locking, incorrect \ac{RO} inverter selection logic and the projected time requirement to ensure alignment of each \ac{RO} this was not achieved. A 4x4 network would better explain some dynamics, such as the skew growth as the \ac{ADPLL} indices increase. However. progressing beyond a 3x3 network means that less than $20\%$ of \ac{ADPLL} output signals can be examined at any given point in time. As such, it may be useful to develop a more advanced measurement set-up that can either capture more signals simultaneously, or implement a measurement system that makes more efficient use of the available probes.
+
+\subsection{\acs{FPGA} Clocked, Linear Period \acs{DCO}}
+\acreset{FPGA,DCO}
+While this design of \ac{DCO} was proposed earlier in this thesis, it was not implemented in any \ac{ADPLL}s, as it was only realised that the output waveform did not matter, just the location of the rising edges was not made until later in the project, once the pitfall encountered in the clocked \ac{PFD} design was resolved. Until this point the non-square wave output had eliminated the design from consideration. However, as in an \ac{ASIC} linear period designs are easier to implement, it would be ideal to have the benefit of frequency scaled hardware simulations with a \ac{DCO} that more closely relates the the eventual system.
+
+\subsection{Procedural Network Instantiation}
+This suggestion is directed at making the user experience simpler. As implemented, networks based on \ac{ADPLL}s containing \ac{RO}s are implemented in separate files to their \ac{FPGA} clocked \ac{DCO} based counterparts as are the networks of difference sizes. At a network size of 2x2 this was not a problem, but at the scale of 3x3 network the modules became somewhat cumbersome to work with, with a large number of interconnects. For 3x3 and larger networks it would be expedient to create the network with a \texttt{generate} statement, as this would reduce the number of lines of code and the amount of named interconnects required. Instead the user could set a number of configuration parameters and the network would be created accordingly. This could even allow for the use of different \ac{ADPLL} types in the same network with ease. Unfortunately the tasks of floorplanning and oscillator alignment would still be left to the user to perform.
+
+
 %TODO cahracterise tdl
