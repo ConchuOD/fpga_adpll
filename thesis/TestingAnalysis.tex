@@ -108,16 +108,16 @@ The gains chosen for use in the \acl{LF} have significant impact on the performa
     \label{fig:gain_sweep_zoom}
 \end{figure}
 
-Figure \ref{fig:gain_sweep} contains a sweep across the possible range of integral gains for four different proportional gains. This test was carried out with a 3x3 network of \ac{ADPLL} Design 3, each locked to the external reference at $5~\si{\mega\hertz}$, and the generated waveform from the \acp{ADPLL} at locations ``11'', ``22'' and  ``33'' were captured. It can clearly be observed that there are two distinct regions in the graph, with jitter values of less than $1~\si{\nano\second}$ contrasting sharply with the points with jitter in the region of $10~\si{\nano\second}$. These distinct sections of the plot represent locked and unlocked operation respectively. Zooming in on the low jitter region in Figure \ref{fig:gain_sweep_zoom}, the loss of lock thresholds can be compared with the theoretical relationship of $k_i = 0.5\times k_p$.
+Figure \ref{fig:gain_sweep} contains a sweep across the possible range of integral gains for four different proportional gains. This test was carried out with a 3x3 network of \ac{ADPLL} Design 3, each locked to the external reference at $5~\si{\mega\hertz}$, and the generated waveform from the \acp{ADPLL} at locations ``11'', ``22'' and  ``33'' were captured. It can clearly be observed that there are two distinct regions in the graph, with jitter values of less than $1~\si{\nano\second}$ contrasting sharply with the points with jitter in the region of $10~\si{\nano\second}$. These distinct sections of the plot represent locked and unlocked operation respectively. Zooming in on the low jitter region in Figure \ref{fig:gain_sweep_zoom}, the approximate loss of lock thresholds can be compared with the theoretical relationship of $k_i = 0.5\times k_p$. The approximated loss of lock is determined as gain setting that caused the first \ac{ADPLL} to lose lock.
 \begin{table}[!h]
     \begin{center}
         \begin{tabular}{lrr}
             \multicolumn{1}{c}{$k_p$} & \multicolumn{1}{c}{$k_i$} & \multicolumn{1}{c}{Ratio} \T\B\\
             \hline
-            $\frac{1}{16}$            & $\frac{5}{64}$            & $0.8$                     \T\B\\
-            $\frac{2}{16}$            & $\frac{10}{64}$           & $0.8$                     \T\B\\
-            $\frac{3}{16}$            & $\frac{12}{64}$           & $1$                       \T\B\\
-            $\frac{4}{16}$            & $\frac{14}{64}$           & $1.1428$                  \T\B
+            $\frac{1}{16}$            & $\frac{5}{64}$            & $0.8$ \T\B\\
+            $\frac{2}{16}$            & $\frac{11}{64}$           & $0.72$ \T\B\\
+            $\frac{3}{16}$            & $\frac{13}{64}$           & $0.92$ \T\B\\
+            $\frac{4}{16}$            & $\frac{15}{64}$           & $1.07$ \T\B
         \end{tabular}
     \end{center}
     \vspace{-0.5cm}
