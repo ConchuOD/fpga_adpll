@@ -520,38 +520,42 @@
 	"buffers":
 	[
 		{
-			"file": "thesis/Thesis_Main_File.tex",
+			"file": "thesis/thesis.bib",
 			"settings":
 			{
-				"buffer_size": 5365,
-				"encoding": "UTF-8",
+				"buffer_size": 0,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "thesis/Abstract.tex",
+			"file": "thesis/FPGABasedADPLLs.tex",
 			"settings":
 			{
-				"buffer_size": 2733,
-				"encoding": "UTF-8",
+				"buffer_size": 0,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "thesis/LayAbstract.tex",
+			"file": "thesis/Acronyms.tex",
 			"settings":
 			{
-				"buffer_size": 2158,
-				"encoding": "UTF-8",
+				"buffer_size": 0,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "conf_paper/paper.tex",
+			"file": "thesis/Thesis.tex",
 			"settings":
 			{
-				"buffer_size": 28624,
-				"encoding": "UTF-8",
+				"buffer_size": 0,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "thesis/NetworkImplemenation.tex",
+			"settings":
+			{
+				"buffer_size": 0,
 				"line_ending": "Unix"
 			}
 		}
@@ -610,24 +614,45 @@
 	},
 	"expanded_folders":
 	[
-		"/home/conor/Documents/Year_5/Project/project_git_files",
-		"/home/conor/Documents/Year_5/Project/project_git_files/thesis"
+		"/home/conor/Documents/Year_5/Project/project_git_files"
 	],
 	"file_history":
 	[
-		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/TwoByTwoTest.v",
-		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/NetworkRingADPLL.v",
-		"/home/conor/Documents/Year_5/Project/project_git_files/constraints/ThreeByThreeRing_FixedEverything.xdc",
-		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/TwoByTwoRingTest.v",
+		"/home/conor/Documents/Year_5/Project/project_git_files/matlab/c_____0.bin",
+		"/home/conor/Documents/Year_5/Project/project_git_files/fixed_kp_zoom.png",
+		"/home/conor/Documents/Year_5/Project/project_git_files/fixed_kp.png",
+		"/home/conor/Documents/Year_5/Project/project_git_files/fixed_kp.pdf",
+		"/home/conor/Documents/Year_5/Project/project_git_files/thesis/Conclusion.tex",
+		"/home/conor/Documents/Year_5/Project/project_git_files/readme.md",
+		"/home/conor/Documents/Year_5/Project/project_git_files/texput.log",
+		"/home/conor/Documents/Year_5/Project/project_git_files/thesis/vivado.jou",
+		"/home/conor/Documents/Year_5/Project/project_git_files/thesis/Thesis.pdf.orig",
 		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/ThreeByThreeRingTest.v",
+		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/LoopFilter.v",
+		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/NetworkRingADPLL.v",
+		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/ThreeByThreeRingClockedPDTest.v",
+		"/home/conor/Documents/Year_5/Project/project_git_files/constraints/ThreeByThreeRing_FixedEverything.xdc",
+		"/home/conor/Documents/Year_5/Project/project_git_files/thesis/TestingAnalysis.tex",
+		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/NetworkADPLL.v",
+		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/RingOsc.v",
+		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/TwoByTwoTest.v",
+		"/home/conor/Documents/Year_5/Project/project_git_files/thesis/Background.tex",
+		"/home/conor/Documents/Year_5/Project/project_git_files/thesis/FPGABasedADPLLs.tex",
+		"/home/conor/Documents/Year_5/Project/project_git_files/new_pdet1.png",
+		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/LoopFilterFrac.v",
+		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/PhaseDetectorDL.v",
+		"/home/conor/Documents/Year_5/Python/ass1/get_item_data.py",
+		"/home/conor/Documents/Year_5/Python/ass1/process_data.py",
+		"/home/conor/Documents/Year_5/Project/project_git_files/thesis/thesis.bib",
+		"/home/conor/Documents/Year_5/Project/project_git_files/thesis/LayAbstract.tex",
+		"/home/conor/Documents/Year_5/Project/project_git_files/thesis/Abstract.tex",
+		"/home/conor/Documents/Year_5/Project/project_git_files/thesis/Thesis_Main_File.tex",
+		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/TwoByTwoRingTest.v",
 		"/home/conor/Documents/Year_5/Embedded/assign_3/verilog/design_sources/AHBliteTop.v",
 		"/home/conor/Documents/Year_5/Project/project_git_files/constraints/Nexys4_ext_ref.xdc",
 		"/home/conor/Documents/Year_5/Project/project_git_files/todo/remaining_files.txt",
 		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/RingADPLL.v",
-		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/NetworkADPLL.v",
-		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/PhaseDetectorDL.v",
 		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/ADPLL.v",
-		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/RingOsc.v",
 		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/PhaseAccum.v",
 		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/PhaseDetector.v",
 		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/ReferenceSelector.v",
@@ -642,7 +667,6 @@
 		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/Synchroniser.v",
 		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/SaveCounter.v",
 		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/SRLatchGate.v",
-		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/LoopFilter.v",
 		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/PulseOnNegEdge.v",
 		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/PulseOnPosEdge.v",
 		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/Div8.v",
@@ -669,7 +693,6 @@
 		"/home/conor/Documents/Year_5/Project/project_git_files/impl_locking.png",
 		"/home/conor/Documents/Year_5/Python/ass1/preserved_data.csv",
 		"/home/conor/Documents/Year_5/Python/ass1/assign1.ipynb",
-		"/home/conor/Documents/Year_5/Python/ass1/process_data.py",
 		"/home/conor/Documents/Year_5/Embedded/ass1/adc.c",
 		"/home/conor/Documents/Year_5/Embedded/ass1/spi.c",
 		"/home/conor/Documents/Year_5/Embedded/ass1/main.c",
@@ -691,7 +714,6 @@
 		"/home/conor/Documents/Year_5/Project/project_git_files/sim_sources/PhaseDetectorDLTestBench.sv",
 		"/home/conor/Documents/Year_5/Project/project_git_files/waveforms/arb_test.wcfg",
 		"/home/conor/Documents/Year_5/Project/project_vivado_files/non_network_att2/project_1.sim/sim_1/synth/timing/xsim/xvlog.log",
-		"/home/conor/Documents/Year_5/Python/ass1/get_item_data.py",
 		"/home/conor/Documents/Year_5/Project/project_git_files/sim_sources/PhaseDetectorTestBench.sv",
 		"/home/conor/Documents/Year_5/Python/ass1/query_result.csv",
 		"/home/conor/Documents/Year_5/Python/ass1/dfsds.json",
@@ -723,30 +745,11 @@
 		"/home/conor/Documents/Year_5/Project/project_git_files/constraints/TwoByTwo.xdc",
 		"/home/conor/Documents/Year_5/Project/project_vivado_files/non_network_att2/project_1.sim/sim_1/behav/xsim/elaborate.log",
 		"/home/conor/Documents/Year_5/Project/project_vivado_files/non_network_att2/project_1.runs/synth_1/runme.log",
-		"/home/conor/Documents/Year_5/Project/project_git_files/sim_sources/PhDetTopTestBenchSaveVal.sv",
-		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/PhDetTopLevel.v",
-		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/RingOscADPLLTopLevel.v",
-		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/PhDetTestLockRange.sv",
-		"/home/conor/Documents/Year_5/Embedded/asm/Assignment_1_CD_AM.txt",
-		"/home/conor/Documents/Year_5/Python/Racing/23_Analysis_Race_Hour_6.CSV",
-		"/home/conor/Arduino/BTS/Code/BTS.cpp",
-		"/home/conor/Documents/Year_5/Python/Racing/import_csv",
-		"/home/conor/Documents/Year_5/Python/Racing/23_Analysis_Race_Hour 6.CSV",
-		"/home/conor/Documents/Year_5/Project/project_git_files/sim_sources/TwoConnectedTestBench.sv",
-		"/home/conor/Documents/Year_5/Project/project_git_files/constraints/Nexys4_TwoConnectedTest_Placement.xdc",
-		"/home/conor/Documents/Year_5/Project/project_git_files/constraints/Nexys4_RingADPLLTop_Placement.xdc",
-		"/home/conor/Documents/Year_5/Project/project_git_files/constraints/Nexys4_GainTest_Placement.xdc",
-		"/home/conor/Documents/Year_5/Project/project_git_files/constraints/Nexys4_RingOsc_Placement.xdc",
-		"/home/conor/Documents/Year_5/Project/project_vivado_files/non_network_att2/project_1.sim/sim_1/synth/timing/xsim/RingOscTest_time_synth.v",
-		"/home/conor/Documents/Year_5/Project/RingOsc/project_1.srcs/sim_2/new/RingOscTest.v",
-		"/home/conor/Documents/Year_5/Project/project_git_files/sim_sources/Div8Test.sv",
-		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/clockReset.v",
-		"/home/conor/Documents/Year_5/Project/project_git_files/design_sources/RingOscTopLevel.v",
-		"/home/conor/Documents/Year_5/SoftwareEng/caffeine/doc/state_machine.dia"
+		"/home/conor/Documents/Year_5/Project/project_git_files/sim_sources/PhDetTopTestBenchSaveVal.sv"
 	],
 	"find":
 	{
-		"height": 44.0
+		"height": 22.0
 	},
 	"find_in_files":
 	{
@@ -760,6 +763,37 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"koskin",
+			"logic",
+			"$1$",
+			"logic $1",
+			"logic $1!",
+			"\\\\cap",
+			"\\\\cap\\",
+			"\\\\cap",
+			"tdl",
+			"\\",
+			"textsc",
+			"mso",
+			"agilent",
+			"pro",
+			"tau",
+			"}\n",
+			"early",
+			"adpll_32",
+			".PDET_WIDTH(PDET_WIDTH),",
+			"NMOS",
+			"overline",
+			"Twos'",
+			"twos'",
+			"combinatorial",
+			"TODO",
+			"koskin",
+			"javidan",
+			"Javidan",
+			"javidan",
+			"koskin",
+			"figure",
 			"_i_373__4",
 			"_i_373",
 			"373__4",
@@ -803,9 +837,12 @@
 		"highlight": true,
 		"in_selection": false,
 		"preserve_case": false,
-		"regex": false,
+		"regex": true,
 		"replace_history":
 		[
+			".PDET_WIDTH(PDET_WIDTH),\\r\\n.DCO_CC_WIDTH(DCO_CC_WIDTH)",
+			"Two's",
+			"two's",
 			"oscope_8bit_bus2",
 			"oscope_8bit_bus1",
 			"junk    done",
@@ -829,32 +866,106 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 4,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "thesis/Thesis_Main_File.tex",
+					"file": "thesis/thesis.bib",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5365,
+						"buffer_size": 0,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								172,
-								172
+								0,
+								0
 							]
 						],
 						"settings":
 						{
-							"SL.173.region_keys":
+							"SL.57.region_keys":
 							[
 							],
-							"syntax": "Packages/LaTeX/LaTeX.sublime-syntax"
+							"syntax": "Packages/LaTeX/Bibtex.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "thesis/FPGABasedADPLLs.tex",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"SL.133.region_keys":
+							[
+								"SL.annotations.Gutter.|region.yellowish markup.warning.sublime_linter|dot",
+								"SL.annotations.Highlights.|668cb248fe8c6529860b89f3a937a28675406d013264c3707a1a0d376f140ef4|region.yellowish markup.warning.sublime_linter|32",
+								"sublime_linter.protected_regions",
+								"SL.annotations.Highlights.|10f4010bd7e942e80817c59e12e01ace88258b5217af398af2d53e3774ec27f4|region.yellowish markup.warning.sublime_linter|32"
+							],
+							"syntax": "Packages/LaTeX/LaTeX.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "thesis/Acronyms.tex",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"SL.55.region_keys":
+							[
+								"SL.annotations.Highlights.|1c8152d7b1b1c32f45bc54aec14cef5cf551489d4cbeb36d214dc3e787f3a3f0|region.yellowish markup.warning.sublime_linter|32",
+								"SL.annotations.Highlights.|de32c0fb16f15e3889ea2e200532512a59a9300ade5069ab0366cb21550a844f|region.yellowish markup.warning.sublime_linter|32",
+								"sublime_linter.protected_regions",
+								"SL.annotations.Highlights.|a27d3d43c9c7b03d4e8c0b77547dabb8218e4364fd6afc9e7a04144f0a0bb308|region.yellowish markup.warning.sublime_linter|32",
+								"SL.annotations.Gutter.|region.yellowish markup.warning.sublime_linter|dot"
+							],
+							"syntax": "Packages/LaTeX/LaTeX.sublime-syntax",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -864,29 +975,32 @@
 					"type": "text"
 				},
 				{
-					"buffer": 1,
-					"file": "thesis/Abstract.tex",
+					"buffer": 3,
+					"file": "thesis/Thesis.tex",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2733,
+						"buffer_size": 0,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2375,
-								2375
+								0,
+								0
 							]
 						],
 						"settings":
 						{
-							"SL.174.region_keys":
+							"SL.35.region_keys":
 							[
+								"SL.annotations.Gutter.|region.yellowish markup.warning.sublime_linter|dot",
+								"SL.annotations.Highlights.|48569d921f37ab76c8d237693fc2ba4aba7e7d0864ddb943e57e2e515fe630cd|region.yellowish markup.warning.sublime_linter|32",
+								"sublime_linter.protected_regions"
 							],
-							"spell_check": true,
-							"syntax": "Packages/LaTeX/LaTeX.sublime-syntax"
+							"syntax": "Packages/LaTeX/LaTeX.sublime-syntax",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -896,32 +1010,42 @@
 					"type": "text"
 				},
 				{
-					"buffer": 2,
-					"file": "thesis/LayAbstract.tex",
+					"buffer": 4,
+					"file": "thesis/NetworkImplemenation.tex",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2158,
+						"buffer_size": 0,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								163,
-								163
+								0,
+								0
 							]
 						],
 						"settings":
 						{
-							"SL.15.region_keys":
+							"SL.99.region_keys":
 							[
-							],
-							"SL.176.region_keys":
-							[
+								"sublime_linter.protected_regions",
+								"SL.annotations.Highlights.|10f9d64c0754d3d2f995b16474401d71e615da0f55450d7856fa5afc459dd7fe|region.yellowish markup.warning.sublime_linter|32",
+								"SL.annotations.Highlights.|70ca6f934cbf6f5607336ed2cc154feddbec900d04001729cc3eb6c2d0a0285d|region.yellowish markup.warning.sublime_linter|32",
+								"SL.annotations.Gutter.|region.yellowish markup.warning.sublime_linter|dot",
+								"SL.annotations.Highlights.|6f0a2fe1cc3fa350ec32acc4cb4f751334225c026ca2858ac3bcef1f529f99b1|region.yellowish markup.warning.sublime_linter|32",
+								"SL.annotations.Highlights.|1570a8b0a1e41f1dad412f6de4ee196c15ed2a2681809adba038ba930a73a12f|region.yellowish markup.warning.sublime_linter|32",
+								"SL.annotations.Highlights.|3fe9865bc2375194c8260d84d602d4c93c4cfa51b68260496670603aeec7b13d|region.yellowish markup.warning.sublime_linter|32",
+								"SL.annotations.Highlights.|9ae16e118ab42941edae4ba297522e3b362c25aec3d9aa1ff8fb5965a9f0c32b|region.yellowish markup.warning.sublime_linter|32",
+								"SL.annotations.Highlights.|1e8f98b0c20134875997a6e62f7cefa8d4911b4396600aca74dafe44ee73c02e|region.yellowish markup.warning.sublime_linter|32",
+								"SL.annotations.Highlights.|a56c3000cb73b66e67434b3402c506f2d5f194662ca244e9afb8f9a16f864b7a|region.yellowish markup.warning.sublime_linter|32",
+								"SL.annotations.Highlights.|19d60509e8e4cd182f2f666ddfd064818fc45fbbac599c89b4ddc22774cc5998|region.yellowish markup.warning.sublime_linter|32",
+								"SL.annotations.Highlights.|2fcbad8206a6eddfd58e7f1d8fdd8b84697311eb846d48e1c849f8c8ff3fbbeb|region.yellowish markup.warning.sublime_linter|32"
 							],
 							"spell_check": true,
-							"syntax": "Packages/LaTeX/LaTeX.sublime-syntax"
+							"syntax": "Packages/LaTeX/LaTeX.sublime-syntax",
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -929,52 +1053,13 @@
 					},
 					"stack_index": 0,
 					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "conf_paper/paper.tex",
-					"semi_transient": true,
-					"settings":
-					{
-						"buffer_size": 28624,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1002,
-								1002
-							]
-						],
-						"settings":
-						{
-							"SL.175.region_keys":
-							[
-								"SL.annotations.Highlights.|3cc1af7a25d04fb6c6dabdd91c07ba04dae8d61d2f08ff7de3931e8d2c8431d2|region.yellowish markup.warning.sublime_linter|32",
-								"SL.annotations.Highlights.|226a19939595e4f2cc79198b2362a8e9f7891dcb6ad9069f43c043a766a37b70|region.yellowish markup.warning.sublime_linter|32",
-								"SL.annotations.Gutter.|region.yellowish markup.warning.sublime_linter|dot",
-								"SL.annotations.Highlights.|31a3e33eee3e4a6a56596958ea06559e00bb3c2a3f717be00ac5c478d2f87fc6|region.yellowish markup.warning.sublime_linter|32",
-								"sublime_linter.protected_regions",
-								"SL.annotations.Highlights.|1e6441eb3fad83d520ada2814cff72a6576fd5a2eccbbcbf12c51f09449c1185|region.yellowish markup.warning.sublime_linter|32"
-							],
-							"syntax": "Packages/LaTeX/LaTeX.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 162.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
 				}
 			]
 		}
 	],
 	"incremental_find":
 	{
-		"height": 31.0
+		"height": 22.0
 	},
 	"input":
 	{
@@ -1027,7 +1112,7 @@
 	"project": "project.sublime-project",
 	"replace":
 	{
-		"height": 79.0
+		"height": 40.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -1065,7 +1150,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 236.0,
+	"side_bar_width": 252.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

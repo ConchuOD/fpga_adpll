@@ -2,7 +2,9 @@
 /*****************************************************************************/
 /* Author   : Conor Dooley                                                   */
 /* Date     : 1-April-2019                                                   */
-/* Function : 3x3 ADPLL network using inverter based oscillator              */
+/* Function : 3x3 ADPLL network using inverter based oscillator and clocked  */
+/*            phase detector. This file must be different to the TDL PDet as */
+/*            they have different centre freqs                               */
 /*****************************************************************************/
 
 module ThreeByThreeRingClockedPDTest (

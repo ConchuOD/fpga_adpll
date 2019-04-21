@@ -1,6 +1,6 @@
 for inc = 1:4 %kp loop
     for inner_inc = 1:15 %ki_loop
-
+        tic
         kp = inc;
         ki = inner_inc;
 
@@ -52,9 +52,8 @@ for inc = 1:4 %kp loop
         std_period(2,inc,inner_inc) = std(periods2);
         std_period(3,inc,inner_inc) = std(periods3);
         std_period(4,inc,inner_inc) = std(periods4);
-        
-        
-        mean_jitter = squeeze(mean(std_period,1));
+               
+        toc
         
 %         if size(init_cross(2,:),2) == size(init_cross(1,:),2)
 %             TIE(2,inc,inner_inc) = max(abs(init_cross(2,1:size(init_cross(1,:),2))-init_cross(1,1:size(init_cross(1,:),2))));
@@ -75,15 +74,15 @@ for inc = 1:4 %kp loop
     end
 end
 
-mean_jitter = squeeze(mean(std_period,1));
+std_period_to_disp = std_period(2:4,1:4,1:end);
 
 fig_handle = figure(1);
 axes_handle = subplot(1,1,1);
-scatter([1:15],mean_jitter(1,:)*1E9,'b');
+scatter(axes_handle,reshape(repmat([1:15],[3 1]),1,[]),reshape(squeeze(std_period_to_disp(:,1,:))*1E9,[1 3*15]),'b');
 hold(axes_handle,'on')
-scatter([1:15],mean_jitter(2,:)*1E9,'r');
-scatter([1:15],mean_jitter(3,:)*1E9,'g');
-scatter([1:15],mean_jitter(4,:)*1E9,'k');
+scatter(axes_handle,reshape(repmat([1:15],[3 1]),1,[]),reshape(squeeze(std_period_to_disp(:,2,:))*1E9,[1 3*15]),'r');
+scatter(axes_handle,reshape(repmat([1:15],[3 1]),1,[]),reshape(squeeze(std_period_to_disp(:,3,:))*1E9,[1 3*15]),'g');
+scatter(axes_handle,reshape(repmat([1:15],[3 1]),1,[]),reshape(squeeze(std_period_to_disp(:,4,:))*1E9,[1 3*15]),'k');
 set(gca, 'TickLabelInterpreter', 'latex', 'XTickLabel', {'$\frac{0}{64}$', '$\frac{5}{64}$', '$\frac{10}{64}$', '$\frac{15}{64}$', '$\frac{10}{64}$', '$\frac{12}{64}$', '$\frac{14}{64}$', '$\frac{16}{64}$'})
 xlabel(axes_handle,"$k_i$",'Interpreter','latex');
 ylabel(axes_handle,"Cycle-To-Cycle Jitter (ns)");%,'Interpreter','latex');

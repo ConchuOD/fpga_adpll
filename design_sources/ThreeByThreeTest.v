@@ -5,7 +5,7 @@
 /* Function : 3x3 ADPLL network using inverter based oscillator              */
 /*****************************************************************************/
 
-module ThreeByThreeRingTest (
+module ThreeByThreeTest (
         input         clk100_i,     // 100 MHz clock from oscillator on board
         input         rst_pbn_i,    // reset signal, active low, from CPU RESET pushbutton //
         input         ra_i,         // external reference
@@ -622,11 +622,10 @@ module ThreeByThreeRingTest (
         end
     end
 
-    NetworkRingADPLL #(
+    NetworkADPLL #(
         .BIAS(BIAS),
-        .RO_WIDTH(RO_WIDTH),
-        .RINGSIZE(RINGSIZE-4),
         .PDET_WIDTH(PDET_WIDTH),
+        .DCO_CC_WIDTH(DCO_CC_WIDTH),
         .KP_WIDTH(KP_WIDTH),
         .KP_FRAC_WIDTH(KP_FRAC_WIDTH),
         .KI_WIDTH(KI_WIDTH),
