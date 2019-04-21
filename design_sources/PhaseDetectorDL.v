@@ -1,14 +1,14 @@
 `timescale 1ns / 1ps
 /*****************************************************************************/
 /* Author   : Conor Dooley                                                   */
-/* Date     : ??-November-2019                                               */
+/* Date     : ??-March-2019                                                  */
 /* Function : Inverter based tapped delay line sig-num phase detector.       */
 /*****************************************************************************/
 module PhaseDetectorDL #(parameter WIDTH = 5) (
-        input wire reset_i,
-        input wire fpga_clk_i, //unused but preserved for interface compatability
-        input wire reference_i,
-        input wire generated_i,
+        input  wire                    reset_i,
+        input  wire                    fpga_clk_i, //unused but preserved for interface compatability
+        input  wire                    reference_i,
+        input  wire                    generated_i,
         output wire signed [WIDTH-1:0] pd_clock_cycles_o //used & named as above
     );
     
@@ -68,17 +68,19 @@ module PhaseDetectorDL #(parameter WIDTH = 5) (
 
     //tapped delay line control signals
     (* DONT_TOUCH = "TRUE" *) and done_and (done_c, ref_q_r, gen_q_r);
-    (* DONT_TOUCH = "TRUE" *) or count_or (count_c, ref_q_r, gen_q_r);
+    (* DONT_TOUCH = "TRUE" *) or  count_or (count_c, ref_q_r, gen_q_r);
 
     //Arbitrator imitation circuit
-    (* DONT_TOUCH = "TRUE" *) SRLatchGate arbitration(
+    (* DONT_TOUCH = "TRUE" *) SRLatchGate arbitration
+    (
         .R(~ref_q_r),
         .S(~gen_q_r),
         .Q(which_first_c)
     );
 
     //Sign detection circuit
-    (* DONT_TOUCH = "TRUE" *) SRLatchGate sign(
+    (* DONT_TOUCH = "TRUE" *) SRLatchGate sign
+    (
         .R(which_first_c),
         .S(~which_first_c),
         .Q(sign_c)
@@ -87,11 +89,11 @@ module PhaseDetectorDL #(parameter WIDTH = 5) (
     //output buffer
     always @ (posedge done_c or posedge reset_i)
     begin
-        if (reset_i) sign_delay_r <= 0'b0;
+        if (reset_i)     sign_delay_r <= 0'b0;
 
         else if (done_c) sign_delay_r <= sign_c;
 
-        else  sign_delay_r <= 0'b0; //should be unreachable
+        else             sign_delay_r <= 0'b0; //should be unreachable
     end
 
     /*************************************************************************/
@@ -106,7 +108,7 @@ module PhaseDetectorDL #(parameter WIDTH = 5) (
     begin
         if (done_c) clear_tdl_c = 1'b1;
 
-        else clear_tdl_c = 1'b0;
+        else        clear_tdl_c = 1'b0;
     end
 
     //tapped delay line
@@ -123,21 +125,21 @@ module PhaseDetectorDL #(parameter WIDTH = 5) (
             //tap registers
             always @ (posedge count_input_c[i] or posedge reset_i or posedge clear_tdl_c)
             begin
-                if (reset_i == 1'b1 || clear_tdl_c == 1'b1) error_taps_r[i] <= 1'b0; //neg of clear_tdl_c
+                //neg of clear_tdl_c
+                if (reset_i == 1'b1 || clear_tdl_c == 1'b1) error_taps_r[i] <= 1'b0; 
 
-                else if (count_c == 1'b1) error_taps_r[i] <= 1'b1;
+                else if (count_c == 1'b1)                   error_taps_r[i] <= 1'b1;
+                // in case edge arrives after counting period has ended
+                else                                        error_taps_r[i] <= 1'b0;
 
-                else error_taps_r[i] <= 1'b0; // if edge arrives after counting has been stopped ?
-            end
-            
             //output buffer registers
             always @ (posedge done_c or posedge reset_i)
             begin
-                if (reset_i) error_taps_buff_r[i] <= 1'b0;
+                if (reset_i)     error_taps_buff_r[i] <= 1'b0;
 
                 else if (done_c) error_taps_buff_r[i] <= error_taps_r[i];
 
-                else error_taps_buff_r[i] <= 1'b0;
+                else             error_taps_buff_r[i] <= 1'b0;
             end
 
         end
@@ -161,8 +163,8 @@ module PhaseDetectorDL #(parameter WIDTH = 5) (
     //concatanation of sign and magnutide
     always @ (error_bin_r or sign_delay_r)
     begin
-        if(sign_delay_r)    error_2s_comp_c = $signed({sign_delay_r,~(error_bin_r[MAG_WIDTH-1:0])}-1'b1);
-        else                error_2s_comp_c = $signed({sign_delay_r,error_bin_r[MAG_WIDTH-1:0]});
+        if(sign_delay_r)    error_2s_comp_c = $signed({sign_delay_r , ~(error_bin_r[MAG_WIDTH-1:0])}-1'b1);
+        else                error_2s_comp_c = $signed({sign_delay_r , error_bin_r[MAG_WIDTH-1:0]});
     end
     
     //assign output

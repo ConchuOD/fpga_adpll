@@ -1,25 +1,25 @@
 `timescale 1ns / 1ps
-/*****************************************************************************/
-/* Author   : Conor Dooley                                                   */
-/* Date     : ??-November-2019                                               */
-/* Function : Inverter based oscillator. Propagation delay and control code  */
-/*            set the frequency of operation.                                 */
-/*****************************************************************************/
+/****************************************************************************/
+/* Author   : Conor Dooley                                                  */
+/* Date     : ??-November-2019                                              */
+/* Function : Inverter based oscillator. Propagation delay and control code */
+/*            set the frequency of operation.                               */
+/****************************************************************************/
 module RingOsc #(
         parameter RINGSIZE = 421, //number of inverters, must be even
         parameter CTRL_WIDTH = 5  //width of the control code
     )
     ( 
-	    input wire enable_i, //enable high
-        input wire reset_i, // reset high
-        input wire [CTRL_WIDTH-1:0] freq_sel_i, //bigger is shorter period
-        output wire early_clk_o, //phase leading version of generated clock
-        output wire clk_o
+        input  wire                  enable_i, //enable high
+        input  wire                  reset_i, // reset high
+        input  wire [CTRL_WIDTH-1:0] freq_sel_i, //bigger is shorter period
+        output wire                  early_clk_o, //phase leading version of generated clock
+        output wire                  clk_o
     );
     
-    /*************************************************************************/
-    /* Define nets and constants                                             */
-    /*************************************************************************/
+    /************************************************************************/
+    /* Define nets and constants                                            */
+    /************************************************************************/
 
     //first "inverter" is actually a nand with enable signal
     localparam INVERTERNUM = RINGSIZE-1;
@@ -29,9 +29,9 @@ module RingOsc #(
 
     reg f_sel_mux_out_r;
     
-    /*************************************************************************/
-    /* Inverter chain                                                        */
-    /*************************************************************************/
+    /************************************************************************/
+    /* Inverter chain                                                       */
+    /************************************************************************/
 
     //generate statement used for ease of use, each inverter connected in a row
     genvar i;
@@ -42,9 +42,9 @@ module RingOsc #(
         end
     endgenerate
 
-    /*************************************************************************/
-    /* Combiational logic                                                    */
-    /*************************************************************************/
+    /************************************************************************/
+    /* Combiational logic                                                   */
+    /************************************************************************/
     
     //output selection multiplexor. 2* ensures odd number of inverters.
     always @(freq_sel_i,ringwire_c,reset_i)
@@ -62,6 +62,7 @@ module RingOsc #(
 
     //output bufferrs
     buf outbuf (clk_o, ringwire_c[INVERTERNUM]);
-    buf outbuf_early (early_clk_o, ringwire_c[INVERTERNUM-2*CTRL_WIDTH-75]); //ensures edge before clk edge
+    //75 ensures early_clk_o edge sufficiently before clk_o edge
+    buf outbuf_early (early_clk_o, ringwire_c[INVERTERNUM-2*CTRL_WIDTH-75]); 
 
-endmodule
+endmodule //RingOsc

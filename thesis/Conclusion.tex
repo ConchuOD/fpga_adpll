@@ -1,4 +1,10 @@
 \section{Conclusions}
+%TODO dont reset acro
+The objective of this project was to create \iac{FPGA} based platform that could be used to prototype and model \ac{ADPLL} networks in a cost and time effective manner. The main effort of the project was to analyse the ways in which the components of an \ac{ADPLL} network could be designed, then select from this pool a number of the most appropriate designs. A number of \ac{ADPLL} designs were then created using the selected components in different combinations for the purposes of comparison. Once these \ac{ADPLL} designs had been validated, they were implemented in networks of a 2x2 and 3x3 Cartesian grid topology. Measurements and performance benchmarks were then carried out on these \ac{ADPLL} networks, and the results used to verify claims made regarding the intended use cases of the individual \ac{ADPLL} designs. Finally various small modifications to the \ac{ADPLL} designs were made, and their impact on system performance identified.
+
+%TODO did I manage this?
+
+
 \section{Suggested Future Work}
 \subsection{\acl{TDL} Characterisation}
 \acreset{TDL}
@@ -9,7 +15,7 @@ A 4x4 network was a stretch-goal of this project, depending on the time remainin
 
 \subsection{\acs{FPGA} Clocked, Linear Period \acs{DCO}}
 \acreset{FPGA,DCO}
-While this design of \ac{DCO} was proposed earlier in this thesis, it was not implemented in any \ac{ADPLL}s, as it was only realised that the output waveform did not matter, just the location of the rising edges was not made until later in the project, once the pitfall encountered in the clocked \ac{PFD} design was resolved. Until this point the non-square wave output had eliminated the design from consideration. However, as in an \ac{ASIC} linear period designs are easier to implement, it would be ideal to have the benefit of frequency scaled hardware simulations with a \ac{DCO} that more closely relates the the eventual system.
+While this design of \ac{DCO} was proposed earlier in this thesis, it was not implemented in any \ac{ADPLL}s, as it was only realised that the output waveform did not matter, just the location of the rising edges was not made until later in the project, once the pitfall encountered in the clocked \ac{PFD} design was resolved. Until this point the non-square wave output had eliminated the design from consideration. However, as in \iac{ASIC} linear period designs are easier to implement, it would be ideal to have the benefit of frequency scaled hardware simulations with \iac{DCO} that more closely relates the the eventual system.
 
 \subsection{Procedural Network Instantiation}
 This suggestion is directed at making the user experience simpler. As implemented, networks based on \ac{ADPLL}s containing \ac{RO}s are implemented in separate files to their \ac{FPGA} clocked \ac{DCO} based counterparts as are the networks of difference sizes. At a network size of 2x2 this was not a problem, but at the scale of 3x3 network the modules became somewhat cumbersome to work with, with a large number of interconnects. For 3x3 and larger networks it would be expedient to create the network with a \texttt{generate} statement, as this would reduce the number of lines of code and the amount of named interconnects required. Instead the user could set a number of configuration parameters and the network would be created accordingly. This could even allow for the use of different \ac{ADPLL} types in the same network with ease. Unfortunately the tasks of floorplanning and oscillator alignment would still be left to the user to perform.

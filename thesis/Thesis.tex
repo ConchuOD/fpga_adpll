@@ -55,6 +55,36 @@
 	breaklinks=true,pdfborder={0 0 0},backref=page,colorlinks=false
 	]{hyperref}
 
+\definecolor{vgreen}{RGB}{104,180,104}
+\definecolor{vblue}{RGB}{49,49,255}
+\definecolor{vorange}{RGB}{255,143,102}
+\definecolor{vred}{RGB}{119,31,31}
+\makeatletter
+\lst@InstallKeywords k{attributes}{attributestyle}\slshape{attributestyle}{}ld
+\makeatother
+\makeatletter
+\lst@InstallKeywords k{modules}{modulestyle}\slshape{modulestyle}{}ld
+\makeatother
+
+\lstdefinestyle{verilog-style}
+{
+	language=Verilog,
+	basicstyle=\footnotesize,
+	%breakatwhitespace=true,
+	breaklines=true,
+	keywordstyle=\color{vblue},
+	identifierstyle=\color{black},
+	commentstyle=\color{vgreen},
+	attributestyle = \color{vorange},
+	modulestyle = \color{vred},
+	numbers=none,
+	tabsize=4,
+	lineskip=-0.7ex,
+	showspaces=false,
+	moreattributes={WIDTH,ERROR_WIDTH,WEIGHT_WIDTH,WEIGHTED_WIDTH,WEIGHT,MAG_WIDTH,RINGSIZE,INVERTERNUM,CTRL_WIDTH,DISABLE,COUNT_UP,COUNT_DOWN,MAXVAL,MINVAL,DYNAMIC_VAL,DCO_CC_WIDTH,KP_WIDTH,KP,KI_WIDTH,KI,KP_MULT_RES_WIDTH,KI_MULT_RES_WIDTH,KI_ACCUM_OVERHEAD,SUM_WIDTH,NUM_TAPS,ACCUM_WIDTH,PDET_WIDTH,BIAS,KP_FRAC_WIDTH,KI_FRAC_WIDTH,PADDING_WIDTH,RO_WIDTH}, % etc...
+	morekeywords={DONT_TOUCH},
+	moremodules={Synchroniser,UpDownCounter,SaveCounter,StateMachine,SRLatchGate,PhaseDetectorDL,PhaseDetector,ErrorCombiner,LoopFilter,RingOsc,Div8}
+}
 
 %\makeatother
 \makeatletter
@@ -284,4 +314,10 @@
 \addcontentsline{toc}{chapter}{Bibliography}
 \fancyhead[LO,RE]{\slshape \nouppercase{\leftmark}}\bibliographystyle{IEEEtran}
 \bibliography{thesis}
+\begin{appendices}
+\chapter{Key Verilog Modules}\label{adx:code}
+\input{CodeAppendix.tex}
+
+\end{appendices}
+
 \end{document}
