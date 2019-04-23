@@ -5,7 +5,7 @@
 \usepackage[T1]{fontenc}
 \usepackage[latin9]{inputenc}
 \usepackage[a4paper]{geometry}
-\geometry{verbose,tmargin=3cm,bmargin=3cm,lmargin=3.5cm,rmargin=2.4cm}
+\geometry{verbose,tmargin=2.9cm,bmargin=2.9cm,lmargin=3.5cm,rmargin=2.3cm}
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \setcounter{secnumdepth}{3}
@@ -175,7 +175,7 @@
 	\begin{center}
 		{\large{}This thesis is submitted to the School of Electrical and Electronic Engineering\\ \vspace{0.5cm}
 		in the College of Engineering and Architecture of University College Dublin \\ \vspace{0.5cm}
-		in partial fulfilment for the requirements for the degree of \\ \vspace{0.5cm}
+		in partial fulfilment of the requirements for the degree of \\ \vspace{0.5cm}
 		\textbf{Master of Engineering} }
 	\end{center}
 	\vspace{1.cm}
@@ -185,9 +185,9 @@
 	\noindent
 	\begin{center}
 		\begin{tabular}{lll}
-			\textbf{\large{}Research Supervisors:} & \qquad{}\qquad{} & {\large{}Dr Elena Blokhina \& Brian Mulkeen}\\
+			\textbf{\large{}Research Supervisors:} & \qquad{}\qquad{} & {\large{}Dr. Elena Blokhina \& Brian Mulkeen}\\
 			&  & \\
-			\textbf{\large{}Head of School:} & \qquad{}\qquad{} & {\large{}Prof Andrew Keane}\\
+			\textbf{\large{}Head of School:} & \qquad{}\qquad{} & {\large{}Prof. Peter Kennedy}\\
 		\end{tabular}
 	\par\end{center}
 	
@@ -313,7 +313,9 @@
 \phantomsection
 \addcontentsline{toc}{chapter}{Bibliography}
 \fancyhead[LO,RE]{\slshape \nouppercase{\leftmark}}\bibliographystyle{IEEEtran}
+\begin{small}
 \bibliography{thesis}
+\end{small}
 \begin{appendices}
 \chapter{Key Verilog Modules}\label{adx:code}
 \input{CodeAppendix.tex}

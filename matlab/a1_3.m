@@ -1,3 +1,4 @@
+clearvars
 num_files = 15;
 std_period = zeros(4,num_files);
 TIE_mean = zeros(4,num_files);
@@ -13,7 +14,7 @@ for inc = 1:num_files
     %filename = char("conor_test/settings1_" + num2str(inc) + ".bin");
     %filename = char("scope_41.bin");
         
-    path3       = "~/gdrive/measurements/monday2/adpll_1b" + num2str(inc) + ".bin";
+    path3       = "~/gdrive/measurements/tuesday_last/adpll_des3_2x2_" + num2str(inc) + ".bin";
 %     path3       = "~/gdrive/measurements/tuesday/net3x3_clocked_pd_5m18_" + num2str(inc) + ".bin";
 %     path3       = "~/gdrive/measurements/wednesday/net3x3_5m00_kp_100_ki_1_" + num2str(inc) + ".bin";
 %     path3       = "~/gdrive/measurements/monday/design2b_div" + num2str(div_ratio) + "_" + num2str(inc) + ".bin";    

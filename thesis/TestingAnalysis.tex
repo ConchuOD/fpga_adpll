@@ -46,6 +46,15 @@ The other notable difference in \ac{C2C} jitter, is that the use of an inverter 
     \vspace{-0.5cm}
 \end{table}
 %\FloatBarrier
+%%design2
+%&6.6275e-10&6.2108e-10&6.3211e-10&5.7432e-09&5.4399e-09&5.2317e-09&7.6801e-12&-1.6812e-10&5.383e-10
+%&6.599e-10&6.3995e-10&6.7278e-10&5.6926e-09&6.9422e-09&8.9609e-09&6.6269e-12&-3.4538e-10&7.6741e-10
+%&6.6308e-10&6.6233e-10&6.7583e-10&1.2222e-08&1.6719e-08&1.9176e-08&5.0799e-09&7.2752e-09&8.7174e-09
+%%design3
+%&7.2836e-10&5.1636e-10&6.8017e-10&4.3727e-08&4.3404e-08&4.3e-08&3.9592e-08&3.917e-08&3.984e-08
+%&7.2557e-10&5.5049e-10&7.3112e-10&2.6007e-08&2.6133e-08&2.7422e-08&2.1748e-08&2.1524e-08&2.3061e-08
+%&7.1964e-10&5.5383e-10&7.2937e-10&2.0045e-08&2.062e-08&2.2781e-08&1.5676e-08&1.5781e-08&1.775e-08
+
 
 \section{3x3 Network Performance Comparison}
 Subsequent to tests carried out using a 2x2 network, the corresponding tests were carried out using a 3x3 network in order to analyse the impact of a larger network. For these tests the gains were left unchanged but, as the 2x2 and 3x3 networks have different floorplans, the \acp{RO} have changed somewhat. This has especially manifested itself in the exceptional individual \ac{PLL} performance of Design 3.
@@ -62,7 +71,7 @@ As \ac{ADPLL} Design 1 suffered significantly more with skew as the node indices
                 \cline{3-11}
                 && \multicolumn{3}{c|}{Jitter Standard Deviation (ns)} & \multicolumn{3}{c|}{Max. Time Interval Error (ns)} & \multicolumn{3}{c|}{Skew (ns)} \T\\
                 \cline{3-11} 
-                &&PLL 11&PLL 12&PLL 22    &PLL 11&PLL 12&PLL 22    &PLL 11&PLL 12&PLL 22\T\\
+                &&PLL 11&PLL 22&PLL 33    &PLL 11&PLL 22&PLL 33    &PLL 11&PLL 22&PLL 33 \T\\
                 \hline
                 \multicolumn{2}{|l|}{\ac{ADPLL} Design 1}&-&-&-&-&-&-&-&-&-\T\\
                 \multicolumn{2}{|r|}{Free PLLs} &&& &&& &&& \T\\
@@ -88,6 +97,10 @@ As \ac{ADPLL} Design 1 suffered significantly more with skew as the node indices
     \vspace{-0.5cm}
 \end{table}
 %\FloatBarrier
+
+%&1.8956e-09&1.8425e-09&1.7594e-09&5.7868e-09&5.8407e-09&6.2537e-09&1.8481e-09&1.5976e-09&2.3251e-09
+%&1.7836e-09&1.8206e-09&1.8827e-09&5.5863e-09&6.522e-09&9.4008e-09&1.7697e-09&1.0359e-09&1.5503e-09
+%&1.9049e-09&1.9205e-09&1.9441e-09&2.298e-08&4.2771e-08&4.7441e-08&1.7268e-08&3.3739e-08&3.5989e-08
 
 \section{Minor Variations}\label{section:minor_variations}
 A number of minor design decisions will be tested in this section against their alternatives, as will the impact of varying the \ac{LF} gains.
