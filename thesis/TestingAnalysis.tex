@@ -145,8 +145,8 @@ f_{step} &= \frac{f_{FPGA}}{2^{12}} = 62.988~\si{\kilo\hertz} \\
 f_{step} &= \frac{f_{FPGA}}{2^{13}} = 31.494~\si{\kilo\hertz}
 \end{align} Both the following measurements were carried out using identical loop filter gains, network configurations and reference signal. While in uni-directional mode some minor difference is observed in the maximum \ac{TIE}, but overall no statistically relevant changes were seen.
 
-As Table \ref{table:accum_width} shows, while the resolution may have improved, the jitter has not. This occurs as all signals are synchronised to the \ac{FPGA} clock, which has a $3.875~\si{\nano\second}$ period. This quantises the output waveform to the \ac{FGPA} clock, and sets the minimum bound on the jitter. Accordingly, the most suitable counter width is that which maximises the bit width, and thus achieves the best frequency resolution, with the constraint that, at the operating frequency, the a period resolution is no finer than the \ac{FPGA} clock period. In this case, there is no bit width that satisfies both constraints, so the latter is relaxed to get a width of $12$.
-%TODO explanation for this?
+As Table \ref{table:accum_width} shows, while the resolution may have improved, the jitter has not. In this design, all signals are synchronised to the \ac{FPGA} clock, which has a $3.875~\si{\nano\second}$ period. The output waveform can only change at rising edges of the \ac{FPGA} clock, thus quantising the generated signal's period to increments of $3.875~\si{\nano\second}$. If the period step is shorter than the clock period, the extra resolution is lost and the \ac{FPGA} clock sets the minimum bound on the jitter. Accordingly, the most suitable counter width is that which maximises the number of bits, and thus achieves the best frequency resolution, with the constraint that, at the operating frequency, the period resolution is no finer than the \ac{FPGA} clock period. In this case, there is no bit width that satisfies both constraints, so the latter is relaxed to get a width of $12$.
+
 \begin{table}[!ht]
     \begin{center}
         \begin{footnotesize}
@@ -168,7 +168,7 @@ As Table \ref{table:accum_width} shows, while the resolution may have improved, 
                 \B
             \end{tabular}
         \end{footnotesize}
-        \caption{\ac{DCO} Accumulator Width Comparison.}
+        \caption{\acs{DCO} Accumulator Width Comparison.}
         \label{table:accum_width}
     \end{center}
     \vspace{-0.5cm}
