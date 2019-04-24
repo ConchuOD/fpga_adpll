@@ -1,4 +1,0 @@
-Status  Measurement                     How many?
-todo    1a,2a,2b 2x2 @ adpll 11 12 22   (3 * 15)
-todo    1a,2a,2b 3x3 @ adpll 11 22 33   (3 * 15)
-todo    1a,2a,2b div2 div4 nodiv        (2 * 3 * 15)
