@@ -1,9 +1,9 @@
 \section{Chapter Overview}
-The first step in creating \iac{FPGA} based network of \acp{ADPLL} is the design of the \ac{ADPLL} itself, which will be addressed in this chapter. The nature of \iac{FPGA} necessitates compromises in the design of a certain blocks, limiting direct transfer from \ac{ASIC} designs. In this chapter the potential designs for each individual block, or module, investigated will be explained and the case for their selection in \iac{FPGA} based \ac{ADPLL} made. A number of blocks have implemented by purely digital circuitry and as such can be transferred in their entirety from \iac{FPGA} and vice versa. However, those that will be used to emulate mixed-signal circuitry, such as the \ac{DCO} and \ac{PFD}, will be examined in greater detail. \Iac{RTL} diagram of the \ac{ADPLL} topology that will be used in the following sections is shown in Figure \ref{fig:network_adpll}.
+The first step in creating \iac{FPGA} based network of \acfp{ADPLL} is the design of the \ac{ADPLL} itself, which will be addressed in this chapter. The nature of \iac{FPGA} necessitates compromises in the design of a certain blocks, limiting direct transfer from \ac{ASIC} designs. In this chapter the potential designs for each individual block, or module, investigated will be explained and the case for their selection in \iac{FPGA} based \ac{ADPLL} made. A number of blocks have implemented by purely digital circuitry and as such can be transferred in their entirety from \iac{FPGA} and vice versa. However, those that will be used to emulate mixed-signal circuitry, such as the \ac{DCO} and \ac{PFD}, will be examined in greater detail. \Iac{RTL} diagram of the \ac{ADPLL} topology that will be used in the following sections is shown in Figure \ref{fig:network_adpll}.
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=\textwidth]{../network_adpll}
-	\caption{\ac{ADPLL} designed for use in a Cartesian grid network.}
+	\caption{\acs{ADPLL} designed for use in a Cartesian grid network.}
 	\label{fig:network_adpll}
 \end{figure}
 
@@ -191,7 +191,7 @@ The \acl{FIR} implementation of the \acl{LF} will take the form presented in Fig
 	\centering
 	\subfloat[Typical FIR Filter]{{\includegraphics[width=0.6\textwidth]{../FIR_1} }}\\
 	\subfloat[Single Multiplier FIR Filter]{{\includegraphics[width=0.6\textwidth]{../FIR_2} }}%
-	\caption[\ac{FIR} \ac{PI} loop filter RTL diagrams]{\ac{FIR} \ac{PI} loop filter RTL diagrams.}
+	\caption[\acs{FIR} \acs{PI} loop filter RTL diagrams]{\acs{FIR} \acs{PI} loop filter RTL diagrams.}
 	\label{fig:fir_pi}
 \end{figure}
 
@@ -207,7 +207,7 @@ As the scaling factor used in this multiplier is the \ac{ki} itself, reconfigura
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.6\textwidth]{../simple_pi.pdf}
-	\caption[Basic \ac{IIR} \ac{PI} loop filter]{Basic \ac{IIR} \ac{PI} loop filter.}
+	\caption[Basic \acs{IIR} \acs{PI} loop filter]{Basic \acs{IIR} \acs{PI} loop filter.}
 	\label{fig:iir_pi}
 \end{figure}
 
