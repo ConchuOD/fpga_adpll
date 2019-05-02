@@ -36,7 +36,7 @@
         \item[--]
         	Want low power, high frequency clocking system for SoCs.
         \item[--]
-            Want closely sync'ed clocks, characterised using:
+            Need closely sync'ed clocks, characterised using:
     		\begin{itemize}
     			\item[]
     				Average difference \textit{skew}.
@@ -136,6 +136,8 @@
 				Detection of any potential flaws/errors.
 			\end{itemize}
 		\item[--]
+			Rapid prototyping, minimal cost.	
+		\item[--]
 			Zianbetov \& Shan - Used FPGA to validate ADPLL network:
 		\begin{itemize}
 			\item[]
@@ -144,8 +146,6 @@
 				Operating frequency much lower.
 		\end{itemize}
 		\item[--]
-			Lose precise control over layout.
-		\item[--]
 			Restriction placed on available hardware.
 			\begin{itemize}
 				\item[]
@@ -153,10 +153,10 @@
 			\end{itemize} 
 		\item[--]
 			Limited mixed-signal circuits \textit{are} possible.
+			\item[--]
+			Lose precise control over layout.
 		\item[--]
-			Can examine system performance and dynamics.
-		\item[--]
-			Rapid prototyping, minimal cost.	
+			Can examine better system performance and dynamics.
 	
 	\end{itemize}
 \end{frame}
@@ -218,7 +218,7 @@
 		Worst detector/period resolution of the three designs.
 	\end{itemize}
 	\column{0.45\linewidth}
-	\includegraphics[width=1\linewidth]{../osc1}
+	\includegraphics[width=1\linewidth]{../osc2}
 \end{columns}
 
 %\end{columns}
@@ -232,23 +232,18 @@
 		\includegraphics[width=0.8\linewidth]{../ro_new}
 	\end{center}
 	\vspace{-0.37 cm}
-	\begin{columns}
-		\column{0.55\linewidth}
 		\begin{itemize}
 			\item[--]
 				Retains FPGA clocked Phase Detector
 			\item[--]
 				Oscillator replaced by inverter chain using primitives.
 			\item[--]
-				Better approximation of mixed-signal circuits.
+				Drawback $\rightarrowtail$ loss of control.
 			\item[--]
-				Drawback = loss of control.
+				 Variation $\rightarrowtail$ better approximation of mixed-signal circuits.
 			\item[--]
 				Significant improvement in period resolution, $3.875~\si{\nano\second}\rightarrow \approx 1.1765~\si{\nano\second}$.
 		\end{itemize}
-		\column{0.45\linewidth}
-		\includegraphics[width=\linewidth]{../osc1}
-	\end{columns}
 \end{frame}
 
 \begin{frame}{Design 3}
@@ -343,7 +338,7 @@
 					Pierre \& Eugene.
 			\end{itemize} 
 		\item[--]
-			FPGA clocked $\rightarrow$ greaater control, better for design validation.
+			FPGA clocked $\rightarrow$ greater control, better for design validation.
 			\begin{itemize}
 				\item[]
 					Zianbetov \& Shan.
@@ -372,8 +367,6 @@
 			\item[--]
 			Also to test for expected results:
 			\begin{itemize}
-				\item[-]
-					DCO Width Variation
 				\item[-]
 					LF Comparison with Eugene's results.
 				\item[-]
@@ -476,8 +469,8 @@
         \item[--]
             Proposed suitable use cases for each design.
         \item[--]
+       		\textbf{Future Work}:
         \begin{itemize}
-            \textbf{Future Work}:
             \item[-]
             	Larger network.
             \item[-]
