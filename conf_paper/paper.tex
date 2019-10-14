@@ -16,20 +16,23 @@
         T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 \begin{document}
 
-\title{FPGA Based Modelling of an ADPLL Network\\}
-
-\author{\IEEEauthorblockN{C. Dooley$^1$, E. Blokhina$^1$, B. Mulkeen$^1$, D. Galayko$^2$}
+\title{FPGA Based Modelling of an ADPLL Network\vspace{-0.3cm}}
+\author{
+	\IEEEauthorblockN{C. Dooley$^1$, E. Blokhina$^1$, B. Mulkeen$^1$, D. Galayko$^2$}
     \IEEEauthorblockA{\textit{$^1$School of Electrical \& Electronic Engineering, University College Dublin}\\
-    \textit{$^2$LIP6 Lab, Sorbonne Université}
-    	\vspace{-0.8cm}
+    \textit{$^2$LIP6 Lab, Sorbonne Universit\'e}
+    	\vspace{-0.7cm}
 	}
 }
+\IEEEoverridecommandlockouts
+\IEEEpubid{\makebox[\columnwidth]{978-1-7281-1201-5/19/\$31.00~\copyright2019 IEEE \hfill} \hspace{\columnsep}\makebox[\columnwidth]{ }}
 \maketitle
+
 \begin{abstract}
-    This paper introduces and compares the implementation of a number of FPGA based ADPLL network prototyping architectures. Comparison is then made between the expected performance and role of each method as a development tool.
+    This paper introduces and compares the implementation of a number of FPGA based ADPLL network prototyping architectures. Networks are then created using three different ADPLL implementations and tests performed on each. Based on these test results, comparison is made to both the expected performance and role of each ADPLL design as a development tool.
 \end{abstract}
 \section{Motivation}
-The technical motivation underlying this paper is the creation of an Field Programmable Gate Array (FPGA) based prototyping platform for All Digital Phase Lock Loop (ADPLL) networks. As the creation of Application Specific Integrated Circuits (ASICs) is an expensive and time consuming process, and mistakes made in the design may require the manufacture of a new chip, it is important to ensure that any errors made in the design have been located and addressed before manufacture..
+The technical motivation underlying this paper is the creation of an Field Programmable Gate Array (FPGA) based prototyping platform for All Digital Phase Lock Loop (ADPLL) networks. As the creation of Application Specific Integrated Circuits (ASICs) is an expensive and time consuming process, and mistakes made in the design may require the manufacture of a new chip, it is important to ensure that any errors made in the design have been located and addressed before manufacture.
 Simulations either at theoretical or gate/transistor levels have global usage in minimising such errors due to the ubiquity of simulators and their ease of use.\\
 However simulations are only as good as the model used to describe the dynamics of the system, and emulating real jitter and other behaviours of a complex system is a rather difficult task. %TODO wording of this last sentence
 An FPGA based prototype allows the system designers to validate the performance of both design and simulation, particularly the response to key noise sources such as power supply noise. An FPGA is ideal for this task as it leverages the existing skill set of a digital designer, permits the re-use of certain blocks, and most importantly enables cost effective and rapid reworking of the design.\\
@@ -37,8 +40,7 @@ An FPGA as a prototyping tool has seen use in UPMC Sorbonne and University Colle
 In the case of Shan et. al \cite{shan2014phd}, direct testing of control parameters was performed using an FPGA based design, where all parameters were scaled down proportionally and thus the ideal gains for the loop filter found in simulation, could be tested in a more realistic setting.\\
 Similarly Koskin et. al \cite{theboys2019} used the analysis of a number of ADPLLs implemented on an FPGA, both independently and in a network, to validate previously obtained theoretical results while avoiding the costs associated with the development of a custom IC.\\
 Prototyping on an FPGA does have its drawbacks, most notably the mixed-signal circuits central to the operation of an ADPLL are not implementable on an FPGA and while most fundamental digital circuit elements are present these elements are not true transistor level implementations of their functionality but rather implemented by lookup tables and other multi-role structures on the FPGA. These drawbacks present a challenge to a designer as they restrict the potential architecture of key blocks. This is of particular concern when trying to mimic the behaviour of an established design on an FPGA.\\
-The particular system that this paper will discuss is an ADPLL network. This is based on an idea first proposed in a 1995 paper by Pratt and Nguyen \cite{pratt1995distributed}, in which they proposed an alternative clock distribution network for ICs using a Cartesian grid of clocking areas, each with their own Phase Lock Loop, which has become known as a PLL Network . This methodology was implemented by Gutnik et. al \cite{gutnik2000active} who found it to be feasible. Subsequently Javiden et. al
-\cite{javidan2011all} proposed the implementation of such a system using All Digital PLLs, which better suited the use cases of the technology and avoided some of the flaws pointed out in the original paper. Zianbetov and Shan followed on from this proposition by implementing such a network on a custom IC \cite{zianbetov2013phd,shan2014phd}.\\
+The particular system that this paper will discuss is an ADPLL network. This is based on an idea first proposed in a 1995 paper by Pratt and Nguyen \cite{pratt1995distributed}, in which they proposed an alternative clock distribution network for ICs using a Cartesian grid of clocking areas, each with their own Phase Lock Loop, which has become known as a PLL Network . This methodology was implemented by Gutnik et. al \cite{gutnik2000active} who found it to be feasible. Subsequently Javiden et. al \cite{javidan2011all} proposed the implementation of such a system using All Digital PLLs, which better suited the use cases of the technology and avoided some of the flaws pointed out in the original paper. Zianbetov and Shan followed on from this proposition by implementing such a network on a custom IC \cite{zianbetov2013phd,shan2014phd}.\\
 This paper will examine the process of creating such a system, highlight the differences between potential designs and address some of the challenges and pitfalls that may be encountered along the way. This paper will also demonstrate that FPGA based prototyping can play a central role on the pathway to the implementation of an ADPLL network on a custom chip, or indeed any number of similar applications. The paper is organised as follows: Section II describes the system that will be used on the FPGA and Section III the implementation thereof and the challenges encountered in the process. Finally, Section IV will present example measurements made on the platform and discuss their merit.
 
 \section{System Architecture}
@@ -56,12 +58,12 @@ An ADPLL network, as the name would suggest, is created from a number of ADPLLs 
 \end{figure}
 \subsection{Digitally Controlled Oscillators}
 While regular Voltage Controlled Oscillator (VCO) is tuned by the input voltage over a continuous range of values, in a digital system there are a very limited number of voltages representable, most commonly just two levels. As such, using the voltage itself to control an oscillator is not a viable strategy and instead Digitally (or Numerically) Controlled Oscillators (DCO) accept an \textit{n} bit wide control signal that alters the period of the output waveform. While tuning range, centre frequency and linearity apply as in a VCO, a DCO also has a minimum frequency step as a result of the non continuous control values. %TODO WORDING
-In combination with the bit width of the control signal, the minimum frequency step limits the range over which the oscillator can be tuned. Frequently the output of the DCO is divided down to allow the control blocks in the feedback path that are clocked on this signal, to run at a lower and thus easier frequency.
-\subsection{Loop Filter}
+In combination with the bit width of the control signal, the minimum frequency step limits the range over which the oscillator can be tuned. Frequently the output of the DCO is divided down to allow the control blocks in the feedback path that are clocked on this signal, to run at a lower and thus easier frequency.\vspace{-0.2cm}
+\subsection{ Loop Filter}
 The loop filter is a key aspect of a phase lock loop as without it only the current output of the phase detector could be used to compute the control voltage of the VCO.
-In an ADPLL it performs an identical role however, the digital environment results in the traditional loop filter being replaced by a discrete time Proportional Integral (PI) controller, with the integral path of the controller implemented by an accumulator.
+In an ADPLL it performs an identical role however, the digital environment results in the traditional loop filter being replaced by a discrete time Proportional Integral (PI) controller, with the integral path of the controller implemented by an accumulator.\vspace{-0.2cm}
 \subsection{Error Combiner}
-The Error Combiner, as the name suggests, performs a summation of the error signals from the phase detectors lying between any neighbouring oscillator and its neighbours. It is often convenient for this to be performed as a weighted sum, thus avoiding different gain requirements for the loop filter of oscillators in the corners of the grid that only have a pair of neighbours. The ability to change the weights during operation enables ``uni-directional start-up'', which Javiden et. al \cite{javidan2011all} found prevented the system from entering unwanted stable equilibriums warned of in Pratt and Nguyen's seminal paper.
+The Error Combiner, as the name suggests, performs a summation of the error signals from the phase detectors lying between any neighbouring oscillator and its neighbours. It is often convenient for this to be performed as a weighted sum, thus avoiding different gain requirements for the loop filter of oscillators in the corners of the grid that only have a pair of neighbours. The ability to change the weights during operation enables ``uni-directional start-up'', which Javiden et. al \cite{javidan2011all} found prevented the system from entering unwanted stable equilibriums warned of in Pratt and Nguyen's seminal paper.\vspace{-0.2cm}
 \subsection{Phase Detector}
 In a conventional PLL the phase detector measures a value proportional to the difference in phase between a pair of signals, which is then output as a continuous voltage.
 A digital phase detector then attempts to do the same by measuring the time difference between fixed reference points in the waveform, which as a digital system deals with square waves, is typically the rising edge of each input to the block.
@@ -162,7 +164,7 @@ The first columns of the table relate to the cycle-to-cycle jitter of the system
                 
             \end{tabular}
         \end{tiny}
-        \caption{}
+        \caption{ADPLL Performance Comparison.}
         \label{table:b_c_perf}
     \end{center}
 \vspace{-0.5cm}
@@ -171,11 +173,12 @@ From the table it is apparent that the coarser period and detection steps of Des
 The further a PLL is away from the reference feeding ADPLL 11 the worse performance is, peaking furthest from the reference in ADPLL 22.
 The lesser cycle-to-cycle of Design ``2A'' follows from the implementation independent design of the phase detector. Unlike the inverter based design where the implementation may result in the propagation delay between taps on the delay line changing, from both tap to tap in the same detector and the same tap in different detectors, the clocked design has identical detection resolutions as each register is driven by the FPGA clock. This can be highlighted in the more easily demonstrable case of the clocked and inverter based oscillators.\\
 \begin{figure}[h]%
+	\vspace{-0.8cm}
     \centering
     \subfloat[Inverter Based Design.]{{\includegraphics[width=0.5\linewidth]{distrib_ring} }}%
     \subfloat[FPGA Clocked Design.]{{\includegraphics[width=0.5\linewidth]{distrib_pa} }}%
     \caption{Example Distribution of Periods.\label{fig:dists}}    
-    \vspace{-0.5cm}
+    \vspace{-0.4cm}
 \end{figure}
 Figure \ref{fig:dists} paints a picture of the unrealistic nature of the FPGA clocked design in comparison to its inverter based counterpart, each oscillator will have identical intrinsic period steps thus eliminating any jitter that maybe be seen in the system due to misalignment. This effects the suitability of the FPGA clocked designs for the improvement of simulation models, or the examination of how a novel block may impact the behaviour of the network.
 \section*{Conclusion}
